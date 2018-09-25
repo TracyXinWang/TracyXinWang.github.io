@@ -139,6 +139,22 @@ var _hmt = _hmt || [];
 		        
 			</div>
 		</nav>
+
+		
+    <script>
+        fetch('https://api.hitokoto.cn')
+            .then(function (res){
+                return res.json();
+            })
+            .then(function (data) {
+                var hitokoto = document.getElementById('hitokoto');
+                hitokoto.innerText = '『' + data.hitokoto + '』——' + '「' + data.from + '」';
+            })
+            .catch(function (err) {
+                console.error(err);
+            });
+    </script>
+    
 	</header>		
 </div>
 
@@ -240,12 +256,22 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-          
+        <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
               <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作及环境"><span class="toc-number">1.</span> <span class="toc-text">准备工作及环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装及配置"><span class="toc-number">2.</span> <span class="toc-text">安装及配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装前提"><span class="toc-number">2.1.</span> <span class="toc-text">安装前提</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装-Hexo"><span class="toc-number">2.2.</span> <span class="toc-text">安装 Hexo:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置"><span class="toc-number">2.3.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#主题-theme-的确定"><span class="toc-number">2.4.</span> <span class="toc-text">主题(theme)的确定</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开写你的第一篇博客"><span class="toc-number">3.</span> <span class="toc-text">开写你的第一篇博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在本地查看并生成静态网页"><span class="toc-number">4.</span> <span class="toc-text">在本地查看并生成静态网页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#部署-（这部分很让我头疼）"><span class="toc-number">5.</span> <span class="toc-text">部署 （这部分很让我头疼）</span></a></li></ol>
             </div>
+           -->
           
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作及环境"><span class="toc-text">准备工作及环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装及配置"><span class="toc-text">安装及配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装前提"><span class="toc-text">安装前提</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装-Hexo"><span class="toc-text">安装 Hexo:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#主题-theme-的确定"><span class="toc-text">主题(theme)的确定</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开写你的第一篇博客"><span class="toc-text">开写你的第一篇博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在本地查看并生成静态网页"><span class="toc-text">在本地查看并生成静态网页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#部署-（这部分很让我头疼）"><span class="toc-text">部署 （这部分很让我头疼）</span></a></li></ol>
+        </div>
+    </div>
+
         <p>在网上查找资料的时候偶然看到有人提到用Hexo来写博客，界面非常简洁，而且支持 markdown 解析，瞬间打算在我<a href="http://tracyxinwang.site/">个人的学术网站</a>上加入这个blog页面。之前写博客都是在现成的博客网站上写的，比如 CSDN 这种还算比较大型的技术博客，无奈广告实在是太多了，后来转战 google 的 blog，但是它的编辑页面实在是难用，就放弃了。所以现在打算试试这个 Hexo。</p>
 <p>Hexo 用官方的来说就是一个快速，简洁且高效的博客框架。我用了大概不到一天的时间，就从安装到部署搞定了，虽然过程很崎岖，掉了很多坑。。。但是总体还是觉得挺不错的，所以接下来我会大致叙述一下整个过程，希望能够让看到的朋友少掉坑。</p>
 <p>先附上<a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>网址，也有<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">中文</a>的。个人觉得基本上按照网页上的指导，前面的步骤基本都是没问题的。由于我是一开始就打算在我个人网页中加入这个博客页面作为一个子页面，所以我是在 coding.net 而非 git 上面建库。另外操作系统是win10.</p>
@@ -442,19 +468,6 @@ var _hmt = _hmt || [];
         </div>
         
         
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作及环境"><span class="toc-number">1.</span> <span class="toc-text">准备工作及环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装及配置"><span class="toc-number">2.</span> <span class="toc-text">安装及配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装前提"><span class="toc-number">2.1.</span> <span class="toc-text">安装前提</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装-Hexo"><span class="toc-number">2.2.</span> <span class="toc-text">安装 Hexo:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置"><span class="toc-number">2.3.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#主题-theme-的确定"><span class="toc-number">2.4.</span> <span class="toc-text">主题(theme)的确定</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开写你的第一篇博客"><span class="toc-number">3.</span> <span class="toc-text">开写你的第一篇博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在本地查看并生成静态网页"><span class="toc-number">4.</span> <span class="toc-text">在本地查看并生成静态网页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#部署-（这部分很让我头疼）"><span class="toc-number">5.</span> <span class="toc-text">部署 （这部分很让我头疼）</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
     </div>
 </aside>
 
@@ -477,15 +490,30 @@ var _hmt = _hmt || [];
       <footer id="footer">
   <div class="outer">
     <div id="footer-info">
+			<script async="" src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     	<div class="footer-left">
     		&copy; 2018 Tracy Xin Wang
     	</div>
+			<div class="footer-left">
+          &nbsp;© 
+          <span id="busuanzi_container_site_pv" style="display: inline;">
+            本站访问量<span id="busuanzi_value_site_pv"></span>次
+          </span>
+          <span id="busuanzi_container_site_uv" style="display: inline;">
+            访客数<span id="busuanzi_value_site_uv"></span>人
+          </span>
+					<span class="post-count">
+              本站总共1.9k字
+          </span>
+        </div>
       	<div class="footer-right">
-      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a>, modified by Tracy
       	</div>
     </div>
   </div>
 </footer>
+
+
     </div>
     <script>
 	var yiliaConfig = {
