@@ -141,7 +141,7 @@ var _hmt = _hmt || [];
 
 		
     <script>
-        fetch('https://api.hitokoto.cn')
+        fetch('https://v1.hitokoto.cn/c=a')
             .then(function (res){
                 return res.json();
             })
@@ -153,6 +153,9 @@ var _hmt = _hmt || [];
                 console.error(err);
             });
     </script>
+	<nav class="header-yiyan" q-class="show:isComplete">
+	<div class="yiyan"><span class="yan"></span></div>
+	</nav>
     
 	</header>		
 </div>
