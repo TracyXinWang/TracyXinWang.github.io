@@ -2,9 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/09/25/My-First-Post/</loc>
-    <lastmod>2018-09-25T06:11:45.638Z</lastmod>
+    <lastmod>2018-09-26T09:43:22.469Z</lastmod>
   </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/09/24/hello-world/</loc>
-    <lastmod>2018-09-24T11:37:10.739Z</lastmod>
+    <lastmod>2018-09-26T09:35:10.091Z</lastmod>
   </url>
 </urlset>
