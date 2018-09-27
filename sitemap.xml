@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://tracyxinwang.site/blog/2018/09/27/SMB-Samba/</loc>
+    
+    <lastmod>2018-09-27T07:04:10.672Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tracyxinwang.site/blog/2018/09/27/OrangePi1/</loc>
     
-    <lastmod>2018-09-27T02:18:58.269Z</lastmod>
+    <lastmod>2018-09-27T02:28:51.617Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tracyxinwang.site/blog/2018/09/24/hello-world/</loc>
+    
+    <lastmod>2018-09-27T02:24:32.588Z</lastmod>
     
   </url>
   
@@ -19,13 +33,6 @@
     <loc>http://tracyxinwang.site/blog/tagcloud/index.html</loc>
     
     <lastmod>2018-09-26T12:50:25.773Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tracyxinwang.site/blog/2018/09/24/hello-world/</loc>
-    
-    <lastmod>2018-09-26T09:35:10.091Z</lastmod>
     
   </url>
   
