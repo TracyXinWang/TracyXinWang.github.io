@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://tracyxinwang.site/blog/blog/2018/09/30/PinDuoDuo/</loc>
+    <lastmod>2018-09-30T01:38:58.856Z</lastmod>
+  </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/09/27/SMB-Samba/</loc>
-    <lastmod>2018-09-27T07:04:10.672Z</lastmod>
+    <lastmod>2018-09-27T07:17:38.733Z</lastmod>
   </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/09/27/OrangePi1/</loc>
     <lastmod>2018-09-27T02:28:51.617Z</lastmod>
