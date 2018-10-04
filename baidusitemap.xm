@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://tracyxinwang.site/blog/blog/2018/10/03/thinking-system/</loc>
+    <lastmod>2018-10-04T03:19:03.162Z</lastmod>
+  </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/09/30/PinDuoDuo/</loc>
     <lastmod>2018-09-30T01:38:58.856Z</lastmod>
   </url>  <url>
