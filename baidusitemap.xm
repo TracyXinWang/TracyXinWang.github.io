@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://tracyxinwang.site/blog/blog/2018/10/11/GRF-BMI-thoughts/</loc>
+    <lastmod>2018-10-11T12:59:23.587Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2018/10/09/NeuralMass2008PlosComp/</loc>
+    <lastmod>2018-10-11T11:48:41.366Z</lastmod>
+  </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/10/05/Laplacian-matrix/</loc>
     <lastmod>2018-10-08T09:39:01.731Z</lastmod>
   </url>  <url>
