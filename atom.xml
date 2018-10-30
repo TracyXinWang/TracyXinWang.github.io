@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="http://tracyxinwang.site/blog/"/>
-  <updated>2018-10-29T02:05:43.000Z</updated>
+  <updated>2018-10-30T00:18:32.000Z</updated>
   <id>http://tracyxinwang.site/blog/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Algorithm - 模拟退火 SImulated Annealing</title>
+    <title>Hexo deploy 出现问题</title>
+    <link href="http://tracyxinwang.site/blog/2018/10/30/problem-hexo-deploy/"/>
+    <id>http://tracyxinwang.site/blog/2018/10/30/problem-hexo-deploy/</id>
+    <published>2018-10-30T02:54:31.000Z</published>
+    <updated>2018-10-30T00:18:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>也不知道怎么回事办公室的电脑突然重启了，可能是更新吧，但是更新完了回来发现hexo generate 和 deploy 并不能使用了<br>最开始报的错是 <code>Node 不是内部或外部命令</code>，一看是 node.js 的环境变量没有配置，很奇怪，之前明明是OK的，然后我就在环境变量里面配置了一下node，步骤如下：</p><ul><li>右键<code>我的电脑-属性-高级系统设置</code></li><li>找到下面有个<code>环境变量</code>的选择框，点进去</li><li>此时出来的对话框中有上下两个部分，上面的部分属于<code>用户变量</code>，找到里面有一行是 <code>path</code>，点击<code>编辑</code></li><li>新建一个变量，把node.js所在的路径拷进去就行了，我的是 <code>D:\Program Files\nodejs</code></li></ul><p>然后 <code>hexo generate</code> 就可以了，deploy的时候发现出现以下问题：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">FATAL Something<span class="string">'s wrong. Maybe you can find the solution here: http://hexo.io/docs/troubleshooting.html</span></span><br><span class="line"><span class="string">Error: spawn git ENOENT</span></span><br><span class="line"><span class="string">at notFoundError (C:\Users\XXX\hexo\node_modules\cross-spawn\lib\enoent.js:11:11)</span></span><br><span class="line"><span class="string">at verifyENOENT (C:\Users\XXX\hexo\node_modules\cross-spawn\lib\enoent.js:46:16)</span></span><br><span class="line"><span class="string">at ChildProcess.cp.emit (C:\Users\XXX\hexo\node_modules\cross-spawn\lib\enoent.js:33:19)</span></span><br><span class="line"><span class="string">at Process.ChildProcess._handle.onexit (internal/child_process.js:198:12)</span></span><br></pre></td></tr></table></figure></p><p>那个XXX是hexo所在文件的路径，这里就不放出来了。<br>解决这个的问题最直接的办法就是直接在hexo的当前文件夹下，运行 <code>git bash</code> 然后在bash 处运行 <code>hexo deploy</code>…</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;也不知道怎么回事办公室的电脑突然重启了，可能是更新吧，但是更新完了回来发现hexo generate 和 deploy 并不能使用了&lt;br&gt;最开始报的错是 &lt;code&gt;Node 不是内部或外部命令&lt;/code&gt;，一看是 node.js 的环境变量没有配置，很奇怪，之前明明是
+      
+    
+    </summary>
+    
+    
+      <category term="Hexo" scheme="http://tracyxinwang.site/blog/tags/Hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Algorithm - 模拟退火 Simulated Annealing</title>
     <link href="http://tracyxinwang.site/blog/2018/10/29/simulated-annealing/"/>
     <id>http://tracyxinwang.site/blog/2018/10/29/simulated-annealing/</id>
     <published>2018-10-29T01:01:51.000Z</published>
-    <updated>2018-10-29T02:05:43.000Z</updated>
+    <updated>2018-10-30T00:19:20.843Z</updated>
     
     <content type="html"><![CDATA[<p>模拟退火（SA）是拿来找给定函数的近似全局最优的。一般当搜索空间是离散的时，经常使用它。模拟退火算法最初是受到金属加工时退火过程的启发来的。在真正的金属冶炼过程中，通过给金属降温，金属的形态就会固定。而在模拟退火中，我们会设置 “温度” 这个变量，来模拟这个过程。 初始时，将其设置为高，然后在算法运行时让它慢慢“冷却”。当这个变量“温度”很高时，算法会更允许接受比当前解更差的解(即高温时，金属可以改变的力度和形状可以更大)。这能够让算法不局限在之前发现的任何local optimum上。随着温度的降低，接受更差解的机会就越小，因此允许算法逐渐集中在搜索空间的一个区域，来找到近最优解。这个渐进的“冷却”过程能够让模拟退火算法在处理包含大量局部最优解的大问题时非常有效地找到接近的最优解。</p><h3 id="Acceptance-Function"><a href="#Acceptance-Function" class="headerlink" title="Acceptance Function:"></a>Acceptance Function:</h3><p>决定一个solution是否被接受的步骤如下：</p><ol><li>看下一个解是否优于当前解，如果是，则无条件接受</li><li>如果不是，根据以下几个方面考虑要不要接受：<ul><li>下一个解有多差？</li><li>当前系统的 “温度” 有多高？<br>数学表达式如下：<br>$$exp(\frac{solutionEnergy - neighborEnergy}{Temperature})$$<br>即：系统能量变得越小，温度越高，越会接受这个解。是否接受解根据一个随机的概率来的</li></ul></li></ol><p>算法描述如下：</p><ol><li>设置温度变量初始值，随机初始化一个解</li><li>循环直到停止条件达到：一般为系统足够”冷却” 或 最优的解已经找到<ul><li>通过较小地改变当前解来确定下一个解</li><li>决定是否跳去下一个解（用上面的Acception function）</li></ul></li><li>降低温度，继续循环</li></ol><h3 id="Pseudo-Code"><a href="#Pseudo-Code" class="headerlink" title="Pseudo Code"></a>Pseudo Code</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int temperature = m;</span><br><span class="line">create a collection of best solutions found</span><br><span class="line"><span class="keyword">while</span> (temperature meets the condition)&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (accept(curr_sol, next_sol, temperature)) curr_sol = next_sol;</span><br><span class="line">    <span class="keyword">if</span> (curr_sol &lt; best) best = add curr_sol to best collection;</span><br><span class="line">    temperature *= (1-coolingRate) </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">accept(curr_sol, next_sol, temperature)&#123;</span><br><span class="line">    <span class="keyword">if</span> (next_sol &lt; curr_sol) <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="built_in">return</span> exp((curr_sol-next_col)/temperature) &gt; rand() <span class="comment"># 以一个随机的概率接受</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><br></p><p>Reference:<br><a href="http://www.theprojectspot.com/tutorial-post/simulated-annealing-algorithm-for-beginners/6" target="_blank" rel="noopener">http://www.theprojectspot.com/tutorial-post/simulated-annealing-algorithm-for-beginners/6</a><br><a href="http://mathworld.wolfram.com/SimulatedAnnealing.html" target="_blank" rel="noopener">http://mathworld.wolfram.com/SimulatedAnnealing.html</a></p>]]></content>
     
@@ -188,9 +211,9 @@
     </summary>
     
     
-      <category term="Notes" scheme="http://tracyxinwang.site/blog/tags/Notes/"/>
-    
       <category term="Algorithms" scheme="http://tracyxinwang.site/blog/tags/Algorithms/"/>
+    
+      <category term="Notes" scheme="http://tracyxinwang.site/blog/tags/Notes/"/>
     
   </entry>
   
@@ -294,9 +317,9 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://tracyxinwang.site/blog/tags/Linux/"/>
-    
       <category term="OrangePi" scheme="http://tracyxinwang.site/blog/tags/OrangePi/"/>
+    
+      <category term="Linux" scheme="http://tracyxinwang.site/blog/tags/Linux/"/>
     
   </entry>
   
