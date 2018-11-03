@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://tracyxinwang.site/blog/blog/2018/11/03/MIT6006-Lec02/</loc>
+    <lastmod>2018-11-03T04:40:14.518Z</lastmod>
+  </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/10/29/simulated-annealing/</loc>
     <lastmod>2018-10-30T00:19:20.843Z</lastmod>
   </url>  <url>

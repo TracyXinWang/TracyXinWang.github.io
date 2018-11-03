@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="http://tracyxinwang.site/blog/"/>
-  <updated>2018-10-30T00:18:32.000Z</updated>
+  <updated>2018-11-03T04:40:14.518Z</updated>
   <id>http://tracyxinwang.site/blog/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MIT6006 Lec02 Models of Computation</title>
+    <link href="http://tracyxinwang.site/blog/2018/11/03/MIT6006-Lec02/"/>
+    <id>http://tracyxinwang.site/blog/2018/11/03/MIT6006-Lec02/</id>
+    <published>2018-11-02T23:45:44.000Z</published>
+    <updated>2018-11-03T04:40:14.518Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="What-is-model-of-computation"><a href="#What-is-model-of-computation" class="headerlink" title="What is model of computation?"></a>What is model of computation?</h3><p>Model of computation specifies</p><ul><li>what <strong>operations</strong> an algorithm is allowed</li><li><strong>cost</strong> (time, space, . . . ) of each operation</li><li>cost of algorithm = sum of operation costs</li></ul><p>The followings are two kinds of models of computation.</p><h3 id="Random-Access-Machine-RAM"><a href="#Random-Access-Machine-RAM" class="headerlink" title="Random Access Machine (RAM)"></a>Random Access Machine (RAM)</h3><ul><li>It is modeled by a big array. </li><li>For each word, it registers $\theta(1)$</li><li>In $\theta(1)$ time, it can<ul><li>load word</li><li>compute (+,-,*,/,&amp;,|,^) on registers</li><li>store register $r_j$ into memory</li></ul></li><li>What is a word: <ul><li>assume basic objects (e.g. int) fit in word</li></ul></li><li>It is realistic and powerful → implement abstractions</li></ul><h3 id="Pointer-machine"><a href="#Pointer-machine" class="headerlink" title="Pointer machine"></a>Pointer machine</h3><ul><li>can dynamically allocated objects</li><li>object has $O(1)$ fields</li><li>field = word (e.g., int) or pointer to object/null (a.k.a. reference)</li><li>weaker than RAM</li></ul><h3 id="Python-model"><a href="#Python-model" class="headerlink" title="Python model"></a>Python model</h3><p>Python lets you use either mode of thinking, e.g.</p><ul><li>“list” is acutually an array in RAM:<br>  &emsp; &nbsp; L[i] = L[j] + 5: this operation only costs $\theta(1)$ time (constant time)</li><li>object with $O(1)$ attributes (including references) is like a pointer machine<br>  &emsp; &nbsp; $x=x.next$ costs $\theta(1)$ time</li></ul><p>The following are some operations and their costs in Python. To determine their cost, imagine implementation in terms of the above two models(RAM or Pointer). </p><ol><li><strong>list</strong><br> (a) L.append(x): $\theta(1)$ time.  (It uses table doubling)<br> (b) L = L1+L2 ≡<br> &emsp; L = []: cost $\theta(1)$ time to build a list<br> &emsp; for x in L1: L.append(x) costs $\theta(1)$. Totally in L1 is $\theta(|L1|)$<br> &emsp; for x in L2: L.append(x) costs $\theta(1)$. Totally in L2 is $\theta(|L2|)$<br> Therefore, L = L1+L2 costs $\theta(1+|L1|+|L2|)$ time<br> (c) L1.extend(L2) ≡<br>  &emsp; for x in L2: L1.append(x) costs θ(1). Totally $\theta(|L2|)$<br>  &emsp; ≡ L1+ = L2<br> Therefore, costs θ(1 + |L2|) time<br> (d) L2 = L1[i : j] ≡<br>   &emsp; L2 = []: θ(1)<br>   &emsp; for k in range(i, j): L2.append(L1[i]) costs θ(1)<br>  Therefore, costs $θ(j − i + 1) = O(|L|)$<br> (e) len(L):  $θ(1)$ time - since list stores its length in a field<br> (f) L.sort(): $θ(|L|log |L|)$ - via comparison sort </li><li><strong>tuple, str</strong>: similar</li><li><strong>dict</strong>: via hashing, costs $θ(1)$ time</li><li><strong>set</strong>: similar (think of as dict without vals)</li><li><strong>heapq</strong>: heappush &amp; heappop - via heaps → $θ(log(n))$ time</li><li><strong>long</strong>: via Karatsuba algorithm<br> &emsp; x + y → O(|x| + |y|) time where |y| reflects # words<br> &emsp; x ∗ y → O((|x| + |y|)log(3)) ≈ O((|x| + |y|)1.58) time</li></ol><h3 id="Document-Distance-Problem-—-compute-d-D1-D2"><a href="#Document-Distance-Problem-—-compute-d-D1-D2" class="headerlink" title="Document Distance Problem — compute d(D1, D2)"></a>Document Distance Problem — compute d(D1, D2)</h3><p>The problem is acutually to find similarity in documents, and have application in detecting duplicates, plagiarism, and also in web search (D2 = query).<br>In this problem, we define word as the sequence of alphanumeric characters, and document as a sequence of words (ignore space, punctuation).</p><p>The idea is to define distance in terms of <strong>shared words</strong>. Think of document D as a vector:<br>If three axis are defined as three words: the, dog, cat<br>Then vector v1 could be “the cat”, vector v2 could be “the dog”, vector v3 could be “cat dog”</p><p>After looking them as vectors, then we can apply mathematical methods to calculate the distance between these vectors like angle </p><p>The algorithm can be formed as follows:</p><ol><li>split each document into words</li><li>count word frequencies (document vectors)</li><li>compute dot product (&amp; divide)</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;What-is-model-of-computation&quot;&gt;&lt;a href=&quot;#What-is-model-of-computation&quot; class=&quot;headerlink&quot; title=&quot;What is model of computation?&quot;&gt;&lt;/a&gt;W
+      
+    
+    </summary>
+    
+    
+      <category term="Algorithm" scheme="http://tracyxinwang.site/blog/tags/Algorithm/"/>
+    
+      <category term="Learning" scheme="http://tracyxinwang.site/blog/tags/Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>Hexo deploy 出现问题</title>
@@ -186,9 +211,9 @@
     </summary>
     
     
-      <category term="Brain" scheme="http://tracyxinwang.site/blog/tags/Brain/"/>
-    
       <category term="Notes" scheme="http://tracyxinwang.site/blog/tags/Notes/"/>
+    
+      <category term="Brain" scheme="http://tracyxinwang.site/blog/tags/Brain/"/>
     
   </entry>
   
@@ -211,9 +236,9 @@
     </summary>
     
     
-      <category term="Algorithms" scheme="http://tracyxinwang.site/blog/tags/Algorithms/"/>
-    
       <category term="Notes" scheme="http://tracyxinwang.site/blog/tags/Notes/"/>
+    
+      <category term="Algorithms" scheme="http://tracyxinwang.site/blog/tags/Algorithms/"/>
     
   </entry>
   
@@ -317,9 +342,9 @@
     </summary>
     
     
-      <category term="OrangePi" scheme="http://tracyxinwang.site/blog/tags/OrangePi/"/>
-    
       <category term="Linux" scheme="http://tracyxinwang.site/blog/tags/Linux/"/>
+    
+      <category term="OrangePi" scheme="http://tracyxinwang.site/blog/tags/OrangePi/"/>
     
   </entry>
   
