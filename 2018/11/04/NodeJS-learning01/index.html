@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://tracyxinwang.site/blog">
-  <title>Notes of Neural Masses and Cortical Fields | Xin Wang&#39;s Blog</title>
+  <title>Notes - NodeJS 学习（一） | Xin Wang&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="This is a summary of paper The Dynamic Brain: From Spiking Neurons to Neural Masses and Cortical Fields This paper mainly talks about a variety of computational approaches that have been used to chara">
-<meta name="keywords" content="Brain,Notes">
+  <meta name="description" content="The following are just some notes when I learn NodeJS. Most of the contents are taken from others. The references have been listed in the end.The reason I want to learn it is just because that I need">
+<meta name="keywords" content="NodeJS,Learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Notes of Neural Masses and Cortical Fields">
-<meta property="og:url" content="http://tracyxinwang.site/blog/2018/10/09/NeuralMass2008PlosComp/index.html">
+<meta property="og:title" content="Notes - NodeJS 学习（一）">
+<meta property="og:url" content="http://tracyxinwang.site/blog/2018/11/04/NodeJS-learning01/index.html">
 <meta property="og:site_name" content="Xin Wang&#39;s Blog">
-<meta property="og:description" content="This is a summary of paper The Dynamic Brain: From Spiking Neurons to Neural Masses and Cortical Fields This paper mainly talks about a variety of computational approaches that have been used to chara">
+<meta property="og:description" content="The following are just some notes when I learn NodeJS. Most of the contents are taken from others. The references have been listed in the end.The reason I want to learn it is just because that I need">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-11T11:48:41.366Z">
+<meta property="og:updated_time" content="2018-11-04T00:11:51.430Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Notes of Neural Masses and Cortical Fields">
-<meta name="twitter:description" content="This is a summary of paper The Dynamic Brain: From Spiking Neurons to Neural Masses and Cortical Fields This paper mainly talks about a variety of computational approaches that have been used to chara">
+<meta name="twitter:title" content="Notes - NodeJS 学习（一）">
+<meta name="twitter:description" content="The following are just some notes when I learn NodeJS. Most of the contents are taken from others. The references have been listed in the end.The reason I want to learn it is just because that I need">
   
     <link rel="alternative" href="/atom.xml" title="Xin Wang&#39;s Blog" type="application/atom+xml">
   
@@ -246,20 +246,20 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-NeuralMass2008PlosComp" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-NodeJS-learning01" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Notes of Neural Masses and Cortical Fields
+      Notes - NodeJS 学习（一）
     </h1>
   
 
         
-        <a href="/blog/2018/10/09/NeuralMass2008PlosComp/" class="archive-article-date">
-  	<time datetime="2018-10-09T01:28:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-09</time>
+        <a href="/blog/2018/11/04/NodeJS-learning01/" class="archive-article-date">
+  	<time datetime="2018-11-03T22:16:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-04</time>
 </a>
         
       </header>
@@ -269,7 +269,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mean-Field-Models"><span class="toc-number">1.</span> <span class="toc-text">Mean-Field Models</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ensemble-density-models"><span class="toc-number">1.1.</span> <span class="toc-text">Ensemble density models</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#From-spiking-neurons-to-mean-field-models"><span class="toc-number">1.2.</span> <span class="toc-text">From spiking neurons to mean-field models</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-population-density-approach"><span class="toc-number">1.3.</span> <span class="toc-text">The population density approach</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-diffusion-approximation"><span class="toc-number">1.4.</span> <span class="toc-text">The diffusion approximation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-mean-field-model"><span class="toc-number">1.5.</span> <span class="toc-text">The mean-field model</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Neural-Modes-and-Masses"><span class="toc-number">2.</span> <span class="toc-text">Neural Modes and Masses</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Neural-Field-Models"><span class="toc-number">3.</span> <span class="toc-text">Neural Field Models</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#NodeJS-Basics"><span class="toc-number">1.</span> <span class="toc-text">NodeJS Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-NodeJS"><span class="toc-number">1.1.</span> <span class="toc-text">What is NodeJS?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装及运行"><span class="toc-number">1.2.</span> <span class="toc-text">安装及运行</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装"><span class="toc-number">1.2.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行"><span class="toc-number">1.2.2.</span> <span class="toc-text">运行</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块"><span class="toc-number">1.3.</span> <span class="toc-text">模块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码的组织和部署"><span class="toc-number">2.</span> <span class="toc-text">代码的组织和部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模块路径的解析"><span class="toc-number">2.1.</span> <span class="toc-text">模块路径的解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#包-Package"><span class="toc-number">2.2.</span> <span class="toc-text">包(Package)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工程目录"><span class="toc-number">2.3.</span> <span class="toc-text">工程目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于NPM"><span class="toc-number">2.4.</span> <span class="toc-text">关于NPM</span></a></li></ol></li></ol>
             </div>
            -->
         <!--  
@@ -278,122 +278,64 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mean-Field-Models"><span class="toc-text">Mean-Field Models</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ensemble-density-models"><span class="toc-text">Ensemble density models</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#From-spiking-neurons-to-mean-field-models"><span class="toc-text">From spiking neurons to mean-field models</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-population-density-approach"><span class="toc-text">The population density approach</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-diffusion-approximation"><span class="toc-text">The diffusion approximation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-mean-field-model"><span class="toc-text">The mean-field model</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Neural-Modes-and-Masses"><span class="toc-text">Neural Modes and Masses</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Neural-Field-Models"><span class="toc-text">Neural Field Models</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#NodeJS-Basics"><span class="toc-text">NodeJS Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-NodeJS"><span class="toc-text">What is NodeJS?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装及运行"><span class="toc-text">安装及运行</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行"><span class="toc-text">运行</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块"><span class="toc-text">模块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码的组织和部署"><span class="toc-text">代码的组织和部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模块路径的解析"><span class="toc-text">模块路径的解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#包-Package"><span class="toc-text">包(Package)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工程目录"><span class="toc-text">工程目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于NPM"><span class="toc-text">关于NPM</span></a></li></ol></li></ol>
         </div>
     </div>
  -->
-        <p>This is a summary of paper <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000092" target="_blank" rel="noopener">The Dynamic Brain: From Spiking Neurons to Neural Masses and Cortical Fields</a></p>
-<p>This paper mainly talks about a variety of computational approaches that have been used to characterize the <strong>dynamics of the cortex</strong>.</p>
-<ul>
-<li>The <strong>central theme</strong>: the activity in populations of neurons can be understood by reducing the degrees of freedom from many to few.</li>
-<li>The way to achieve that is: to <strong>reduce the large population of spiking neurons to a distribution function</strong> describing their probabilistic evolution, which <strong>captures the likely distribution of neuronal states at a given time</strong>. </li>
-<li>This can be further <strong>reduced to a single variable</strong> describing the <strong>mean firing rate</strong>.</li>
+        <p>The following are just some notes when I learn NodeJS. Most of the contents are taken from others. The references have been listed in the end.<br>The reason I want to learn it is just because that I need to write codes for my websites…</p>
+<hr>
+<h2 id="NodeJS-Basics"><a href="#NodeJS-Basics" class="headerlink" title="NodeJS Basics"></a>NodeJS Basics</h2><h3 id="What-is-NodeJS"><a href="#What-is-NodeJS" class="headerlink" title="What is NodeJS?"></a>What is NodeJS?</h3><p>在了解NodeJS之前，先要了解JS，JS就是JavaScript, 是一种脚本语言(scripting language)，它运行在浏览器中。那什么是脚本语言呢? 脚本语言其实也是一种编程语言(programming language). 传统的编程语言是会有这几个步骤的：编写-编译-链接-运行(edit-compile-link-run)。脚本语言与一般的编程语言的区别在于，他们没有编译(compilation)这个过程，而是通过一种解释的形式来运行。通常来讲，编译型的语言会运行得比解释型语言快，因为他们先转化为及其语言，并且编译器只会读和分析一次代码，最后汇总所有的errors出来。但解释型语言则会在每次遇到一个错误的时候都停下来，而非汇总。<br>扯远了，那JS是一个脚本语言的话，就需要一个<strong>解析器</strong>才能运行，对于写在HTML页面里的JS，浏览器充当了解析器的角色。而对于需要独立运行的JS，NodeJS就是一个解析器。<br>任何操作系统下安装NodeJS本质上做的事情都是把NodeJS执行程序复制到一个目录，然后保证这个目录在系统PATH环境变量下，以便终端下可以使用node命令。</p>
+<h3 id="安装及运行"><a href="#安装及运行" class="headerlink" title="安装及运行"></a>安装及运行</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>在Windows下，在<a href="https://nodejs.org/en/" target="_blank" rel="noopener">官网</a>上下载好后，直接运行.msi安装文件即可</p>
+<h4 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h4><ul>
+<li>在终端运行：Windows下，cmd进入终端，输入 <code>node</code> 就可以进入交互模式了，及之后的运行环境都是在NodeJS下，想退出的话输入 <code>.exit</code></li>
+<li>运行JS文件：当要运行大段代码时，在终端编写代码不是很方便，这时就可以先写一个JS文件(以.js结尾储存)，然后再运行这个文件，假如JS文件名为”hello.js”, 在命令行输入 <code>node hello.js</code> 就可以运行这个脚本程序了。</li>
 </ul>
+<h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><ul>
+<li>在编写大型程序时，一般都会将程序模块化，及分成一个一个的子程序。这些子程序在js中就是一个一个的不同的js文件，每个文件就是一个模块，文件路径就是模块名。</li>
+<li>在编写每个模块时，都有<code>require</code>、<code>exports</code>、<code>module</code> 三个预先定义好的变量可供使用。</li>
+<li><strong>require</strong><ul>
+<li>用于在当前模块中加载和使用别的模块，传入一个模块名，返回一个模块导出对象。</li>
+<li>模块名可使用相对路径（以./开头），或者是绝对路径（以/或C:之类的盘符开头）。</li>
+<li>另外，模块名中的.js扩展名可以省略</li>
+<li>e.g. <code>var foo1 = require(&#39;./foo&#39;);</code>, <code>var foo2 = require(&#39;./foo.js&#39;);</code>, <code>var foo3 = require(&#39;/home/user/foo&#39;);</code>, <code>var foo4 = require(&#39;/home/user/foo.js&#39;);</code> 都是指导入同一个模块</li>
+</ul>
+</li>
+<li><strong>exports</strong><ul>
+<li>是当前模块的导出对象，用于导出模块公有方法和属性。</li>
+<li>别的模块通过require函数使用当前模块时得到的就是当前模块的exports对象。</li>
+</ul>
+</li>
+<li><strong>module</strong><ul>
+<li>通过<code>module</code>对象可以访问到当前模块的一些相关信息，但最多的用途是替换当前模块的导出对象。</li>
+</ul>
+</li>
+<li><strong>模块初始化</strong>: 一个模块中的JS代码仅在模块第一次被使用时执行一次，并在执行过程中初始化模块的导出对象。之后，缓存起来的导出对象被重复利用。简单点，所有模块都只初始化一次。</li>
+<li><strong>主模块</strong>：<ul>
+<li>即 负责调度组成整个程序的其它模块完成工作。</li>
+<li>通过命令行参数传递给NodeJS以启动程序的模块被称为主模块。</li>
+</ul>
+</li>
+</ul>
+<h2 id="代码的组织和部署"><a href="#代码的组织和部署" class="headerlink" title="代码的组织和部署"></a>代码的组织和部署</h2><h3 id="模块路径的解析"><a href="#模块路径的解析" class="headerlink" title="模块路径的解析"></a>模块路径的解析</h3><p>我们在写程序时会用到 <code>require</code> 来告诉程序需要用到哪些模块，让你程序就会去找这些模块，找这些模块的过程就叫做路径解析。那怎么去找呢，分两种情况：</p>
+<ul>
+<li>如果是内置模块，即自带的那种，就不做路径解析</li>
+<li>node_module目录：这是NodeJS定义的一个专门用来存放模块的目录，在加载某个非内置模块时，NodeJS就会去找 <code>node_module</code>这个文件夹。其实在用Hexo创建静态网页时，你就会发现在你创建的hexo项目下就有个<code>node_modules</code> 文件夹。</li>
+<li>NODE_PATH环境变量：NodeJS允许通过<code>NODE_PATH</code>环境变量来指定额外的模块搜索路径。<h3 id="包-Package"><a href="#包-Package" class="headerlink" title="包(Package)"></a>包(Package)</h3>JS模块的基本单位是单个JS文件，但复杂些的模块往往由多个子模块组成。为了便于管理和使用，我们可以把由多个子模块组成的大模块称做包，并把所有子模块放在同一个目录里。<br>在组成一个包的所有子模块中，需要有一个入口模块，入口模块的导出对象被作为包的导出对象。</li>
+<li>在其它模块里使用包的时候，需要加载包的入口模块。可以直接使用require加上入口模块名称的路径来加载。但是这样不简洁，要让包使用起来更像是单个模块的话，就将模块的文件名设为<code>index.js</code>，这样即使在require路径上不出现index这个名称，程序也会知道这个<code>index.js</code>就是入口模块。</li>
+<li>使用<code>package.json</code> 可以自定义入口模块的文件名和存放位置，即：在包目录下包含一个<code>package.json</code> 文件，并在其中指定入口模块的路径:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"name"</span>: modulename</span><br><span class="line">    <span class="string">"main"</span>: <span class="string">"./lib/main.js"</span> <span class="comment"># 这里就指定入口模块的路径</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="工程目录"><a href="#工程目录" class="headerlink" title="工程目录"></a>工程目录</h3><p>标准如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- /home/user/workspace/node-echo/   <span class="comment"># 工程目录</span></span><br><span class="line">    - bin/                          <span class="comment"># 存放命令行相关代码</span></span><br><span class="line">        node-echo</span><br><span class="line">    + doc/                          <span class="comment"># 存放文档</span></span><br><span class="line">    - lib/                          <span class="comment"># 存放API相关代码</span></span><br><span class="line">        echo.js</span><br><span class="line">    - node_modules/                 <span class="comment"># 存放三方包</span></span><br><span class="line">        + argv/</span><br><span class="line">    + tests/                        <span class="comment"># 存放测试用例</span></span><br><span class="line">    package.json                    <span class="comment"># 元数据文件</span></span><br><span class="line">    README.md                       <span class="comment"># 说明文件</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="关于NPM"><a href="#关于NPM" class="headerlink" title="关于NPM"></a>关于NPM</h3><p>NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：</p>
+<ul>
+<li>允许用户从NPM服务器下载别人编写的三方包到本地使用。</li>
+<li>允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。</li>
+<li>允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。</li>
+</ul>
+<p><a href="http://nqdeng.github.io/7-days-nodejs/#2.5" target="_blank" rel="noopener">七天学会NodeJS</a>上在NPM这个讲解上很详细，推荐看一看。</p>
 <p><br></p>
-<p><strong>Neural Mass models</strong>: capture the dynamics of a neuronal population. </p>
-<blockquote>
-<p>The theory based: Full probability distribution function can be represented by a set of scalars that parameterize it parsimoniously. These parameters are equivalent to the moments of the distribution.)</p>
-</blockquote>
-<p><strong>Neural Field Models</strong>: investigate how neuronal activity unfolds on the spatially continuous cortical sheet by involving differential operators with both temporal and spatial terms.</p>
-<blockquote>
-<p>The theory based: Neuronal activity depends on its current state as well as spatial gradients, which allow its spread horizontally across the cortical surface.</p>
-</blockquote>
-<p><br></p>
-<h3 id="Mean-Field-Models"><a href="#Mean-Field-Models" class="headerlink" title="Mean-Field Models"></a>Mean-Field Models</h3><p>This part provides an overview of mean-field models of neuronal dynamics and their derivation from models of spiking neurons. </p>
-<ul>
-<li>mainly based on the <strong>mean-field approximation</strong></li>
-<li>are formulated using concepts from <strong>statistical physics</strong>.</li>
-<li>suited to data which reflect the behavior of a population of neurons, such as EEG, MEG and fMRI.</li>
-</ul>
-<h4 id="Ensemble-density-models"><a href="#Ensemble-density-models" class="headerlink" title="Ensemble density models"></a>Ensemble density models</h4><ul>
-<li>Ensemble models attempt to model the dynamics of large (theoretically infinite) populations of neurons</li>
-<li>use phase space to represent the neuron attribute space. Each attribute induces a dimension in the phase space of a neuron.</li>
-<li>Three attributes will be included: post-synaptic membrane depolarization, $V$, capacitive current, $I$, and the time since the last action potential, $T$. (therefore, it is a three dimensional phase space)</li>
-<li>The state of each neuron is a point $ν = {V,I,T} ∈ ℜ^3$</li>
-<li>The density of neurons populate the space can be represented as: $p(ν,t)$<ul>
-<li>As the state of each neuron evolves, the points will flow through phase space, and the ensemble density $p(ν,t)$ will evolve until it reaches some steady state or equilibrium.</li>
-<li>$p(ν,t)$ is a scalar function returning the probability density at each point in phase space. </li>
-</ul>
-</li>
-<li>the density dynamics conform to a simple equation: the <strong>Fokker-Planck equation</strong>:<ul>
-<li>This equation comprises a flow and a dispersion term</li>
-<li>phase flow, $f(ν,t)$ describes the dynamics</li>
-<li>dispersion, $D(ν,t)$, describes the random fluctuations<br>$$\dot p = - \nabla \cdot (f-D\nabla)p \equiv \frac{\partial p}{\partial t} = tr(-\frac{\partial (fp)}{\partial v}+\frac{\partial}{\partial v}(D \frac {\partial p}{\partial v}))$$</li>
-</ul>
-</li>
-<li>This level of description is usually framed as a <strong>stochastic differential equation</strong> (Langevin equation) that describes how the states evolve as functions of each other and some random fluctuations with $dv = f(v)dt + \sigma d \omega$.<ul>
-<li>$D = \frac 12 \sigma^2$</li>
-<li>$\omega$ is a standard Wiener process,i.e. $w(t)−w(t+Δt)∼N(0, Δt)$</li>
-</ul>
-</li>
-<li>The density dynamics can be written as a linear operator or Jacobian Q:<br>$$\dot p = Qp$$ $$Q = \nabla \cdot (D \nabla - f)$$</li>
-<li>For any model of neuronal dynamics, specified as a stochastic differential equation, there is a deterministic linear equation that can be integrated to generate ensemble dynamics. </li>
-</ul>
-<h4 id="From-spiking-neurons-to-mean-field-models"><a href="#From-spiking-neurons-to-mean-field-models" class="headerlink" title="From spiking neurons to mean-field models"></a>From spiking neurons to mean-field models</h4><ul>
-<li>For a single neuron, we can assume the spiking dynamics as the $leaky integrate-and-fire (LIF)$ model. </li>
-<li>In the LIF model, each neuron i can be fully described in terms of a single internal variable, namely the depolarization $V_i(t)$ of the neural membrane. </li>
-<li>The basic circuit of a LIF model consists of a capacitor, $C$, in parallel with a resistor, $R$, driven by a synaptic current.</li>
-<li>When the voltage across the capacitor reaches a threshold $θ$, the circuit is shunted (reset) and a $δ$ pulse (spike) is generated and transmitted to other neurons. </li>
-<li>The subthreshold membrane potential of each neuron evolves according to a simple RC circuit, with a time constant $τ = RC$ given by the following equation:<ul>
-<li>$I_i(t)$ is the total synaptic current flow into the cell i</li>
-<li>$V_L$ is the leak or resting potential of the cell in the absence of external afferent inputs<br>$$\tau \frac{dV_i(t)}{dt} = -[V_i(t)-V_L] + RI_i(t)$$</li>
-</ul>
-</li>
-<li>The total synaptic current coming into the cell i is therefore given by the sum of the contributions of δ-spikes produced at presynaptic neurons. </li>
-<li>Assume that $N$ neurons synapse onto cell i and that $J_{ij}$ is the efficacy of synapse j, then the total synaptic afferent current is given by<ul>
-<li>$t_j^{(k)}$ is the emission time of the kth spike from the jth presynaptic neuron.<br>$$RI_i(t) = \tau \sum^N_{j=1} J_{ij} \sum_k \delta (t-t_j^{(k)})$$</li>
-</ul>
-</li>
-<li>Substitute the above equation gets:<ul>
-<li>H(t) is the Heaviside function (H(t) = 1 if t&gt;0, and H(t) = 0 if t&lt;0) (acutally is a step function)<br>$$V_i(t) = V_L + \sum^N_{j=1} J_{ij} \int^t_0 e^{-s/\tau} \sum_k \delta (t-s-t_j^{(k)})ds<br>= V_L + \sum^N_{j=1} J_{ij} e^{-(t-t_j^{(k)})/\tau} \sum_k H(t-t_j^{(k)})$$</li>
-</ul>
-</li>
-</ul>
-<h4 id="The-population-density-approach"><a href="#The-population-density-approach" class="headerlink" title="The population density approach"></a>The population density approach</h4><p>A cortical column has $O(10^4)$−$O(10^8)$ neurons which are massively interconnected (on average, a neuron makes contact with $O(10^4)$ other neurons). The underlying dynamics of such networks can be described explicitly by the set of coupled differential equations. However, direct simulations of these equations will be very complex and computationally expensive. Therefore, we adopt the <strong>population density approach</strong>, using the Fokker-Planck formalism. <em>The Fokker-Planck equation summarizes the flow and dispersion of states over phase space in a way that is a natural summary of population dynamics in genetics.</em> The following will show how to derive the Fokker-Planck equation for neuronal dynamics.</p>
-<ul>
-<li>Individual IF neurons are grouped together into populations of statistically similar neurons.</li>
-<li>Then use <strong>probability density function</strong> to describe the distribution of neuronal states (i.e., membrane potential) over the population.</li>
-<li>Key <strong>assumption</strong>: the afferent input currents impinging on neurons in one population are uncorrelated<ul>
-<li>In general, neurons with the same state $V(t)$ at a given time $t$ have a different history because of random fluctuations in the input current $I(t)$.</li>
-<li>The main source of randomness is from fluctuations in recurrent currents and fluctuations in the external currents</li>
-</ul>
-</li>
-<li>Then the dynamics are described by the evolution of the probability density function:<ul>
-<li>which is the <strong>fraction of neurons at time $t$ that have a membrane potential $V(t)$ in the interval $[ν,ν+dν]$</strong><br>$$p(v, t)dv = Prob\{V(t)\in [v, v+dv]\}$$</li>
-</ul>
-</li>
-<li>The evolution of the population density is given by the <strong>Chapman-Kolmogorov equation</strong>:<ul>
-<li>$ρ(ε|ν) = Prob\{V(t+dt) = ν+ε|V(t) = ν\}$ is the conditional probability that generates an infinitesimal change $ε = V(t+dt)−V(t)$ in the infinitesimal interval $dt$.<br>$$p(v, t+dt) = \int^{+\infty}_{-\infty} p(v-\varepsilon,t)\rho(\varepsilon|v-\varepsilon)d\varepsilon$$</li>
-</ul>
-</li>
-<li>The Chapman-Kolmogorov equation can be written in a differential form by performing a Taylor expansion in $p(ν′,t) ρ(ε|ν′)$ around $ν′ = ν$:<ul>
-<li>assume that $p(ν′,t)$ and $ρ(ε| ν′)$ are infinitely many times differentiable in $ν$<br>$$p(v’,t)\rho (\varepsilon|v’) = \sum^{\infty}_{k=0} \frac{(-\varepsilon)^k}{k!} \frac{\partial^k}{\partial v’^k} [p(v’,t)\rho(\varepsilon|v’)] \mid {v’=v}$$</li>
-</ul>
-</li>
-<li>Combine the above equatin and can get:<ul>
-<li>$〈…〉ν$ denotes the average with respect to $ρ(ε| ν)$ at a given $ν$<br>$$p(v,t+dt) = \sum^\infty_{k=0} \frac{(-1)^k}{k!} \frac{\partial^k}{\partial v^k} [p(v,t)\langle \varepsilon^k \rangle _v]$$</li>
-</ul>
-</li>
-<li>Take the limit for $dt \to 2$:<br>$$\frac{\partial p(v,t)}{\partial t} = \sum^\infty_{k=1} \frac{(-1)^k}{k!} \frac{\partial^k}{\partial v^k} [p(v,t)lim_{dt \to 0 }\frac 1{dt} \langle \varepsilon^k \rangle_v]$$</li>
-</ul>
-<h4 id="The-diffusion-approximation"><a href="#The-diffusion-approximation" class="headerlink" title="The diffusion approximation"></a>The diffusion approximation</h4><ul>
-<li>The above temporal evolution requires the moments $〈ε^k〉_υ$. </li>
-<li>These moments can be calculated by the mean-field approximation</li>
-<li>The mean-field approximation replaces the time-averaged discharge rate of individual cells with a common time-dependent population activity </li>
-<li>Therefore, infinitesimal change, $dV(t)$, in the membrane potential of all neurons is:<ul>
-<li>$N$ is the number of neurons</li>
-<li>$〈J〉_J$ denotes the average of the synaptic weights in the population.</li>
-<li>$Q(t)$ is the mean population firing rate and determined by the proportion of active neurons by counting the number of spikes $n_{spikes}(t,t+dt)$ in a small time interval dt and dividing by N and by dt: $Q(t) = lim_{dt \to 0} \frac{n_{spikes}(t,t+dt)}{Ndt}$<br>$$dV(t) = \langle J\rangle_J NQ(t) dt - \frac{V(t)-V_L}{\tau}dt$$</li>
-</ul>
-</li>
-<li>The first two moments in the Kramers-Moyal expansion are called <strong>drift</strong> and <strong>diffusion coefficients</strong>, respectively as follows:<br>$$M^{(1)} = lim_{dt \to 0} \frac1{dt} \langle \varepsilon\rangle_v =\langle J\rangle_J NQ(t) - \frac{v-V_L}{\tau} = \frac{\mu(t)}{\tau} - \frac{v-V_L}{\tau}$$ $$M^{(2)} = lim_{dt \to 0} \frac1{dt} \langle \varepsilon^2 \rangle_v =\langle J^2 \rangle_J NQ(t) = \frac{\sigma(t)^2}{\tau}$$</li>
-<li>The diffusion approximation allows to omit all higher orders k&gt;2 in the Kramers-Moyal expansion. The resulting differential equation describing the temporal evolution of the population density is called the Fokker-Planck equation:<br>$$\frac{\partial p(v,t)}{\partial t} = \frac1{2\tau} \sigma^2 (t) \frac{\partial^2p(v,t)}{\partial v^2} + \frac{\partial}{\partial v}[(\frac{v-V_L-\mu(t)}{\tau})p(v,t)]$$</li>
-<li>If the <strong>drift is linear</strong> and the <strong>diffusion coefficient, $σ^2(t)$, is given by a constant</strong>, the Fokker-Planck equation describes a well-known stochastic process called the <strong>Ornstein-Uhlenbeck process</strong>. And the input afferent currents are given by<ul>
-<li>$ω(t)$ is a white noise process<br>$$RI(t) = \mu(t) + \sigma \sqrt \tau \omega(t)$$</li>
-</ul>
-</li>
-</ul>
-<h4 id="The-mean-field-model"><a href="#The-mean-field-model" class="headerlink" title="The mean-field model"></a>The mean-field model</h4><h3 id="Neural-Modes-and-Masses"><a href="#Neural-Modes-and-Masses" class="headerlink" title="Neural Modes and Masses"></a>Neural Modes and Masses</h3><h3 id="Neural-Field-Models"><a href="#Neural-Field-Models" class="headerlink" title="Neural Field Models"></a>Neural Field Models</h3>
+<p>Reference:<br><a href="http://nqdeng.github.io/7-days-nodejs/" target="_blank" rel="noopener">http://nqdeng.github.io/7-days-nodejs/</a><br><a href="https://www.geeksforgeeks.org/whats-the-difference-between-scripting-and-programming-languages/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/whats-the-difference-between-scripting-and-programming-languages/</a></p>
+
       
 
       
@@ -437,11 +379,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">NodeJS</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
         		</li>
       		
 		</ul>
@@ -497,7 +439,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://tracyxinwang.site/blog/2018/10/09/NeuralMass2008PlosComp/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://tracyxinwang.site/blog/2018/11/04/NodeJS-learning01/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -511,18 +453,18 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/blog/2018/10/11/GRF-BMI-thoughts/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/blog/2018/11/04/life-in-Melbourne01/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          写GRF，答辩BMI的一些心得
+          猫本交流杂记（一）
         
       </div>
     </a>
   
   
-    <a href="/blog/2018/10/05/Laplacian-matrix/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Laplacian Matrix and Spectral Clustering</div>
+    <a href="/blog/2018/11/03/MIT6006-Lec02/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MIT6006 Lec02 Models of Computation</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -549,7 +491,7 @@ var _hmt = _hmt || [];
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mean-Field-Models"><span class="toc-number">1.</span> <span class="toc-text">Mean-Field Models</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ensemble-density-models"><span class="toc-number">1.1.</span> <span class="toc-text">Ensemble density models</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#From-spiking-neurons-to-mean-field-models"><span class="toc-number">1.2.</span> <span class="toc-text">From spiking neurons to mean-field models</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-population-density-approach"><span class="toc-number">1.3.</span> <span class="toc-text">The population density approach</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-diffusion-approximation"><span class="toc-number">1.4.</span> <span class="toc-text">The diffusion approximation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-mean-field-model"><span class="toc-number">1.5.</span> <span class="toc-text">The mean-field model</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Neural-Modes-and-Masses"><span class="toc-number">2.</span> <span class="toc-text">Neural Modes and Masses</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Neural-Field-Models"><span class="toc-number">3.</span> <span class="toc-text">Neural Field Models</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#NodeJS-Basics"><span class="toc-number">1.</span> <span class="toc-text">NodeJS Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-NodeJS"><span class="toc-number">1.1.</span> <span class="toc-text">What is NodeJS?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装及运行"><span class="toc-number">1.2.</span> <span class="toc-text">安装及运行</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装"><span class="toc-number">1.2.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行"><span class="toc-number">1.2.2.</span> <span class="toc-text">运行</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块"><span class="toc-number">1.3.</span> <span class="toc-text">模块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码的组织和部署"><span class="toc-number">2.</span> <span class="toc-text">代码的组织和部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模块路径的解析"><span class="toc-number">2.1.</span> <span class="toc-text">模块路径的解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#包-Package"><span class="toc-number">2.2.</span> <span class="toc-text">包(Package)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工程目录"><span class="toc-number">2.3.</span> <span class="toc-text">工程目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于NPM"><span class="toc-number">2.4.</span> <span class="toc-text">关于NPM</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>

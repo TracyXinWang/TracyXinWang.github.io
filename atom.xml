@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="http://tracyxinwang.site/blog/"/>
-  <updated>2018-11-03T04:40:14.518Z</updated>
+  <updated>2018-11-04T00:03:51.000Z</updated>
   <id>http://tracyxinwang.site/blog/</id>
   
   <author>
@@ -15,6 +15,58 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>猫本交流杂记（一）</title>
+    <link href="http://tracyxinwang.site/blog/2018/11/04/life-in-Melbourne01/"/>
+    <id>http://tracyxinwang.site/blog/2018/11/04/life-in-Melbourne01/</id>
+    <published>2018-11-03T22:20:34.000Z</published>
+    <updated>2018-11-04T00:03:51.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>算下来来墨尔本接近半个月了，从10月16号落地到现在，对这边整个center和研究也有些感悟和感慨，就随手记一点吧。</p><p>今天主要想来说说这边搞研究和国内乃至香港搞研究的一个比较相反的现象。</p><p>有天晚上弄得比较晚（其实也就7点多，但办公室基本没人了…），我们三个中国人（两个PhD学生一个PostDoc）说一起出去吃，然后正好我们老板(澳洲土著)也在，他就说他也一起。这在国内应该是比较少见的，一般来说教授是很少跟自己的学生一起吃饭的，一起吃饭的情况大都是整个实验室聚餐这种。然后我们就一起出去吃了，在一个中国馆子里，期间老板一直负责给我们倒茶水… 看来他已经习惯了中国的饭桌文化。。。</p><p>饭间大家讨论到国内各个阶层都追求学位这个现象，说不管怎么样，大家都想努力地去拿本科甚至研究生的学位，因为这在某种程度上代表着一种地位，也意味着将来出来工资的高收入。土著老板就很不解，他说现实社会实际上是哪怕没有读过书的人，也能赚大钱，做生意会做得很好，为什么还要去拿学位，赚钱不就是这个目的吗，那达到这个目的的方式并不一定要读书啊，你可以说 “Hey look, I have a new car. I don’t care if I have that degree”。这就反应了中外国家思维和心态上的不同，实际上也是社会发展程度的一种映射。</p><p>在澳洲，不管你做什么，你都能挣很多钱，很多体力或者技工的活儿，挣得不比一个教授的工资少，反而真的是一些白领阶层，才是挣得最少的。对大多数人来说，还没有到“兼济天下”这种情怀，那么其实挣钱就是他们的最终目的，只要能挣钱就行，还读什么书呢，不读书都比你读那么多年的书还挣得多，何必呢。所以在澳洲，那些读研究生的，甚至读PhD的，真的是对科研的热爱才会去做的，因为或许他们有更好的选择去挣大钱，但他们还是想搞搞研究，因为这样他们才觉得真的快乐。所以这也是为什么他们能做出很好的成果的原因吧，毕竟是因为热爱，是真的想去探索。</p><p>但在国内和香港不一样，读PhD的目的是为了挣钱，是为了将来有更好的生活，这是社会和人口决定了的，根本还没有精力去追求更高层次的热爱，因为你需要去考虑生活甚至生存。这也是为什么很多PhD读得很痛苦(包括我自己)，读到一半不读了，或者读着读着跑去学cs了。如果每天考虑的是我什么时候才能毕业，做哪个方向更赚钱，那你又怎么有时间去考虑如何把科研做到极致这种事情呢？</p><p>还是有点遗憾吧。少了真正对某个事情的激情和热情，人生会少了很多乐趣的。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;算下来来墨尔本接近半个月了，从10月16号落地到现在，对这边整个center和研究也有些感悟和感慨，就随手记一点吧。&lt;/p&gt;
+&lt;p&gt;今天主要想来说说这边搞研究和国内乃至香港搞研究的一个比较相反的现象。&lt;/p&gt;
+&lt;p&gt;有天晚上弄得比较晚（其实也就7点多，但办公室基本没人了…）
+      
+    
+    </summary>
+    
+    
+      <category term="杂文" scheme="http://tracyxinwang.site/blog/tags/%E6%9D%82%E6%96%87/"/>
+    
+      <category term="碎碎念" scheme="http://tracyxinwang.site/blog/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Notes - NodeJS 学习（一）</title>
+    <link href="http://tracyxinwang.site/blog/2018/11/04/NodeJS-learning01/"/>
+    <id>http://tracyxinwang.site/blog/2018/11/04/NodeJS-learning01/</id>
+    <published>2018-11-03T22:16:34.000Z</published>
+    <updated>2018-11-04T00:11:51.430Z</updated>
+    
+    <content type="html"><![CDATA[<p>The following are just some notes when I learn NodeJS. Most of the contents are taken from others. The references have been listed in the end.<br>The reason I want to learn it is just because that I need to write codes for my websites…</p><hr><h2 id="NodeJS-Basics"><a href="#NodeJS-Basics" class="headerlink" title="NodeJS Basics"></a>NodeJS Basics</h2><h3 id="What-is-NodeJS"><a href="#What-is-NodeJS" class="headerlink" title="What is NodeJS?"></a>What is NodeJS?</h3><p>在了解NodeJS之前，先要了解JS，JS就是JavaScript, 是一种脚本语言(scripting language)，它运行在浏览器中。那什么是脚本语言呢? 脚本语言其实也是一种编程语言(programming language). 传统的编程语言是会有这几个步骤的：编写-编译-链接-运行(edit-compile-link-run)。脚本语言与一般的编程语言的区别在于，他们没有编译(compilation)这个过程，而是通过一种解释的形式来运行。通常来讲，编译型的语言会运行得比解释型语言快，因为他们先转化为及其语言，并且编译器只会读和分析一次代码，最后汇总所有的errors出来。但解释型语言则会在每次遇到一个错误的时候都停下来，而非汇总。<br>扯远了，那JS是一个脚本语言的话，就需要一个<strong>解析器</strong>才能运行，对于写在HTML页面里的JS，浏览器充当了解析器的角色。而对于需要独立运行的JS，NodeJS就是一个解析器。<br>任何操作系统下安装NodeJS本质上做的事情都是把NodeJS执行程序复制到一个目录，然后保证这个目录在系统PATH环境变量下，以便终端下可以使用node命令。</p><h3 id="安装及运行"><a href="#安装及运行" class="headerlink" title="安装及运行"></a>安装及运行</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>在Windows下，在<a href="https://nodejs.org/en/" target="_blank" rel="noopener">官网</a>上下载好后，直接运行.msi安装文件即可</p><h4 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h4><ul><li>在终端运行：Windows下，cmd进入终端，输入 <code>node</code> 就可以进入交互模式了，及之后的运行环境都是在NodeJS下，想退出的话输入 <code>.exit</code></li><li>运行JS文件：当要运行大段代码时，在终端编写代码不是很方便，这时就可以先写一个JS文件(以.js结尾储存)，然后再运行这个文件，假如JS文件名为”hello.js”, 在命令行输入 <code>node hello.js</code> 就可以运行这个脚本程序了。</li></ul><h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><ul><li>在编写大型程序时，一般都会将程序模块化，及分成一个一个的子程序。这些子程序在js中就是一个一个的不同的js文件，每个文件就是一个模块，文件路径就是模块名。</li><li>在编写每个模块时，都有<code>require</code>、<code>exports</code>、<code>module</code> 三个预先定义好的变量可供使用。</li><li><strong>require</strong><ul><li>用于在当前模块中加载和使用别的模块，传入一个模块名，返回一个模块导出对象。</li><li>模块名可使用相对路径（以./开头），或者是绝对路径（以/或C:之类的盘符开头）。</li><li>另外，模块名中的.js扩展名可以省略</li><li>e.g. <code>var foo1 = require(&#39;./foo&#39;);</code>, <code>var foo2 = require(&#39;./foo.js&#39;);</code>, <code>var foo3 = require(&#39;/home/user/foo&#39;);</code>, <code>var foo4 = require(&#39;/home/user/foo.js&#39;);</code> 都是指导入同一个模块</li></ul></li><li><strong>exports</strong><ul><li>是当前模块的导出对象，用于导出模块公有方法和属性。</li><li>别的模块通过require函数使用当前模块时得到的就是当前模块的exports对象。</li></ul></li><li><strong>module</strong><ul><li>通过<code>module</code>对象可以访问到当前模块的一些相关信息，但最多的用途是替换当前模块的导出对象。</li></ul></li><li><strong>模块初始化</strong>: 一个模块中的JS代码仅在模块第一次被使用时执行一次，并在执行过程中初始化模块的导出对象。之后，缓存起来的导出对象被重复利用。简单点，所有模块都只初始化一次。</li><li><strong>主模块</strong>：<ul><li>即 负责调度组成整个程序的其它模块完成工作。</li><li>通过命令行参数传递给NodeJS以启动程序的模块被称为主模块。</li></ul></li></ul><h2 id="代码的组织和部署"><a href="#代码的组织和部署" class="headerlink" title="代码的组织和部署"></a>代码的组织和部署</h2><h3 id="模块路径的解析"><a href="#模块路径的解析" class="headerlink" title="模块路径的解析"></a>模块路径的解析</h3><p>我们在写程序时会用到 <code>require</code> 来告诉程序需要用到哪些模块，让你程序就会去找这些模块，找这些模块的过程就叫做路径解析。那怎么去找呢，分两种情况：</p><ul><li>如果是内置模块，即自带的那种，就不做路径解析</li><li>node_module目录：这是NodeJS定义的一个专门用来存放模块的目录，在加载某个非内置模块时，NodeJS就会去找 <code>node_module</code>这个文件夹。其实在用Hexo创建静态网页时，你就会发现在你创建的hexo项目下就有个<code>node_modules</code> 文件夹。</li><li>NODE_PATH环境变量：NodeJS允许通过<code>NODE_PATH</code>环境变量来指定额外的模块搜索路径。<h3 id="包-Package"><a href="#包-Package" class="headerlink" title="包(Package)"></a>包(Package)</h3>JS模块的基本单位是单个JS文件，但复杂些的模块往往由多个子模块组成。为了便于管理和使用，我们可以把由多个子模块组成的大模块称做包，并把所有子模块放在同一个目录里。<br>在组成一个包的所有子模块中，需要有一个入口模块，入口模块的导出对象被作为包的导出对象。</li><li>在其它模块里使用包的时候，需要加载包的入口模块。可以直接使用require加上入口模块名称的路径来加载。但是这样不简洁，要让包使用起来更像是单个模块的话，就将模块的文件名设为<code>index.js</code>，这样即使在require路径上不出现index这个名称，程序也会知道这个<code>index.js</code>就是入口模块。</li><li>使用<code>package.json</code> 可以自定义入口模块的文件名和存放位置，即：在包目录下包含一个<code>package.json</code> 文件，并在其中指定入口模块的路径:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"name"</span>: modulename</span><br><span class="line">    <span class="string">"main"</span>: <span class="string">"./lib/main.js"</span> <span class="comment"># 这里就指定入口模块的路径</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul><h3 id="工程目录"><a href="#工程目录" class="headerlink" title="工程目录"></a>工程目录</h3><p>标准如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- /home/user/workspace/node-echo/   <span class="comment"># 工程目录</span></span><br><span class="line">    - bin/                          <span class="comment"># 存放命令行相关代码</span></span><br><span class="line">        node-echo</span><br><span class="line">    + doc/                          <span class="comment"># 存放文档</span></span><br><span class="line">    - lib/                          <span class="comment"># 存放API相关代码</span></span><br><span class="line">        echo.js</span><br><span class="line">    - node_modules/                 <span class="comment"># 存放三方包</span></span><br><span class="line">        + argv/</span><br><span class="line">    + tests/                        <span class="comment"># 存放测试用例</span></span><br><span class="line">    package.json                    <span class="comment"># 元数据文件</span></span><br><span class="line">    README.md                       <span class="comment"># 说明文件</span></span><br></pre></td></tr></table></figure></p><h3 id="关于NPM"><a href="#关于NPM" class="headerlink" title="关于NPM"></a>关于NPM</h3><p>NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：</p><ul><li>允许用户从NPM服务器下载别人编写的三方包到本地使用。</li><li>允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。</li><li>允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。</li></ul><p><a href="http://nqdeng.github.io/7-days-nodejs/#2.5" target="_blank" rel="noopener">七天学会NodeJS</a>上在NPM这个讲解上很详细，推荐看一看。</p><p><br></p><p>Reference:<br><a href="http://nqdeng.github.io/7-days-nodejs/" target="_blank" rel="noopener">http://nqdeng.github.io/7-days-nodejs/</a><br><a href="https://www.geeksforgeeks.org/whats-the-difference-between-scripting-and-programming-languages/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/whats-the-difference-between-scripting-and-programming-languages/</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;The following are just some notes when I learn NodeJS. Most of the contents are taken from others. The references have been listed in the
+      
+    
+    </summary>
+    
+    
+      <category term="NodeJS" scheme="http://tracyxinwang.site/blog/tags/NodeJS/"/>
+    
+      <category term="Learning" scheme="http://tracyxinwang.site/blog/tags/Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>MIT6006 Lec02 Models of Computation</title>
@@ -35,9 +87,9 @@
     </summary>
     
     
-      <category term="Algorithm" scheme="http://tracyxinwang.site/blog/tags/Algorithm/"/>
-    
       <category term="Learning" scheme="http://tracyxinwang.site/blog/tags/Learning/"/>
+    
+      <category term="Algorithm" scheme="http://tracyxinwang.site/blog/tags/Algorithm/"/>
     
   </entry>
   
@@ -83,9 +135,9 @@
     </summary>
     
     
-      <category term="Algorithm" scheme="http://tracyxinwang.site/blog/tags/Algorithm/"/>
-    
       <category term="Learning" scheme="http://tracyxinwang.site/blog/tags/Learning/"/>
+    
+      <category term="Algorithm" scheme="http://tracyxinwang.site/blog/tags/Algorithm/"/>
     
   </entry>
   
@@ -211,9 +263,9 @@
     </summary>
     
     
-      <category term="Notes" scheme="http://tracyxinwang.site/blog/tags/Notes/"/>
-    
       <category term="Brain" scheme="http://tracyxinwang.site/blog/tags/Brain/"/>
+    
+      <category term="Notes" scheme="http://tracyxinwang.site/blog/tags/Notes/"/>
     
   </entry>
   
@@ -342,9 +394,9 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://tracyxinwang.site/blog/tags/Linux/"/>
-    
       <category term="OrangePi" scheme="http://tracyxinwang.site/blog/tags/OrangePi/"/>
+    
+      <category term="Linux" scheme="http://tracyxinwang.site/blog/tags/Linux/"/>
     
   </entry>
   
