@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="http://tracyxinwang.site/blog/"/>
-  <updated>2018-11-04T00:03:51.000Z</updated>
+  <updated>2018-11-05T10:23:06.030Z</updated>
   <id>http://tracyxinwang.site/blog/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MIT6006 Lec03 插入排序，归并排序</title>
+    <link href="http://tracyxinwang.site/blog/2018/11/05/MIT6006-Lec03/"/>
+    <id>http://tracyxinwang.site/blog/2018/11/05/MIT6006-Lec03/</id>
+    <published>2018-11-05T12:37:44.000Z</published>
+    <updated>2018-11-05T10:23:06.030Z</updated>
+    
+    <content type="html"><![CDATA[<p>排序总的问题就是：<br>输入一个序列 <code>A[1···n]</code><br>要求输求它的递增排序之后的排列。</p><h3 id="插入排序-Insertion-sort"><a href="#插入排序-Insertion-sort" class="headerlink" title="插入排序 (Insertion sort)"></a>插入排序 (Insertion sort)</h3><p><strong>Pseudocode</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> j = 2:n</span><br><span class="line">    insert key A[j] into the already sorted sub array A[1 ... j-1] by pairwise key-swaps down to its right position.</span><br></pre></td></tr></table></figure></p><p><strong>Complexity</strong>: $\theta(n^2)$<br>because at the worst case, it needs $\theta(n^2)$ compares and $\theta(n^2)$ swaps.</p><h4 id="Binary-Insertion-sort"><a href="#Binary-Insertion-sort" class="headerlink" title="Binary Insertion sort"></a>Binary Insertion sort</h4><p>注意到在一般的插入排序中，我们会得到一个已经排好序的子序列，那么这时其实就可以用二分查找法来替代之前的逐个compare，这样能减少compare的次数。<br><strong>Pseudocode</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> j = 2:n</span><br><span class="line">    insert key A[j] into the already sorted sub array A[1 ... j-1]</span><br><span class="line">    Use binary search to find the right position</span><br></pre></td></tr></table></figure></p><p>二分查找法花费 $\theta(log n)$ 时间，插入之后移动元素花费 $\theta(n)$ 时间。<br><strong>Complexity</strong>:<br>$\theta(nlog n)$ comparisons, $\theta(n^2)$ swaps</p><h3 id="归并排序-Merge-Sort"><a href="#归并排序-Merge-Sort" class="headerlink" title="归并排序 (Merge Sort)"></a>归并排序 (Merge Sort)</h3><p>采用的是 divide and conquer 的思想。<br><strong>Pseudocode</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">If n = 1, <span class="keyword">done</span> (nothing to sort)</span><br><span class="line">Otherwise, recursively sort A[1 ... n/2] and A[n/2+1 ... n]</span><br><span class="line"><span class="string">"Merge"</span> the two sorted sub-arrays</span><br></pre></td></tr></table></figure></p><p><strong>Complexity</strong>:<br>$\theta(n)$ to merge a total of n elements(linear time)<br>$T(n) = 2T(n/2) + \theta(n)$<br>After plotting the recursion tree, we can find that there are <code>1+lgn</code> layers, and <code>n</code> leaves in the tree. And for each layer, it totally costs <code>cn</code> time. Therefore, complexity is  $\theta(nlg n)$<br>可以看到，在这个树里面，每一层的complexity都是均等的<br><img src="/blog/images/MIT03_01.jpg" width="80%" height="60%"></p><h3 id="Solving-Recurrences"><a href="#Solving-Recurrences" class="headerlink" title="Solving Recurrences"></a>Solving Recurrences</h3><p>对于不同的recurrence tree来说，每一层不同的cost决定了它的complexity主要集中在哪里。<br>如上面的归并排序是每一层都占相等的复杂度。<br>下面是两个例子：<br><strong>叶子部分的计算占主要复杂度</strong>:</p><p><img src="/blog/images/MIT03_02.jpg" width="80%" height="60%"></p><p><strong>根部分的计算占主要复杂度</strong>:</p><p><img src="/blog/images/MIT03_03.jpg" width="80%" height="60%"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;排序总的问题就是：&lt;br&gt;输入一个序列 &lt;code&gt;A[1···n]&lt;/code&gt;&lt;br&gt;要求输求它的递增排序之后的排列。&lt;/p&gt;
+&lt;h3 id=&quot;插入排序-Insertion-sort&quot;&gt;&lt;a href=&quot;#插入排序-Insertion-sort&quot; class=&quot;head
+      
+    
+    </summary>
+    
+    
+      <category term="Algorithm" scheme="http://tracyxinwang.site/blog/tags/Algorithm/"/>
+    
+      <category term="Learning" scheme="http://tracyxinwang.site/blog/tags/Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>猫本交流杂记（一）</title>
@@ -62,9 +88,9 @@
     </summary>
     
     
-      <category term="NodeJS" scheme="http://tracyxinwang.site/blog/tags/NodeJS/"/>
-    
       <category term="Learning" scheme="http://tracyxinwang.site/blog/tags/Learning/"/>
+    
+      <category term="NodeJS" scheme="http://tracyxinwang.site/blog/tags/NodeJS/"/>
     
   </entry>
   
@@ -87,9 +113,9 @@
     </summary>
     
     
-      <category term="Learning" scheme="http://tracyxinwang.site/blog/tags/Learning/"/>
-    
       <category term="Algorithm" scheme="http://tracyxinwang.site/blog/tags/Algorithm/"/>
+    
+      <category term="Learning" scheme="http://tracyxinwang.site/blog/tags/Learning/"/>
     
   </entry>
   
@@ -135,9 +161,9 @@
     </summary>
     
     
-      <category term="Learning" scheme="http://tracyxinwang.site/blog/tags/Learning/"/>
-    
       <category term="Algorithm" scheme="http://tracyxinwang.site/blog/tags/Algorithm/"/>
+    
+      <category term="Learning" scheme="http://tracyxinwang.site/blog/tags/Learning/"/>
     
   </entry>
   
@@ -288,9 +314,9 @@
     </summary>
     
     
-      <category term="Notes" scheme="http://tracyxinwang.site/blog/tags/Notes/"/>
-    
       <category term="Algorithms" scheme="http://tracyxinwang.site/blog/tags/Algorithms/"/>
+    
+      <category term="Notes" scheme="http://tracyxinwang.site/blog/tags/Notes/"/>
     
   </entry>
   
