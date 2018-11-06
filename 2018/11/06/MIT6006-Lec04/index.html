@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://tracyxinwang.site/blog">
-  <title>My First Post - 献给Hexo | Xin Wang&#39;s Blog</title>
+  <title>MIT6006 Lec04 Priority queue and Heap | Xin Wang&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在网上查找资料的时候偶然看到有人提到用Hexo来写博客，界面非常简洁，而且支持 markdown 解析，瞬间打算在我个人的学术网站上加入这个blog页面。之前写博客都是在现成的博客网站上写的，比如 网易的 和 CSDN 这种还算比较大型的技术博客，无奈广告实在是太多了，后来转战 google 的 blog，但是它的编辑页面实在是难用，就放弃了。所以现在打算试试这个 Hexo。 Hexo 用官方的来">
-<meta name="keywords" content="杂文,碎碎念,hexo">
+  <meta name="description" content="Priority Queues Defination: A data structure implementing a set S of elements, each associated with a key. Every element has its own key. And the key represents the priority of that element. Keys are">
+<meta name="keywords" content="Algorithm,Learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="My First Post - 献给Hexo">
-<meta property="og:url" content="http://tracyxinwang.site/blog/2018/09/25/My-First-Post/index.html">
+<meta property="og:title" content="MIT6006 Lec04 Priority queue and Heap">
+<meta property="og:url" content="http://tracyxinwang.site/blog/2018/11/06/MIT6006-Lec04/index.html">
 <meta property="og:site_name" content="Xin Wang&#39;s Blog">
-<meta property="og:description" content="在网上查找资料的时候偶然看到有人提到用Hexo来写博客，界面非常简洁，而且支持 markdown 解析，瞬间打算在我个人的学术网站上加入这个blog页面。之前写博客都是在现成的博客网站上写的，比如 网易的 和 CSDN 这种还算比较大型的技术博客，无奈广告实在是太多了，后来转战 google 的 blog，但是它的编辑页面实在是难用，就放弃了。所以现在打算试试这个 Hexo。 Hexo 用官方的来">
+<meta property="og:description" content="Priority Queues Defination: A data structure implementing a set S of elements, each associated with a key. Every element has its own key. And the key represents the priority of that element. Keys are">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-27T01:39:31.641Z">
+<meta property="og:updated_time" content="2018-11-06T10:08:25.972Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="My First Post - 献给Hexo">
-<meta name="twitter:description" content="在网上查找资料的时候偶然看到有人提到用Hexo来写博客，界面非常简洁，而且支持 markdown 解析，瞬间打算在我个人的学术网站上加入这个blog页面。之前写博客都是在现成的博客网站上写的，比如 网易的 和 CSDN 这种还算比较大型的技术博客，无奈广告实在是太多了，后来转战 google 的 blog，但是它的编辑页面实在是难用，就放弃了。所以现在打算试试这个 Hexo。 Hexo 用官方的来">
+<meta name="twitter:title" content="MIT6006 Lec04 Priority queue and Heap">
+<meta name="twitter:description" content="Priority Queues Defination: A data structure implementing a set S of elements, each associated with a key. Every element has its own key. And the key represents the priority of that element. Keys are">
   
     <link rel="alternative" href="/atom.xml" title="Xin Wang&#39;s Blog" type="application/atom+xml">
   
@@ -246,20 +246,20 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-My-First-Post" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-MIT6006-Lec04" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      My First Post - 献给Hexo
+      MIT6006 Lec04 Priority queue and Heap
     </h1>
   
 
         
-        <a href="/blog/2018/09/25/My-First-Post/" class="archive-article-date">
-  	<time datetime="2018-09-25T00:23:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-25</time>
+        <a href="/blog/2018/11/06/MIT6006-Lec04/" class="archive-article-date">
+  	<time datetime="2018-11-06T02:48:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-06</time>
 </a>
         
       </header>
@@ -269,7 +269,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作及环境"><span class="toc-number">1.</span> <span class="toc-text">准备工作及环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装及配置"><span class="toc-number">2.</span> <span class="toc-text">安装及配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装前提"><span class="toc-number">2.1.</span> <span class="toc-text">安装前提</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装-Hexo"><span class="toc-number">2.2.</span> <span class="toc-text">安装 Hexo:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置"><span class="toc-number">2.3.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#主题-theme-的确定"><span class="toc-number">2.4.</span> <span class="toc-text">主题(theme)的确定</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开写你的第一篇博客"><span class="toc-number">3.</span> <span class="toc-text">开写你的第一篇博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在本地查看并生成静态网页"><span class="toc-number">4.</span> <span class="toc-text">在本地查看并生成静态网页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#部署-（这部分很让我头疼）"><span class="toc-number">5.</span> <span class="toc-text">部署 （这部分很让我头疼）</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Priority-Queues"><span class="toc-number">1.</span> <span class="toc-text">Priority Queues</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap"><span class="toc-number">2.</span> <span class="toc-text">Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap-sort"><span class="toc-number">3.</span> <span class="toc-text">Heap sort</span></a></li></ol>
             </div>
            -->
         <!--  
@@ -278,70 +278,81 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作及环境"><span class="toc-text">准备工作及环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装及配置"><span class="toc-text">安装及配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装前提"><span class="toc-text">安装前提</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装-Hexo"><span class="toc-text">安装 Hexo:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#主题-theme-的确定"><span class="toc-text">主题(theme)的确定</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开写你的第一篇博客"><span class="toc-text">开写你的第一篇博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在本地查看并生成静态网页"><span class="toc-text">在本地查看并生成静态网页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#部署-（这部分很让我头疼）"><span class="toc-text">部署 （这部分很让我头疼）</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Priority-Queues"><span class="toc-text">Priority Queues</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap"><span class="toc-text">Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap-sort"><span class="toc-text">Heap sort</span></a></li></ol>
         </div>
     </div>
  -->
-        <p>在网上查找资料的时候偶然看到有人提到用Hexo来写博客，界面非常简洁，而且支持 markdown 解析，瞬间打算在我<a href="http://tracyxinwang.site/">个人的学术网站</a>上加入这个blog页面。之前写博客都是在现成的博客网站上写的，比如 网易的 和 <a href="https://blog.csdn.net/u013036695" target="_blank" rel="noopener">CSDN</a> 这种还算比较大型的技术博客，无奈广告实在是太多了，后来转战 google 的 blog，但是它的编辑页面实在是难用，就放弃了。所以现在打算试试这个 Hexo。</p>
-<p>Hexo 用官方的来说就是一个快速，简洁且高效的博客框架。我用了大概不到一天的时间，就从安装到部署搞定了，虽然过程很崎岖，掉了很多坑。。。但是总体还是觉得挺不错的，所以接下来我会大致叙述一下整个过程，希望能够让看到的朋友少掉坑。</p>
-<p>先附上<a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>网址，也有<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">中文</a>的。个人觉得基本上按照网页上的指导，前面的步骤基本都是没问题的。由于我是一开始就打算在我个人网页中加入这个博客页面作为一个子页面，所以我是在 coding.net 而非 git 上面建库。另外操作系统是win10.</p>
-<h3 id="准备工作及环境"><a href="#准备工作及环境" class="headerlink" title="准备工作及环境"></a>准备工作及环境</h3><ol>
-<li>在 coding 上新建一个项目库，命名 “blog”，同时设置 <a href="https://coding.net/pages/" target="_blank" rel="noopener">Pages服务</a></li>
-<li>在电脑上一个你觉得不错的位置新建一个文件夹，命名随意，这个名字没太大关系，我命名为”Hexo_blog”, 这文件夹是用来放所有跟你这个博客相关的东西的。</li>
-</ol>
-<h3 id="安装及配置"><a href="#安装及配置" class="headerlink" title="安装及配置"></a>安装及配置</h3><h4 id="安装前提"><a href="#安装前提" class="headerlink" title="安装前提"></a>安装前提</h4><p>须有 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a> 和 <a href="https://git-scm.com/" target="_blank" rel="noopener">Git</a></p>
-<ul>
-<li>Node.js 安装：在官网下载好你电脑对应的版本之后，点安装包进行安装，在接近最后一步是，选择 “Add to PATH” 选项进行安装</li>
-<li>git 安装：略</li>
+        <p><br></p>
+<h3 id="Priority-Queues"><a href="#Priority-Queues" class="headerlink" title="Priority Queues"></a>Priority Queues</h3><ul>
+<li>Defination: A data structure implementing a set S of elements, each associated with a <strong>key</strong>.</li>
+<li>Every element has its own key. And the key represents the priority of that element. Keys are not necessarily unique.</li>
+<li>It supports the following operations:<ul>
+<li><code>insert(S,x)</code>: insert element x into set S</li>
+<li><code>max(S)</code>: return element of S with largest key</li>
+<li><code>extract_max(S)</code>: return element of S with largest key and remove it from S</li>
+<li><code>increase_key(S,x,k)</code>: increase the value of element x’ s key to new value k (assumed to be as large as current value)</li>
 </ul>
-<h4 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo:"></a>安装 Hexo:</h4><p>使用 npm 安装 Hexo:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure></p>
-<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><ol>
-<li><p>新建框架<br> 去到你刚刚创建的那个要放所有Hexo东西的文件夹下，执行以下命令：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
-<p> 这个命令就是告诉hexo这里要建一个框架，然后它就会生成整个框架所需要的材料。<br> 新建完成后，可以看见有很多的文件夹，具体每个文件夹啥作用请看<a href="https://hexo.io/zh-cn/docs/setup" target="_blank" rel="noopener">官网</a>。这里面有一个叫 _config.yml 的东西，非常重要，是你整个博客配置的基础。</p>
 </li>
-<li><p>基本配置(只列出可能有坑的地方)：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">language: zh-Hans</span><br><span class="line">url: http://yoursite.com/blog</span><br><span class="line">root: /blog/</span><br></pre></td></tr></table></figure>
-<p> 前面说了我是打算我个人网站子页面下加入这个blog，所以那个url, 对我来说是后面加上这个子目录名字，然后root那个地方也需要改成，如果你本身是一个网页来的(比如git的页面)，那就不用设置这个root了。其他的配置具体可参见<a href="https://hexo.io/zh-cn/docs/configuration" target="_blank" rel="noopener">网页</a>。最后关于主题(theme)和部署(deploy)的，接下来讲。</p>
-</li>
-</ol>
-<h4 id="主题-theme-的确定"><a href="#主题-theme-的确定" class="headerlink" title="主题(theme)的确定"></a>主题(theme)的确定</h4><p>主题顾名思义就是你的博客的风格，Hexo有很多模板可供选择，要使用哪个模板，就需要将该主题拷贝到themes文件夹下，然后在_config.yml 更改主题的名字。我用的是 <a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="noopener">yilia</a> 的主题，下面以此为例写步骤：</p>
-<ul>
-<li><p>进入你放创建的hexo文件夹(e.g. Hexo_blog)下, 使用如下命令安装：</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/litten/hexo-theme-yilia.git themes/yilia</span><br></pre></td></tr></table></figure>
-<p>  这需要你先找到该主题的github，也可以直接下载然后解压到你的themes文件夹下</p>
-</li>
-<li>进入Hexo_blog 下面那个 _config.yml， 修改 ‘themes: yilia’</li>
-<li>进入Hexo_blog/themes/yilia, 里面也有一个 _config.yml, 在上面更改你想命名的主页的menu和其他的基本个人设置</li>
 </ul>
-<h3 id="开写你的第一篇博客"><a href="#开写你的第一篇博客" class="headerlink" title="开写你的第一篇博客"></a>开写你的第一篇博客</h3><p>这个很简单，直接执行：<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new  my-first-post</span><br></pre></td></tr></table></figure></p>
-<p>那个 my-first-post 是你的文章题目。所有的文章都会被放在 /source/posts 文件夹下。在这个文件夹下你可以看到一个 my-first-post.md 的文件。打开这个文件然后就在下面用markdown的语法就写好了。</p>
-<h3 id="在本地查看并生成静态网页"><a href="#在本地查看并生成静态网页" class="headerlink" title="在本地查看并生成静态网页"></a>在本地查看并生成静态网页</h3><ol>
-<li><p>由于有文件的改动，所以需要先生成静态文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure>
+<h3 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h3><ul>
+<li>Heap is an implementation of a priority queue</li>
+<li>is also an <strong>array</strong> visualized as a nearly complete <em>binary tree</em></li>
+<li>Heaps can be convert to max heap or min heap when sorting them.</li>
+<li><strong>Max heap</strong>: the key of a node is ≥ than the keys of its children. (analogously as min heap)</li>
+<li>Heap as a tree:<ul>
+<li>Root of the tree: the first element (i=1) in the array</li>
+<li>parent(i)=i/2: returns index of node’s parent</li>
+<li>left(i)=2i: returns index of node’s left child</li>
+<li>right(i)=2i+1: returns index of node’s right child</li>
+<li>The height of a binary heap is $O(lg n)$</li>
+</ul>
 </li>
-<li><p>生成之后可以hexo server来查看新建的文章或者网站：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
+<li>Heap operations:<ul>
+<li><code>build_max_heap</code>: produce a max-heap from an unordered array</li>
+<li><code>max_heapify</code>: correct a single violation of the heap property in a subtree at its root</li>
+<li><code>insert</code>, <code>extract_max</code>, <code>heapsort</code></li>
+</ul>
 </li>
+</ul>
+<p><strong>Max_heapify</strong>: </p>
+<ul>
+<li>the assumption is that the trees rooted at left(i) and right(i) are max-heaps. </li>
+<li>If element A[i] violates the max-heap property, correct violation by “trickling” element A[i] down the tree, making the subtree rooted at index i a max-heap.</li>
+<li>Pseudocode:  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">l = left(i)</span><br><span class="line">r = right(i)</span><br><span class="line"><span class="keyword">if</span> (l &lt;= heap-size(A) and A[l] &gt; A[i])</span><br><span class="line">    <span class="keyword">then</span> largest = l <span class="keyword">else</span> largest = i</span><br><span class="line"><span class="keyword">if</span> (r &lt;= heap-size(A) and A[r] &gt; A[largest])</span><br><span class="line">    <span class="keyword">then</span> largest = r</span><br><span class="line"><span class="keyword">if</span> largest != i</span><br><span class="line">    <span class="keyword">then</span> exchange A[i] and A[largest]</span><br><span class="line">Max_Heapify(A, largest)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>Build_Max_Heap</strong>:</p>
+<ul>
+<li>Converts A[1…n] to a max heap</li>
+<li><p>Build_Max_Heap(A):</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i=n/2 downto 1</span><br><span class="line"><span class="keyword">do</span> Max_Heapify(A, i)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>The reason to start at n/2 is that element A[n/2+1 … n] are all leaves. There is no need to build max_heap for leaves which has only one element (its own).</p>
+</li>
+<li>Time costs: $O(nlog n)$ via simple analysis</li>
+<li>Observe however that Max_Heapify takes $O(1)$ for time for nodes that are one level above the leaves(叶子层的上一层，即倒数第二层)，$O(l)$ for the nodes that are $l$ levels above the leaves. There are n/4 nodes in level 1(即 倒数第二层), n/8 in level 2 (再往上的的一层) and so on till in $lg n$ level remains one root node.</li>
+<li>Therefore, the total amount of work in the for loop is (括号里面的是那一层的Node个数):<br>$$\frac n4(1c) + \frac n8 (2c) + \frac n{16} (3c) + … + 1(lgn c)$$</li>
+<li>set $\frac n4=2^k$简化上式可得：$c 2^k (\frac1{2^0}+\frac2{2^1}+\frac3{2^2}+ … + \frac{(k+1)}{2^k})$, 括号里面上界是个常数</li>
+<li>Therefore, Build_max_heap is $O(n)$</li>
+</ul>
+<h3 id="Heap-sort"><a href="#Heap-sort" class="headerlink" title="Heap sort"></a>Heap sort</h3><ul>
+<li>Sort strategy:<ol>
+<li>Build Max Heap from unordered array;</li>
+<li>Find maximum element A[1];</li>
+<li>Swap elements A[n] and A[1]: now max element is at the end of the array!</li>
+<li>Discard node n from heap (by decrementing heap-size variable)</li>
+<li>New root may violate max heap property, but its children are max heaps. Run max_heapify to fix this.</li>
+<li>Go to Step 2 unless heap is empty</li>
 </ol>
-<p>然后就能看到说在 <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> 下可以打开。如果一切都没问题，那么就可以部署到真的网页上面了。</p>
-<h3 id="部署-（这部分很让我头疼）"><a href="#部署-（这部分很让我头疼）" class="headerlink" title="部署 （这部分很让我头疼）"></a>部署 （这部分很让我头疼）</h3><p>先说步骤：</p>
-<p>1.git-SSH 配置：</p>
-<pre><code>- 查看你的git user.email: &apos;git config user.email&apos;
-- 假如得到的email是 xx@gamil.com, 生成这个email对应的密匙: &apos;ssh-keygen -t rsa -C &quot;xx@gmail.com&quot;&apos;
-- 接下来会让你enter file to save the key，enter passphrase, enter passphrase again, 可以不需要设置这些秘密啥的，所以每一个问题出现，都按enter, 即连续3个回车。
-- 然后会得到两个文件 &apos;id_rsa&apos; 和 &apos;id_tsa.pub&apos;
-- 复制刚刚生成的密匙(其中xx/xx是你密匙生成的位置，在上一步骤中会显示)： &apos;clip &lt; xx/xx/id_rsa.pub&apos;
-- 在准备步骤中新建的那个库下，打开设置-添加公匙，将刚刚复制的内容粘贴到上面，至此，配置完成。
-- 检查是否真的完成：输入&apos;ssh -T xx@gmail.com&apos;，然后选择 &apos;yes&apos;, 接着看到 Hi XX, You&apos;ve successfully authenticated 等等，就表明已经设置成功了
-</code></pre><p>2._config.yml 文件deploy的更改：<br>    应该是在最下面，有个deploy，在下面写上你的库的ssh地址等如下：</p>
-<pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@git.coding.net:XX/blog.git</span><br><span class="line">  branch: master</span><br><span class="line">  message: update my blog.</span><br></pre></td></tr></table></figure>
-</code></pre><p>3.部署：<br>先下载deployer: ‘npm install hexo-deployer-git –save’<br>然后执行：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
-<p>然后就可以看你的网页有没有变化了。</p>
-<p>由于我是打算直接在我的个人网站下直接建一个子网页，所以一开始一直想的是deploy到我之前的那个库里面，我以为是直接添加到那个git repo 里面就好，没想到一deploy之后，发现之前的内容全没有了，然后才意识到应该是force push上去的，没有pull等过程，所以直接啥都没有了，没办法我又只好force push 我之前的网站内容上去，才将原网页复原。由于我不知道怎么可以只deploy到一个子folder里面去，所以我又新建了一个库叫blog，也就是文章开头写的那样。然后将这个库的地址作为deploy的git 地址，才可以。我发现coding上可以直接设置子静态页面，所以我也直接就将这个网页的地址链接到我原个人网站上，算是间接完成吧。</p>
-<p>同时这过程中遇到一些问题，列出来纪念一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Error: Host key verification failed.</span><br><span class="line">fatal: Could not read from remote repository.</span><br><span class="line">Please make sure you have the correct access rights and the repository exists.</span><br></pre></td></tr></table></figure></p>
-<p>需设置SSH密匙来进行。且注意需删除之前生成的 git 那个文件夹。</p>
+</li>
+<li>Running time:<ul>
+<li>after n iterations the Heap is empty</li>
+<li>every iteration involves a swap and a max_heapify operation; hence it takes O(log n) time</li>
+<li>Overall $O(nlog n)$</li>
+</ul>
+</li>
+<li>A nice demo here: <a href="https://www.geeksforgeeks.org/heap-sort/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/heap-sort/</a></li>
+</ul>
 
       
 
@@ -386,15 +397,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂文</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">碎碎念</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
         		</li>
       		
 		</ul>
@@ -450,7 +457,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://tracyxinwang.site/blog/2018/09/25/My-First-Post/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://tracyxinwang.site/blog/2018/11/06/MIT6006-Lec04/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -464,18 +471,9 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/blog/2018/09/27/OrangePi1/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Playing with Orange Pi - Setting up the system
-        
-      </div>
-    </a>
   
-  
-    <a href="/blog/2018/09/24/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Markdown Template</div>
+    <a href="/blog/2018/11/06/notes-matlab/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MATLAB 常用语法记录</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -502,7 +500,7 @@ var _hmt = _hmt || [];
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作及环境"><span class="toc-number">1.</span> <span class="toc-text">准备工作及环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装及配置"><span class="toc-number">2.</span> <span class="toc-text">安装及配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装前提"><span class="toc-number">2.1.</span> <span class="toc-text">安装前提</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装-Hexo"><span class="toc-number">2.2.</span> <span class="toc-text">安装 Hexo:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置"><span class="toc-number">2.3.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#主题-theme-的确定"><span class="toc-number">2.4.</span> <span class="toc-text">主题(theme)的确定</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开写你的第一篇博客"><span class="toc-number">3.</span> <span class="toc-text">开写你的第一篇博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在本地查看并生成静态网页"><span class="toc-number">4.</span> <span class="toc-text">在本地查看并生成静态网页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#部署-（这部分很让我头疼）"><span class="toc-number">5.</span> <span class="toc-text">部署 （这部分很让我头疼）</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Priority-Queues"><span class="toc-number">1.</span> <span class="toc-text">Priority Queues</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap"><span class="toc-number">2.</span> <span class="toc-text">Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap-sort"><span class="toc-number">3.</span> <span class="toc-text">Heap sort</span></a></li></ol>
                     </div>
                 </span>
             </div>

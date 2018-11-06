@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://tracyxinwang.site/blog/blog/2018/11/06/MIT6006-Lec04/</loc>
+    <lastmod>2018-11-06T10:08:25.972Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2018/11/06/notes-matlab/</loc>
+    <lastmod>2018-11-05T22:57:19.000Z</lastmod>
+  </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/11/05/MIT6006-Lec03/</loc>
     <lastmod>2018-11-05T10:23:06.030Z</lastmod>
   </url>  <url>

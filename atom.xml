@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="http://tracyxinwang.site/blog/"/>
-  <updated>2018-11-05T10:23:06.030Z</updated>
+  <updated>2018-11-06T10:08:25.972Z</updated>
   <id>http://tracyxinwang.site/blog/</id>
   
   <author>
@@ -15,6 +15,59 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MIT6006 Lec04 Priority queue and Heap</title>
+    <link href="http://tracyxinwang.site/blog/2018/11/06/MIT6006-Lec04/"/>
+    <id>http://tracyxinwang.site/blog/2018/11/06/MIT6006-Lec04/</id>
+    <published>2018-11-06T02:48:56.000Z</published>
+    <updated>2018-11-06T10:08:25.972Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p><h3 id="Priority-Queues"><a href="#Priority-Queues" class="headerlink" title="Priority Queues"></a>Priority Queues</h3><ul><li>Defination: A data structure implementing a set S of elements, each associated with a <strong>key</strong>.</li><li>Every element has its own key. And the key represents the priority of that element. Keys are not necessarily unique.</li><li>It supports the following operations:<ul><li><code>insert(S,x)</code>: insert element x into set S</li><li><code>max(S)</code>: return element of S with largest key</li><li><code>extract_max(S)</code>: return element of S with largest key and remove it from S</li><li><code>increase_key(S,x,k)</code>: increase the value of element x’ s key to new value k (assumed to be as large as current value)</li></ul></li></ul><h3 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h3><ul><li>Heap is an implementation of a priority queue</li><li>is also an <strong>array</strong> visualized as a nearly complete <em>binary tree</em></li><li>Heaps can be convert to max heap or min heap when sorting them.</li><li><strong>Max heap</strong>: the key of a node is ≥ than the keys of its children. (analogously as min heap)</li><li>Heap as a tree:<ul><li>Root of the tree: the first element (i=1) in the array</li><li>parent(i)=i/2: returns index of node’s parent</li><li>left(i)=2i: returns index of node’s left child</li><li>right(i)=2i+1: returns index of node’s right child</li><li>The height of a binary heap is $O(lg n)$</li></ul></li><li>Heap operations:<ul><li><code>build_max_heap</code>: produce a max-heap from an unordered array</li><li><code>max_heapify</code>: correct a single violation of the heap property in a subtree at its root</li><li><code>insert</code>, <code>extract_max</code>, <code>heapsort</code></li></ul></li></ul><p><strong>Max_heapify</strong>: </p><ul><li>the assumption is that the trees rooted at left(i) and right(i) are max-heaps. </li><li>If element A[i] violates the max-heap property, correct violation by “trickling” element A[i] down the tree, making the subtree rooted at index i a max-heap.</li><li>Pseudocode:  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">l = left(i)</span><br><span class="line">r = right(i)</span><br><span class="line"><span class="keyword">if</span> (l &lt;= heap-size(A) and A[l] &gt; A[i])</span><br><span class="line">    <span class="keyword">then</span> largest = l <span class="keyword">else</span> largest = i</span><br><span class="line"><span class="keyword">if</span> (r &lt;= heap-size(A) and A[r] &gt; A[largest])</span><br><span class="line">    <span class="keyword">then</span> largest = r</span><br><span class="line"><span class="keyword">if</span> largest != i</span><br><span class="line">    <span class="keyword">then</span> exchange A[i] and A[largest]</span><br><span class="line">Max_Heapify(A, largest)</span><br></pre></td></tr></table></figure></li></ul><p><strong>Build_Max_Heap</strong>:</p><ul><li>Converts A[1…n] to a max heap</li><li><p>Build_Max_Heap(A):</p>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i=n/2 downto 1</span><br><span class="line"><span class="keyword">do</span> Max_Heapify(A, i)</span><br></pre></td></tr></table></figure></li><li><p>The reason to start at n/2 is that element A[n/2+1 … n] are all leaves. There is no need to build max_heap for leaves which has only one element (its own).</p></li><li>Time costs: $O(nlog n)$ via simple analysis</li><li>Observe however that Max_Heapify takes $O(1)$ for time for nodes that are one level above the leaves(叶子层的上一层，即倒数第二层)，$O(l)$ for the nodes that are $l$ levels above the leaves. There are n/4 nodes in level 1(即 倒数第二层), n/8 in level 2 (再往上的的一层) and so on till in $lg n$ level remains one root node.</li><li>Therefore, the total amount of work in the for loop is (括号里面的是那一层的Node个数):<br>$$\frac n4(1c) + \frac n8 (2c) + \frac n{16} (3c) + … + 1(lgn c)$$</li><li>set $\frac n4=2^k$简化上式可得：$c 2^k (\frac1{2^0}+\frac2{2^1}+\frac3{2^2}+ … + \frac{(k+1)}{2^k})$, 括号里面上界是个常数</li><li>Therefore, Build_max_heap is $O(n)$</li></ul><h3 id="Heap-sort"><a href="#Heap-sort" class="headerlink" title="Heap sort"></a>Heap sort</h3><ul><li>Sort strategy:<ol><li>Build Max Heap from unordered array;</li><li>Find maximum element A[1];</li><li>Swap elements A[n] and A[1]: now max element is at the end of the array!</li><li>Discard node n from heap (by decrementing heap-size variable)</li><li>New root may violate max heap property, but its children are max heaps. Run max_heapify to fix this.</li><li>Go to Step 2 unless heap is empty</li></ol></li><li>Running time:<ul><li>after n iterations the Heap is empty</li><li>every iteration involves a swap and a max_heapify operation; hence it takes O(log n) time</li><li>Overall $O(nlog n)$</li></ul></li><li>A nice demo here: <a href="https://www.geeksforgeeks.org/heap-sort/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/heap-sort/</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h3 id=&quot;Priority-Queues&quot;&gt;&lt;a href=&quot;#Priority-Queues&quot; class=&quot;headerlink&quot; title=&quot;Priority Queues&quot;&gt;&lt;/a&gt;Priority Queues&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;
+      
+    
+    </summary>
+    
+    
+      <category term="Algorithm" scheme="http://tracyxinwang.site/blog/tags/Algorithm/"/>
+    
+      <category term="Learning" scheme="http://tracyxinwang.site/blog/tags/Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MATLAB 常用语法记录</title>
+    <link href="http://tracyxinwang.site/blog/2018/11/06/notes-matlab/"/>
+    <id>http://tracyxinwang.site/blog/2018/11/06/notes-matlab/</id>
+    <published>2018-11-06T01:12:34.000Z</published>
+    <updated>2018-11-05T22:57:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Matrix-处理"><a href="#Matrix-处理" class="headerlink" title="Matrix 处理"></a>Matrix 处理</h3><ul><li><p>将所有非零的元素变为1，为零的元素保持为0，使用 <code>~~</code>, 可用于二值化</p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A=~~A;</span><br></pre></td></tr></table></figure></li><li><p>Get indices of elements in upper triangle</p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nNodes = size(adj,1);  % get the number of nodes in a matrix</span><br><span class="line">upperInds = find(triu(ones(nNodes),1));</span><br></pre></td></tr></table></figure></li><li><p>Sort the node strength and plot matrix by sorting results</p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">stg = strengths_und(A)&apos;;</span><br><span class="line">[srtVals srtInds] = sort(stg);</span><br><span class="line">imagesc(log10(A(srtInds, srtInds)));</span><br></pre></td></tr></table></figure></li></ul><h4 id="画图"><a href="#画图" class="headerlink" title="画图"></a>画图</h4><ul><li><p>设置图像背景，位置：</p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hf=figure; hf.Position=[100,350,600,300]; hf.Color=&apos;w&apos;;</span><br></pre></td></tr></table></figure></li><li><p>设置坐标轴用 <code>gca</code></p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ax = gca; % current axes</span><br><span class="line">ax.FontSize = 12;</span><br><span class="line">ax.XTick = [0 0.1000 0.2000 0.3000 0.4000 0.5000 0.6000 0.7000 0.8000 0.9000 1];</span><br><span class="line">ax.XTickLabel = [0.02 0.02];</span><br><span class="line">ax.XLim = [-2 2];</span><br></pre></td></tr></table></figure></li><li><p>去掉坐标轴，按像素实际大小画图</p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">axis off; axis equal;</span><br></pre></td></tr></table></figure></li></ul><h3 id="Read-and-write-file"><a href="#Read-and-write-file" class="headerlink" title="Read and write file"></a>Read and write file</h3><ul><li><p>Read nii file</p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[hdr,data]=read(filename)</span><br></pre></td></tr></table></figure></li><li><p>Write to a txt file </p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dlmwrite(&apos;coords.txt&apos;,coords,&apos;delimiter&apos;,&apos; &apos;);</span><br><span class="line">dlmwrite(&apos;matrix.txt&apos;,A,&apos;delimiter&apos;,&apos; &apos;);</span><br></pre></td></tr></table></figure></li><li><p>Combine data into a table with column headers</p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">att = array2table([ci stg degree clust], &apos;VariableNames&apos;, &#123;&apos;module&apos;,&apos;strength&apos;,&apos;degree&apos;,&apos;clustering&apos;&#125;);</span><br><span class="line">writetable(att, &apos;attributes.txt&apos;,&apos;delimiter&apos;,&apos; &apos;);</span><br></pre></td></tr></table></figure></li></ul><h3 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h3><ul><li><p>在命令行窗口输出</p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fprintf(&apos;Subject: %0.3f\n&apos;,some_value);</span><br></pre></td></tr></table></figure></li><li><p>Get the running time of code</p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tic</span><br><span class="line">code here</span><br><span class="line">toc</span><br></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;Matrix-处理&quot;&gt;&lt;a href=&quot;#Matrix-处理&quot; class=&quot;headerlink&quot; title=&quot;Matrix 处理&quot;&gt;&lt;/a&gt;Matrix 处理&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;将所有非零的元素变为1，为零的元素保持为0，使用 &lt;code&gt;~~
+      
+    
+    </summary>
+    
+    
+      <category term="Notes" scheme="http://tracyxinwang.site/blog/tags/Notes/"/>
+    
+      <category term="Matlab" scheme="http://tracyxinwang.site/blog/tags/Matlab/"/>
+    
+  </entry>
   
   <entry>
     <title>MIT6006 Lec03 插入排序，归并排序</title>
@@ -289,9 +342,9 @@
     </summary>
     
     
-      <category term="Brain" scheme="http://tracyxinwang.site/blog/tags/Brain/"/>
-    
       <category term="Notes" scheme="http://tracyxinwang.site/blog/tags/Notes/"/>
+    
+      <category term="Brain" scheme="http://tracyxinwang.site/blog/tags/Brain/"/>
     
   </entry>
   
@@ -314,9 +367,9 @@
     </summary>
     
     
-      <category term="Algorithms" scheme="http://tracyxinwang.site/blog/tags/Algorithms/"/>
-    
       <category term="Notes" scheme="http://tracyxinwang.site/blog/tags/Notes/"/>
+    
+      <category term="Algorithms" scheme="http://tracyxinwang.site/blog/tags/Algorithms/"/>
     
   </entry>
   
@@ -420,9 +473,9 @@
     </summary>
     
     
-      <category term="OrangePi" scheme="http://tracyxinwang.site/blog/tags/OrangePi/"/>
-    
       <category term="Linux" scheme="http://tracyxinwang.site/blog/tags/Linux/"/>
+    
+      <category term="OrangePi" scheme="http://tracyxinwang.site/blog/tags/OrangePi/"/>
     
   </entry>
   

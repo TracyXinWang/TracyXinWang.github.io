@@ -247,6 +247,211 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-problem-matlab-gcc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/10/18/problem-matlab-gcc/">Problem solve - `GLIBCXX_3.4.21&#39; not found</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/10/18/problem-matlab-gcc/" class="archive-article-date">
+  	<time datetime="2018-10-18T04:11:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              
+            </div>
+           -->
+        <!--   -->
+        <p>在才开始使用Panda的过程中遇到了一个问题，这个问题之前遇到过，后来解决了也没再管过，没想到过了接近半年之后还会再使用Panda，搞了半天才找到解决办法，觉得还是真的要记录下来每个问题及当时的解决方法，保不准下一次又遇到了。。。</p>
+<p>问题如下：<br>运行之后直接出现error:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/<span class="built_in">local</span>/MATLAB/R2016b/sys/os/glnxa64/libstdc++.so.6: version `GLIBCXX_3.4.21<span class="string">' not found (required by /usr/share/fsl/5.0/bin/fslchfiletype_exe</span></span><br></pre></td></tr></table></figure></p>
+<p>首先 not found 有两种情况：</p>
+<ol>
+<li>这个 GLIBCXX_3.4.21 本来就不存在</li>
+<li>这个 GLIBCXX_3.4.21 存在，但是matlab找不到，没有链接过去</li>
+</ol>
+<p>在terminal处先通过以下代码看这个到底有没有：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strings /usr/lib/libstdc++.so.6 | grep GLIBCXX</span><br></pre></td></tr></table></figure></p>
+<p>下面会出来一串相关的存在的 GLIBCXX. 找下有没有MATLAB说的那个 `GLIBCXX_3.4.21’。</p>
+<p>如果存在的话，那就说明是matlab 链接的问题，只需要在terminal处用以下方式打开matlab就行了：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LD_PRELOAD=<span class="string">"/usr/lib/x86_64-linux-gnu/libstdc++.so.6"</span> matlab</span><br></pre></td></tr></table></figure></p>
+<p>如果不存在的话，执行以下代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libstdc++6</span><br><span class="line">sudo add-apt-repository ppa:ubuntu-toolchain-r/<span class="built_in">test</span> </span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get dist-upgrade</span><br></pre></td></tr></table></figure></p>
+<p><br><br>Reference:<br><a href="https://askubuntu.com/questions/719028/version-glibcxx-3-4-21-not-found" target="_blank" rel="noopener">https://askubuntu.com/questions/719028/version-glibcxx-3-4-21-not-found</a><br><a href="https://stackoverflow.com/questions/44773296/libstdc-so-6-version-glibcxx-3-4-20-not-found" target="_blank" rel="noopener">https://stackoverflow.com/questions/44773296/libstdc-so-6-version-glibcxx-3-4-20-not-found</a><br><a href="https://askubuntu.com/questions/575505/glibcxx-3-4-20-not-found-how-to-fix-this-error" target="_blank" rel="noopener">https://askubuntu.com/questions/575505/glibcxx-3-4-20-not-found-how-to-fix-this-error</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/10/18/problem-matlab-gcc/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-GRF-BMI-thoughts" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/10/11/GRF-BMI-thoughts/">写GRF，答辩BMI的一些心得</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/10/11/GRF-BMI-thoughts/" class="archive-article-date">
+  	<time datetime="2018-10-11T07:24:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              
+            </div>
+           -->
+        <!--   -->
+        <p>到今天(2018.10.11)为止，帮老板写 GRF proposal 和 Brain Mind Institute(BMI) 申 funding 的答辩就基本告一段落了，被 criticize 了很多吧。这里记录一下这个过程的一些心得，这些是我觉得不只是写proposal，对开始做一件事情时，整个人的逻辑和思考方式都是有帮助的：</p>
+<p><strong>GRF</strong>:</p>
+<ul>
+<li>每次只 <strong>highlight 一个最多两个新颖的点</strong>：有些时候可能自己想法很多，觉得这样不错，那样也不错，都是非常前卫cutting-edge那种感觉，然后很兴奋，想把他们都加进去。但是有几点你要考虑：<ol>
+<li>Reviewer 不完全是你这个方向的，他可能并不能理解你那些前卫的想法，你要考虑这个剧本的观众是谁，他们能不能完全 get 到你的 point, 如果不能，那你这个剧本再怎么梦幻都是失败的，因为你首先需要观众的认可。一个人嗨没用，你要让一群人都嗨起来。</li>
+<li>加入多个新鲜的元素意味着，危险。这个危险有两个方面，一是apply到人上面的东西，涉及到伦理人情实验时长subject的心情等等客观因素，作为一个investigator, 首先要保证的就是安全无害，当多个元素加入时，这种风险就会增大，这是必须要注意的， 人是第一要素。第二个方面是实验失败的风险，多个元素会使对照变得显得相当困难，连初中生都知道在设计生物实验时一定要有对照组，你怎么就忘了呢？没有对照，一切结果都是不能让人信服的。</li>
+</ol>
+</li>
+<li><strong>描述细节</strong>：在写的过程中，很容易写得很宽泛，特别是 abstract 和 introduction 部分, 全程不说你要具体怎么做，只是说明你要去optimize, 要去 maximize 一个东西， 最后结果可以多叼多叼。别人看完了还是不知道你到底要怎么去optimize, maxmize, 你倒是给点操作步骤啊。所以这里我的总结是，少用形容词，少点假大空，最好的句式是：<strong>列出要用到哪些东西，表明用什么方法，之后怎么去改变，会有什么样的结果</strong>。</li>
+<li><strong>写下的每一个数字，要有来源和依据</strong>：比如样本你要多少个，那这个数字是怎么来的，从文献呢还是经验呢，这个要列出来，No magic number。另一类数字就是你的一些 preliminary study 的结果，这些数字，你要知道它的物理意义，单位，还要用最通俗的语言解释给别人听，它的变化意味着什么。</li>
+<li>关于<strong>题目的选取</strong>：google search 一下别人是怎么起名字的，这个我觉得对 non-native speaker 是很有用的。比如你起的这个到底是不是常用的，要是search 一下发现别人根本没人用这个词，或者这个词search出去导向的是别的研究方向，那就尴尬了，别人会觉得你不是内行人。</li>
+<li>在文中适当表明一下这个技术有多新，多前沿，可以考虑指出世界上第一次做这个方向，采用这个方法等等是在哪个年份。。。比如2016, 2017，那就显得高端前沿了。</li>
+<li>每一个稍微专业的词，都一定要解释清楚，保证你要传达的信息能够被准确理解</li>
+<li>小到Reference中的journal斜体，缩写，作者名字，都是应该注意的。</li>
+</ul>
+<p><br></p>
+<p><strong>BMI 答辩</strong>：</p>
+<ul>
+<li><strong>对你画出的每一个图，图里面的每一个字负责</strong>：前后一致，文字与图内容一致，并且保证你放上去的图，你都能完全解释给卖菜的大妈听懂。</li>
+<li>PPT 少一点字啊喂：我承认没有花时间去准备，但这并不能成为你降低自己表达能力要求的借口。</li>
+<li><strong>关注你的听众</strong>：他们的background是什么，他们懂你的术语吗？不懂就一定要提前想到，然后过程中解释保证他们能听懂，还是那句话，交流就表示要有信息输出，而这个信息一定要能被准确传达和理解</li>
+<li>关于回答问题：如果回答完一次后发现对方仍然在问相同或相似的问题，可能不是你的回答有问题，而是你们在某些内容上的认知不一样，这个时候就需要回到你觉得他在问什么上，你觉得的和他觉得的，可能并不是一个东西。考虑：他为什么这样问，这样问的前提是基于什么来的（或者简单点，这个问题的词汇构成是什么，你的哪一部分解释会指向这些词汇），是不是之前哪里让他对整个事情（问题中的一些词汇）有点误解？</li>
+</ul>
+<p><br></p>
+<p>大概就这样了，愿世界少点 proposal。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂文</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">碎碎念</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/10/11/GRF-BMI-thoughts/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-NeuralMass2008PlosComp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -407,11 +612,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
         		</li>
       		
 		</ul>
@@ -572,11 +777,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Algorithms</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Algorithms</a>
         		</li>
       		
 		</ul>
@@ -1087,11 +1292,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">OrangePi</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">OrangePi</a>
         		</li>
       		
 		</ul>
@@ -1456,7 +1661,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共18.5k字
+              本站总共19.4k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -1563,23 +1768,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Brain</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">MRI</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Algorithms</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1595,15 +1784,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Brain</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">MRI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Algorithms</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1615,19 +1820,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Tools</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
               </li>
              
               <li class="article-tag-list-item">
