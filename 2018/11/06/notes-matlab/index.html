@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Xin Wang&#39;s Blog">
 <meta property="og:description" content="Matrix 处理 将所有非零的元素变为1，为零的元素保持为0，使用 ~~, 可用于二值化   1A=~~A;  Get indices of elements in upper triangle   12nNodes = size(adj,1);  % get the number of nodes in a matrixupperInds = find(triu(ones(nNodes),1)">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-05T22:57:19.000Z">
+<meta property="og:updated_time" content="2018-11-07T22:08:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MATLAB 常用语法记录">
 <meta name="twitter:description" content="Matrix 处理 将所有非零的元素变为1，为零的元素保持为0，使用 ~~, 可用于二值化   1A=~~A;  Get indices of elements in upper triangle   12nNodes = size(adj,1);  % get the number of nodes in a matrixupperInds = find(triu(ones(nNodes),1)">
@@ -292,6 +292,11 @@ var _hmt = _hmt || [];
 <li><p>Sort the node strength and plot matrix by sorting results</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">stg = strengths_und(A)&apos;;</span><br><span class="line">[srtVals srtInds] = sort(stg);</span><br><span class="line">imagesc(log10(A(srtInds, srtInds)));</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>Set infinite values to 0:</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A(isinf(A))=0;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Compute Euclidean distance and convert to matrix<br>  ···<br>  D = pdist(X)； % calculate the distance between pairs in X<br>  M = squareform(D) % convert to the symmetry matrix<br>  ···</p>
+</li>
 </ul>
 <h4 id="画图"><a href="#画图" class="headerlink" title="画图"></a>画图</h4><ul>
 <li><p>设置图像背景，位置：</p>
@@ -302,6 +307,9 @@ var _hmt = _hmt || [];
 </li>
 <li><p>去掉坐标轴，按像素实际大小画图</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">axis off; axis equal;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Scatter plot matrix: diagonal are replaced with histogram plots of the data in the corresponding column of X. Off-diagonal parts are scatter plots of the columns of X against other columns of X. </p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X = randn(50,3); </span><br><span class="line">plotmatrix(X)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="Read-and-write-file"><a href="#Read-and-write-file" class="headerlink" title="Read and write file"></a>Read and write file</h3><ul>
@@ -525,7 +533,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共19.4k字
+              本站总共20.3k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -640,11 +648,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂文</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
+                <a href="javascript:void(0)" class="js-tag color1">Algorithms</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -656,6 +660,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂文</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Brain</a>
               </li>
              
@@ -664,15 +676,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Algorithms</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+                <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -684,11 +692,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -696,11 +700,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
             
             <div class="clearfix"></div>
