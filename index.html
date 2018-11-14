@@ -247,6 +247,397 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-MIT6006-Lec06" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/11/14/MIT6006-Lec06/">MIT6006 Lec06 AVL trees, AVL sort</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/11/14/MIT6006-Lec06/" class="archive-article-date">
+  	<time datetime="2018-11-14T03:52:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Tree-rotation"><span class="toc-number">1.</span> <span class="toc-text">Tree rotation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AVL-tree"><span class="toc-number">2.</span> <span class="toc-text">AVL tree</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AVL-Insert"><span class="toc-number">2.1.</span> <span class="toc-text">AVL Insert</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#General"><span class="toc-number">3.</span> <span class="toc-text">General</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Tree-rotation"><span class="toc-text">Tree rotation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AVL-tree"><span class="toc-text">AVL tree</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AVL-Insert"><span class="toc-text">AVL Insert</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#General"><span class="toc-text">General</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <p>Recall the properties of binary search tree:</p>
+<ul>
+<li>each node has <ul>
+<li>key</li>
+<li>left pointer</li>
+<li>right pointer</li>
+<li>parent pointer</li>
+</ul>
+</li>
+<li>height of the node  = length (number of edges) of longest downward path to a leaf</li>
+<li>BST will do all operations in $O(h)$ time, h = height</li>
+<li>h is between $lg n$ and $n$.</li>
+</ul>
+<p>The advantage of balanced tree is that it maintains $h=O(lg n)$, therefore, all operations run in $O(lg n)$ time.</p>
+<h3 id="Tree-rotation"><a href="#Tree-rotation" class="headerlink" title="Tree rotation"></a>Tree rotation</h3><p>The operation “rotation” is to make a tree balanced and will be used in fixing the inbalance of AVL tree.<br>There are two categories: single rotation and two rotations. </p>
+<p><strong>Left Rotation</strong><br><em>Application scenario</em>: When a node A’s <strong>right</strong> subtree becomes inbalanced after inserting another new one. Then need to apply the left rotation of that node (A).<br>After performing the left rotation of node A, A’s right child becomes its parent and A becomes the <strong>left child</strong>.</p>
+<p><strong>Right Rotation</strong><br><em>Application scenario</em>: When a node A’s <strong>left</strong> subtree becomes inbalanced after inserting another new one. Then need to apply the right rotation of that node (A).<br>After performing the right rotation of the unbalanced node A, it becomes the <strong>right child</strong> of its original left child.</p>
+<p><strong>Left-Right Rotation</strong><br><em>Application scenario</em>: When a node A becomes inbalanced after inserting another new one to the <strong>right subtree of the left subtree of A</strong>.<br><em>Steps</em>: </p>
+<ol>
+<li>Perform left rotation to the left subtree of A</li>
+<li>Perform right rotation of the A itself</li>
+</ol>
+<p><strong>Right-Left Rotation</strong><br><em>Application scenario</em>: When a node A becomes inbalanced after inserting another new one to the <strong>left subtree of the right subtree of A</strong>.<br><em>Steps</em>: </p>
+<ol>
+<li>Perform right rotation to the right subtree of A</li>
+<li>Perform left rotation of the A itself</li>
+</ol>
+<p><strong>Implementation</strong>:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">def left_rotate(self, x):</span><br><span class="line">    y = x.right</span><br><span class="line">    y.parent = x.parent</span><br><span class="line">    <span class="keyword">if</span> y.parent is None:</span><br><span class="line">        self.root = y</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">if</span> y.parent.left is x:</span><br><span class="line">            y.parent.left = y</span><br><span class="line">        <span class="keyword">elif</span> y.parent.right is x:</span><br><span class="line">            y.parent.right = y</span><br><span class="line">    x.right = y.left</span><br><span class="line">    <span class="keyword">if</span> x.right is not None:</span><br><span class="line">        x.right.parent = x</span><br><span class="line">    y.left = x</span><br><span class="line">    x.parent = y</span><br><span class="line">    update_height(x)</span><br><span class="line">    update_height(y)</span><br><span class="line"></span><br><span class="line">def right_rotate(self, x):</span><br><span class="line">    y = x.left</span><br><span class="line">    y.parent = x.parent</span><br><span class="line">    <span class="keyword">if</span> y.parent is None:</span><br><span class="line">        self.root = y</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">if</span> y.parent.left is x:</span><br><span class="line">            y.parent.left = y</span><br><span class="line">        <span class="keyword">elif</span> y.parent.right is x:</span><br><span class="line">            y.parent.right = y</span><br><span class="line">    x.left = y.right</span><br><span class="line">    <span class="keyword">if</span> x.left is not None:</span><br><span class="line">        x.left.parent = x</span><br><span class="line">    y.right = x</span><br><span class="line">    x.parent = y</span><br><span class="line">    update_height(x)</span><br><span class="line">    update_height(y)</span><br></pre></td></tr></table></figure></p>
+<p>Here is a very nice illustration: <a href="https://wiki2.org/en/Tree_rotation#/media/File:Tree_Rebalancing.gif" target="_blank" rel="noopener">https://wiki2.org/en/Tree_rotation#/media/File:Tree_Rebalancing.gif</a></p>
+<h3 id="AVL-tree"><a href="#AVL-tree" class="headerlink" title="AVL tree"></a>AVL tree</h3><ul>
+<li>named by the author.</li>
+<li>for every node, require height of left &amp; right children to differ by at most 1<ul>
+<li>nil tree as height -1</li>
+<li>each node stores its height (using data structure augmentation)</li>
+</ul>
+</li>
+</ul>
+<h4 id="AVL-Insert"><a href="#AVL-Insert" class="headerlink" title="AVL Insert"></a>AVL Insert</h4><ul>
+<li>Perform the normal BST insertion.</li>
+<li>The current node must be one of the ancestors of the newly inserted node. Update the height of the current node.</li>
+<li>Get the balance factor (left subtree height – right subtree height) of the current node.</li>
+<li>If balance factor is greater than 1, then the current node is unbalanced and we are either in Left Left case or left Right case. To check whether it is left left case or not, compare the newly inserted key with the key in left subtree root.</li>
+<li>If balance factor is less than -1, then the current node is unbalanced and we are either in Right Right case or Right-Left case. To check whether it is Right Right case or not, compare the newly inserted key with the key in right subtree root.</li>
+<li>Time: $\theta (nlg n)$</li>
+</ul>
+<p><strong>Code of rebalance the tree</strong>:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">def rebalance(self, node):</span><br><span class="line">    <span class="keyword">while</span> node is not None:</span><br><span class="line">        update_height(node)</span><br><span class="line">        <span class="keyword">if</span> height(node.left) &gt;= 2 + height(node.right):</span><br><span class="line">            <span class="keyword">if</span> height(node.left.left) &gt;= height(node.left.right):</span><br><span class="line">                self.right_rotate(node)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                self.left_rotate(node.left)</span><br><span class="line">                self.right_rotate(node)</span><br><span class="line">        <span class="keyword">elif</span> height(node.right) &gt;= 2 + height(node.left):</span><br><span class="line">            <span class="keyword">if</span> height(node.right.right) &gt;= height(node.right.left):</span><br><span class="line">                self.left_rotate(node)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                self.right_rotate(node.right)</span><br><span class="line">                self.left_rotate(node)</span><br><span class="line">        node = node.parent</span><br></pre></td></tr></table></figure></p>
+<h3 id="General"><a href="#General" class="headerlink" title="General"></a>General</h3><p><strong>Other balanced trees</strong>:</p>
+<ul>
+<li>B-Trees/2-3-4 Trees</li>
+<li>BB[α] Trees </li>
+<li>Red-black Trees </li>
+<li>(A) — Splay-Trees </li>
+<li>(R) — Skip Lists</li>
+<li>(A) — Scapegoat Trees </li>
+<li>(R) — Treaps<br>(R) = use random numbers to make decisions fast with high probability<br>(A) = “amortized”: adding up costs for several operations =⇒ fast on average</li>
+</ul>
+<p><strong>Data Structure (DS) vs Abstract Data Type (ADT)</strong></p>
+<ul>
+<li>ADT is a logical description and data structure is concrete. </li>
+<li>ADT is the logical picture of the data and the operations to manipulate the component elements of the data. </li>
+<li>Data structure is the actual representation of the data during the implementation and the algorithms to manipulate the data elements. </li>
+<li>ADT is in the logical level and data structure is in the implementation level.</li>
+</ul>
+<p>There are many possible DSs for one ADT.<br>Some common ADTs: </p>
+<ul>
+<li>stack, queue, priority queue, dictionary, sequence, set</li>
+</ul>
+<p>Some common DSs used to implement the above ADTS: </p>
+<ul>
+<li>array, linked list, hash table (open, closed, circular hashing) </li>
+<li>trees (binary search trees, heaps, AVL trees, 2-3 trees, tries, red/black trees, B-trees)</li>
+</ul>
+<p><br></p>
+<p>Reference:<br><a href="https://www.tutorialspoint.com/data_structures_algorithms/avl_tree_algorithm.htm" target="_blank" rel="noopener">https://www.tutorialspoint.com/data_structures_algorithms/avl_tree_algorithm.htm</a><br><a href="https://www.geeksforgeeks.org/avl-tree-set-1-insertion/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/avl-tree-set-1-insertion/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Algorithms</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/11/14/MIT6006-Lec06/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-slurm-exit-code" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/11/13/slurm-exit-code/">Slurm Exit Code</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/11/13/slurm-exit-code/" class="archive-article-date">
+  	<time datetime="2018-11-12T21:09:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Job-Termination-Signals"><span class="toc-number">1.</span> <span class="toc-text">Job Termination Signals</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Job-Exit-Status"><span class="toc-number">2.</span> <span class="toc-text">Job Exit Status</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Job-Termination-Signals"><span class="toc-text">Job Termination Signals</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Job-Exit-Status"><span class="toc-text">Job Exit Status</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <p>开始使用HPC时遇到很多问题，特别是用slurm deploy job的时候，如果在slurm文件中设置将开始，结束，失败的信息发送给自己邮箱时，它会针对每一种情况给一个code，这个code即表示一种状态。下面记录一些常见的 exit code 表明的意思。</p>
+<p>The exit code from a batch job is a standard Unix termination signal.<br>Typically, exit code 0 means successful completion.<br>Codes 1-127 are generated from the job calling exit() with a non-zero value to indicate an error.<br>Exit codes 129-255 represent jobs terminated by Unix signals.<br>Each signal has a corresponding value which is indicated in the job exit code</p>
+<h3 id="Job-Termination-Signals"><a href="#Job-Termination-Signals" class="headerlink" title="Job Termination Signals"></a>Job Termination Signals</h3><table>
+<thead>
+<tr>
+<th>Signal Name</th>
+<th>Signal Number</th>
+<th>Exit Type</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SIGHUP</td>
+<td>1</td>
+<td>Term</td>
+<td>Hangup detected on controlling terminal or death of controlling process</td>
+</tr>
+<tr>
+<td>SIGINT</td>
+<td>2</td>
+<td>Term</td>
+<td>Interrupt from keyboard</td>
+</tr>
+<tr>
+<td>SIGQUIT</td>
+<td>3</td>
+<td>Core</td>
+<td>Quit from keyboard</td>
+</tr>
+<tr>
+<td>SIGILL</td>
+<td>4</td>
+<td>Core</td>
+<td>Illegal Instruction</td>
+</tr>
+<tr>
+<td>SIGABRT</td>
+<td>6</td>
+<td>Core</td>
+<td>Abort signal from abort(3)</td>
+</tr>
+<tr>
+<td>SIGFPE</td>
+<td>8</td>
+<td>Core</td>
+<td>Floating point exception</td>
+</tr>
+<tr>
+<td>SIGKILL</td>
+<td>9</td>
+<td>Term</td>
+<td>Kill signal</td>
+</tr>
+<tr>
+<td>SIGSEGV</td>
+<td>11</td>
+<td>Core</td>
+<td>Invalid memory reference</td>
+</tr>
+<tr>
+<td>SIGPIPE</td>
+<td>13</td>
+<td>Term</td>
+<td>Broken pipe: write to pipe with no readers</td>
+</tr>
+<tr>
+<td>SIGALRM</td>
+<td>14</td>
+<td>Term</td>
+<td>Timer signal from alarm(2)</td>
+</tr>
+<tr>
+<td>SIGTERM</td>
+<td>15</td>
+<td>Term</td>
+<td>Termination signal</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Job-Exit-Status"><a href="#Job-Exit-Status" class="headerlink" title="Job Exit Status"></a>Job Exit Status</h3><table>
+<thead>
+<tr>
+<th>Exit Code</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9</td>
+<td>Ran out of CPU time.</td>
+</tr>
+<tr>
+<td>64</td>
+<td>The job ended nicely for but your job was running out of CPU time. The solution is to submit the job to a queue with more resources (bigger CPU time limit).</td>
+</tr>
+<tr>
+<td>125</td>
+<td>An ErrMsg(severe) was reached in your job.</td>
+</tr>
+<tr>
+<td>127</td>
+<td>Something wrong with the machine?</td>
+</tr>
+<tr>
+<td>130</td>
+<td>The job ran out of CPU or swap time. If swap time is the culprit, check for memory leaks.</td>
+</tr>
+<tr>
+<td>131</td>
+<td>The job ran out of CPU or swap time. If swap time is the culprit, check for memory leaks.</td>
+</tr>
+<tr>
+<td>134</td>
+<td>The job is killed with an abort signal, and you probably got core dumped. Often this is caused either by an assert() or an ErrMsg(fatal) being hit in your job. There may be a run-time bug in your code. Use a debugger like gdb or Totalview to find out what’s wrong.</td>
+</tr>
+<tr>
+<td>137</td>
+<td>The job was killed because it exceeded the time limit.</td>
+</tr>
+<tr>
+<td>139</td>
+<td>Segmentation violation. Usually indicates a pointer error.</td>
+</tr>
+<tr>
+<td>140</td>
+<td>The job exceeded the “wall clock” time limit (as opposed to the CPU time limit).</td>
+</tr>
+</tbody>
+</table>
+<p>Reference:<br><a href="https://sites.google.com/a/case.edu/hpc-upgraded-cluster/cluster-faq/running-jobs/exit-code-status" target="_blank" rel="noopener">https://sites.google.com/a/case.edu/hpc-upgraded-cluster/cluster-faq/running-jobs/exit-code-status</a><br><a href="https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference-list-of-run-time-error-messages" target="_blank" rel="noopener">https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference-list-of-run-time-error-messages</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Tools</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/11/13/slurm-exit-code/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-MIT6006-Lec05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1267,224 +1658,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-simulated-annealing" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/10/29/simulated-annealing/">Algorithm - 模拟退火 Simulated Annealing</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/10/29/simulated-annealing/" class="archive-article-date">
-  	<time datetime="2018-10-29T01:01:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Acceptance-Function"><span class="toc-number">1.</span> <span class="toc-text">Acceptance Function:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pseudo-Code"><span class="toc-number">2.</span> <span class="toc-text">Pseudo Code</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Acceptance-Function"><span class="toc-text">Acceptance Function:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pseudo-Code"><span class="toc-text">Pseudo Code</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>模拟退火（SA）是拿来找给定函数的近似全局最优的。一般当搜索空间是离散的时，经常使用它。模拟退火算法最初是受到金属加工时退火过程的启发来的。在真正的金属冶炼过程中，通过给金属降温，金属的形态就会固定。而在模拟退火中，我们会设置 “温度” 这个变量，来模拟这个过程。 初始时，将其设置为高，然后在算法运行时让它慢慢“冷却”。当这个变量“温度”很高时，算法会更允许接受比当前解更差的解(即高温时，金属可以改变的力度和形状可以更大)。这能够让算法不局限在之前发现的任何local optimum上。随着温度的降低，接受更差解的机会就越小，因此允许算法逐渐集中在搜索空间的一个区域，来找到近最优解。这个渐进的“冷却”过程能够让模拟退火算法在处理包含大量局部最优解的大问题时非常有效地找到接近的最优解。</p>
-<h3 id="Acceptance-Function"><a href="#Acceptance-Function" class="headerlink" title="Acceptance Function:"></a>Acceptance Function:</h3><p>决定一个solution是否被接受的步骤如下：</p>
-<ol>
-<li>看下一个解是否优于当前解，如果是，则无条件接受</li>
-<li>如果不是，根据以下几个方面考虑要不要接受：<ul>
-<li>下一个解有多差？</li>
-<li>当前系统的 “温度” 有多高？<br>数学表达式如下：<br>$$exp(\frac{solutionEnergy - neighborEnergy}{Temperature})$$<br>即：系统能量变得越小，温度越高，越会接受这个解。是否接受解根据一个随机的概率来的</li>
-</ul>
-</li>
-</ol>
-<p>算法描述如下：</p>
-<ol>
-<li>设置温度变量初始值，随机初始化一个解</li>
-<li>循环直到停止条件达到：一般为系统足够”冷却” 或 最优的解已经找到<ul>
-<li>通过较小地改变当前解来确定下一个解</li>
-<li>决定是否跳去下一个解（用上面的Acception function）</li>
-</ul>
-</li>
-<li>降低温度，继续循环</li>
-</ol>
-<h3 id="Pseudo-Code"><a href="#Pseudo-Code" class="headerlink" title="Pseudo Code"></a>Pseudo Code</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int temperature = m;</span><br><span class="line">create a collection of best solutions found</span><br><span class="line"><span class="keyword">while</span> (temperature meets the condition)&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (accept(curr_sol, next_sol, temperature)) curr_sol = next_sol;</span><br><span class="line">    <span class="keyword">if</span> (curr_sol &lt; best) best = add curr_sol to best collection;</span><br><span class="line">    temperature *= (1-coolingRate) </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">accept(curr_sol, next_sol, temperature)&#123;</span><br><span class="line">    <span class="keyword">if</span> (next_sol &lt; curr_sol) <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="built_in">return</span> exp((curr_sol-next_col)/temperature) &gt; rand() <span class="comment"># 以一个随机的概率接受</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><br></p>
-<p>Reference:<br><a href="http://www.theprojectspot.com/tutorial-post/simulated-annealing-algorithm-for-beginners/6" target="_blank" rel="noopener">http://www.theprojectspot.com/tutorial-post/simulated-annealing-algorithm-for-beginners/6</a><br><a href="http://mathworld.wolfram.com/SimulatedAnnealing.html" target="_blank" rel="noopener">http://mathworld.wolfram.com/SimulatedAnnealing.html</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/10/29/simulated-annealing/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-DTI-basics" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/10/23/DTI-basics/">DTI Basics</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/10/23/DTI-basics/" class="archive-article-date">
-  	<time datetime="2018-10-22T23:01:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Processing-Data-with-FSL’s-FDT-Diffusion"><span class="toc-number">1.</span> <span class="toc-text">Processing Data with FSL’s FDT Diffusion</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Processing-Data-with-FSL’s-FDT-Diffusion"><span class="toc-text">Processing Data with FSL’s FDT Diffusion</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>You will also need to acquire a reference image with no diffusion information to calculate the ADC value (divide diffusion scan by reference scan). You can vary the amount of diffusion weighting (level of sensitivity to diffusion). The amount of diffusion weighting is measured by the b-value. If the b-value equals 0, there is no diffusion weighting (reference scan). If the diffusion value is very high, you can get greater resolution, but also more noise. The standard b-value for adults is 1000. In children, you typically use 600. If looking outside the brain, typically around 500.</p>
-<p>converted to NIfTI format and includes the b-values and gradient idrections: .bval and .bvec</p>
-<p> mean B0 image is not sensitive to diffusion direction.<br>in diffusion image, the brightness varies dramatically in the white matter depending on the alignment of the fibers. More diffusion yields a darker pixel because you lose signal as the water molecule can go anywhere. Higher ADC values mean it can go very far without interruption, and it takes the signal with it. This is not necessarily related to anisotropy. </p>
-<p>Eddy current correction of DTI data is analogous to motion correction of fMRI data.</p>
-<h3 id="Processing-Data-with-FSL’s-FDT-Diffusion"><a href="#Processing-Data-with-FSL’s-FDT-Diffusion" class="headerlink" title="Processing Data with FSL’s FDT Diffusion"></a>Processing Data with FSL’s FDT Diffusion</h3><p>The reference volume is typically 0 (this is the volume with a b-value of 0, dcm2nii should automatically ensure that the initial volume is the volume with zero b-value, but you should ensure this is correct with your data which you can do by viewing the volumes with MRIcron).</p>
-<p>The basic processing pipeline has the following elements:<br>Convert data from scanner to scalar image<br>Run distortion correction<br>EPI distortion correction with fieldmap/TOPUP<br>Eddy current correction<br>Brain extraction<br>Tensor fitting<br>Produce scalars (FA, MD, AD, RD, RGB)</p>
-<p>Advanced processing:<br>Normalization<br>Scalar normalization, or<br>Tensor normalization<br>Fiber tracking<br>Deterministic, or<br>Probabilistic<br>Whole brain analysis<br>Voxel-based analysis, or<br>Track-based analysis</p>
-<p>步骤：FA -&gt; Tensors -&gt; Fiber tracking -&gt; white matter delineation</p>
-<p><a href="http://www.cabiatl.com/Resources/Course/tutorial/html/dti.html" target="_blank" rel="noopener">http://www.cabiatl.com/Resources/Course/tutorial/html/dti.html</a><br><a href="http://brainimaging.waisman.wisc.edu/~tromp/DTI_101.pdf" target="_blank" rel="noopener">http://brainimaging.waisman.wisc.edu/~tromp/DTI_101.pdf</a><br><a href="http://www.diffusion-imaging.com/2015/10/dti-tutorial-1-from-scanner-to-tensor.html" target="_blank" rel="noopener">http://www.diffusion-imaging.com/2015/10/dti-tutorial-1-from-scanner-to-tensor.html</a><br><a href="https://mrtrix.readthedocs.io/en/latest/quantitative_structural_connectivity/ismrm_hcp_tutorial.html" target="_blank" rel="noopener">https://mrtrix.readthedocs.io/en/latest/quantitative_structural_connectivity/ismrm_hcp_tutorial.html</a><br><a href="http://dbic.dartmouth.edu/wiki/index.php/Diffusion_Tensor_Imaging_Analysis" target="_blank" rel="noopener">http://dbic.dartmouth.edu/wiki/index.php/Diffusion_Tensor_Imaging_Analysis</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">MRI</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/10/23/DTI-basics/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><a class="extend next" rel="next" href="/blog/page/2/">Next &raquo;</a>
@@ -1516,7 +1689,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共20.3k字
+              本站总共21.6k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -1631,15 +1804,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Algorithms</a>
+                <a href="javascript:void(0)" class="js-tag color1">Brain</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+                <a href="javascript:void(0)" class="js-tag color4">MRI</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1651,11 +1820,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Brain</a>
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">MRI</a>
+                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Algorithms</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1667,6 +1840,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
@@ -1675,7 +1852,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1683,15 +1864,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
             
             <div class="clearfix"></div>

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://tracyxinwang.site/blog/blog/2018/11/13/slurm-exit-code/</loc>
+    <lastmod>2018-11-14T06:26:48.299Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2018/11/14/MIT6006-Lec06/</loc>
+    <lastmod>2018-11-14T06:26:07.771Z</lastmod>
+  </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/11/07/MIT6006-Lec05/</loc>
     <lastmod>2018-11-08T06:23:05.000Z</lastmod>
   </url>  <url>
