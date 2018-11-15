@@ -247,6 +247,95 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-problem-hexo-deploy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/10/30/problem-hexo-deploy/">Hexo deploy 出现问题</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/10/30/problem-hexo-deploy/" class="archive-article-date">
+  	<time datetime="2018-10-30T02:54:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              
+            </div>
+           -->
+        <!--   -->
+        <p>也不知道怎么回事办公室的电脑突然重启了，可能是更新吧，但是更新完了回来发现hexo generate 和 deploy 并不能使用了<br>最开始报的错是 <code>Node 不是内部或外部命令</code>，一看是 node.js 的环境变量没有配置，很奇怪，之前明明是OK的，然后我就在环境变量里面配置了一下node，步骤如下：</p>
+<ul>
+<li>右键<code>我的电脑-属性-高级系统设置</code></li>
+<li>找到下面有个<code>环境变量</code>的选择框，点进去</li>
+<li>此时出来的对话框中有上下两个部分，上面的部分属于<code>用户变量</code>，找到里面有一行是 <code>path</code>，点击<code>编辑</code></li>
+<li>新建一个变量，把node.js所在的路径拷进去就行了，我的是 <code>D:\Program Files\nodejs</code></li>
+</ul>
+<p>然后 <code>hexo generate</code> 就可以了，deploy的时候发现出现以下问题：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">FATAL Something<span class="string">'s wrong. Maybe you can find the solution here: http://hexo.io/docs/troubleshooting.html</span></span><br><span class="line"><span class="string">Error: spawn git ENOENT</span></span><br><span class="line"><span class="string">at notFoundError (C:\Users\XXX\hexo\node_modules\cross-spawn\lib\enoent.js:11:11)</span></span><br><span class="line"><span class="string">at verifyENOENT (C:\Users\XXX\hexo\node_modules\cross-spawn\lib\enoent.js:46:16)</span></span><br><span class="line"><span class="string">at ChildProcess.cp.emit (C:\Users\XXX\hexo\node_modules\cross-spawn\lib\enoent.js:33:19)</span></span><br><span class="line"><span class="string">at Process.ChildProcess._handle.onexit (internal/child_process.js:198:12)</span></span><br></pre></td></tr></table></figure></p>
+<p>那个XXX是hexo所在文件的路径，这里就不放出来了。<br>解决这个的问题最直接的办法就是直接在hexo的当前文件夹下，运行 <code>git bash</code> 然后在bash 处运行 <code>hexo deploy</code>…</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/10/30/problem-hexo-deploy/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-simulated-annealing" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1135,7 +1224,7 @@ var _hmt = _hmt || [];
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Algorithms</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
         		</li>
       		
 		</ul>
@@ -1432,124 +1521,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-SMB-Samba" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/09/27/SMB-Samba/">Ubuntu与Windows共享资源</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/09/27/SMB-Samba/" class="archive-article-date">
-  	<time datetime="2018-09-27T03:01:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#以下在-Linux-上操作"><span class="toc-number">1.</span> <span class="toc-text">以下在 Linux 上操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装samba："><span class="toc-number">1.1.</span> <span class="toc-text">安装samba：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建共享文件夹"><span class="toc-number">1.2.</span> <span class="toc-text">创建共享文件夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改samba配置文件"><span class="toc-number">1.3.</span> <span class="toc-text">修改samba配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置samba用户名"><span class="toc-number">1.4.</span> <span class="toc-text">设置samba用户名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动samba服务器并测试"><span class="toc-number">1.5.</span> <span class="toc-text">启动samba服务器并测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加入开机启动"><span class="toc-number">1.6.</span> <span class="toc-text">加入开机启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看Ubuntu的-IP"><span class="toc-number">1.7.</span> <span class="toc-text">查看Ubuntu的 IP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#以下在Windows上操作"><span class="toc-number">2.</span> <span class="toc-text">以下在Windows上操作</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#以下在-Linux-上操作"><span class="toc-text">以下在 Linux 上操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装samba："><span class="toc-text">安装samba：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建共享文件夹"><span class="toc-text">创建共享文件夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改samba配置文件"><span class="toc-text">修改samba配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置samba用户名"><span class="toc-text">设置samba用户名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动samba服务器并测试"><span class="toc-text">启动samba服务器并测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加入开机启动"><span class="toc-text">加入开机启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看Ubuntu的-IP"><span class="toc-text">查看Ubuntu的 IP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#以下在Windows上操作"><span class="toc-text">以下在Windows上操作</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>事情又是这样的，想与实验室一台公用的Linux server和自己的windows的共享资源，毕竟数据拿硬盘拷来拷去太麻烦了。Linux 下有Samba软件可以提供与Windows共享，所以打算用这个来搞一下。</p>
-<h2 id="以下在-Linux-上操作"><a href="#以下在-Linux-上操作" class="headerlink" title="以下在 Linux 上操作"></a>以下在 Linux 上操作</h2><h3 id="安装samba："><a href="#安装samba：" class="headerlink" title="安装samba："></a>安装samba：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install samba</span><br></pre></td></tr></table></figure>
-<h3 id="创建共享文件夹"><a href="#创建共享文件夹" class="headerlink" title="创建共享文件夹"></a>创建共享文件夹</h3><p>在home路径下创建一个你想共享的文件夹，名字自定，e.g. <code>DataShare</code>, 然后修改文件夹权限确保共享：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod 777 /home/DataShare</span><br></pre></td></tr></table></figure></p>
-<p>777表示将全部权限都放出来。</p>
-<h3 id="修改samba配置文件"><a href="#修改samba配置文件" class="headerlink" title="修改samba配置文件"></a>修改samba配置文件</h3><p>为防止更改失败，先备份一下原文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /etc/smaba/smb.conf /etc/samba/smb.conf.orig</span><br></pre></td></tr></table></figure></p>
-<p>接下来修改配置文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/samba/smb.conf</span><br></pre></td></tr></table></figure></p>
-<p>在文件最下面加上一下内容：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[share]</span><br><span class="line">path = /home/Datashare</span><br><span class="line">writable = yes</span><br><span class="line">avaliable = yes</span><br><span class="line">browseable = yes</span><br></pre></td></tr></table></figure></p>
-<p>解释一下上面的内容，[share]指这个共享文件夹的别名，之后在window接入下会直接使用这个别名，用之前的名字实测并不可以。</p>
-<h3 id="设置samba用户名"><a href="#设置samba用户名" class="headerlink" title="设置samba用户名"></a>设置samba用户名</h3><p>注意在设置之前，这个用户名一定是本身就已经是 linux 下的一个user, 不然会创建失败，所以最好先在linux下添加一个user:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo adduser shareuser</span><br></pre></td></tr></table></figure></p>
-<p>然后会让你输入密码，记住这个密码，因为在之后设置samba用户时也需要同样的密码。<br>然后设置samba的登录密码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo touch /etc/samba/smbpasswd</span><br><span class="line">sudo smbpasswd -a shareuser</span><br></pre></td></tr></table></figure></p>
-<p><code>touch</code>是指保存账户信息，<code>shareuser</code> 就是你要添加的用户名，之后会让你输入密码，这个密码就是之前创建user的那个密码。</p>
-<h3 id="启动samba服务器并测试"><a href="#启动samba服务器并测试" class="headerlink" title="启动samba服务器并测试"></a>启动samba服务器并测试</h3><p>启动：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/samba restart</span><br></pre></td></tr></table></figure></p>
-<p>测试：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">testparm</span><br></pre></td></tr></table></figure></p>
-<h3 id="加入开机启动"><a href="#加入开机启动" class="headerlink" title="加入开机启动"></a>加入开机启动</h3><p>这部分我没有加，先留在这里备用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> smb.service</span><br><span class="line">systemctl <span class="built_in">enable</span> nmb.service</span><br><span class="line">systemctl start smb.service</span><br><span class="line">systemctl start nmb.service</span><br></pre></td></tr></table></figure></p>
-<h3 id="查看Ubuntu的-IP"><a href="#查看Ubuntu的-IP" class="headerlink" title="查看Ubuntu的 IP"></a>查看Ubuntu的 IP</h3><p>是为了在windows上访问的时候添加使用：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure></p>
-<p>出来一串的东西，找到ip记下来就好了。</p>
-<h2 id="以下在Windows上操作"><a href="#以下在Windows上操作" class="headerlink" title="以下在Windows上操作"></a>以下在Windows上操作</h2><p>打开<code>我的电脑</code>，左边导航栏下面有个 <code>网络</code>, 右键选择 <code>映射网络驱动</code>，然后会让你输入samba服务器的地址和文件夹：</p>
-<ul>
-<li>驱动器选择默认的 z 就好</li>
-<li>文件夹： <code>\\192.168.3.78\share</code>, 其中前面的ip就是你的linux的ip, 后面的<code>share</code>就是你创建共享文件夹的别名，同时注意斜杠不要打反了。。。</li>
-<li>勾选 <code>使用其他凭据连接</code>,没有选的话可能会以默认的用户名登入，这样机会导致失败。因为当前的用户是你linux下的用户，名称并不匹配</li>
-</ul>
-<p>点击完成之后会要求输入网络凭据，用户名和密码就是你之前在linux下新添加的那个用户名和密码。点击确定之后就会连接，不出意外的话在此电脑下的网络位置里面，就能看到一个叫 <code>share</code>的z盘了。在里面拖放文件，就会发现可以自由共享了。简直不能再Nice！</p>
-<!-- 下在局域网中可以通过 [SMB(Server Message Block)](https://wiki2.org/en/Server_Message_Block) 协议传输文件, 是微软当初提出来的，后来又称 CIFS（Common Internet File System）。-->
-<p>Reference:<br><a href="https://www.cnblogs.com/gzdaijie/p/5194033.html" target="_blank" rel="noopener">https://www.cnblogs.com/gzdaijie/p/5194033.html</a><br><a href="https://ywnz.com/linuxjc/2636.html" target="_blank" rel="noopener">https://ywnz.com/linuxjc/2636.html</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Samba</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/09/27/SMB-Samba/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/blog/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><a class="extend next" rel="next" href="/blog/page/3/">Next &raquo;</a>
@@ -1581,7 +1552,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共21.6k字
+              本站总共22.3k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -1696,6 +1667,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Brain</a>
               </li>
              
@@ -1712,27 +1691,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Algorithms</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1748,11 +1711,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">

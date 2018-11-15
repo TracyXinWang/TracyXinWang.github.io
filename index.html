@@ -247,6 +247,140 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-MIT6006-Lec07" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/11/15/MIT6006-Lec07/">MIT6006 Lec07 Linear-Time Sorting</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/11/15/MIT6006-Lec07/" class="archive-article-date">
+  	<time datetime="2018-11-15T03:52:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Comparison-model"><span class="toc-number">1.</span> <span class="toc-text">Comparison model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Decision-tree"><span class="toc-number">1.1.</span> <span class="toc-text">Decision tree</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lower-Bounds"><span class="toc-number">2.</span> <span class="toc-text">Lower Bounds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linear-time-Sorting"><span class="toc-number">3.</span> <span class="toc-text">Linear-time Sorting</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Radix-sort"><span class="toc-number">3.1.</span> <span class="toc-text">Radix sort</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Comparison-model"><span class="toc-text">Comparison model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Decision-tree"><span class="toc-text">Decision tree</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lower-Bounds"><span class="toc-text">Lower Bounds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linear-time-Sorting"><span class="toc-text">Linear-time Sorting</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Radix-sort"><span class="toc-text">Radix sort</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <p>Need to digest again!</p>
+<p>First lists some claims:</p>
+<ul>
+<li>searching among n preprocessed items requires $Ω(lg n)$ time: binary search, AVL tree search optimal</li>
+<li>sorting n items requires $Ω(nlg n)$: mergesort, heap sort, AVL sort optimal</li>
+</ul>
+<h3 id="Comparison-model"><a href="#Comparison-model" class="headerlink" title="Comparison model"></a>Comparison model</h3><ul>
+<li>All the input items are black boxes (ADTs)</li>
+<li>Only support comparisons (&gt;,&lt;, etc.)</li>
+<li>Time cost = number of comparisons</li>
+</ul>
+<h4 id="Decision-tree"><a href="#Decision-tree" class="headerlink" title="Decision tree"></a>Decision tree</h4><p>Any comparison algorithm can be viewed/specified as a tree of all possible comparison outcomes &amp; resulting output.</p>
+<ul>
+<li>internal node = binary decision</li>
+<li>leaf = output (algorithm is done)</li>
+<li>root-to-leaf path = algorithm execution</li>
+<li>path length (depth) = running time</li>
+<li>height of tree = worst-case running time</li>
+</ul>
+<p>In fact, binary decision tree model is more powerful than comparison model, and lower bounds extend to it</p>
+<blockquote>
+<p>A sorting algorithm is comparison based if it uses comparison operators to find the order between two numbers.  Comparison sorts can be viewed abstractly in terms of decision trees. A decision tree is a full binary tree that represents the comparisons between elements that are performed by a particular sorting algorithm operating on an input of a given size. The execution of the sorting algorithm corresponds to tracing a path from the root of the decision tree to a leaf. At each internal node, a comparison ai &lt;= aj is made. The left subtree then dictates subsequent comparisons for ai &lt;= aj, and the right subtree dictates subsequent comparisons for ai &gt; aj. When we come to a leaf, the sorting algorithm has established the ordering. </p>
+</blockquote>
+<h3 id="Lower-Bounds"><a href="#Lower-Bounds" class="headerlink" title="Lower Bounds"></a>Lower Bounds</h3><p><strong>Search Lower Bound</strong></p>
+<ul>
+<li>number of leaves &gt;= number of possible answers &gt;= n</li>
+<li>decision tree is binary</li>
+<li>height &gt;=  $lg Θ(n) = lg n ± Θ(1)$</li>
+</ul>
+<p><strong>Sorting Lower Bound</strong></p>
+<ul>
+<li>leaf specifies answer as permutation: A[3] ≤ A[1] ≤ A[9] ≤ . . .</li>
+<li>all n! are possible answers</li>
+<li>number of leaves &gt;= n!</li>
+</ul>
+<p>$$ \begin{align*}<br>height &amp; ≥ lg n! \\<br>&amp; = lg(1·2 /cdots (n − 1)·n) \\<br>&amp; = lg 1 + lg 2 + /cdots + lg(n − 1) + lg n \\<br>&amp; = \sum^n_{i=1} lg i \\<br>&amp; \ge \sum^n_{i=n/2} lg i \\<br>&amp; \ge \sum^n_{i=n/2} lg \frac n2 \\<br>&amp; = \frac n2 lg n - \frac n2 \\<br>&amp; = \Omega (n lg n)<br>\end{align*}$$</p>
+<p>Therefore, the lower bound for Comparison based sorting algorithm (Merge Sort, Heap Sort, Quick-Sort .. etc) is $Ω(nLogn)$, i.e., they cannot do better than $n logn$.</p>
+<h3 id="Linear-time-Sorting"><a href="#Linear-time-Sorting" class="headerlink" title="Linear-time Sorting"></a>Linear-time Sorting</h3><h4 id="Radix-sort"><a href="#Radix-sort" class="headerlink" title="Radix sort"></a>Radix sort</h4><p><a href="https://www.geeksforgeeks.org/counting-sort/" target="_blank" rel="noopener">Counting sort</a> is a linear time sorting algorithm that sort in $O(n+k)$ time when elements are in range from 1 to k. But if the elements are in range from 1 to $n^2$, counting sort will take $O(n^2)$.</p>
+<p>How to sort such an array in linear time? Use Radix sort.<br>The idea of Radix Sort is to do digit by digit sort starting from least significant digit to most significant digit. Radix sort uses counting sort as a subroutine to sort.</p>
+<p><br></p>
+<p>Reference:<br><a href="https://www.geeksforgeeks.org/lower-bound-on-comparison-based-sorting-algorithms/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/lower-bound-on-comparison-based-sorting-algorithms/</a><br><a href="https://www.geeksforgeeks.org/radix-sort/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/radix-sort/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/11/15/MIT6006-Lec07/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-MIT6006-Lec06" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -370,11 +504,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Algorithms</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
         		</li>
       		
 		</ul>
@@ -421,7 +555,7 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/13/slurm-exit-code/">Slurm Exit Code</a>
+      <a class="article-title" href="/blog/2018/11/13/slurm-exit-code/">Slurm General Command and Exit Code</a>
     </h1>
   
 
@@ -437,7 +571,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Job-Termination-Signals"><span class="toc-number">1.</span> <span class="toc-text">Job Termination Signals</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Job-Exit-Status"><span class="toc-number">2.</span> <span class="toc-text">Job Exit Status</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#General-command"><span class="toc-number">1.</span> <span class="toc-text">General command</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exit-code"><span class="toc-number">2.</span> <span class="toc-text">Exit code</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Job-Termination-Signals"><span class="toc-number">2.1.</span> <span class="toc-text">Job Termination Signals</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Job-Exit-Status"><span class="toc-number">2.2.</span> <span class="toc-text">Job Exit Status</span></a></li></ol></li></ol>
             </div>
            -->
         <!--  
@@ -446,13 +580,16 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Job-Termination-Signals"><span class="toc-text">Job Termination Signals</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Job-Exit-Status"><span class="toc-text">Job Exit Status</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#General-command"><span class="toc-text">General command</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exit-code"><span class="toc-text">Exit code</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Job-Termination-Signals"><span class="toc-text">Job Termination Signals</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Job-Exit-Status"><span class="toc-text">Job Exit Status</span></a></li></ol></li></ol>
         </div>
     </div>
  -->
-        <p>开始使用HPC时遇到很多问题，特别是用slurm deploy job的时候，如果在slurm文件中设置将开始，结束，失败的信息发送给自己邮箱时，它会针对每一种情况给一个code，这个code即表示一种状态。下面记录一些常见的 exit code 表明的意思。</p>
+        <h3 id="General-command"><a href="#General-command" class="headerlink" title="General command"></a>General command</h3><p><strong>submit a job</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sbatch myscript.sh</span><br><span class="line">sbatch --<span class="built_in">test</span>-only myscript.sh  <span class="comment"># test a job and find out when your job is estimated to run</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Information of jobs for a user</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">squeue -u &lt;username&gt;    <span class="comment"># List all current jobs for a user</span></span><br><span class="line">squeue -u &lt;username&gt; -t RUNNING <span class="comment"># List all running jobs for a user</span></span><br><span class="line">squeue -u &lt;username&gt; -t PENDING <span class="comment"># List all pending jobs for a user</span></span><br><span class="line">scontrol show jobid -dd &lt;jobid&gt; <span class="comment"># List detailed information for a job (useful for troubleshooting)</span></span><br><span class="line">sstat --format=AveCPU,AvePages,AveRSS,AveVMSize,JobID -j &lt;jobid&gt; --allsteps <span class="comment"># List status info for a currently running job</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Controlling jobs</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">scancel &lt;jobid&gt;   <span class="comment"># cancel one job</span></span><br><span class="line">scancel -u &lt;username&gt; <span class="comment"># cancel all the jobs for a user</span></span><br><span class="line">scancel -t PENDING -u &lt;username&gt; <span class="comment"># cancel all pending jobs for a user</span></span><br><span class="line">scontrol hold &lt;jobid&gt; <span class="comment"># pause a particular job</span></span><br><span class="line">scontrol requeue &lt;jobid&gt;    <span class="comment"># requeue (cancel and rerun) a particular job </span></span><br><span class="line">scancel &lt;jobid&gt;_&lt;index&gt; <span class="comment"># To cancel an indexed job in a job array</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="Exit-code"><a href="#Exit-code" class="headerlink" title="Exit code"></a>Exit code</h3><p>开始使用HPC时遇到很多问题，特别是用slurm deploy job的时候，如果在slurm文件中设置将开始，结束，失败的信息发送给自己邮箱时，它会针对每一种情况给一个code，这个code即表示一种状态。下面记录一些常见的 exit code 表明的意思。</p>
 <p>The exit code from a batch job is a standard Unix termination signal.<br>Typically, exit code 0 means successful completion.<br>Codes 1-127 are generated from the job calling exit() with a non-zero value to indicate an error.<br>Exit codes 129-255 represent jobs terminated by Unix signals.<br>Each signal has a corresponding value which is indicated in the job exit code</p>
-<h3 id="Job-Termination-Signals"><a href="#Job-Termination-Signals" class="headerlink" title="Job Termination Signals"></a>Job Termination Signals</h3><table>
+<h4 id="Job-Termination-Signals"><a href="#Job-Termination-Signals" class="headerlink" title="Job Termination Signals"></a>Job Termination Signals</h4><table>
 <thead>
 <tr>
 <th>Signal Name</th>
@@ -530,7 +667,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-<h3 id="Job-Exit-Status"><a href="#Job-Exit-Status" class="headerlink" title="Job Exit Status"></a>Job Exit Status</h3><table>
+<h4 id="Job-Exit-Status"><a href="#Job-Exit-Status" class="headerlink" title="Job Exit Status"></a>Job Exit Status</h4><table>
 <thead>
 <tr>
 <th>Exit Code</th>
@@ -580,7 +717,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-<p>Reference:<br><a href="https://sites.google.com/a/case.edu/hpc-upgraded-cluster/cluster-faq/running-jobs/exit-code-status" target="_blank" rel="noopener">https://sites.google.com/a/case.edu/hpc-upgraded-cluster/cluster-faq/running-jobs/exit-code-status</a><br><a href="https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference-list-of-run-time-error-messages" target="_blank" rel="noopener">https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference-list-of-run-time-error-messages</a></p>
+<p>Reference:<br><a href="https://www.rc.fas.harvard.edu/resources/documentation/convenient-slurm-commands/" target="_blank" rel="noopener">https://www.rc.fas.harvard.edu/resources/documentation/convenient-slurm-commands/</a><br><a href="https://sites.google.com/a/case.edu/hpc-upgraded-cluster/cluster-faq/running-jobs/exit-code-status" target="_blank" rel="noopener">https://sites.google.com/a/case.edu/hpc-upgraded-cluster/cluster-faq/running-jobs/exit-code-status</a><br><a href="https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference-list-of-run-time-error-messages" target="_blank" rel="noopener">https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference-list-of-run-time-error-messages</a></p>
 
       
 
@@ -1569,95 +1706,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-problem-hexo-deploy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/10/30/problem-hexo-deploy/">Hexo deploy 出现问题</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/10/30/problem-hexo-deploy/" class="archive-article-date">
-  	<time datetime="2018-10-30T02:54:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              
-            </div>
-           -->
-        <!--   -->
-        <p>也不知道怎么回事办公室的电脑突然重启了，可能是更新吧，但是更新完了回来发现hexo generate 和 deploy 并不能使用了<br>最开始报的错是 <code>Node 不是内部或外部命令</code>，一看是 node.js 的环境变量没有配置，很奇怪，之前明明是OK的，然后我就在环境变量里面配置了一下node，步骤如下：</p>
-<ul>
-<li>右键<code>我的电脑-属性-高级系统设置</code></li>
-<li>找到下面有个<code>环境变量</code>的选择框，点进去</li>
-<li>此时出来的对话框中有上下两个部分，上面的部分属于<code>用户变量</code>，找到里面有一行是 <code>path</code>，点击<code>编辑</code></li>
-<li>新建一个变量，把node.js所在的路径拷进去就行了，我的是 <code>D:\Program Files\nodejs</code></li>
-</ul>
-<p>然后 <code>hexo generate</code> 就可以了，deploy的时候发现出现以下问题：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">FATAL Something<span class="string">'s wrong. Maybe you can find the solution here: http://hexo.io/docs/troubleshooting.html</span></span><br><span class="line"><span class="string">Error: spawn git ENOENT</span></span><br><span class="line"><span class="string">at notFoundError (C:\Users\XXX\hexo\node_modules\cross-spawn\lib\enoent.js:11:11)</span></span><br><span class="line"><span class="string">at verifyENOENT (C:\Users\XXX\hexo\node_modules\cross-spawn\lib\enoent.js:46:16)</span></span><br><span class="line"><span class="string">at ChildProcess.cp.emit (C:\Users\XXX\hexo\node_modules\cross-spawn\lib\enoent.js:33:19)</span></span><br><span class="line"><span class="string">at Process.ChildProcess._handle.onexit (internal/child_process.js:198:12)</span></span><br></pre></td></tr></table></figure></p>
-<p>那个XXX是hexo所在文件的路径，这里就不放出来了。<br>解决这个的问题最直接的办法就是直接在hexo的当前文件夹下，运行 <code>git bash</code> 然后在bash 处运行 <code>hexo deploy</code>…</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/10/30/problem-hexo-deploy/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><a class="extend next" rel="next" href="/blog/page/2/">Next &raquo;</a>
@@ -1689,7 +1737,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共21.6k字
+              本站总共22.3k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -1804,6 +1852,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Brain</a>
               </li>
              
@@ -1820,27 +1876,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Algorithms</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1856,11 +1896,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">

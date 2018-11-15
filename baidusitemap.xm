@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://tracyxinwang.site/blog/blog/2018/11/13/slurm-exit-code/</loc>
-    <lastmod>2018-11-14T06:26:48.299Z</lastmod>
+    <loc>http://tracyxinwang.site/blog/blog/2018/11/15/MIT6006-Lec07/</loc>
+    <lastmod>2018-11-15T05:23:33.770Z</lastmod>
   </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/11/14/MIT6006-Lec06/</loc>
-    <lastmod>2018-11-14T06:26:07.771Z</lastmod>
+    <lastmod>2018-11-15T03:49:11.000Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2018/09/25/My-First-Post/</loc>
+    <lastmod>2018-11-15T03:48:50.000Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2018/10/05/Laplacian-matrix/</loc>
+    <lastmod>2018-11-15T03:48:24.000Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2018/11/13/slurm-exit-code/</loc>
+    <lastmod>2018-11-15T00:04:06.000Z</lastmod>
   </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/11/07/MIT6006-Lec05/</loc>
     <lastmod>2018-11-08T06:23:05.000Z</lastmod>
@@ -49,9 +58,6 @@
     <loc>http://tracyxinwang.site/blog/blog/2018/10/09/NeuralMass2008PlosComp/</loc>
     <lastmod>2018-10-11T11:48:41.366Z</lastmod>
   </url>  <url>
-    <loc>http://tracyxinwang.site/blog/blog/2018/10/05/Laplacian-matrix/</loc>
-    <lastmod>2018-10-08T09:39:01.731Z</lastmod>
-  </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/10/03/thinking-system/</loc>
     <lastmod>2018-10-04T04:52:40.540Z</lastmod>
   </url>  <url>
@@ -66,8 +72,5 @@
   </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/09/24/hello-world/</loc>
     <lastmod>2018-09-27T02:24:32.588Z</lastmod>
-  </url>  <url>
-    <loc>http://tracyxinwang.site/blog/blog/2018/09/25/My-First-Post/</loc>
-    <lastmod>2018-09-27T01:39:31.641Z</lastmod>
   </url>
 </urlset>
