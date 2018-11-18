@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://tracyxinwang.site/blog/blog/2018/11/17/MIT6006-Lec08/</loc>
+    <lastmod>2018-11-18T21:25:45.654Z</lastmod>
+  </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/11/15/MIT6006-Lec07/</loc>
     <lastmod>2018-11-15T05:23:33.770Z</lastmod>
   </url>  <url>
