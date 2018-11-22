@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="http://tracyxinwang.site/blog/"/>
-  <updated>2018-11-22T03:26:09.907Z</updated>
+  <updated>2018-11-22T10:51:51.000Z</updated>
   <id>http://tracyxinwang.site/blog/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Neural Mass Models</title>
+    <link href="http://tracyxinwang.site/blog/2018/11/22/NNM/"/>
+    <id>http://tracyxinwang.site/blog/2018/11/22/NNM/</id>
+    <published>2018-11-22T08:52:09.000Z</published>
+    <updated>2018-11-22T10:51:51.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Here is a summary of neual mass models used in literatures.</p><h3 id="Wilson-Cowan-Model"><a href="#Wilson-Cowan-Model" class="headerlink" title="Wilson-Cowan Model"></a>Wilson-Cowan Model</h3><h4 id="Muldoon-2016-Stimulation-Based-Control-of-Dynamic-Brain-Networks"><a href="#Muldoon-2016-Stimulation-Based-Control-of-Dynamic-Brain-Networks" class="headerlink" title="Muldoon 2016 Stimulation-Based Control of Dynamic Brain Networks"></a>Muldoon 2016 Stimulation-Based Control of Dynamic Brain Networks</h4><p><a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005076" target="_blank" rel="noopener">https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005076</a></p><p>$$\tau \frac{dE_j}{dt} = -E_j(t) + (S_{e_max}-E_j(t))S_e\lgroup c_1E_j(t) - c_2I_j(t) + c_5\sum_k A_{jk}E_k(t-\tau_d^k)+P_j(t)\rgroup + \sigma w_j(t)$$<br>$$\tau \frac{dI_j}{dt} = -I_j(t) +(S_{i_max}-I_j(t))S_i(c_3E_j(t)-c_4I_j(t))+\sigma v_j(t)$$</p><ul><li>$E(t)/I(t)$: the firing rate of the excitatory/inhibitory population respectively</li><li>$\tau$: time constant</li><li>$P(t)$: an external stimulus parameter</li><li>$w_j(t)$, $v_j(t)$: drawn from a standard normal distribution and act as additive noise to the system with σ = 0.00001. </li><li>$A$: connectivity matrix</li><li>$\tau_d$: delays between regions.(are calculated as a function of physical distance between identified brain regions, assuming a transmission velocity of 10 m/s (range $\tau_d$ = 0.8 − 14.8 ms))</li><li>$S_{e/i}(x)$:  transfer function(given by the sigmoidal function)<br>$$S_{e/i}(x) = \frac{1}{1+e^{(-a_{e/i}(x-\theta_{e/i}))}} - \frac{1}{1+e^{a_{e/i}\theta_{e/i}}} $$</li></ul><p>Parameters used in paper:<br>$c_1 = 16, c_2 = 12, c_3 = 15, c_4 = 3, a_e = 1.3, a_i = 2, θ_e = 4, θ_i = 3.7$<br>To simulate brain activity, set $P(t) = 0$ for all regions<br>Model stimulation to single brain region, $j$, by setting $P_j(t) = 1.25$. </p><h4 id="Hlinka-2012-Using-computational-models-to-relate-structural-and-functional-brain-connectivity"><a href="#Hlinka-2012-Using-computational-models-to-relate-structural-and-functional-brain-connectivity" class="headerlink" title="Hlinka 2012 Using computational models to relate structural and functional brain connectivity"></a>Hlinka 2012 Using computational models to relate structural and functional brain connectivity</h4><p><a href="https://onlinelibrary.wiley.com/doi/full/10.1111/j.1460-9568.2012.08081.x" target="_blank" rel="noopener">https://onlinelibrary.wiley.com/doi/full/10.1111/j.1460-9568.2012.08081.x</a></p><p>$$\dot u_i = -u_i +f(c_1u_i - c_2v_i + P + \epsilon \sum_j w_{ij}u_j)$$<br>$$\dot v_i = -v_i + f(c_3u_i - c_4v_i + Q)$$<br>$$f(x) = \frac{1}{1+exp(-x)}$$</p><ul><li>$f(x)$: a population firing rate function</li></ul><h3 id="Wong-Wang-Model"><a href="#Wong-Wang-Model" class="headerlink" title="Wong-Wang Model"></a>Wong-Wang Model</h3><h4 id="Deco-2013-Resting-State-Functional-Connectivity-Emerges-from-Structurally-and-Dynamically-Shaped-Slow-Linear-Fluctuations"><a href="#Deco-2013-Resting-State-Functional-Connectivity-Emerges-from-Structurally-and-Dynamically-Shaped-Slow-Linear-Fluctuations" class="headerlink" title="Deco 2013 Resting-State Functional Connectivity Emerges from Structurally and Dynamically Shaped Slow Linear Fluctuations"></a>Deco 2013 Resting-State Functional Connectivity Emerges from Structurally and Dynamically Shaped Slow Linear Fluctuations</h4><p><a href="http://www.jneurosci.org/content/33/27/11239" target="_blank" rel="noopener">http://www.jneurosci.org/content/33/27/11239</a></p><p>$$\frac{dS_i(t)}{dt} = -\frac{S_i}{\tau_S} +(1-S_i)\gamma H(x_i) +\sigma v_i(t) $$<br>$$H(x_i) = \frac{ax_i - b}{1-exp(-d(ax_i-b))}$$<br>$$x_i = wJ_NS_i + GJ_N\sum_j C_{ij}S_j + I_0  $$</p><ul><li>$H(x_i)$: population firing rate</li><li>$S_i$: the average synaptic gating variable at the local cortical area i </li><li>$w$: the local excitatory recurrence, = 0.9</li><li>$C_{ij}$: the structural connectivity matrix expressing the neuroanatomical links between the areas i and j. </li><li>$J_N$: the synaptic couplings, = 0.2609 (nA)</li><li>$I_0$: the overall effective external input, = 0.3 (nA). </li><li>$υ_i(t)$: uncorrelated standard Gaussian noise, and the noise amplitude at each node is $σ = 0.001 (nA)$.</li></ul><p>Parameters used in the paper:<br>$a = 270 (n/C), b = 108 (Hz), d = 0.154 (s), \gamma = 0.641/1000$ (the factor 1000 is for expressing everything in ms), $\tau S = 100 ms$</p><h4 id="Hansen-2014-Functional-connectivity-dynamics-Modeling-the-switching-behavior-of-the-resting-state"><a href="#Hansen-2014-Functional-connectivity-dynamics-Modeling-the-switching-behavior-of-the-resting-state" class="headerlink" title="Hansen 2014 Functional connectivity dynamics: Modeling the switching behavior of the resting state"></a>Hansen 2014 Functional connectivity dynamics: Modeling the switching behavior of the resting state</h4><p><a href="https://www.sciencedirect.com/science/article/pii/S1053811914009033" target="_blank" rel="noopener">https://www.sciencedirect.com/science/article/pii/S1053811914009033</a></p><p>$$\frac{dS_i}{dt} = -\frac{S_i}{\tau_S} +(1-S_i)\gamma R_i +\sigma \eta_i(t) $$<br>$$R_i = \frac{ax_i - b}{1-exp(-d(ax_i-b))}$$<br>$$x_i = wJ_NS_i + GJ_N\sum_j C_{ij}S_j + I_0  $$</p><ul><li>$S_i$: NMDA synaptic input currents</li><li>$\tau_S$: NMDA decay time constant</li><li>$R_i$: collective firing rates</li><li>$\gamma$: kinetic parameter, = 0.641</li><li>$x_i$: total synaptic inputs to a region</li><li>$N$: an intensity scale for synaptic currents, = 0.2609 nA</li><li>$w$: relative strength of recurrent connections within the region</li><li>$C_{ij}$: entries of the SC matrix globally reweighted by a single scalar G adjusted as a control parameter</li><li>$σ$: noise amplitude</li><li>$η$: a stochastic Gaussian variable with a zero mean and unit variance.</li><li>$I_0$: external input and sets the level of regional excitability. </li></ul><p>Parameters used in the paper:<br>$a = 270(V·nC)^{−1}, b = 108 Hz, d = 0.154, G = 2.4, σ = 0.001, w = 0.9, I_0 = 0.3 nA$</p><h4 id="Schirner-2018-Inferring-multi-scale-neural-mechanisms-with-brain-network-modelling"><a href="#Schirner-2018-Inferring-multi-scale-neural-mechanisms-with-brain-network-modelling" class="headerlink" title="Schirner 2018 Inferring multi-scale neural mechanisms with brain network modelling"></a>Schirner 2018 Inferring multi-scale neural mechanisms with brain network modelling</h4><p>Deco 2014<br><a href="https://elifesciences.org/articles/28927" target="_blank" rel="noopener">https://elifesciences.org/articles/28927</a></p><p>$$ I_i^{(E)} = W_EI_0 + G\sum_j C_{ij}S_j^{(E)} - J_iS_i^{(I)} + w_{BG}^{(E)}I_{BG} $$<br>$$I_i^{(I)} = W_II_0 - S_i^{(I)} +w_{BG}^{(I)}I_{BG} $$<br>$$r_i^{(E)} = \frac{a_EI_i^{(E)}-b_E}{1-exp(-d_E(a_EI_i^{(E)}-b_E))}$$<br>$$r_i^{(I)} = \frac{a_II_i^{(I)}-b_I}{1-exp(-d_I(a_II_i^{(I)}-b_I))}$$<br>$$\frac{dS_i^{(E)}(t)}{dt} = -\frac{S_i^{(E)}}{\tau_E} +(1-S_i^{(E)})\gamma_E r_i^{(E)} $$<br>$$\frac{dS_i^{(I)}(t)}{dt} = -\frac{S_i^{(I)}}{\tau_I} +\gamma_I r_i^{(I)} $$</p><ul><li>$r_i^{(E,I)}$: population firing rate of the excitatory (E) and inhibitory (I) population of brain area i. </li><li>$S_i^{(E,I)}$: the average excitatory or inhibitory synaptic gating variables of each brain area, while their input currents are given by $I_i^{(E,I)}$</li><li>$I_{BG}$: excitatory postsynaptic currents using region-wise aggregated EEG source activity that is added to the sum of input currents $I_i^{(E,I)}$.</li><li>$ω_{BG}^{(E,I)}$: weight parameters, rescale the z-score normalized EEG source activity independently for excitatory and inhibitory populations. </li><li>$G$: long-range coupling strength scaling factor that rescales the structural connectivity matrix $C_{ij}$ that denotes the strength of interaction for each region pair i and j. </li><li>$w_+$: Local excitatory recurrence, = 1.4</li><li>$C_{ij}$:    Structural connectivity matrix</li><li>$γ_E, γ_I$: Kinetic parameters, =    $6.41×10^{−4}, 1.0×10^{−3}$    </li><li>$a_E, b_E, d_E, τ_E, W_E$: Excitatory gating variables, = $310 (nC^{−1}), 125(Hz), 0.16(s), 100(ms), 1$    </li><li>$a_I, b_I, d_I, τ_I, W_I$: Inhibitory gating variables, $615 (nC^{−1}), 177 (Hz), 0.087 (s), 10 (ms), 0.7$</li><li>$J_{NMDA}$: Excitatory synaptic coupling, = 0.15 (nA)    </li><li>$J_I$: Feedback inhibitory synaptic coupling, Obtained by FIC heuristic (nA)</li><li>$I_0$: overall effective external input, = 0.382 (nA)</li><li>$G$: global coupling scaling factor, obtained from model fitting</li><li>$w^{(E)}_{BG}, w^{(I)}_{BG}$: weights for scaling EEG-derived input currents, obtained from model fitting</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Here is a summary of neual mass models used in literatures.&lt;/p&gt;
+&lt;h3 id=&quot;Wilson-Cowan-Model&quot;&gt;&lt;a href=&quot;#Wilson-Cowan-Model&quot; class=&quot;headerli
+      
+    
+    </summary>
+    
+    
+      <category term="Brain" scheme="http://tracyxinwang.site/blog/tags/Brain/"/>
+    
+      <category term="Neural Dynamic Simulation" scheme="http://tracyxinwang.site/blog/tags/Neural-Dynamic-Simulation/"/>
+    
+  </entry>
   
   <entry>
     <title>MIT6006 Lec10 Hashing III Open Addressing</title>
@@ -527,9 +553,9 @@
     </summary>
     
     
-      <category term="Brain" scheme="http://tracyxinwang.site/blog/tags/Brain/"/>
-    
       <category term="Notes" scheme="http://tracyxinwang.site/blog/tags/Notes/"/>
+    
+      <category term="Brain" scheme="http://tracyxinwang.site/blog/tags/Brain/"/>
     
   </entry>
   
@@ -552,9 +578,9 @@
     </summary>
     
     
-      <category term="Algorithm" scheme="http://tracyxinwang.site/blog/tags/Algorithm/"/>
-    
       <category term="Notes" scheme="http://tracyxinwang.site/blog/tags/Notes/"/>
+    
+      <category term="Algorithm" scheme="http://tracyxinwang.site/blog/tags/Algorithm/"/>
     
   </entry>
   
@@ -658,9 +684,9 @@
     </summary>
     
     
-      <category term="OrangePi" scheme="http://tracyxinwang.site/blog/tags/OrangePi/"/>
-    
       <category term="Linux" scheme="http://tracyxinwang.site/blog/tags/Linux/"/>
+    
+      <category term="OrangePi" scheme="http://tracyxinwang.site/blog/tags/OrangePi/"/>
     
   </entry>
   

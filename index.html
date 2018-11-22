@@ -247,6 +247,164 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-NNM" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/11/22/NNM/">Neural Mass Models</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/11/22/NNM/" class="archive-article-date">
+  	<time datetime="2018-11-22T08:52:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Wilson-Cowan-Model"><span class="toc-number">1.</span> <span class="toc-text">Wilson-Cowan Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Muldoon-2016-Stimulation-Based-Control-of-Dynamic-Brain-Networks"><span class="toc-number">1.1.</span> <span class="toc-text">Muldoon 2016 Stimulation-Based Control of Dynamic Brain Networks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hlinka-2012-Using-computational-models-to-relate-structural-and-functional-brain-connectivity"><span class="toc-number">1.2.</span> <span class="toc-text">Hlinka 2012 Using computational models to relate structural and functional brain connectivity</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Wong-Wang-Model"><span class="toc-number">2.</span> <span class="toc-text">Wong-Wang Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Deco-2013-Resting-State-Functional-Connectivity-Emerges-from-Structurally-and-Dynamically-Shaped-Slow-Linear-Fluctuations"><span class="toc-number">2.1.</span> <span class="toc-text">Deco 2013 Resting-State Functional Connectivity Emerges from Structurally and Dynamically Shaped Slow Linear Fluctuations</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hansen-2014-Functional-connectivity-dynamics-Modeling-the-switching-behavior-of-the-resting-state"><span class="toc-number">2.2.</span> <span class="toc-text">Hansen 2014 Functional connectivity dynamics: Modeling the switching behavior of the resting state</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Schirner-2018-Inferring-multi-scale-neural-mechanisms-with-brain-network-modelling"><span class="toc-number">2.3.</span> <span class="toc-text">Schirner 2018 Inferring multi-scale neural mechanisms with brain network modelling</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Wilson-Cowan-Model"><span class="toc-text">Wilson-Cowan Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Muldoon-2016-Stimulation-Based-Control-of-Dynamic-Brain-Networks"><span class="toc-text">Muldoon 2016 Stimulation-Based Control of Dynamic Brain Networks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hlinka-2012-Using-computational-models-to-relate-structural-and-functional-brain-connectivity"><span class="toc-text">Hlinka 2012 Using computational models to relate structural and functional brain connectivity</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Wong-Wang-Model"><span class="toc-text">Wong-Wang Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Deco-2013-Resting-State-Functional-Connectivity-Emerges-from-Structurally-and-Dynamically-Shaped-Slow-Linear-Fluctuations"><span class="toc-text">Deco 2013 Resting-State Functional Connectivity Emerges from Structurally and Dynamically Shaped Slow Linear Fluctuations</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hansen-2014-Functional-connectivity-dynamics-Modeling-the-switching-behavior-of-the-resting-state"><span class="toc-text">Hansen 2014 Functional connectivity dynamics: Modeling the switching behavior of the resting state</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Schirner-2018-Inferring-multi-scale-neural-mechanisms-with-brain-network-modelling"><span class="toc-text">Schirner 2018 Inferring multi-scale neural mechanisms with brain network modelling</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <p>Here is a summary of neual mass models used in literatures.</p>
+<h3 id="Wilson-Cowan-Model"><a href="#Wilson-Cowan-Model" class="headerlink" title="Wilson-Cowan Model"></a>Wilson-Cowan Model</h3><h4 id="Muldoon-2016-Stimulation-Based-Control-of-Dynamic-Brain-Networks"><a href="#Muldoon-2016-Stimulation-Based-Control-of-Dynamic-Brain-Networks" class="headerlink" title="Muldoon 2016 Stimulation-Based Control of Dynamic Brain Networks"></a>Muldoon 2016 Stimulation-Based Control of Dynamic Brain Networks</h4><p><a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005076" target="_blank" rel="noopener">https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005076</a></p>
+<p>$$\tau \frac{dE_j}{dt} = -E_j(t) + (S_{e_max}-E_j(t))S_e\lgroup c_1E_j(t) - c_2I_j(t) + c_5\sum_k A_{jk}E_k(t-\tau_d^k)+P_j(t)\rgroup + \sigma w_j(t)$$<br>$$\tau \frac{dI_j}{dt} = -I_j(t) +(S_{i_max}-I_j(t))S_i(c_3E_j(t)-c_4I_j(t))+\sigma v_j(t)$$</p>
+<ul>
+<li>$E(t)/I(t)$: the firing rate of the excitatory/inhibitory population respectively</li>
+<li>$\tau$: time constant</li>
+<li>$P(t)$: an external stimulus parameter</li>
+<li>$w_j(t)$, $v_j(t)$: drawn from a standard normal distribution and act as additive noise to the system with σ = 0.00001. </li>
+<li>$A$: connectivity matrix</li>
+<li>$\tau_d$: delays between regions.(are calculated as a function of physical distance between identified brain regions, assuming a transmission velocity of 10 m/s (range $\tau_d$ = 0.8 − 14.8 ms))</li>
+<li>$S_{e/i}(x)$:  transfer function(given by the sigmoidal function)<br>$$S_{e/i}(x) = \frac{1}{1+e^{(-a_{e/i}(x-\theta_{e/i}))}} - \frac{1}{1+e^{a_{e/i}\theta_{e/i}}} $$</li>
+</ul>
+<p>Parameters used in paper:<br>$c_1 = 16, c_2 = 12, c_3 = 15, c_4 = 3, a_e = 1.3, a_i = 2, θ_e = 4, θ_i = 3.7$<br>To simulate brain activity, set $P(t) = 0$ for all regions<br>Model stimulation to single brain region, $j$, by setting $P_j(t) = 1.25$. </p>
+<h4 id="Hlinka-2012-Using-computational-models-to-relate-structural-and-functional-brain-connectivity"><a href="#Hlinka-2012-Using-computational-models-to-relate-structural-and-functional-brain-connectivity" class="headerlink" title="Hlinka 2012 Using computational models to relate structural and functional brain connectivity"></a>Hlinka 2012 Using computational models to relate structural and functional brain connectivity</h4><p><a href="https://onlinelibrary.wiley.com/doi/full/10.1111/j.1460-9568.2012.08081.x" target="_blank" rel="noopener">https://onlinelibrary.wiley.com/doi/full/10.1111/j.1460-9568.2012.08081.x</a></p>
+<p>$$\dot u_i = -u_i +f(c_1u_i - c_2v_i + P + \epsilon \sum_j w_{ij}u_j)$$<br>$$\dot v_i = -v_i + f(c_3u_i - c_4v_i + Q)$$<br>$$f(x) = \frac{1}{1+exp(-x)}$$</p>
+<ul>
+<li>$f(x)$: a population firing rate function</li>
+</ul>
+<h3 id="Wong-Wang-Model"><a href="#Wong-Wang-Model" class="headerlink" title="Wong-Wang Model"></a>Wong-Wang Model</h3><h4 id="Deco-2013-Resting-State-Functional-Connectivity-Emerges-from-Structurally-and-Dynamically-Shaped-Slow-Linear-Fluctuations"><a href="#Deco-2013-Resting-State-Functional-Connectivity-Emerges-from-Structurally-and-Dynamically-Shaped-Slow-Linear-Fluctuations" class="headerlink" title="Deco 2013 Resting-State Functional Connectivity Emerges from Structurally and Dynamically Shaped Slow Linear Fluctuations"></a>Deco 2013 Resting-State Functional Connectivity Emerges from Structurally and Dynamically Shaped Slow Linear Fluctuations</h4><p><a href="http://www.jneurosci.org/content/33/27/11239" target="_blank" rel="noopener">http://www.jneurosci.org/content/33/27/11239</a></p>
+<p>$$\frac{dS_i(t)}{dt} = -\frac{S_i}{\tau_S} +(1-S_i)\gamma H(x_i) +\sigma v_i(t) $$<br>$$H(x_i) = \frac{ax_i - b}{1-exp(-d(ax_i-b))}$$<br>$$x_i = wJ_NS_i + GJ_N\sum_j C_{ij}S_j + I_0  $$</p>
+<ul>
+<li>$H(x_i)$: population firing rate</li>
+<li>$S_i$: the average synaptic gating variable at the local cortical area i </li>
+<li>$w$: the local excitatory recurrence, = 0.9</li>
+<li>$C_{ij}$: the structural connectivity matrix expressing the neuroanatomical links between the areas i and j. </li>
+<li>$J_N$: the synaptic couplings, = 0.2609 (nA)</li>
+<li>$I_0$: the overall effective external input, = 0.3 (nA). </li>
+<li>$υ_i(t)$: uncorrelated standard Gaussian noise, and the noise amplitude at each node is $σ = 0.001 (nA)$.</li>
+</ul>
+<p>Parameters used in the paper:<br>$a = 270 (n/C), b = 108 (Hz), d = 0.154 (s), \gamma = 0.641/1000$ (the factor 1000 is for expressing everything in ms), $\tau S = 100 ms$</p>
+<h4 id="Hansen-2014-Functional-connectivity-dynamics-Modeling-the-switching-behavior-of-the-resting-state"><a href="#Hansen-2014-Functional-connectivity-dynamics-Modeling-the-switching-behavior-of-the-resting-state" class="headerlink" title="Hansen 2014 Functional connectivity dynamics: Modeling the switching behavior of the resting state"></a>Hansen 2014 Functional connectivity dynamics: Modeling the switching behavior of the resting state</h4><p><a href="https://www.sciencedirect.com/science/article/pii/S1053811914009033" target="_blank" rel="noopener">https://www.sciencedirect.com/science/article/pii/S1053811914009033</a></p>
+<p>$$\frac{dS_i}{dt} = -\frac{S_i}{\tau_S} +(1-S_i)\gamma R_i +\sigma \eta_i(t) $$<br>$$R_i = \frac{ax_i - b}{1-exp(-d(ax_i-b))}$$<br>$$x_i = wJ_NS_i + GJ_N\sum_j C_{ij}S_j + I_0  $$</p>
+<ul>
+<li>$S_i$: NMDA synaptic input currents</li>
+<li>$\tau_S$: NMDA decay time constant</li>
+<li>$R_i$: collective firing rates</li>
+<li>$\gamma$: kinetic parameter, = 0.641</li>
+<li>$x_i$: total synaptic inputs to a region</li>
+<li>$N$: an intensity scale for synaptic currents, = 0.2609 nA</li>
+<li>$w$: relative strength of recurrent connections within the region</li>
+<li>$C_{ij}$: entries of the SC matrix globally reweighted by a single scalar G adjusted as a control parameter</li>
+<li>$σ$: noise amplitude</li>
+<li>$η$: a stochastic Gaussian variable with a zero mean and unit variance.</li>
+<li>$I_0$: external input and sets the level of regional excitability. </li>
+</ul>
+<p>Parameters used in the paper:<br>$a = 270(V·nC)^{−1}, b = 108 Hz, d = 0.154, G = 2.4, σ = 0.001, w = 0.9, I_0 = 0.3 nA$</p>
+<h4 id="Schirner-2018-Inferring-multi-scale-neural-mechanisms-with-brain-network-modelling"><a href="#Schirner-2018-Inferring-multi-scale-neural-mechanisms-with-brain-network-modelling" class="headerlink" title="Schirner 2018 Inferring multi-scale neural mechanisms with brain network modelling"></a>Schirner 2018 Inferring multi-scale neural mechanisms with brain network modelling</h4><p>Deco 2014<br><a href="https://elifesciences.org/articles/28927" target="_blank" rel="noopener">https://elifesciences.org/articles/28927</a></p>
+<p>$$ I_i^{(E)} = W_EI_0 + G\sum_j C_{ij}S_j^{(E)} - J_iS_i^{(I)} + w_{BG}^{(E)}I_{BG} $$<br>$$I_i^{(I)} = W_II_0 - S_i^{(I)} +w_{BG}^{(I)}I_{BG} $$<br>$$r_i^{(E)} = \frac{a_EI_i^{(E)}-b_E}{1-exp(-d_E(a_EI_i^{(E)}-b_E))}$$<br>$$r_i^{(I)} = \frac{a_II_i^{(I)}-b_I}{1-exp(-d_I(a_II_i^{(I)}-b_I))}$$<br>$$\frac{dS_i^{(E)}(t)}{dt} = -\frac{S_i^{(E)}}{\tau_E} +(1-S_i^{(E)})\gamma_E r_i^{(E)} $$<br>$$\frac{dS_i^{(I)}(t)}{dt} = -\frac{S_i^{(I)}}{\tau_I} +\gamma_I r_i^{(I)} $$</p>
+<ul>
+<li>$r_i^{(E,I)}$: population firing rate of the excitatory (E) and inhibitory (I) population of brain area i. </li>
+<li>$S_i^{(E,I)}$: the average excitatory or inhibitory synaptic gating variables of each brain area, while their input currents are given by $I_i^{(E,I)}$</li>
+<li>$I_{BG}$: excitatory postsynaptic currents using region-wise aggregated EEG source activity that is added to the sum of input currents $I_i^{(E,I)}$.</li>
+<li>$ω_{BG}^{(E,I)}$: weight parameters, rescale the z-score normalized EEG source activity independently for excitatory and inhibitory populations. </li>
+<li>$G$: long-range coupling strength scaling factor that rescales the structural connectivity matrix $C_{ij}$ that denotes the strength of interaction for each region pair i and j. </li>
+<li>$w_+$: Local excitatory recurrence, = 1.4</li>
+<li>$C_{ij}$:    Structural connectivity matrix</li>
+<li>$γ_E, γ_I$: Kinetic parameters, =    $6.41×10^{−4}, 1.0×10^{−3}$    </li>
+<li>$a_E, b_E, d_E, τ_E, W_E$: Excitatory gating variables, = $310 (nC^{−1}), 125(Hz), 0.16(s), 100(ms), 1$    </li>
+<li>$a_I, b_I, d_I, τ_I, W_I$: Inhibitory gating variables, $615 (nC^{−1}), 177 (Hz), 0.087 (s), 10 (ms), 0.7$</li>
+<li>$J_{NMDA}$: Excitatory synaptic coupling, = 0.15 (nA)    </li>
+<li>$J_I$: Feedback inhibitory synaptic coupling, Obtained by FIC heuristic (nA)</li>
+<li>$I_0$: overall effective external input, = 0.382 (nA)</li>
+<li>$G$: global coupling scaling factor, obtained from model fitting</li>
+<li>$w^{(E)}_{BG}, w^{(I)}_{BG}$: weights for scaling EEG-derived input currents, obtained from model fitting</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Neural Dynamic Simulation</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/11/22/NNM/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-MIT6006-Lec10" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1652,110 +1810,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-MIT6006-Lec03" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/05/MIT6006-Lec03/">MIT6006 Lec03 插入排序，归并排序</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/11/05/MIT6006-Lec03/" class="archive-article-date">
-  	<time datetime="2018-11-05T12:37:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#插入排序-Insertion-sort"><span class="toc-number">1.</span> <span class="toc-text">插入排序 (Insertion sort)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Binary-Insertion-sort"><span class="toc-number">1.1.</span> <span class="toc-text">Binary Insertion sort</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#归并排序-Merge-Sort"><span class="toc-number">2.</span> <span class="toc-text">归并排序 (Merge Sort)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solving-Recurrences"><span class="toc-number">3.</span> <span class="toc-text">Solving Recurrences</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#插入排序-Insertion-sort"><span class="toc-text">插入排序 (Insertion sort)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Binary-Insertion-sort"><span class="toc-text">Binary Insertion sort</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#归并排序-Merge-Sort"><span class="toc-text">归并排序 (Merge Sort)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solving-Recurrences"><span class="toc-text">Solving Recurrences</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>排序总的问题就是：<br>输入一个序列 <code>A[1···n]</code><br>要求输求它的递增排序之后的排列。</p>
-<h3 id="插入排序-Insertion-sort"><a href="#插入排序-Insertion-sort" class="headerlink" title="插入排序 (Insertion sort)"></a>插入排序 (Insertion sort)</h3><p><strong>Pseudocode</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> j = 2:n</span><br><span class="line">    insert key A[j] into the already sorted sub array A[1 ... j-1] by pairwise key-swaps down to its right position.</span><br></pre></td></tr></table></figure></p>
-<p><strong>Complexity</strong>: $\theta(n^2)$<br>because at the worst case, it needs $\theta(n^2)$ compares and $\theta(n^2)$ swaps.</p>
-<h4 id="Binary-Insertion-sort"><a href="#Binary-Insertion-sort" class="headerlink" title="Binary Insertion sort"></a>Binary Insertion sort</h4><p>注意到在一般的插入排序中，我们会得到一个已经排好序的子序列，那么这时其实就可以用二分查找法来替代之前的逐个compare，这样能减少compare的次数。<br><strong>Pseudocode</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> j = 2:n</span><br><span class="line">    insert key A[j] into the already sorted sub array A[1 ... j-1]</span><br><span class="line">    Use binary search to find the right position</span><br></pre></td></tr></table></figure></p>
-<p>二分查找法花费 $\theta(log n)$ 时间，插入之后移动元素花费 $\theta(n)$ 时间。<br><strong>Complexity</strong>:<br>$\theta(nlog n)$ comparisons, $\theta(n^2)$ swaps</p>
-<h3 id="归并排序-Merge-Sort"><a href="#归并排序-Merge-Sort" class="headerlink" title="归并排序 (Merge Sort)"></a>归并排序 (Merge Sort)</h3><p>采用的是 divide and conquer 的思想。<br><strong>Pseudocode</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">If n = 1, <span class="keyword">done</span> (nothing to sort)</span><br><span class="line">Otherwise, recursively sort A[1 ... n/2] and A[n/2+1 ... n]</span><br><span class="line"><span class="string">"Merge"</span> the two sorted sub-arrays</span><br></pre></td></tr></table></figure></p>
-<p><strong>Complexity</strong>:<br>$\theta(n)$ to merge a total of n elements(linear time)<br>$T(n) = 2T(n/2) + \theta(n)$<br>After plotting the recursion tree, we can find that there are <code>1+lgn</code> layers, and <code>n</code> leaves in the tree. And for each layer, it totally costs <code>cn</code> time. Therefore, complexity is  $\theta(nlg n)$<br>可以看到，在这个树里面，每一层的complexity都是均等的<br><img src="/blog/images/MIT03_01.jpg" width="80%" height="60%"></p>
-<h3 id="Solving-Recurrences"><a href="#Solving-Recurrences" class="headerlink" title="Solving Recurrences"></a>Solving Recurrences</h3><p>对于不同的recurrence tree来说，每一层不同的cost决定了它的complexity主要集中在哪里。<br>如上面的归并排序是每一层都占相等的复杂度。<br>下面是两个例子：<br><strong>叶子部分的计算占主要复杂度</strong>:</p>
-<p><img src="/blog/images/MIT03_02.jpg" width="80%" height="60%"></p>
-<p><strong>根部分的计算占主要复杂度</strong>:</p>
-<p><img src="/blog/images/MIT03_03.jpg" width="80%" height="60%"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/05/MIT6006-Lec03/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><a class="extend next" rel="next" href="/blog/page/2/">Next &raquo;</a>
@@ -1787,7 +1841,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共24.1k字
+              本站总共25.1k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -1894,11 +1948,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Brain</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">MRI</a>
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1910,11 +1964,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color1">Brain</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+                <a href="javascript:void(0)" class="js-tag color4">MRI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1926,6 +1984,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
               </li>
              
@@ -1934,7 +1996,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1942,15 +2004,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
               </li>
              
               <li class="article-tag-list-item">

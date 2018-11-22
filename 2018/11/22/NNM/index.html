@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://tracyxinwang.site/blog">
-  <title>Archives | Xin Wang&#39;s Blog</title>
+  <title>Neural Mass Models | Xin Wang&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="CUHK在读博士生">
-<meta name="keywords" content="大脑建模，前通信狗，程序媛">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Xin Wang&#39;s Blog">
-<meta property="og:url" content="http://tracyxinwang.site/blog/archives/index.html">
+  <meta name="description" content="Here is a summary of neual mass models used in literatures. Wilson-Cowan ModelMuldoon 2016 Stimulation-Based Control of Dynamic Brain Networkshttps://journals.plos.org/ploscompbiol/article?id=10.1371/">
+<meta name="keywords" content="Brain,Neural Dynamic Simulation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Neural Mass Models">
+<meta property="og:url" content="http://tracyxinwang.site/blog/2018/11/22/NNM/index.html">
 <meta property="og:site_name" content="Xin Wang&#39;s Blog">
-<meta property="og:description" content="CUHK在读博士生">
+<meta property="og:description" content="Here is a summary of neual mass models used in literatures. Wilson-Cowan ModelMuldoon 2016 Stimulation-Based Control of Dynamic Brain Networkshttps://journals.plos.org/ploscompbiol/article?id=10.1371/">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-22T10:51:51.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xin Wang&#39;s Blog">
-<meta name="twitter:description" content="CUHK在读博士生">
+<meta name="twitter:title" content="Neural Mass Models">
+<meta name="twitter:description" content="Here is a summary of neual mass models used in literatures. Wilson-Cowan ModelMuldoon 2016 Stimulation-Based Control of Dynamic Brain Networkshttps://journals.plos.org/ploscompbiol/article?id=10.1371/">
   
     <link rel="alternative" href="/atom.xml" title="Xin Wang&#39;s Blog" type="application/atom+xml">
   
@@ -245,36 +246,146 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-NNM" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/blog/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/22/NNM/" class="archive-article-date">
-  	<time datetime="2018-11-22T08:52:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-22</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/22/NNM/">Neural Mass Models</a>
+    <h1 class="article-title" itemprop="name">
+      Neural Mass Models
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/blog/2018/11/22/NNM/" class="archive-article-date">
+  	<time datetime="2018-11-22T08:52:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Wilson-Cowan-Model"><span class="toc-number">1.</span> <span class="toc-text">Wilson-Cowan Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Muldoon-2016-Stimulation-Based-Control-of-Dynamic-Brain-Networks"><span class="toc-number">1.1.</span> <span class="toc-text">Muldoon 2016 Stimulation-Based Control of Dynamic Brain Networks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hlinka-2012-Using-computational-models-to-relate-structural-and-functional-brain-connectivity"><span class="toc-number">1.2.</span> <span class="toc-text">Hlinka 2012 Using computational models to relate structural and functional brain connectivity</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Wong-Wang-Model"><span class="toc-number">2.</span> <span class="toc-text">Wong-Wang Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Deco-2013-Resting-State-Functional-Connectivity-Emerges-from-Structurally-and-Dynamically-Shaped-Slow-Linear-Fluctuations"><span class="toc-number">2.1.</span> <span class="toc-text">Deco 2013 Resting-State Functional Connectivity Emerges from Structurally and Dynamically Shaped Slow Linear Fluctuations</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hansen-2014-Functional-connectivity-dynamics-Modeling-the-switching-behavior-of-the-resting-state"><span class="toc-number">2.2.</span> <span class="toc-text">Hansen 2014 Functional connectivity dynamics: Modeling the switching behavior of the resting state</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Schirner-2018-Inferring-multi-scale-neural-mechanisms-with-brain-network-modelling"><span class="toc-number">2.3.</span> <span class="toc-text">Schirner 2018 Inferring multi-scale neural mechanisms with brain network modelling</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Wilson-Cowan-Model"><span class="toc-text">Wilson-Cowan Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Muldoon-2016-Stimulation-Based-Control-of-Dynamic-Brain-Networks"><span class="toc-text">Muldoon 2016 Stimulation-Based Control of Dynamic Brain Networks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hlinka-2012-Using-computational-models-to-relate-structural-and-functional-brain-connectivity"><span class="toc-text">Hlinka 2012 Using computational models to relate structural and functional brain connectivity</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Wong-Wang-Model"><span class="toc-text">Wong-Wang Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Deco-2013-Resting-State-Functional-Connectivity-Emerges-from-Structurally-and-Dynamically-Shaped-Slow-Linear-Fluctuations"><span class="toc-text">Deco 2013 Resting-State Functional Connectivity Emerges from Structurally and Dynamically Shaped Slow Linear Fluctuations</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hansen-2014-Functional-connectivity-dynamics-Modeling-the-switching-behavior-of-the-resting-state"><span class="toc-text">Hansen 2014 Functional connectivity dynamics: Modeling the switching behavior of the resting state</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Schirner-2018-Inferring-multi-scale-neural-mechanisms-with-brain-network-modelling"><span class="toc-text">Schirner 2018 Inferring multi-scale neural mechanisms with brain network modelling</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <p>Here is a summary of neual mass models used in literatures.</p>
+<h3 id="Wilson-Cowan-Model"><a href="#Wilson-Cowan-Model" class="headerlink" title="Wilson-Cowan Model"></a>Wilson-Cowan Model</h3><h4 id="Muldoon-2016-Stimulation-Based-Control-of-Dynamic-Brain-Networks"><a href="#Muldoon-2016-Stimulation-Based-Control-of-Dynamic-Brain-Networks" class="headerlink" title="Muldoon 2016 Stimulation-Based Control of Dynamic Brain Networks"></a>Muldoon 2016 Stimulation-Based Control of Dynamic Brain Networks</h4><p><a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005076" target="_blank" rel="noopener">https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005076</a></p>
+<p>$$\tau \frac{dE_j}{dt} = -E_j(t) + (S_{e_max}-E_j(t))S_e\lgroup c_1E_j(t) - c_2I_j(t) + c_5\sum_k A_{jk}E_k(t-\tau_d^k)+P_j(t)\rgroup + \sigma w_j(t)$$<br>$$\tau \frac{dI_j}{dt} = -I_j(t) +(S_{i_max}-I_j(t))S_i(c_3E_j(t)-c_4I_j(t))+\sigma v_j(t)$$</p>
+<ul>
+<li>$E(t)/I(t)$: the firing rate of the excitatory/inhibitory population respectively</li>
+<li>$\tau$: time constant</li>
+<li>$P(t)$: an external stimulus parameter</li>
+<li>$w_j(t)$, $v_j(t)$: drawn from a standard normal distribution and act as additive noise to the system with σ = 0.00001. </li>
+<li>$A$: connectivity matrix</li>
+<li>$\tau_d$: delays between regions.(are calculated as a function of physical distance between identified brain regions, assuming a transmission velocity of 10 m/s (range $\tau_d$ = 0.8 − 14.8 ms))</li>
+<li>$S_{e/i}(x)$:  transfer function(given by the sigmoidal function)<br>$$S_{e/i}(x) = \frac{1}{1+e^{(-a_{e/i}(x-\theta_{e/i}))}} - \frac{1}{1+e^{a_{e/i}\theta_{e/i}}} $$</li>
+</ul>
+<p>Parameters used in paper:<br>$c_1 = 16, c_2 = 12, c_3 = 15, c_4 = 3, a_e = 1.3, a_i = 2, θ_e = 4, θ_i = 3.7$<br>To simulate brain activity, set $P(t) = 0$ for all regions<br>Model stimulation to single brain region, $j$, by setting $P_j(t) = 1.25$. </p>
+<h4 id="Hlinka-2012-Using-computational-models-to-relate-structural-and-functional-brain-connectivity"><a href="#Hlinka-2012-Using-computational-models-to-relate-structural-and-functional-brain-connectivity" class="headerlink" title="Hlinka 2012 Using computational models to relate structural and functional brain connectivity"></a>Hlinka 2012 Using computational models to relate structural and functional brain connectivity</h4><p><a href="https://onlinelibrary.wiley.com/doi/full/10.1111/j.1460-9568.2012.08081.x" target="_blank" rel="noopener">https://onlinelibrary.wiley.com/doi/full/10.1111/j.1460-9568.2012.08081.x</a></p>
+<p>$$\dot u_i = -u_i +f(c_1u_i - c_2v_i + P + \epsilon \sum_j w_{ij}u_j)$$<br>$$\dot v_i = -v_i + f(c_3u_i - c_4v_i + Q)$$<br>$$f(x) = \frac{1}{1+exp(-x)}$$</p>
+<ul>
+<li>$f(x)$: a population firing rate function</li>
+</ul>
+<h3 id="Wong-Wang-Model"><a href="#Wong-Wang-Model" class="headerlink" title="Wong-Wang Model"></a>Wong-Wang Model</h3><h4 id="Deco-2013-Resting-State-Functional-Connectivity-Emerges-from-Structurally-and-Dynamically-Shaped-Slow-Linear-Fluctuations"><a href="#Deco-2013-Resting-State-Functional-Connectivity-Emerges-from-Structurally-and-Dynamically-Shaped-Slow-Linear-Fluctuations" class="headerlink" title="Deco 2013 Resting-State Functional Connectivity Emerges from Structurally and Dynamically Shaped Slow Linear Fluctuations"></a>Deco 2013 Resting-State Functional Connectivity Emerges from Structurally and Dynamically Shaped Slow Linear Fluctuations</h4><p><a href="http://www.jneurosci.org/content/33/27/11239" target="_blank" rel="noopener">http://www.jneurosci.org/content/33/27/11239</a></p>
+<p>$$\frac{dS_i(t)}{dt} = -\frac{S_i}{\tau_S} +(1-S_i)\gamma H(x_i) +\sigma v_i(t) $$<br>$$H(x_i) = \frac{ax_i - b}{1-exp(-d(ax_i-b))}$$<br>$$x_i = wJ_NS_i + GJ_N\sum_j C_{ij}S_j + I_0  $$</p>
+<ul>
+<li>$H(x_i)$: population firing rate</li>
+<li>$S_i$: the average synaptic gating variable at the local cortical area i </li>
+<li>$w$: the local excitatory recurrence, = 0.9</li>
+<li>$C_{ij}$: the structural connectivity matrix expressing the neuroanatomical links between the areas i and j. </li>
+<li>$J_N$: the synaptic couplings, = 0.2609 (nA)</li>
+<li>$I_0$: the overall effective external input, = 0.3 (nA). </li>
+<li>$υ_i(t)$: uncorrelated standard Gaussian noise, and the noise amplitude at each node is $σ = 0.001 (nA)$.</li>
+</ul>
+<p>Parameters used in the paper:<br>$a = 270 (n/C), b = 108 (Hz), d = 0.154 (s), \gamma = 0.641/1000$ (the factor 1000 is for expressing everything in ms), $\tau S = 100 ms$</p>
+<h4 id="Hansen-2014-Functional-connectivity-dynamics-Modeling-the-switching-behavior-of-the-resting-state"><a href="#Hansen-2014-Functional-connectivity-dynamics-Modeling-the-switching-behavior-of-the-resting-state" class="headerlink" title="Hansen 2014 Functional connectivity dynamics: Modeling the switching behavior of the resting state"></a>Hansen 2014 Functional connectivity dynamics: Modeling the switching behavior of the resting state</h4><p><a href="https://www.sciencedirect.com/science/article/pii/S1053811914009033" target="_blank" rel="noopener">https://www.sciencedirect.com/science/article/pii/S1053811914009033</a></p>
+<p>$$\frac{dS_i}{dt} = -\frac{S_i}{\tau_S} +(1-S_i)\gamma R_i +\sigma \eta_i(t) $$<br>$$R_i = \frac{ax_i - b}{1-exp(-d(ax_i-b))}$$<br>$$x_i = wJ_NS_i + GJ_N\sum_j C_{ij}S_j + I_0  $$</p>
+<ul>
+<li>$S_i$: NMDA synaptic input currents</li>
+<li>$\tau_S$: NMDA decay time constant</li>
+<li>$R_i$: collective firing rates</li>
+<li>$\gamma$: kinetic parameter, = 0.641</li>
+<li>$x_i$: total synaptic inputs to a region</li>
+<li>$N$: an intensity scale for synaptic currents, = 0.2609 nA</li>
+<li>$w$: relative strength of recurrent connections within the region</li>
+<li>$C_{ij}$: entries of the SC matrix globally reweighted by a single scalar G adjusted as a control parameter</li>
+<li>$σ$: noise amplitude</li>
+<li>$η$: a stochastic Gaussian variable with a zero mean and unit variance.</li>
+<li>$I_0$: external input and sets the level of regional excitability. </li>
+</ul>
+<p>Parameters used in the paper:<br>$a = 270(V·nC)^{−1}, b = 108 Hz, d = 0.154, G = 2.4, σ = 0.001, w = 0.9, I_0 = 0.3 nA$</p>
+<h4 id="Schirner-2018-Inferring-multi-scale-neural-mechanisms-with-brain-network-modelling"><a href="#Schirner-2018-Inferring-multi-scale-neural-mechanisms-with-brain-network-modelling" class="headerlink" title="Schirner 2018 Inferring multi-scale neural mechanisms with brain network modelling"></a>Schirner 2018 Inferring multi-scale neural mechanisms with brain network modelling</h4><p>Deco 2014<br><a href="https://elifesciences.org/articles/28927" target="_blank" rel="noopener">https://elifesciences.org/articles/28927</a></p>
+<p>$$ I_i^{(E)} = W_EI_0 + G\sum_j C_{ij}S_j^{(E)} - J_iS_i^{(I)} + w_{BG}^{(E)}I_{BG} $$<br>$$I_i^{(I)} = W_II_0 - S_i^{(I)} +w_{BG}^{(I)}I_{BG} $$<br>$$r_i^{(E)} = \frac{a_EI_i^{(E)}-b_E}{1-exp(-d_E(a_EI_i^{(E)}-b_E))}$$<br>$$r_i^{(I)} = \frac{a_II_i^{(I)}-b_I}{1-exp(-d_I(a_II_i^{(I)}-b_I))}$$<br>$$\frac{dS_i^{(E)}(t)}{dt} = -\frac{S_i^{(E)}}{\tau_E} +(1-S_i^{(E)})\gamma_E r_i^{(E)} $$<br>$$\frac{dS_i^{(I)}(t)}{dt} = -\frac{S_i^{(I)}}{\tau_I} +\gamma_I r_i^{(I)} $$</p>
+<ul>
+<li>$r_i^{(E,I)}$: population firing rate of the excitatory (E) and inhibitory (I) population of brain area i. </li>
+<li>$S_i^{(E,I)}$: the average excitatory or inhibitory synaptic gating variables of each brain area, while their input currents are given by $I_i^{(E,I)}$</li>
+<li>$I_{BG}$: excitatory postsynaptic currents using region-wise aggregated EEG source activity that is added to the sum of input currents $I_i^{(E,I)}$.</li>
+<li>$ω_{BG}^{(E,I)}$: weight parameters, rescale the z-score normalized EEG source activity independently for excitatory and inhibitory populations. </li>
+<li>$G$: long-range coupling strength scaling factor that rescales the structural connectivity matrix $C_{ij}$ that denotes the strength of interaction for each region pair i and j. </li>
+<li>$w_+$: Local excitatory recurrence, = 1.4</li>
+<li>$C_{ij}$:    Structural connectivity matrix</li>
+<li>$γ_E, γ_I$: Kinetic parameters, =    $6.41×10^{−4}, 1.0×10^{−3}$    </li>
+<li>$a_E, b_E, d_E, τ_E, W_E$: Excitatory gating variables, = $310 (nC^{−1}), 125(Hz), 0.16(s), 100(ms), 1$    </li>
+<li>$a_I, b_I, d_I, τ_I, W_I$: Inhibitory gating variables, $615 (nC^{−1}), 177 (Hz), 0.087 (s), 10 (ms), 0.7$</li>
+<li>$J_{NMDA}$: Excitatory synaptic coupling, = 0.15 (nA)    </li>
+<li>$J_I$: Feedback inhibitory synaptic coupling, Obtained by FIC heuristic (nA)</li>
+<li>$I_0$: overall effective external input, = 0.382 (nA)</li>
+<li>$G$: global coupling scaling factor, obtained from model fitting</li>
+<li>$w^{(E)}_{BG}, w^{(I)}_{BG}$: weights for scaling EEG-derived input currents, obtained from model fitting</li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢老板<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/blog/images/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/blog/images/wechatpay.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -290,816 +401,118 @@ var _hmt = _hmt || [];
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://tracyxinwang.site/blog/2018/11/22/NNM/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/22/MIT6006-Lec10/" class="archive-article-date">
-  	<time datetime="2018-11-21T23:38:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-22</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2018/11/22/MIT6006-Lec10/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MIT6006 Lec10 Hashing III Open Addressing</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/22/MIT6006-Lec10/">MIT6006 Lec10 Hashing III Open Addressing</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Wilson-Cowan-Model"><span class="toc-number">1.</span> <span class="toc-text">Wilson-Cowan Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Muldoon-2016-Stimulation-Based-Control-of-Dynamic-Brain-Networks"><span class="toc-number">1.1.</span> <span class="toc-text">Muldoon 2016 Stimulation-Based Control of Dynamic Brain Networks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hlinka-2012-Using-computational-models-to-relate-structural-and-functional-brain-connectivity"><span class="toc-number">1.2.</span> <span class="toc-text">Hlinka 2012 Using computational models to relate structural and functional brain connectivity</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Wong-Wang-Model"><span class="toc-number">2.</span> <span class="toc-text">Wong-Wang Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Deco-2013-Resting-State-Functional-Connectivity-Emerges-from-Structurally-and-Dynamically-Shaped-Slow-Linear-Fluctuations"><span class="toc-number">2.1.</span> <span class="toc-text">Deco 2013 Resting-State Functional Connectivity Emerges from Structurally and Dynamically Shaped Slow Linear Fluctuations</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hansen-2014-Functional-connectivity-dynamics-Modeling-the-switching-behavior-of-the-resting-state"><span class="toc-number">2.2.</span> <span class="toc-text">Hansen 2014 Functional connectivity dynamics: Modeling the switching behavior of the resting state</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Schirner-2018-Inferring-multi-scale-neural-mechanisms-with-brain-network-modelling"><span class="toc-number">2.3.</span> <span class="toc-text">Schirner 2018 Inferring multi-scale neural mechanisms with brain network modelling</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/19/MIT6006-Lec09/" class="archive-article-date">
-  	<time datetime="2018-11-18T21:36:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-19</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/19/MIT6006-Lec09/">MIT6006 Lec09 Hashing II</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/17/MIT6006-Lec08/" class="archive-article-date">
-  	<time datetime="2018-11-17T07:07:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/17/MIT6006-Lec08/">MIT6006 Lec08 Hashing I</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/15/MIT6006-Lec07/" class="archive-article-date">
-  	<time datetime="2018-11-15T03:52:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/15/MIT6006-Lec07/">MIT6006 Lec07 Linear-Time Sorting</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/14/MIT6006-Lec06/" class="archive-article-date">
-  	<time datetime="2018-11-14T03:52:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/14/MIT6006-Lec06/">MIT6006 Lec06 AVL trees, AVL sort</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/13/slurm-exit-code/" class="archive-article-date">
-  	<time datetime="2018-11-12T21:09:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/13/slurm-exit-code/">Slurm General Command and Exit Code</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Tools</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/07/MIT6006-Lec05/" class="archive-article-date">
-  	<time datetime="2018-11-06T22:28:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/07/MIT6006-Lec05/">MIT6006 Lec05 Binary search trees, BST sort</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/06/MIT6006-Lec04/" class="archive-article-date">
-  	<time datetime="2018-11-06T02:48:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/06/MIT6006-Lec04/">MIT6006 Lec04 Priority queue and Heap</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/06/notes-matlab/" class="archive-article-date">
-  	<time datetime="2018-11-06T01:12:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/06/notes-matlab/">MATLAB 常用语法记录</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/05/MIT6006-Lec03/" class="archive-article-date">
-  	<time datetime="2018-11-05T12:37:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/05/MIT6006-Lec03/">MIT6006 Lec03 插入排序，归并排序</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/04/life-in-Melbourne01/" class="archive-article-date">
-  	<time datetime="2018-11-03T22:20:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/04/life-in-Melbourne01/">猫本交流杂记（一）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂文</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">碎碎念</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/04/NodeJS-learning01/" class="archive-article-date">
-  	<time datetime="2018-11-03T22:16:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/04/NodeJS-learning01/">Notes - NodeJS 学习（一）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">NodeJS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/03/MIT6006-Lec02/" class="archive-article-date">
-  	<time datetime="2018-11-02T23:45:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/03/MIT6006-Lec02/">MIT6006 Lec02 Models of Computation</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/10/30/problem-hexo-deploy/" class="archive-article-date">
-  	<time datetime="2018-10-30T02:54:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/10/30/problem-hexo-deploy/">Hexo deploy 出现问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/10/29/simulated-annealing/" class="archive-article-date">
-  	<time datetime="2018-10-29T01:01:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/10/29/simulated-annealing/">Algorithm - 模拟退火 Simulated Annealing</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/10/23/DTI-basics/" class="archive-article-date">
-  	<time datetime="2018-10-22T23:01:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/10/23/DTI-basics/">DTI Basics</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">MRI</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/10/19/panda-use/" class="archive-article-date">
-  	<time datetime="2018-10-18T23:01:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/10/19/panda-use/">Panda软件使用笔记</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Tools</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/10/18/problem-matlab-gcc/" class="archive-article-date">
-  	<time datetime="2018-10-18T04:11:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/10/18/problem-matlab-gcc/">Problem solve - `GLIBCXX_3.4.21&#39; not found</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/10/11/GRF-BMI-thoughts/" class="archive-article-date">
-  	<time datetime="2018-10-11T07:24:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/10/11/GRF-BMI-thoughts/">写GRF，答辩BMI的一些心得</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂文</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">碎碎念</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/blog/archives/page/2/">2</a><a class="extend next" rel="next" href="/blog/archives/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -1143,8 +556,8 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
