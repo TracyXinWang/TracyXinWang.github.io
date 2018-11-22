@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="http://tracyxinwang.site/blog/"/>
-  <updated>2018-11-19T22:30:42.000Z</updated>
+  <updated>2018-11-22T03:26:09.907Z</updated>
   <id>http://tracyxinwang.site/blog/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MIT6006 Lec10 Hashing III Open Addressing</title>
+    <link href="http://tracyxinwang.site/blog/2018/11/22/MIT6006-Lec10/"/>
+    <id>http://tracyxinwang.site/blog/2018/11/22/MIT6006-Lec10/</id>
+    <published>2018-11-21T23:38:23.000Z</published>
+    <updated>2018-11-22T03:26:09.907Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Open-addressing"><a href="#Open-addressing" class="headerlink" title="Open addressing"></a>Open addressing</h3><ul><li>is another approach to solve collisions</li><li>no chaining; instead, all items stored in table</li><li>one item per slot ⇒ $m ≥ n$</li><li><strong>hash function</strong> will specify the order of slots to probe (try) for a key (for insert/search/delete), not just one slot. (since when collision occurs, you need to have further trials to find an spare slot)</li><li>in math notation: to design a function $h$, with the property that for all $k ∈ U$:<ul><li>the universe of keys $\times$ trial count, mapps to the slot in table<br>$$h: U \times \{0,1,…,m-1\} \to \{0,1,…,m-1\}$$</li></ul></li><li>$\langle h(k, 0), h(k, 1), . . . , h(k, m − 1)\rangle$ is a permutation of 0, 1, …, m − 1. That means if keep trying h(k, i) for increasing i, we will eventually hit all slots of the table.</li></ul><p>Operations are as follows:</p><ul><li><strong>Insert(k,v)</strong>: Keep probing until an empty slot is found. Insert item into that slot.</li><li><strong>Search(k)</strong>: As long as the slots you encounter by probing are occupied by keys = k, keep probing until you either encounter k or find an empty slot—return success or failure respectively.</li><li><strong>Deleting Items</strong>: rather than setting none in the slot of the deleted item, replace it with special flag: “DeleteMe”, which <em>Insert</em> treats as None but <em>Search</em> doesn’t</li></ul><h3 id="Probing-strategies"><a href="#Probing-strategies" class="headerlink" title="Probing strategies"></a>Probing strategies</h3><p><strong>Linear Probing</strong><br>$h(k, i) = (h’(k) +i)\; mod\; m$ where h’(k) is ordinary hash function</p><p>But have a problem: clustering—cluster: consecutive group of occupied slots as clusters become longer, it gets more likely to grow further.</p><p><strong>Double Hashing</strong><br>$h(k, i) =(h_1(k) +i·h_2(k)) \; mod\; m$ where $h_1(k)$ and $h_2(k)$ are two ordinary hash functions.</p><ul><li>actually hit all slots (permutation) if $h_2(k)$ is relatively prime to m for all k</li></ul><h3 id="Uniform-Hashing-Assumption"><a href="#Uniform-Hashing-Assumption" class="headerlink" title="Uniform Hashing Assumption"></a>Uniform Hashing Assumption</h3><ul><li>is not Simple Uniform Hashing Assumption</li><li>Each key is equally likely to have any one of the m! permutations as its probe sequence(not really true, but double hashing can come close)</li></ul><h4 id="Open-Addressing-vs-Chaining"><a href="#Open-Addressing-vs-Chaining" class="headerlink" title="Open Addressing vs. Chaining"></a>Open Addressing vs. Chaining</h4><ul><li>Open Addressing: better cache performance (better memory usage, no pointers needed)</li><li>Chaining: less sensitive to hash functions (OA requires extra care to avoid clustering) and the load factor α (OA degrades past 70% or so and in any event cannot support values larger than 1)</li></ul><h3 id="Cryptographic-Hashing"><a href="#Cryptographic-Hashing" class="headerlink" title="Cryptographic Hashing"></a>Cryptographic Hashing</h3><p><br></p><p>A demo of different probng tsrategies can be found <a href="https://www.cse.cuhk.edu.hk/irwin.king/_media/teaching/csc2100b/tu6.pdf" target="_blank" rel="noopener">here</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;Open-addressing&quot;&gt;&lt;a href=&quot;#Open-addressing&quot; class=&quot;headerlink&quot; title=&quot;Open addressing&quot;&gt;&lt;/a&gt;Open addressing&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;is another a
+      
+    
+    </summary>
+    
+    
+      <category term="Algorithm" scheme="http://tracyxinwang.site/blog/tags/Algorithm/"/>
+    
+      <category term="Learning" scheme="http://tracyxinwang.site/blog/tags/Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>MIT6006 Lec09 Hashing II</title>
@@ -501,9 +527,9 @@
     </summary>
     
     
-      <category term="Notes" scheme="http://tracyxinwang.site/blog/tags/Notes/"/>
-    
       <category term="Brain" scheme="http://tracyxinwang.site/blog/tags/Brain/"/>
+    
+      <category term="Notes" scheme="http://tracyxinwang.site/blog/tags/Notes/"/>
     
   </entry>
   
@@ -526,9 +552,9 @@
     </summary>
     
     
-      <category term="Notes" scheme="http://tracyxinwang.site/blog/tags/Notes/"/>
-    
       <category term="Algorithm" scheme="http://tracyxinwang.site/blog/tags/Algorithm/"/>
+    
+      <category term="Notes" scheme="http://tracyxinwang.site/blog/tags/Notes/"/>
     
   </entry>
   
@@ -632,9 +658,9 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://tracyxinwang.site/blog/tags/Linux/"/>
-    
       <category term="OrangePi" scheme="http://tracyxinwang.site/blog/tags/OrangePi/"/>
+    
+      <category term="Linux" scheme="http://tracyxinwang.site/blog/tags/Linux/"/>
     
   </entry>
   
