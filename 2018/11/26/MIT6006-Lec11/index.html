@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://tracyxinwang.site/blog">
-  <title>Tag: Notes | Xin Wang&#39;s Blog</title>
+  <title>MIT6006 Lec11 Numerics I | Xin Wang&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="CUHK在读博士生">
-<meta name="keywords" content="大脑建模，前通信狗，程序媛">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Xin Wang&#39;s Blog">
-<meta property="og:url" content="http://tracyxinwang.site/blog/tags/Notes/index.html">
+  <meta name="description" content="IrrationalsDigression Catalan numbers:  Set P of balanced parentheses strings are recursively defined as $λ ∈ P$ (λ is empty string) If $α, β ∈ P$, then $(α)β ∈ P$   Every nonempty balanced paren stri">
+<meta name="keywords" content="Algorithm,Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MIT6006 Lec11 Numerics I">
+<meta property="og:url" content="http://tracyxinwang.site/blog/2018/11/26/MIT6006-Lec11/index.html">
 <meta property="og:site_name" content="Xin Wang&#39;s Blog">
-<meta property="og:description" content="CUHK在读博士生">
+<meta property="og:description" content="IrrationalsDigression Catalan numbers:  Set P of balanced parentheses strings are recursively defined as $λ ∈ P$ (λ is empty string) If $α, β ∈ P$, then $(α)β ∈ P$   Every nonempty balanced paren stri">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-26T05:22:46.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xin Wang&#39;s Blog">
-<meta name="twitter:description" content="CUHK在读博士生">
+<meta name="twitter:title" content="MIT6006 Lec11 Numerics I">
+<meta name="twitter:description" content="IrrationalsDigression Catalan numbers:  Set P of balanced parentheses strings are recursively defined as $λ ∈ P$ (λ is empty string) If $α, β ∈ P$, then $(α)β ∈ P$   Every nonempty balanced paren stri">
   
     <link rel="alternative" href="/atom.xml" title="Xin Wang&#39;s Blog" type="application/atom+xml">
   
@@ -245,246 +246,112 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-MIT6006-Lec11" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MIT6006 Lec11 Numerics I
+    </h1>
+  
+
+        
+        <a href="/blog/2018/11/26/MIT6006-Lec11/" class="archive-article-date">
+  	<time datetime="2018-11-26T07:42:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-26</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Irrationals"><span class="toc-number">1.</span> <span class="toc-text">Irrationals</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Newton’s-Method"><span class="toc-number">2.</span> <span class="toc-text">Newton’s Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#High-precision-multiply"><span class="toc-number">3.</span> <span class="toc-text">High precision multiply</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Irrationals"><span class="toc-text">Irrationals</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Newton’s-Method"><span class="toc-text">Newton’s Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#High-precision-multiply"><span class="toc-text">High precision multiply</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="Irrationals"><a href="#Irrationals" class="headerlink" title="Irrationals"></a>Irrationals</h3><p><strong>Digression</strong></p>
+<p>Catalan numbers:</p>
+<ul>
+<li>Set P of balanced parentheses strings are recursively defined as<ul>
+<li>$λ ∈ P$ (λ is empty string)</li>
+<li>If $α, β ∈ P$, then $(α)β ∈ P$</li>
+</ul>
+</li>
+<li>Every nonempty balanced paren string can be obtained via Rule 2 from a unique α, β pair</li>
+</ul>
+<p><strong>Enumeration</strong></p>
+<ul>
+<li>$C_n$: number of balanced parentheses strings with exactly n pairs of parentheses $C_0 = 1$ empty string</li>
+<li>$C_{n+1}$? Every string with n+1 pairs of parentheses can be obtained in a unique way via rule 2.</li>
+<li>One paren pair comes explicitly from the rule.<ul>
+<li>$k$ pairs from $α$, $n − k$ pairs from $β$</li>
+<li>$C_{n+1} = \sum_{n=0}^n C_k \dot C_{n-k} \qquad n \ge 0$</li>
+<li>$C_0=1 C_1=C_0^2 = 1  C_2=C_0C_1 + C_1C_0 = 2 C_3 = \cdots = 5$</li>
+</ul>
+</li>
+</ul>
+<h3 id="Newton’s-Method"><a href="#Newton’s-Method" class="headerlink" title="Newton’s Method"></a>Newton’s Method</h3><ul>
+<li>Find root of $f(x) = 0$ through successive approximation e.g., $f(x) = x2 − a$</li>
+<li>Tangent at $(x_i, f(x_i))$ is line $y = f(x_i)+ f’(x_i)·(x− x_i)$ where $f’(x_i)$ is the derivative. $x_{i+1}$ = intercept on x-axis<br>$$x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}$$</li>
+</ul>
+<h3 id="High-precision-multiply"><a href="#High-precision-multiply" class="headerlink" title="High precision multiply"></a>High precision multiply</h3><p>Multiplying two n-digit numbers (radix r = 2, 10) $0 ≤ x, y &lt; r^n$<br>$$x = x_1 · r^{n/2} + x_0 \quad x_1 = high half$$<br>$$y = y_1 · r^{n/2} + y_0 \quad x_0 = low half$$<br>$$0 \le x_0, x_1 &lt; r^{n/2}$$<br>$$0 \le y_0, y_1 &lt; r^{n/2}$$<br>$$z = x·y = x_1y_1·r^{n} + (x_0·y_1 + x_1·y_0)r^{n/2} + x_0·y_0$$</p>
+<ul>
+<li>4 multiplications of half-sized ⇒ quadratic algorithm $θ(n^2)$ time</li>
+</ul>
+<p><strong>Karatsuba’s Method</strong><br>Let<br>$$z_0 = x_0·y_0$$ $$z_2 = x_1·y_1$$ $$z_1 = (x_0+x_1)·(y_0+y_1) - z_0 - z_2 = x_0y_1+x_1y_0$$<br>$$z = z_2·r^n +z_1·r^{n/2} +z_0$$<br>There are three multiplies in the above calculations.<br>$$T(n) = time to multiply two n-digit numbers<br>        = 3T(n/2) + θ(n)<br>        = θ(n^{log_23}) = θ(n^{1.5849625···})$$</p>
+<p>A tutorial <a href="https://courses.csail.mit.edu/6.006/spring11/exams/notes3-karatsuba" target="_blank" rel="noopener">here</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢老板<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/blog/images/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/blog/images/wechatpay.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/blog/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/24/technique-Matlab/" class="archive-article-date">
-  	<time datetime="2018-11-23T23:39:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/24/technique-Matlab/">Higher Level Programming Technique using Matlab</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/23/ODE-Matlab/" class="archive-article-date">
-  	<time datetime="2018-11-22T23:39:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/23/ODE-Matlab/">ODE in Matlab</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/13/slurm-exit-code/" class="archive-article-date">
-  	<time datetime="2018-11-12T21:09:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/13/slurm-exit-code/">Slurm General Command and Exit Code</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Tools</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/06/notes-matlab/" class="archive-article-date">
-  	<time datetime="2018-11-06T01:12:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/06/notes-matlab/">MATLAB 常用语法记录</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/10/09/NeuralMass2008PlosComp/" class="archive-article-date">
-  	<time datetime="2018-10-09T01:28:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/10/09/NeuralMass2008PlosComp/">Notes of Neural Masses and Cortical Fields</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/10/05/Laplacian-matrix/" class="archive-article-date">
-  	<time datetime="2018-10-05T02:34:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/10/05/Laplacian-matrix/">Laplacian Matrix and Spectral Clustering</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -494,25 +361,125 @@ var _hmt = _hmt || [];
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://tracyxinwang.site/blog/2018/11/26/MIT6006-Lec11/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/blog/2018/11/24/technique-Matlab/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Higher Level Programming Technique using Matlab</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Irrationals"><span class="toc-number">1.</span> <span class="toc-text">Irrationals</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Newton’s-Method"><span class="toc-number">2.</span> <span class="toc-text">Newton’s Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#High-precision-multiply"><span class="toc-number">3.</span> <span class="toc-text">High precision multiply</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -555,9 +522,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: false,

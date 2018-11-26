@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://tracyxinwang.site/blog">
-  <title>Tag: Notes | Xin Wang&#39;s Blog</title>
+  <title>Higher Level Programming Technique using Matlab | Xin Wang&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="CUHK在读博士生">
-<meta name="keywords" content="大脑建模，前通信狗，程序媛">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Xin Wang&#39;s Blog">
-<meta property="og:url" content="http://tracyxinwang.site/blog/tags/Notes/index.html">
+  <meta name="description" content="This is a note taken from MATLAB online self-paced course. Utilizing Development ToolsDirectory reports  Commonly used folder reports in MATLAB Code Analyzer report: displays code analyzer findings fo">
+<meta name="keywords" content="Notes,Matlab">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Higher Level Programming Technique using Matlab">
+<meta property="og:url" content="http://tracyxinwang.site/blog/2018/11/24/technique-Matlab/index.html">
 <meta property="og:site_name" content="Xin Wang&#39;s Blog">
-<meta property="og:description" content="CUHK在读博士生">
+<meta property="og:description" content="This is a note taken from MATLAB online self-paced course. Utilizing Development ToolsDirectory reports  Commonly used folder reports in MATLAB Code Analyzer report: displays code analyzer findings fo">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-26T03:49:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xin Wang&#39;s Blog">
-<meta name="twitter:description" content="CUHK在读博士生">
+<meta name="twitter:title" content="Higher Level Programming Technique using Matlab">
+<meta name="twitter:description" content="This is a note taken from MATLAB online self-paced course. Utilizing Development ToolsDirectory reports  Commonly used folder reports in MATLAB Code Analyzer report: displays code analyzer findings fo">
   
     <link rel="alternative" href="/atom.xml" title="Xin Wang&#39;s Blog" type="application/atom+xml">
   
@@ -245,36 +246,482 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-technique-Matlab" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Higher Level Programming Technique using Matlab
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/blog/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/24/technique-Matlab/" class="archive-article-date">
+
+        
+        <a href="/blog/2018/11/24/technique-Matlab/" class="archive-article-date">
   	<time datetime="2018-11-23T23:39:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-24</time>
 </a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Utilizing-Development-Tools"><span class="toc-number">1.</span> <span class="toc-text">Utilizing Development Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Createing-Robust-Application"><span class="toc-number">2.</span> <span class="toc-text">Createing Robust Application</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Review-of-Data-Type"><span class="toc-number">3.</span> <span class="toc-text">Review of Data Type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Structing-Data"><span class="toc-number">4.</span> <span class="toc-text">Structing Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Structing-Code"><span class="toc-number">5.</span> <span class="toc-text">Structing Code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Performance-and-Memory"><span class="toc-number">6.</span> <span class="toc-text">Performance and Memory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Verifying-Application-Behavior"><span class="toc-number">7.</span> <span class="toc-text">Verifying Application Behavior</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Creating-a-Toolbox"><span class="toc-number">8.</span> <span class="toc-text">Creating a Toolbox</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Utilizing-Development-Tools"><span class="toc-text">Utilizing Development Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Createing-Robust-Application"><span class="toc-text">Createing Robust Application</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Review-of-Data-Type"><span class="toc-text">Review of Data Type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Structing-Data"><span class="toc-text">Structing Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Structing-Code"><span class="toc-text">Structing Code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Performance-and-Memory"><span class="toc-text">Performance and Memory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Verifying-Application-Behavior"><span class="toc-text">Verifying Application Behavior</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Creating-a-Toolbox"><span class="toc-text">Creating a Toolbox</span></a></li></ol>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/24/technique-Matlab/">Higher Level Programming Technique using Matlab</a>
-    </h1>
-  
+    </div>
+ -->
+        <p>This is a note taken from MATLAB online self-paced course.</p>
+<h3 id="Utilizing-Development-Tools"><a href="#Utilizing-Development-Tools" class="headerlink" title="Utilizing Development Tools"></a>Utilizing Development Tools</h3><p><strong>Directory reports</strong></p>
+<ul>
+<li>Commonly used folder reports in MATLAB<ul>
+<li>Code Analyzer report: displays code analyzer findings for each code file</li>
+<li>Dependency report: shows the function dependencies of the code files in the current folder</li>
+<li>Help report: provides each code file’s help text in a single report</li>
+<li>TODO/FIXME report: lists the instances of “TODO”, “FIXME”, or other custom text that exist in comments</li>
+</ul>
+</li>
+<li>To run these reports, navigate to the desired folder in MATLAB and then use the <code>Current Folder Actions</code> menu.</li>
+</ul>
+<p><strong>Code Analyzer</strong></p>
+<ul>
+<li>出现红色波浪线(即warning)时，右键单击，就有显示的帮助fix的选项</li>
+<li>如果没有fix，并且你觉得没有问题时，就可以右键选择”Suppress XXX”, 这时MATLAB会帮助你在后面加上一个注释 <code>#Ok&lt;AGROW&gt;</code>  来表示没有问题</li>
+</ul>
+<p><strong>MATLAB debugger</strong></p>
+<ul>
+<li>use breakpoint </li>
+<li>run MATLAB with <code>Pause on Errors</code> can help relief the work to find where is the bug.</li>
+</ul>
+<p><strong>Execution time measurements</strong></p>
+<ul>
+<li><code>tic</code> and <code>toc</code> functions can help measure the execution time of MATLAB code<ul>
+<li>Because tic and toc measure clock time, your computer’s background tasks can cause the timing measurements to vary slightly. Therefore, tic and toc may give different results for consecutive timings of the same code.</li>
+</ul>
+</li>
+<li>Average several running times is a good idea:  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tic; x = rand(1000); t(1) = toc;	</span><br><span class="line">tic; x = rand(1000); t(2) = toc;	</span><br><span class="line">tic; x = rand(1000); t(3) = toc;</span><br><span class="line">mean(t)</span><br><span class="line">    ans =</span><br><span class="line">        0.0305</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>Code profiler</strong></p>
+<p>To know which parts of the code take the most time.</p>
+<ul>
+<li>Click <code>Run and Time</code> opens <code>MATLAB Profiler</code> window</li>
+<li>Enter a line of code in the edit box and then press Enter or click the <code>Start Profiling</code> button.</li>
+<li>Note: The profiler report does not provide information on each individual call to a function, but rather only information on the conglomeration of all calls to a function.</li>
+</ul>
+<h3 id="Createing-Robust-Application"><a href="#Createing-Robust-Application" class="headerlink" title="Createing Robust Application"></a>Createing Robust Application</h3><p><strong>Custom Warnings and Errors</strong></p>
+<ul>
+<li>use <code>warning</code> and <code>error</code> to customize</li>
+<li>Warnings and errors both contain two components: an <em>identifier</em> and a <em>displayed</em> message</li>
+<li>Identifier:<ul>
+<li>Hidden from the user</li>
+<li>At least contains two components and separated by ‘:’</li>
+<li>First component is typically the name of the application</li>
+<li>Second component identifies the condition for the error or the warning</li>
+</ul>
+</li>
+<li>Error or warning message<ul>
+<li>is displayed to the user</li>
+<li>Errors are displayed in red and warnings in orange</li>
+</ul>
+</li>
+<li>e.g. <code>warning(&#39;MyProject:ValueOutOfRange&#39;,&#39;The value must be between 1 and 10.&#39;)</code></li>
+</ul>
+<p><strong>Validating Function Inputs</strong></p>
+<ul>
+<li>MATLAB provides <a href="https://au.mathworks.com/help/matlab/ref/is.html" target="_blank" rel="noopener">several</a> functions for validating the attributes of a variable.</li>
+<li>Validating Multiple Attributes: <ul>
+<li><code>validateattributes(name,class,attributes)</code></li>
+<li><code>name</code>: the variable name</li>
+<li><code>class</code>: should be a cell array containing strings, e.g: {‘double’}, {‘cell’}, {‘numeric’}, etc.</li>
+<li><code>attributes</code>: should be a cell array containing the list of attributes and their expected values, e.g.: {‘vector’}, {‘nonempty’}, {‘scalar’,’&gt;’,10}, etc.</li>
+<li>e.g.: checks that the data passed into the variable r is a numeric scalar greater than 0: <code>validateattributes(&#39;r&#39;,{&#39;numeric&#39;},{&#39;scalar&#39;,&#39;&gt;=&#39;,0})</code></li>
+</ul>
+</li>
+<li><p>You can also provide additional flexibility to the user by converting the input provided by the user into something that is acceptable to the program.</p>
+<ul>
+<li>e.g. calling the following by <code>int = calculateInterest(500,2,&#39;2%&#39;)</code>, and return <code>int = 20</code>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> interest = calculateInterest(p,n,r)</span><br><span class="line">    <span class="keyword">if</span> ischar(r)</span><br><span class="line">        r = str2num(r(1:end-1));</span><br><span class="line">    end</span><br><span class="line">    interest = p*n*r/100;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>numel</code> can be used to check the number of elements in a array</p>
+</li>
+</ul>
+<p><strong>Setting Default Input Values</strong></p>
+<ul>
+<li><em>Missing input</em>: use function <code>nargin</code> to check if all the inputs were provided in the function call<ul>
+<li><code>nargin</code> returns the number of inputs that were passed</li>
+</ul>
+</li>
+<li><em>Empty Input</em>: <ul>
+<li>use an empty array <code>[]</code> to skip specifying some inputs</li>
+<li>usie function <code>isempty</code> to check if the input is given. If it is empty, we can assign a default value.</li>
+</ul>
+</li>
+</ul>
+<p>The program flow within the function goes as follows now:</p>
+<ol>
+<li>Are all inputs provided?(nargin) No -&gt; Set default values</li>
+<li>Is any input empty?(isempty) No -&gt; Set default values</li>
+</ol>
+<p><strong>Creating Flexible Interfaces</strong></p>
+<p>use the property name-value pairs in the function syntax to allows the user to specify only a subset of the line attributes in <em>any order</em>.</p>
+<ul>
+<li>Every input argument in the function call is mapped to a single variable in the function definition. However, you can map multiple input arguments to a single input variable <code>varargin</code> in the function definition.</li>
+<li>e.g. <code>function analyzeAndPlot(x,y,varargin)</code> can be called as <code>analyzeAndPlot(time,position,&#39;LineWidth&#39;,3,&#39;Color&#39;,&#39;r&#39;)</code> </li>
+<li><code>varargin</code> is a cell array. In the above example, starting with the third input, each input is assigned to a separate cell of varargin.</li>
+<li>The contents of varargin can be passed to other MATLAB functions using like <code>varargin{:}</code></li>
+<li><code>varargin</code> is the last input in the function declaration.</li>
+</ul>
+<p><strong>Try-Catch: Unexpected Errors</strong></p>
+<ul>
+<li>The MException Object: <ul>
+<li>Error information in MATLAB is stored in a specialized datatype called an MException object.</li>
+<li>can access the MException object for the last error that occurred using the command: <code>MException.last</code></li>
+</ul>
+</li>
+<li><p>The try-catch Construct:</p>
+<ul>
+<li><p>This special programming construct attempts to run the code within the try block. If an error condition occurs, then the execution is interrupted and switched immediately into the catch block.</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">try</span><br><span class="line">    % Attempt code</span><br><span class="line">catch mexc</span><br><span class="line">    % Backup <span class="keyword">case</span> – something went wrong</span><br><span class="line">    % An MException object called mexc now exists</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>You can provide the name of a variable after the keyword catch (<code>mexc</code> in the above example). </p>
+</li>
+<li>If an error is generated in the try block the program can then proceed in one of the following ways in the catch block:<ul>
+<li>Try to recover from the error and continue execution.</li>
+<li>Provide a customized error message and halt the execution.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Review-of-Data-Type"><a href="#Review-of-Data-Type" class="headerlink" title="Review of Data Type"></a>Review of Data Type</h3><ul>
+<li><code>whos</code>: show variables in the workspace and compare their properties.</li>
+</ul>
+<p><strong>Table</strong>:</p>
+<ul>
+<li>Create a table: <ul>
+<li>You can use the table function with the workspace variables as inputs to create a table.</li>
+<li><code>tableName = table(variable1,variable2,variable3,&#39;VariableNames&#39;,{&#39;A&#39;,&#39;B&#39;,&#39;C&#39;})</code></li>
+</ul>
+</li>
+<li>Combine tables: <code>tableC = [tableA tableB]</code></li>
+<li>Extracting <em>portions</em> of a table: <ul>
+<li>by using column or row number: <code>tableC = tableA(:,1:2)</code></li>
+<li>by using variable name in single quotes: <code>tableC = tableA(:,&#39;FirstVariableName&#39;</code> or <code>tableC = tableA(:,{&#39;Var1&#39;,&#39;Var5&#39;})</code></li>
+<li>mixied indexing: <code>tableC = tableA([1 3 5],{&#39;Var1&#39;,&#39;Var5&#39;})</code></li>
+</ul>
+</li>
+<li>Extracting <em>Data</em> from a Table<ul>
+<li>dot notation: <code>data = tableName.VariableName</code></li>
+<li>Add new variable to a table: <code>table.NewVariable = [5 27 14]&#39;</code></li>
+<li>Curly Braces: <code>na1 = patientData{:,{&#39;Name&#39;,&#39;Age&#39;}}</code> or <code>patientData.Name{3} = &#39;NewName&#39;</code> (可直接赋值：<code>patientData{[1 4],&#39;HeartRate&#39;} = [80 ; 75]</code>)</li>
+</ul>
+</li>
+<li>use <code>tablename.Properties.VariableNames</code> to get the variabe names in a table or index into the VariableNames field to change a variable name: <code>myTable.Properties.VariableNames{2} = &#39;NewName&#39;</code></li>
+</ul>
+<p><strong>Cell Array</strong></p>
+<ul>
+<li>using <em>parentheses</em>, returns a subset cell array: <code>currencies(1)</code> -&gt; <code>ans={&#39;Euro&#39;}</code> (提取出来的还是cell)</li>
+<li>using <em>curly braces</em> will return a string: <code>currencies{1}</code> -&gt; <code>ans=&#39;Euro&#39;</code> (提取出来的 cell 本身的类型，即自身的内容)</li>
+<li>using <em>curly braces</em> can also replace or add a content: <code>currencies{1,3} = &#39;Yen&#39;</code></li>
+<li>remove an element from an array, use parentheses and set the result to an empty array, <code>ezone(2) = [];</code></li>
+</ul>
+<p><strong>Structures</strong></p>
+<ul>
+<li>Structures can contain data of dissimilar types and sizes in one variable. Use dot notation to add a field to a structure.</li>
+</ul>
+<p><strong>Function Handles</strong></p>
+<p>You can use a function handle to store a command as a variable, which can then be passed as an input to a function.</p>
+<ul>
+<li>construct a function handle by preceding the function name with an @ sign: <code>h = @sin</code></li>
+<li>call the function handle as the same way to call the function directly: <code>h(0)</code></li>
+<li>For functions requires an input, give the function handle (variable) as an input: <code>integral(h,0,pi)</code> , <code>integral(@log,1,2)</code></li>
+</ul>
+<p><strong>Anonymous Functions</strong></p>
+<p>use anonymous functions to create simple functions without creating a code file. That is to say, create a function directly in command line with only input variables.</p>
+<ul>
+<li>syntax: <code>variableName = @(arg1,...) functionDefinition</code>, e.g. <code>f = @(x,y) sin(x) + y;</code></li>
+<li><em>variableName</em> is the Function Handle</li>
+<li>Call the function just need to give the input into the handle: <code>f(pi/6,0.5)</code></li>
+</ul>
+<h3 id="Structing-Data"><a href="#Structing-Data" class="headerlink" title="Structing Data"></a>Structing Data</h3><p><strong>Structuring Data Considerations</strong></p>
+<ul>
+<li>Data that contains values from a finite set of categories, may be converted to categorical data using the <code>categorical</code> function: <code>gender = {&#39;M&#39; &#39;M&#39; &#39;F&#39; &#39;M&#39; &#39;F&#39; &#39;F&#39;}; gender = categorical(gender);</code></li>
+<li>use <code>cat</code> to concatenate the output: <code>allSums = cat(1,groupSum{:})</code></li>
+</ul>
+<p><strong>Extracting multiple elements</strong></p>
+<p><strong>Applying scalar functions to data</strong></p>
+<ul>
+<li><p>use <code>cellfun</code> function to find the group attributes of each cell:</p>
+<ul>
+<li><code>cellfun</code> function applies the specified function to each element of the cell.</li>
+<li>the specified function is called once per cell element.</li>
+<li>The specified function is typically a function which accepts a single input and produces a single output. e.g.  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">groups = </span><br><span class="line">    [3x1 double]    [2x1 double]    [4x1 double]</span><br><span class="line">cellfunc(@mean, groups)</span><br><span class="line">    ans = 3.03  4.30    5.05</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>use <code>structfun</code> to apply the same to a structure, this returns a scalar for each cell</p>
+<pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">groups = </span><br><span class="line">    group1: [3x1 double]</span><br><span class="line">    group2: [2x1 double]</span><br><span class="line">    group3: [4x1 double]</span><br><span class="line">    structfun(@mean,groups)</span><br><span class="line">        ans = 3.03    4.30    5.05</span><br></pre></td></tr></table></figure>
+</code></pre></li>
+<li><p>Nonscalar output</p>
+<ul>
+<li>You may attempt to use <code>cellfun</code> or structfun with functions that return nonscalar outputs, such as sort, return an array.</li>
+<li><p>To handle this situation, you can specify that the outputs will be different sizes using the <code>UniformOutput</code> property. This returns a nonscalar for each cell. e.g.</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">groups = </span><br><span class="line">    [3x1 double]    [2x1 double]    [4x1 double]</span><br><span class="line">cellfun(@sort,groups,<span class="string">'UniformOutput'</span>,<span class="literal">false</span>)	</span><br><span class="line">    ans = </span><br><span class="line">        [3x1 double]    [2x1 double]    [4x1 double]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>can also use anonymous functions as inputs to <code>cellfun</code>: <code>cellfun( @(x) mean(x.price), c)</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Converting data types</strong></p>
+<ul>
+<li><code>num2cell</code>: converts an m-by-n numeric matrix into an m-by-n cell array, where each cell contains a scalar value</li>
+<li><code>mat2cell</code>: converts a numeric matrix into a cell array where the cells contain matrices of various sizes. <ul>
+<li>the second input indicates how to subdivide the rows</li>
+<li>the third input indicates how to subdivide the columns</li>
+<li>e.g. <code>c = mat2cell(r,[2,4],[2,1])</code> means to convert the matrix r to four matrix cell, each cell has the matrix of dimension: 2x2, 2x1, 4x2, 4x1</li>
+</ul>
+</li>
+<li><code>cell2struct</code>: converts a cell array into a structure.<ul>
+<li>e.g. 4-by-2 cell array <code>c</code> is converted into a 2 element structure, <code>s</code>, with 4 fields: <code>s = cell2struct(c,{&#39;fA&#39;,&#39;fB&#39;,&#39;fC&#39;,&#39;fD&#39;},1)</code></li>
+<li>first input: the cell array</li>
+<li>second input: a cell of strings containing the field names</li>
+<li>third input: the dimension on which the fields are named. (i.e. row or column)</li>
+</ul>
+</li>
+<li><code>cell2table</code>: converts a cell array into a table</li>
+<li><em>character array</em>:  <code>cellstr</code> converts a list of strings to a cell array with the trailing spaces removed.</li>
+</ul>
+<h3 id="Structing-Code"><a href="#Structing-Code" class="headerlink" title="Structing Code"></a>Structing Code</h3><p><strong>Private Functions</strong></p>
+<ul>
+<li>To prevent your application’s internal functions from being accessible outside the application, you can place them in a folder named <em>private</em></li>
+<li>Functions in a private folder can only be called by<ul>
+<li>Functions within the parent folder</li>
+<li>Other functions within the private folder</li>
+</ul>
+</li>
+<li>private functions can call any other functions on the MATLAB path.</li>
+<li><em>private</em> folders cannot be added to the MATLAB path. Therefore, functions within them generally cannot be called from the command line unless the MATLAB current folder is the private folder itself.</li>
+</ul>
+<p><strong>Local Functions</strong></p>
+<ul>
+<li>To create local functions, place them below the primary function in the same code file</li>
+<li>When using local functions<ul>
+<li>The primary function can call the local functions</li>
+<li>The local functions can call other local functions and the primary function</li>
+<li>External code (outside of the code file) can call the primary function, but not the local functions</li>
+</ul>
+</li>
+<li>As with functions in separate files, local functions <em>have their own workspaces</em></li>
+<li>When creating local functions, you may or may not choose to use the <code>end</code> keyword for each function. However, whichever you choose, you must stay consistent. Some local functions have <code>end</code> while others don’t is invalid in MATLAB </li>
+</ul>
+<p><strong>Change the Function Interface with Anonymous Functions</strong></p>
+<ul>
+<li>One way to modify a function’s interface (without modifying the function itself) is to use a wrapper function.</li>
+<li><p>Functions with multiple inputs may not be used directly with other functions like <code>fzero</code>, <code>ode45</code>, using anonymous functions can help this:</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> y = myquad(x,a,b,c)</span><br><span class="line">    y = a*x^2 + b*x + c;</span><br><span class="line"></span><br><span class="line">a = 1; b = 5; c = -10;</span><br><span class="line"></span><br><span class="line">f = @(x) myquad(x,a,b,c)</span><br><span class="line"></span><br><span class="line">fzero(f,3)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>And the input variables can be the variables in the workspace.</p>
+</li>
+</ul>
+<h3 id="Performance-and-Memory"><a href="#Performance-and-Memory" class="headerlink" title="Performance and Memory"></a>Performance and Memory</h3><p><strong>Datatypes and Memory</strong></p>
+<ul>
+<li>can determine the memory used by a variable by choosing to display the <code>&#39;Bytes&#39;</code> column in MATLAB workspace. </li>
+<li>Container variables (tables, cell arrays, and structure arrays) require <em>overhead</em> in addition to the data they store. <ul>
+<li>This additional memory is used to store information about the contents of the variable. </li>
+<li>The amount of the overhead depends on the size of the variable.</li>
+<li>Each <code>cell</code> of a cell array requires memory overhead.</li>
+<li>A <code>table</code> requires <strong>minimal</strong> overhead for each variable and for storing table properties.</li>
+<li>A <code>structure</code> requires 64 bytes of overhead for each field name. If a structure array has more than one element, each element will require additional overhead.</li>
+</ul>
+</li>
+<li>Special Variable Types: MATLAB has datatypes that are designed to be used with data having specific characteristics. These datatypes can significantly reduce the memory consumption.<ul>
+<li><code>Categorical arrays</code> can be used to store a list of text labels or strings containing many repeated entries.</li>
+<li>The memory saved increases as the size of the list and the number of the repeated entries increase.</li>
+<li><code>Datetime arrays</code> can be used to store a list of dates. They also provide memory saving over a cell array storing individual date strings.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Preallocation</strong></p>
+<ul>
+<li>Preallocating Numeric Arrays:<ul>
+<li>can use the functions <code>zeros</code> and <code>ones</code> to preallocate numeric arrays</li>
+<li>another way to preallocate an array is to assign a value to the last element of the array.</li>
+</ul>
+</li>
+<li>Preallocating Cells and Structures<br>:<ul>
+<li><strong>benefit when a for loop used</strong>, since frequently change the size will consume lots of time</li>
+<li>Preallocating a cell array or a structure array assigns space for the containers themselves, not the contents</li>
+<li>This means that preallocation of the container variables is most beneficial when the container array itself is large, regardless of the size of the contents of the individual containers.</li>
+<li>using <code>cell</code> to preallocate a cell array: <code>C = cell(1,4)</code> </li>
+<li>preallocate a structure array, start by defining the last element of the array. MATLAB will automatically replicate the field names to all of the preceding elements in the array. <code>S(5) = struct(&#39;field1&#39;,6,&#39;field2&#39;,7)</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>Vectorization</strong></p>
+<ul>
+<li>a subset of vectorized functions in MATLAB: <code>diff</code>, <code>prod</code>, <code>cumprod</code>, <code>cumsum</code>, <code>union</code>,<code>setdiff</code>,<code>setxor</code> etc.</li>
+</ul>
+<p><strong>Binary Singleton Expansion (bsxfun)</strong> </p>
+<ul>
+<li>Binary: the function should accept two inputs</li>
+<li>Scalar: the function should return a scalar output  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x = [4;5;6]</span><br><span class="line">y = [1 2 3; 4 5 6; 7 8 9];</span><br><span class="line">bsxfun(@gt,x,y)</span><br><span class="line">ans =</span><br><span class="line">    1   1   1</span><br><span class="line">    1   0   0</span><br><span class="line">    0   0   0</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>Memory Usage</strong></p>
+<ul>
+<li>use the <code>memory</code> command to display information about the memory</li>
+<li>or with output structures: <code>[user,sys] = memory</code></li>
+<li>The output structures have the following information:<ul>
+<li><em>Total System Memory</em>(sys.SystemMemory.Available): Physical RAM available + Page File (or swap) available. </li>
+<li><em>MATLAB Process Virtual Memory</em>(sys.VirtualAddressSpace): Total and available memory associated with the whole MATLAB process. It is limited by processor architecture and operating system.</li>
+<li><em>MATLAB Workspace</em>(user.MemAvailableAllArrays) and <em>Largest block</em>(user.MaxPossibleArrayBytes): The effective workspace available for data is the MATLAB process virtual address space minus system DLLs, Java™ (JVM), MATLAB.exe and DLLs. The largest block (for numerical arrays) is affected by fragmentation, third-party DLLs , and other running processes.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Copy-on-Write Behavior</strong></p>
+<ul>
+<li>also named lazy-copying, ensures that no additional memory is assigned to an input variable until it is modified within the function.</li>
+</ul>
+<p><strong>In-Place Optimizations</strong></p>
+<ul>
+<li>declare and call a function using the same variable to define the input and output arguments: <code>x=myFun(x)</code></li>
+</ul>
+<p><strong>Nested Functions</strong></p>
+<ul>
+<li>a nested function is also used to organize several functions in a single function file and it often acts as a helper function to the primary function.</li>
+<li>However, nested functions exihibit one additional feature: They allow functions in the file to <em>share workspace variables</em>.</li>
+<li>To nest a function inside another function, the extents of the functions must be marked explicitly by using the keywords <em>function</em> and <em>end</em>.</li>
+<li><p>When to use a nested function?</p>
+<ul>
+<li>Sharing large data: Auxiliary functions that are intended to modify the data of the parent function can be written as nested functions.</li>
+<li><p>In the following example, even though <code>x</code> is not explicitly passed to the nested function <code>movingAverage</code>, the nested function can access and modify <code>x</code> from the workspace of the primary function <code>analyzeData</code>:</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> y = analyzeData(x)</span><br><span class="line">movingAverage(3);</span><br><span class="line">...</span><br><span class="line"><span class="keyword">function</span> movingAverage(n)</span><br><span class="line">window = ones(1,n)/n;</span><br><span class="line">x = conv(x,window);</span><br><span class="line">end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Using a function which requires specific function <em>signature</em>: Some functions in MATLAB, such as fzero, require you to pass handles to your own functions as inputs.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Verifying-Application-Behavior"><a href="#Verifying-Application-Behavior" class="headerlink" title="Verifying Application Behavior"></a>Verifying Application Behavior</h3><p><strong>What Is a Test?</strong></p>
+<ul>
+<li>A test allows you to verify that your code works correctly by testing specific inputs and validating that expected values have been created.</li>
+<li>A simple test should:<ul>
+<li>Set up the circumstances under which you want to test the application.</li>
+<li>Call the application.</li>
+<li>Define the expected value.</li>
+<li>Compare the actual and expected behaviors.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Test Response</strong></p>
+<ul>
+<li>A formal testing framework should produce either no response, to indicate that the test was passed, or an error, to indicate failure.</li>
+<li><code>assert</code> function takes a logical input (or an expression that evaluates to a logical result), and generates an error only if the input is false.  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; assert(<span class="literal">true</span>)</span><br><span class="line">    <span class="comment"># (No response)	</span></span><br><span class="line">&gt;&gt; assert(<span class="literal">false</span>)</span><br><span class="line">Assertion failed.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>Writing and Running a Test Script</strong></p>
+<ul>
+<li>A test script is simply a MATLAB script that is divided into sections and uses the assert function.</li>
+<li>Code sections allow you to compile multiple tests into a single file. The section header describes the test. Use <code>%% Test XXX</code> to seperate each section.</li>
+<li>Each section of a test script maintains its own workspace. Thus, in each section, you must define all needed variables.</li>
+<li>to run each and every section of a test script, use the <code>runtests</code> function: <code>result = runtests(&#39;myTests&#39;);</code><ul>
+<li>If run the test script as a regular script, any failed tests will produce an error, halting execution. Thus, the remaining tests will not be performed. </li>
+<li>Whereas, the runtests function will move to the next section of the script after an error is encountered so that all the tests run.</li>
+</ul>
+</li>
+<li>Output variable of <code>runtests</code> is a specialized MATLAB object designed to hold test result information.</li>
+</ul>
+<p><strong>Avoiding Bugs in Comparisons</strong></p>
+<ul>
+<li><em>Numerical Precision</em>: use a tolerance value for equality comparisons: <code>abs(x-y) &lt; 1e-6</code></li>
+</ul>
+<p><strong>Writing Test Functions</strong></p>
+<ul>
+<li><p>Creating a Test Function: A test function follows a specific template:</p>
+<ul>
+<li>note: the test local function name should be ended with <code>Test</code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="built_in">test</span> = mainFunctionName</span><br><span class="line">    <span class="built_in">test</span> = functiontests(localfunctions);</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> testName1(testcase)</span><br><span class="line">    % code <span class="keyword">for</span> <span class="built_in">test</span> 1</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> testName2(testcase)</span><br><span class="line">    % code <span class="keyword">for</span> <span class="built_in">test</span> 2</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>For each test:</p>
+<ul>
+<li>Create a local function.</li>
+<li>Name each test function starting or ending with the word “test.”</li>
+<li>Pass a single input variable.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Verifying Behavior</strong></p>
+<ul>
+<li>to verify that an application behaves in a certain way, such as generating an error or not generating warnings under specific conditions</li>
+<li><em>Verification functions</em>: <code>verifyClass</code>, <code>verifyError</code>, <code>verifyWarningFree</code>, etc.</li>
+<li>The local test functions have a single input, named <code>testcase</code> in the example below. Your test code should use it as the first input to the verification function.  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> posRootTest(testcase)</span><br><span class="line">x = linspace(0,pi);</span><br><span class="line">y = sqrt(x);</span><br><span class="line">verifyTrue(testcase,isreal(y))</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>Passing Commands as Inputs</strong><br>    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> testStringInput(testcase)</span><br><span class="line">    errorMessage = <span class="string">'MATLAB:UndefinedFunction'</span>;</span><br><span class="line">    cmd = @()sqrt(<span class="string">'ZureyBug'</span>);</span><br><span class="line">    verifyError(testcase,cmd,errorMessage)</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p><strong>Adding Pre- and Post-Test Tasks</strong></p>
+<ul>
+<li>It can be useful to define tasks that should be performed immediately before and after running the actual tests defined in your test code. e.g., if you keep the test code and the application in separate locations, the location of the application code can be added to the MATLAB path for the tests to successfully run.</li>
+<li><p>ou can add pre- and post-test tasks to your testing function by adding functions with the special names <code>setupOnce</code> and <code>teardownOnce</code> which have the same signature as the other test functions.</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> setupOnce(testCase)</span><br><span class="line">    % save the name of the application folder you will add</span><br><span class="line">    % to the TestData structure</span><br><span class="line">    testCase.TestData.appDir = fullfile(<span class="string">'C:'</span>,<span class="string">'class'</span>,<span class="string">'work'</span>,<span class="string">'ApplicationDirectory'</span>);</span><br><span class="line"></span><br><span class="line">    % add the application folder to the path <span class="keyword">for</span> testing</span><br><span class="line">    addpath(testCase.TestData.appDir)</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> teardownOnce(testCase)</span><br><span class="line">    % removes the added path</span><br><span class="line">    rmpath(testCase.TestData.appDir)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>In the above example, the test code and the application code are in separate locations. You will use the application folder in the teardown function. So, rather than redefining it, you can save it in the testCase variable to the TestData property. This property is a structure variable to which you can add fields as you desire. Any fields that are added to this variable are accessible by all functions in the test function file.</p>
+</li>
+<li>remove the directory from the path in the teardownOnce function. See that the variable you previously defined, appDir, is accessible through testCase.TestData. Note that the structure TestData is named automatically, whereas you can name the function input, testCase in this example, whatever you want.</li>
+</ul>
+<h3 id="Creating-a-Toolbox"><a href="#Creating-a-Toolbox" class="headerlink" title="Creating a Toolbox"></a>Creating a Toolbox</h3>
+      
 
-        <div class="article-info info-on-right">
-          
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢老板<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/blog/images/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/blog/images/wechatpay.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -290,229 +737,128 @@ var _hmt = _hmt || [];
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://tracyxinwang.site/blog/2018/11/24/technique-Matlab/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/23/ODE-Matlab/" class="archive-article-date">
-  	<time datetime="2018-11-22T23:39:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-23</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/blog/2018/11/26/MIT6006-Lec11/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          MIT6006 Lec11 Numerics I
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2018/11/23/ODE-Matlab/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ODE in Matlab</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/23/ODE-Matlab/">ODE in Matlab</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Utilizing-Development-Tools"><span class="toc-number">1.</span> <span class="toc-text">Utilizing Development Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Createing-Robust-Application"><span class="toc-number">2.</span> <span class="toc-text">Createing Robust Application</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Review-of-Data-Type"><span class="toc-number">3.</span> <span class="toc-text">Review of Data Type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Structing-Data"><span class="toc-number">4.</span> <span class="toc-text">Structing Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Structing-Code"><span class="toc-number">5.</span> <span class="toc-text">Structing Code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Performance-and-Memory"><span class="toc-number">6.</span> <span class="toc-text">Performance and Memory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Verifying-Application-Behavior"><span class="toc-number">7.</span> <span class="toc-text">Verifying Application Behavior</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Creating-a-Toolbox"><span class="toc-number">8.</span> <span class="toc-text">Creating a Toolbox</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/13/slurm-exit-code/" class="archive-article-date">
-  	<time datetime="2018-11-12T21:09:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-13</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/13/slurm-exit-code/">Slurm General Command and Exit Code</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Tools</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/06/notes-matlab/" class="archive-article-date">
-  	<time datetime="2018-11-06T01:12:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/06/notes-matlab/">MATLAB 常用语法记录</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/10/09/NeuralMass2008PlosComp/" class="archive-article-date">
-  	<time datetime="2018-10-09T01:28:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/10/09/NeuralMass2008PlosComp/">Notes of Neural Masses and Cortical Fields</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/10/05/Laplacian-matrix/" class="archive-article-date">
-  	<time datetime="2018-10-05T02:34:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/10/05/Laplacian-matrix/">Laplacian Matrix and Spectral Clustering</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -555,9 +901,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: false,

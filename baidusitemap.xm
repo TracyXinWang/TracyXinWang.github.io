@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://tracyxinwang.site/blog/blog/2018/11/23/ODE-Matlab/</loc>
+    <lastmod>2018-11-26T05:24:37.000Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2018/11/26/MIT6006-Lec11/</loc>
+    <lastmod>2018-11-26T05:22:46.000Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2018/11/24/technique-Matlab/</loc>
+    <lastmod>2018-11-26T03:49:02.000Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2018/11/06/notes-matlab/</loc>
+    <lastmod>2018-11-25T22:28:21.000Z</lastmod>
+  </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/11/22/NNM/</loc>
     <lastmod>2018-11-22T10:51:51.000Z</lastmod>
   </url>  <url>
@@ -30,9 +42,6 @@
   </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/11/07/MIT6006-Lec05/</loc>
     <lastmod>2018-11-08T06:23:05.000Z</lastmod>
-  </url>  <url>
-    <loc>http://tracyxinwang.site/blog/blog/2018/11/06/notes-matlab/</loc>
-    <lastmod>2018-11-07T22:08:57.000Z</lastmod>
   </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/11/06/MIT6006-Lec04/</loc>
     <lastmod>2018-11-06T10:08:25.972Z</lastmod>

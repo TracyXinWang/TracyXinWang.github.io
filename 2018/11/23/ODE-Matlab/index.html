@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://tracyxinwang.site/blog">
-  <title>Tag: Notes | Xin Wang&#39;s Blog</title>
+  <title>ODE in Matlab | Xin Wang&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="CUHK在读博士生">
-<meta name="keywords" content="大脑建模，前通信狗，程序媛">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Xin Wang&#39;s Blog">
-<meta property="og:url" content="http://tracyxinwang.site/blog/tags/Notes/index.html">
+  <meta name="description" content="Basic[tSol, ySol] = ode45(@odefun, tRange, y0)  @odefun: A function handle to the derivative function, need to specify tRange: the time range to calculate the differential function y0: the initial val">
+<meta name="keywords" content="Notes,Matlab">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ODE in Matlab">
+<meta property="og:url" content="http://tracyxinwang.site/blog/2018/11/23/ODE-Matlab/index.html">
 <meta property="og:site_name" content="Xin Wang&#39;s Blog">
-<meta property="og:description" content="CUHK在读博士生">
+<meta property="og:description" content="Basic[tSol, ySol] = ode45(@odefun, tRange, y0)  @odefun: A function handle to the derivative function, need to specify tRange: the time range to calculate the differential function y0: the initial val">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-26T05:24:37.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xin Wang&#39;s Blog">
-<meta name="twitter:description" content="CUHK在读博士生">
+<meta name="twitter:title" content="ODE in Matlab">
+<meta name="twitter:description" content="Basic[tSol, ySol] = ode45(@odefun, tRange, y0)  @odefun: A function handle to the derivative function, need to specify tRange: the time range to calculate the differential function y0: the initial val">
   
     <link rel="alternative" href="/atom.xml" title="Xin Wang&#39;s Blog" type="application/atom+xml">
   
@@ -245,78 +246,104 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-ODE-Matlab" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/blog/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/24/technique-Matlab/" class="archive-article-date">
-  	<time datetime="2018-11-23T23:39:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-24</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/24/technique-Matlab/">Higher Level Programming Technique using Matlab</a>
+    <h1 class="article-title" itemprop="name">
+      ODE in Matlab
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/23/ODE-Matlab/" class="archive-article-date">
+        
+        <a href="/blog/2018/11/23/ODE-Matlab/" class="archive-article-date">
   	<time datetime="2018-11-22T23:39:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-23</time>
 </a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic"><span class="toc-number">1.</span> <span class="toc-text">Basic</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solve-system-of-ODE"><span class="toc-number">2.</span> <span class="toc-text">Solve system of ODE</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic"><span class="toc-text">Basic</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solve-system-of-ODE"><span class="toc-text">Solve system of ODE</span></a></li></ol>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/23/ODE-Matlab/">ODE in Matlab</a>
-    </h1>
-  
+    </div>
+ -->
+        <h3 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h3><p>[tSol, ySol] = ode45(@odefun, tRange, y0)</p>
+<ul>
+<li><em>@odefun</em>: A function handle to the derivative function, need to specify</li>
+<li><em>tRange</em>: the time range to calculate the differential function</li>
+<li><em>y0</em>: the initial value</li>
+<li><em>tSol</em>: indepent variable, two element vector containing the initial and final values</li>
+<li><em>ySol</em>: dependent variable, the initial value of the dependent variable</li>
+</ul>
+<p>ODE general solution structure:</p>
+<ul>
+<li>Call ode45 with a single output variable: <code>sol = ode45(@odefun,tRange,y0)</code></li>
+<li>use the deval function to evaluate the solution at any point in the interval tRange by passing the solution structure and the point to deval: <code>y2 = deval(sol,t)</code> t is the time point, can be a single time or an array of time</li>
+<li>use <code>fzero</code> to find when sol evaluates to a value(e.g. 336): <code>tTermVel = fzero(@(t) deval(sol,t) - 336, 300)</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">tRange = [0 120];</span><br><span class="line">V0 = 6000;</span><br><span class="line">[tSol vSol] = ode45(@fallingbody, tRange, V0);</span><br><span class="line"></span><br><span class="line">plot(tSol,vSol)</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> dvdt = fallingbody(t, v)</span><br><span class="line">    g = 3.72;</span><br><span class="line">    D = 3.3e-5;</span><br><span class="line">    dvdt = g - D*v^2;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h3 id="Solve-system-of-ODE"><a href="#Solve-system-of-ODE" class="headerlink" title="Solve system of ODE"></a>Solve system of ODE</h3><p>Writing Vector-Valued ODE functions</p>
+<p>Creating a vector-valued ODE function can be broken down into three parts: </p>
+<ul>
+<li>extracting the individual elements from the vector of dependent variables</li>
+<li>implementing the derivative functions for the dependent variables</li>
+<li>returning the output variable as a column vector of the derivatives</li>
+</ul>
+<p>Initial condition is a column vector</p>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢老板<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/blog/images/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/blog/images/wechatpay.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -332,187 +359,128 @@ var _hmt = _hmt || [];
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://tracyxinwang.site/blog/2018/11/23/ODE-Matlab/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/13/slurm-exit-code/" class="archive-article-date">
-  	<time datetime="2018-11-12T21:09:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-13</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/blog/2018/11/24/technique-Matlab/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Higher Level Programming Technique using Matlab
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2018/11/22/NNM/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Neural Mass Models</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/13/slurm-exit-code/">Slurm General Command and Exit Code</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Tools</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic"><span class="toc-number">1.</span> <span class="toc-text">Basic</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solve-system-of-ODE"><span class="toc-number">2.</span> <span class="toc-text">Solve system of ODE</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/06/notes-matlab/" class="archive-article-date">
-  	<time datetime="2018-11-06T01:12:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-06</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/06/notes-matlab/">MATLAB 常用语法记录</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/10/09/NeuralMass2008PlosComp/" class="archive-article-date">
-  	<time datetime="2018-10-09T01:28:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/10/09/NeuralMass2008PlosComp/">Notes of Neural Masses and Cortical Fields</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/10/05/Laplacian-matrix/" class="archive-article-date">
-  	<time datetime="2018-10-05T02:34:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/10/05/Laplacian-matrix/">Laplacian Matrix and Spectral Clustering</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -555,9 +523,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: false,

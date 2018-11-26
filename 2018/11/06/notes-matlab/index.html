@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Xin Wang&#39;s Blog">
 <meta property="og:description" content="Matrix 处理 将所有非零的元素变为1，为零的元素保持为0，使用 ~~, 可用于二值化   1A=~~A;  Get indices of elements in upper triangle   12nNodes = size(adj,1);  % get the number of nodes in a matrixupperInds = find(triu(ones(nNodes),1)">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-07T22:08:57.000Z">
+<meta property="og:updated_time" content="2018-11-25T22:28:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MATLAB 常用语法记录">
 <meta name="twitter:description" content="Matrix 处理 将所有非零的元素变为1，为零的元素保持为0，使用 ~~, 可用于二值化   1A=~~A;  Get indices of elements in upper triangle   12nNodes = size(adj,1);  % get the number of nodes in a matrixupperInds = find(triu(ones(nNodes),1)">
@@ -330,6 +330,9 @@ var _hmt = _hmt || [];
 <li><p>Get the running time of code</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tic</span><br><span class="line">code here</span><br><span class="line">toc</span><br></pre></td></tr></table></figure>
 </li>
+<li><p><code>diff</code> function: to calculate the incremental change between each pair of values in an array.</p>
+</li>
+<li><code>linspace</code> function: creates a vector of n equally spaced elements between any two values, x1 and x2. <code>x = linspace(x1,x2,n)</code></li>
 </ul>
 
       
@@ -533,7 +536,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共25.1k字
+              本站总共29.2k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -640,11 +643,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color1">Brain</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+                <a href="javascript:void(0)" class="js-tag color4">MRI</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -656,15 +659,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Brain</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">MRI</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -680,11 +679,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -697,10 +704,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Tools</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
               </li>
              
               <li class="article-tag-list-item">
