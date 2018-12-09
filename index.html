@@ -247,6 +247,620 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-MIT6006-Lec14" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/12/09/MIT6006-Lec14/">MIT6006 Lec14 Graphs II Depth-First Search</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/12/09/MIT6006-Lec14/" class="archive-article-date">
+  	<time datetime="2018-12-09T07:49:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Depth-First-Search"><span class="toc-number">1.</span> <span class="toc-text">Depth-First Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cycle-Testing"><span class="toc-number">2.</span> <span class="toc-text">Cycle Testing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Topological-Sort"><span class="toc-number">3.</span> <span class="toc-text">Topological Sort</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Depth-First-Search"><span class="toc-text">Depth-First Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cycle-Testing"><span class="toc-text">Cycle Testing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Topological-Sort"><span class="toc-text">Topological Sort</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="Depth-First-Search"><a href="#Depth-First-Search" class="headerlink" title="Depth-First Search"></a>Depth-First Search</h3><p><strong>Depth First Search Algorithm</strong>:</p>
+<ul>
+<li>follow path until you get stuck</li>
+<li>backtrack along breadcrumbs(面包屑…) until reach unexplored neighbor</li>
+<li><strong>recursively</strong> explore</li>
+<li>careful not to repeat a vertex</li>
+</ul>
+<p>Pseudo codes are as follows:<br><img src="/blog/images/MIT14_01.jpg"></p>
+<p>Note that DFS and DFS-visit are two things. DFS is the top level of DFS-visit and it makes sure that all the vertex will be visited.</p>
+<p><strong>Edge Classification</strong></p>
+<ul>
+<li>tree edges (parent pointer): visit new vertex via edge</li>
+<li>forward edges: node -&gt; descendant in tree</li>
+<li>backward edges: node -&gt; ancestor in tree</li>
+<li>cross edges: other edges (from one tree to another) between two non-ancestor-related subtrees<br>To compute this classification (back or not), mark nodes for duration they are “on the stack”</li>
+<li>only tree and back edges in undirected graph</li>
+</ul>
+<p><strong>Analysis</strong></p>
+<ul>
+<li>DFS-visit gets called with a vertex s only once (because then parent[s] set)<ul>
+<li>⇒ time in DFS-visit = $\sum_{s∈V}|Adj[s]| = O(E)$</li>
+</ul>
+</li>
+<li>DFS outer loop adds just $O(V)$<ul>
+<li>⇒ $O(V + E)$ time (linear time)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Cycle-Testing"><a href="#Cycle-Testing" class="headerlink" title="Cycle Testing"></a>Cycle Testing</h3><p>For directed graph:</p>
+<ul>
+<li>DFS can be used to detect a cycle in a Graph.</li>
+<li>DFS for a connected graph produces a tree. There is a cycle in a graph only if there is a <strong>back edge</strong> present in the graph. </li>
+<li>For a disconnected graph, get the DFS forest as output. To detect cycle, we can check for a cycle in <em>individual trees</em> by checking back edges.</li>
+</ul>
+<h3 id="Topological-Sort"><a href="#Topological-Sort" class="headerlink" title="Topological Sort"></a>Topological Sort</h3><p>Topological sorting for <u>Directed Acyclic Graph (DAG)</u> is a linear ordering of vertices such that for every directed edge uv, vertex u comes before v in the ordering. Topological Sorting for a graph is not possible if the graph is not a DAG.</p>
+<ul>
+<li>The first vertex in topological sorting is always a vertex with in-degree as 0 (a vertex with no incoming edges).</li>
+<li>We can modify DFS to find Topological Sorting of a graph. </li>
+<li>In DFS, we start from a vertex, we first print it and then recursively call DFS for its adjacent vertices. </li>
+<li>In topological sorting, we use a temporary stack. We don’t print the vertex immediately, we first recursively call topological sorting for all its adjacent vertices, then push it to a stack. Finally, print contents of stack. Note that a vertex is pushed to stack only when all of its adjacent vertices (and their adjacent vertices and so on) are already in stack.</li>
+</ul>
+<p><br><br>Reference:<br><a href="https://www.geeksforgeeks.org/topological-sorting/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/topological-sorting/</a><br><a href="https://www.geeksforgeeks.org/detect-cycle-in-a-graph/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/detect-cycle-in-a-graph/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/12/09/MIT6006-Lec14/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-MIT6006-Lec13" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/12/09/MIT6006-Lec13/">MIT6006 Lec13 Graphs I Breadth First Search</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/12/09/MIT6006-Lec13/" class="archive-article-date">
+  	<time datetime="2018-12-09T03:25:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Graph-Representations"><span class="toc-number">1.</span> <span class="toc-text">Graph Representations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Breadth-First-Search"><span class="toc-number">2.</span> <span class="toc-text">Breadth-First Search</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Graph-Representations"><span class="toc-text">Graph Representations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Breadth-First-Search"><span class="toc-text">Breadth-First Search</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="Graph-Representations"><a href="#Graph-Representations" class="headerlink" title="Graph Representations"></a>Graph Representations</h3><p><strong>Adjacency lists</strong>:</p>
+<ul>
+<li>Array $Adj$ of $|V|$ linked lists<ul>
+<li>for each vertex $u∈V$, $Adj[u]$ stores $u$’s neighbors, i.e., ${v∈V|(u,v)∈E}$</li>
+</ul>
+</li>
+</ul>
+<p><strong>Implicit Graphs</strong>:</p>
+<ul>
+<li>$Adj(u)$ is a function — compute local structure on the fly</li>
+</ul>
+<p><strong>Object-oriented Variations</strong>:</p>
+<ul>
+<li>object for each vertex $u$</li>
+<li>u.neighbors = list of neighbors i.e. $Adj[u]$</li>
+</ul>
+<p><strong>Incidence Lists</strong>:</p>
+<ul>
+<li>can also make edges objects</li>
+<li>u.edges = list of (outgoing) edges from u.</li>
+<li>advantage: store edge data without hashing</li>
+</ul>
+<p><strong>Graph traversal</strong> means visiting every vertex and edge exactly once in a well-defined order. BFS is the most commonly used approach.</p>
+<h3 id="Breadth-First-Search"><a href="#Breadth-First-Search" class="headerlink" title="Breadth-First Search"></a>Breadth-First Search</h3><p>Explore graph level by level from $s$ (that is to say, you will not move to another layer until you visit all the nodes of the current layer):</p>
+<ul>
+<li>level 0 = {s}</li>
+<li>level i = vertices reachable by path of i edges but not fewer</li>
+<li>build level $i &gt; 0$ from level $i − 1$ by trying all outgoing edges, but ignoring vertices from previous levels<br><img src="/blog/images/MIT13_01.jpg" width="50%" height="50%"></li>
+</ul>
+<p><strong>Breadth-First-Search Algorithm</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">BFS (V,Adj,s): </span><br><span class="line">    level = &#123;s: 0&#125;</span><br><span class="line">    parent = &#123;s: None&#125;</span><br><span class="line">    i = 1</span><br><span class="line">    frontier = [s]      <span class="comment"># previous level, i − 1</span></span><br><span class="line">    <span class="keyword">while</span> frontier:</span><br><span class="line">        next = [ ]          <span class="comment"># next level, i</span></span><br><span class="line">        <span class="keyword">for</span> u <span class="keyword">in</span> frontier:</span><br><span class="line">            <span class="keyword">for</span> v <span class="keyword">in</span> Adj[u]:</span><br><span class="line">                <span class="keyword">if</span> v not <span class="keyword">in</span> level:  <span class="comment"># not yet seen</span></span><br><span class="line">                    level[v] = i    <span class="comment"># = level[u] + 1</span></span><br><span class="line">                    parent[v] = u</span><br><span class="line">                    next.append(v)</span><br><span class="line">        frontier = next</span><br><span class="line">        i + =1</span><br></pre></td></tr></table></figure></p>
+<p>Example:<br><img src="/blog/images/MIT13_02.jpg"></p>
+<p><strong>Analysis</strong>:</p>
+<ul>
+<li>vertex $V$ enters next (&amp; then frontier) only once (because level[v] then set)</li>
+<li>⇒ $Adj[v]$ looped through only once</li>
+<li>⇒ $O(E)$ time</li>
+<li>$O(V + E)$ (“LINEAR TIME”) to also list vertices unreachable from v (those still not assigned level)</li>
+</ul>
+<p><strong>Shortest Paths</strong>:</p>
+<ul>
+<li>for every vertex v, fewest edges to get from s to v is:<ul>
+<li>level[v], if v assigned level</li>
+<li>$∞$, if no path</li>
+</ul>
+</li>
+<li>parent pointers form <u>shortest-path tree</u> = union of such a shortest path for each v<ul>
+<li>⇒ to find shortest path, take v, parent[v], parent[parent[v]], etc., until s (or None)</li>
+</ul>
+</li>
+</ul>
+<p><br><br>Reference:<br><a href="https://www.hackerearth.com/zh/practice/algorithms/graphs/breadth-first-search/tutorial/" target="_blank" rel="noopener">https://www.hackerearth.com/zh/practice/algorithms/graphs/breadth-first-search/tutorial/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/12/09/MIT6006-Lec13/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Matlab-visualization" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/12/01/Matlab-visualization/">Visualization in Matlab</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/12/01/Matlab-visualization/" class="archive-article-date">
+  	<time datetime="2018-12-01T10:07:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Import-Tabular-Data"><span class="toc-number">1.</span> <span class="toc-text">Import Tabular Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Preprocessing-Data"><span class="toc-number">2.</span> <span class="toc-text">Preprocessing Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Graphics-Formatting-Function"><span class="toc-number">3.</span> <span class="toc-text">Graphics Formatting Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Importing-Data-from-Multiple-Files"><span class="toc-number">4.</span> <span class="toc-text">Importing Data from Multiple Files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analyzing-Groups-within-Data"><span class="toc-number">5.</span> <span class="toc-text">Analyzing Groups within Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Customizing-Graphics-Objects"><span class="toc-number">6.</span> <span class="toc-text">Customizing Graphics Objects</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Images-and-3-D-Surface-Plots"><span class="toc-number">7.</span> <span class="toc-text">Images and 3-D Surface Plots</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Import-Unstructured-Data"><span class="toc-number">8.</span> <span class="toc-text">Import Unstructured Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Review-of-data-types"><span class="toc-number">9.</span> <span class="toc-text">Review of data types</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Import-Tabular-Data"><span class="toc-text">Import Tabular Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Preprocessing-Data"><span class="toc-text">Preprocessing Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Graphics-Formatting-Function"><span class="toc-text">Graphics Formatting Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Importing-Data-from-Multiple-Files"><span class="toc-text">Importing Data from Multiple Files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analyzing-Groups-within-Data"><span class="toc-text">Analyzing Groups within Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Customizing-Graphics-Objects"><span class="toc-text">Customizing Graphics Objects</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Images-and-3-D-Surface-Plots"><span class="toc-text">Images and 3-D Surface Plots</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Import-Unstructured-Data"><span class="toc-text">Import Unstructured Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Review-of-data-types"><span class="toc-text">Review of data types</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <p><br></p>
+<h3 id="Import-Tabular-Data"><a href="#Import-Tabular-Data" class="headerlink" title="Import Tabular Data"></a>Import Tabular Data</h3><ul>
+<li>Tabular data can be in a single spreadsheet or a delimited text file</li>
+<li><code>readtable</code> function: <ul>
+<li><code>myTable = readtable(&#39;tablename.txt&#39;);</code></li>
+<li>access the variable using dot notation: <code>P=myTable.Pressure;</code></li>
+<li>when there is additional header in text file, provide additional inputs to indicate the number of header lines in the file: <code>myTable = readtable(&#39;tablename.txt&#39;,&#39;HeaderLines&#39;,5)</code></li>
+<li>use the option <code>CommentStyle</code> to ignore some lines with specific symbols: <code>myTable = readtable(&#39;tablename.txt&#39;,&#39;CommentStyle&#39;,&#39;##&#39;);</code></li>
+</ul>
+</li>
+<li><p>Representing Discrete Categories:</p>
+<ul>
+<li>By default, the values of finite variables are imported as a cell array. But it may consume the memory</li>
+<li>therefore using <code>categorical</code> variables to store those data.</li>
+<li><code>x = categorical(x)</code></li>
+<li><p>can specify all the possible values as additional inputs to <code>categorical</code>: the <em>second</em> input indicates the unique category values in the original array, and the <em>third</em> input indicates the names that correspond to these categories:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">v = [ 10 5 0 0 ];</span><br><span class="line">levels = &#123; <span class="string">'beg'</span> <span class="string">'mid'</span> <span class="string">'last'</span> &#125;;</span><br><span class="line">categorical(v,[0 5 10],levels)</span><br><span class="line">ans = </span><br><span class="line">    last      mid      beg      beg</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>to remain the inherent ordering, use <code>Ordinal</code>: </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">v = [2 4 1 1];</span><br><span class="line">levels = &#123;<span class="string">'tiny'</span>,<span class="string">'small'</span>,<span class="string">'big'</span>,<span class="string">'huge'</span>&#125;;</span><br><span class="line">c = categorical(v,[1 2 3 4],levels,<span class="string">'Ordinal'</span>,<span class="literal">true</span>)</span><br><span class="line">ans = </span><br><span class="line">    small huge tiny tiny</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Categorical arrays allow the use of <code>==, &gt;, &lt;</code> for comparison: <code>y==&#39;small&#39;</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Preprocessing-Data"><a href="#Preprocessing-Data" class="headerlink" title="Preprocessing Data"></a>Preprocessing Data</h3><ul>
+<li>Calculations Involving NaNs:<ul>
+<li>mean without NaN: <code>y=mean(y,&#39;omitnan&#39;)</code></li>
+<li>median without NaN: <code>y=median(y,&#39;omitnan&#39;)</code></li>
+<li>test an array for numeric equality, as well as determining if the NaNs align, use <code>isequaln</code>: <code>test = isequaln(x,y)</code></li>
+</ul>
+</li>
+<li>Locating Missing Data:<ul>
+<li>replace the NaN value with zero: <code>x(isnan(x)) = 0</code></li>
+<li>delete the NaN value: <code>x(isnan(x)) = [];</code></li>
+<li>use <code>ismissing</code> on a table to identify location of any kind of missing values: <code>missingDataLocations = ismissing(tableName);</code></li>
+<li>Use <code>any</code> function to determine which <em>rows</em> have any true values: <code>trueRows = any(grid,2)</code>, <code>2</code> indicates that the function should search for nonzero elements along the 2nd (column) dimension.</li>
+</ul>
+</li>
+<li>Categories and Set Operations:<ul>
+<li><code>categories</code> function returns the unique categories within a categorical array: <code>cats = categories(variableName);</code></li>
+<li><code>setdiff</code> function performs the set difference between the first and the second input: <code>d = setdiff(a,b)</code>, returned variable d has values in a that are not present in b.</li>
+<li>merge different categories in a categorical array: <code>a = mergecats(a,{&#39;small&#39; &#39;medium&#39; &#39;large&#39;},&#39;size&#39;)</code></li>
+</ul>
+</li>
+<li>Discretizing Continuous Data:<ul>
+<li><code>discretize</code> function to categorize values into discrete bins: <code>binNum = discretize(x,0:0.2:1)</code>. </li>
+<li>Note that any NaNs or values outside the range of the bins are unclassified. Add <code>-Inf</code> or <code>Inf</code> to the vector of bin edges if want to include bins for values outside of the edges.</li>
+<li>To discretize data into categories, use the <code>Categorical</code> option: <code>cats = {&#39;on&#39;,&#39;off&#39;}; binNum = discretize(x,0:0.5:1,&#39;Categorical&#39;,cats);</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="Graphics-Formatting-Function"><a href="#Graphics-Formatting-Function" class="headerlink" title="Graphics Formatting Function"></a>Graphics Formatting Function</h3><ul>
+<li>A plot in MATLAB is a collection of graphics objects. You can change the properties of the graphics object by providing additional inputs to the function that created the graphics object.</li>
+<li>Plot line properties:<ul>
+<li><code>plot(x,y,&#39;*&#39;,&#39;MarkerSize&#39;,8,&#39;MarkerFaceColor&#39;,[0.5 0.5 1])</code></li>
+</ul>
+</li>
+<li>Scatter plot:<ul>
+<li>scale the size of the markers by supplying it as the <em>third</em> optional input which must be either a scalar or the same length as the input values: <code>scatter([4 5 6 7],[9 11 13 15],[25 50 75 100])</code></li>
+<li>specify marker style: <code>plot(xData,yData,15,&#39;kd&#39;)</code> to plot with black diamond markers</li>
+<li>fill the marker: <code>scatter(xData,yData,15,&#39;kd&#39;,&#39;filled&#39;)</code></li>
+</ul>
+</li>
+<li>Functions for Customizing Appearance:<ul>
+<li><code>xlim</code> function will change the limits of the x-axis: <code>xlim([1 10])</code></li>
+<li><code>grid</code> command to control whether or not grid lines are displayed: <code>grid(&#39;on&#39;)</code> or <code>grid(&#39;minor&#39;)</code></li>
+<li><code>axis</code> command to change the style of the axes: <code>axis(&#39;tight&#39;)</code> <code>axis(&#39;square&#39;)</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="Importing-Data-from-Multiple-Files"><a href="#Importing-Data-from-Multiple-Files" class="headerlink" title="Importing Data from Multiple Files"></a>Importing Data from Multiple Files</h3><ul>
+<li>Create Datastores:<ul>
+<li>A datastore is just a reference to a file or a set of files. Creating a datastore does not automatically import any data into MATLAB.</li>
+<li>use <code>datastore</code> function with the file or folder location as the input: <code>ds = datastore(&#39;dirName/fileName.txt&#39;);</code> At this point, we have only created a reference to the data file.  </li>
+<li><code>preview</code> function help see the first few lines of data in the file: <code>preview(datastoreVariable)</code></li>
+<li>Since the datastore variable does not contain any data but only the information about the file, we can access this information through its properties: <code>ds.propertyName</code>. The properties can be <code>VariableNames</code>, <code>Files</code>, <code>NumHeaderLines</code>, <code>MissingValue</code></li>
+</ul>
+</li>
+<li>Modify Datastore Properties<ul>
+<li>ignore that begin with the character sequence ‘//‘ by modifying the <code>CommenStyle</code> property: <code>dat.CommentStyle = &#39;//&#39;</code></li>
+<li>set the <code>ReadVariableNames</code> property to false if there isn’t a line containing the variable names: <code>dat.ReadVariableNames = false</code></li>
+<li>Set the variable name: <code>dat.VariableNames ={&#39;color&#39;,&#39;size&#39;,&#39;act&#39;,&#39;age&#39;,&#39;inflated&#39;}</code></li>
+</ul>
+</li>
+<li>Import Data into MATLAB<ul>
+<li><code>read</code> and <code>readall</code>: to read data using datastore:  <code>data = ds.read;</code></li>
+<li>the <code>read</code> function will read data up to the number of lines specified by the <code>ReadSize</code> property of the datastore (20000 by default).</li>
+<li>If File1.txt has more than 20000 rows, only first 20000 are read. When <code>read</code> again, the rest part are readed.</li>
+<li><code>reset</code> function: reset the datastore to the beginning of the first data file.</li>
+<li>After resetting, use the function <code>readall</code> to read all the data.</li>
+</ul>
+</li>
+<li>Importing Datatypes Directly<ul>
+<li><code>TextscanFormats</code> property will return a cell array with the format used to read in each column of data: <code>fmt = dat.TextscanFormats</code></li>
+<li>By default, the numeric columns are represented with <code>%f</code> and non-numeric columns are interpreted to be strings denoted by <code>%q</code>. The format specifier for a categorical is <code>%C</code>. Datatime is <code>%D</code></li>
+<li>To modify the datatype of a variable while importing, use curly braces to index into a cell of TextscanFormats and set it to the appropriate value: <code>ds.TextscanFormats{1} = &#39;%q&#39;</code></li>
+</ul>
+</li>
+<li>Skipping Columns of Data<ul>
+<li>to import only a subset of columns, use <code>SelectedVariableNames</code>. Only the variables listed in the <code>SelectedVariableNames</code> property are imported: <code>ds.SelectedVariableNames = {&#39;Name&#39;,&#39;Date&#39;}</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="Analyzing-Groups-within-Data"><a href="#Analyzing-Groups-within-Data" class="headerlink" title="Analyzing Groups within Data"></a>Analyzing Groups within Data</h3><ul>
+<li>Find unique groups of data<ul>
+<li><code>findgroups</code> function can group the values in an array and get the group numbers for each value: <code>v = {&#39;tiger&#39; &#39;lion&#39; &#39;lion&#39; &#39;tiger&#39;}; grpNums = findgroups(v)</code></li>
+<li>return the group values from findgroups by requesting a second output: <code>[grpNum,grpVal] = findgroups(v)</code>, then <code>grpval=&#39;lion&#39;, &#39;tiger&#39;</code></li>
+<li><code>histcounts</code> can count the number of observations in each group: <code>counts = histcounts(grpNum,&#39;BinMethod&#39;,&#39;integers&#39;);</code></li>
+<li><code>findgroups</code> allows for grouping with multiple inputs. In addition to the group number, it can also return the group values from each input variable: <code>[grpNum,petVals,genderVals] = findgroups(pets,gender)</code></li>
+</ul>
+</li>
+<li>Aggregating Grouped Data<ul>
+<li>function <code>splitapply</code> to perform different operations on groups of data: <code>splitapply(@min,data,grpNums)</code></li>
+<li>after that, you can plot the grouped results using <code>bar</code> chart: <code>[gNum1,gName1] = findgroups(mnth); avgWS = splitapply(@mean,hurrs.Windspeed,gNum1); bar(avgWS);xticklabels(gName1)</code></li>
+<li><code>monthNum2Name</code> can help convert month to names: <code>xticklabels(monthNum2Name(gName1)); xtickangle(45)</code></li>
+</ul>
+</li>
+<li>Aggregating Grouped Data into a Prescribed Format<ul>
+<li>You might want to see the correlations between the groups by aggregating groups and storing the results in a particular structure. <code>accumarray</code> can do that.</li>
+<li>The first input to <code>accumarray</code> is the results from <code>findgroups</code>, with columns representing the group numbers. The second input is the data to be aggregated. The third input is left blank and the fourth input is the function to be used for aggregation: <code>avgP = accumarray([G1 G2],Price,[],@mean)</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="Customizing-Graphics-Objects"><a href="#Customizing-Graphics-Objects" class="headerlink" title="Customizing Graphics Objects"></a>Customizing Graphics Objects</h3><ul>
+<li>Accessing Graphics Objects<ul>
+<li>To modify the properties of a graphics object, the first step is to obtaining a variable (sometimes called a handle) that refers to the particular graphics object.</li>
+<li>Obtain the graphics object variable by assigning output from the graphics functions: <code>f = figure</code></li>
+<li>By assigning output from the <code>plot</code> command, you can obtain a line object variable: <code>p=plot(x,y)</code></li>
+<li>To get the graphics object variables for a plot that is already created, use the functions <code>gcf</code>, <code>gca</code>, and <code>gco</code> to obtain the current figure, axes and selected object (“get current figure/axes/object”): <code>fig = gcf;</code></li>
+</ul>
+</li>
+<li><p>Querying and Modifying Properties:</p>
+<ul>
+<li>use dot notation with the property name to return object property value, e.g.: <code>ax = gca; fw = ax.FontWeight</code></li>
+<li>use the dot notation to assign a value to an object property: <code>ax.FontWeight = &#39;bold&#39;</code>, <code>ax.XTick = [1,4,8,12]</code></li>
+<li>modify the data values of an existing plot: <code>p.XData = linspace(0,1,12)</code></li>
+<li>rememeber that if you want to change the property of axes, then use gca.<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># create a figure containing 2 axes and 2 line plots </span></span><br><span class="line">fig = figure;</span><br><span class="line">ax1 = axes;</span><br><span class="line">l1 = plot(t,y1)</span><br><span class="line">axis tight;</span><br><span class="line">ax2 = axes(<span class="string">'Position'</span>,[.6 .6 .25 .25])</span><br><span class="line">l2 = plot(ax2,t,y2);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>The Graphics Object Hierarchy</p>
+<ul>
+<li>All graphics objects are part of a hierarchy that starts with the root, the main display containing the MATLAB environment. You can make use of the graphics object hierarchy to obtain a specific graphics object after a plot is created.</li>
+<li>besides using <code>gca</code> to get axes object, we can also get the axes graphics object using the <code>Children</code> property of the figure: <code>ax = fig.Children</code></li>
+<li>The scatter and line plots are the children of the axes: <code>p = ax.Children</code></li>
+<li><p>X Y axis are the children of axes: </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xLab = ax.XLabel; </span><br><span class="line">xLab.FontName = <span class="string">'Garamond'</span>; % only change the font of x axis</span><br><span class="line">xAx = ax.XAxis; </span><br><span class="line">xAx.TickDirection = <span class="string">'out'</span>;</span><br><span class="line">xAx.FontName = <span class="string">'Courier'</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>After ploting a bar chart with two or more bars, if you want to change the property of only one of the bars:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ax = gca;</span><br><span class="line">b = ax.Children;</span><br><span class="line">b(1).FaceColor = [1 0 0];</span><br><span class="line"></span><br><span class="line">xAx = ax.XAxis;</span><br><span class="line">xAx.FontWeight = <span class="string">'bold'</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>The following is a summary of this section:</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">ds = datastore(<span class="string">'fuelEconomy2.txt'</span>)</span><br><span class="line">ds.ReadSize = 362;</span><br><span class="line">data = ds.read;</span><br><span class="line"> </span><br><span class="line">[gNum, gNames] = findgroups(data.NumCyl )</span><br><span class="line">avgMPG = splitapply(@mean, data.CombinedMPG, gNum)</span><br><span class="line"> </span><br><span class="line">b = bar(avgMPG);</span><br><span class="line">xlabel(<span class="string">'Number of cylinders'</span>)</span><br><span class="line">title(<span class="string">'Average MPG'</span>)</span><br><span class="line"></span><br><span class="line">% Customize the chart</span><br><span class="line">f = gcf;</span><br><span class="line">a = gca;</span><br><span class="line"></span><br><span class="line">f.Color = [0.81 0.87 0.9];</span><br><span class="line"></span><br><span class="line">a.Color = [0.81 0.87 0.9];</span><br><span class="line">a.Box = <span class="string">'off'</span>;</span><br><span class="line">a.YAxisLocation = <span class="string">'right'</span>;</span><br><span class="line">a.YGrid = <span class="string">'on'</span>;</span><br><span class="line">a.GridColor = [1 1 1];</span><br><span class="line">a.GridAlpha = 1;</span><br><span class="line">a.XTickLabel = gVal;</span><br><span class="line">a.YLim = [0 40];</span><br><span class="line"></span><br><span class="line">ax = a.XAxis;</span><br><span class="line">ax.TickDirection = <span class="string">'out'</span>;</span><br><span class="line"></span><br><span class="line">b.FaceColor = [0,0.31,0.42];</span><br><span class="line">b.BarWidth = 0.5;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Images-and-3-D-Surface-Plots"><a href="#Images-and-3-D-Surface-Plots" class="headerlink" title="Images and 3-D Surface Plots"></a>Images and 3-D Surface Plots</h3><ul>
+<li>Making grid<ul>
+<li><code>meshgrid</code> function converts vectors of points into matrices that can represent a grid of points in the x-y plane: <code>[X,Y] = meshgrid(x,y)</code></li>
+</ul>
+</li>
+<li>Interpolating Scattered Data<ul>
+<li>Interpolating irregularly located data to a regular grid requires two steps: 1) Using the scattered data to create an interpolating function and 2) Evaluating the interpolant at desired locations. Use <code>griddata</code></li>
+<li><code>griddata</code> function: the first three inputs represent the original data and the next two inputs contain the locations at which you would like to get the interpolated data: <code>zInterp = griddata(xOrig,yOrig,zOrig, xNew,yNew);</code></li>
+</ul>
+</li>
+<li>Visualizing Surfaces:<ul>
+<li><code>surf(X,Y,Z)</code></li>
+<li>The color of the lines between the patches is determined by the <code>EdgeColor</code> property: <code>s.EdgeColor = &#39;interp&#39;</code></li>
+</ul>
+</li>
+<li>Colormaps and Indexed Colors:<ul>
+<li>The colors in a surface are determined by indexing into a color lookup table associated with the parent figure window, called a <code>colormap</code>.</li>
+<li>Each point on a surface has a color data value. These values are stored in the <code>CData</code> property of the surface.</li>
+<li>The color data value is mapped to a range of values. The range is set by the axes using the <code>CLim</code> property of the axes: <code>c = ax.CLim</code></li>
+<li>The default colormap of a figure is called <code>parula</code>. You can modify this using the colormap function: <code>colormap(jet)</code></li>
+</ul>
+</li>
+<li>Creating Indexed-Color Images<ul>
+<li>Using <code>pcolor</code>: the <code>pcolor</code> function has the same syntax as <code>surf</code>. In fact, it actually creates a flat surface with <code>ZData</code> all set to 0 and <code>CData</code> set to Z.</li>
+<li>The direction of the y-axis can be changed using the axis command: <code>axis xy</code> or <code>axis ij</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="Import-Unstructured-Data"><a href="#Import-Unstructured-Data" class="headerlink" title="Import Unstructured Data"></a>Import Unstructured Data</h3><ul>
+<li>Low-Level File I/O<ul>
+<li><code>fopen</code> function: to open a file. This does not open the file in an editor but instead opens a connection between MATLAB and the file for reading and writing the data: <code>fi = fopen(&#39;economy.txt&#39;);</code></li>
+<li>The returned value is a unique file identifier used to reference the open file.</li>
+<li>Once the file is opened, you can use the file identifier to read data from the file. <code>fgetl</code> function takes the file identifier as input in order to read in the first line of code.: <code>fgetl(fi) ans = date, unrate, gdp, feddebt</code></li>
+<li>Subsequent file reads will read in subsequent lines. The file position indicator moves to the beginning of the next line after each read. So when using <code>fgetl</code> the second time, it will return the second line of the file.</li>
+<li>use <code>frewind</code> command to move the file position indicator back to the beginning of the file: <code>frewind(fi)</code></li>
+<li>To close a file that has been opened by <code>fopen</code>, use the <code>fclose</code> function: <code>fclose(fi)</code></li>
+<li>if a file was opened, but an identifier was not stored, use <code>fclose(&#39;all&#39;)</code> to close all opened files.</li>
+</ul>
+</li>
+<li>Importing a Block of Formatted Data:<ul>
+<li>You can read in data from a file with arbitrary formatting using the <code>textscan</code> function</li>
+<li><code>textscan</code> function has two required inputs: a file identifier and a format specification string, e.g. <code>data = textscan(fid,&#39;%D%q%f%f%f&#39;)</code>, this is to convert the first unit of data to a date, <code>%D</code>, the second to a string, <code>%q</code>, and the next three units to double precision numbers, <code>%f</code>. This pattern is repeated indefinitely, so the sixth unit is a date, the seventh is a string and so on.</li>
+<li>use cell indexing to extract the data from a column； <code>secondColumn = data{2}</code></li>
+<li><code>%q</code> specifier can read both numbers and strings</li>
+<li>Data is read from the file sequentially in blocks delimited by whitespace (by default) or a specific delimiting character (if provided): <code>data = textscan(fid,&#39;%D%f%q%C&#39;,&#39;Delimiter&#39;,&#39;\t&#39;)</code></li>
+<li>the data will stop being read as soon as a match was not found, even though there were additional matches later in the file. Generally, textscan matches the format string pattern as many times as possible until a match is not found.</li>
+<li>When a text file contains header lines, you can still import data by instructing <code>textscan</code> to skip a number of lines before attempting to read data: <code>data = textscan(fid,&#39;%D%f&#39;,&#39;HeaderLines&#39;,5);</code></li>
+<li>To read only a specific number of lines from a file, specify the number using a <em>third input</em> to textscan. The following code will read five rows: <code>data = textscan(fid,&#39;%D%f%f&#39;,5);</code> Remember there will also be an indicator in textscan, so when it’s used the second time, it will not start from the beginning but the stop point from last time been called.</li>
+<li>Reading Sections with Headers: </li>
+</ul>
+</li>
+<li>Parsing Data in Text:<ul>
+<li>use the <code>strfind</code> function to determine the index values where certain phrases or characters appear: <code>iv = strfind(&#39;cat,dog,goat&#39;,&#39;,&#39;)  iv = 4  8</code></li>
+<li><code>strsplit</code> function can split up a line of text into individual strings in a cell array. This function will split on whitespace unless a delimiter is provided as an optional input value: <code>C = strsplit(&#39;cat dog goat&#39;)   C = &#39;cat&#39;    &#39;dog&#39;    &#39;goat&#39;</code></li>
+<li><code>strcmp</code> function can find a word within a list of strings in a cell array. This function will compare values and return a logical array: <code>strcmp(C,&#39;goat&#39;)   ans = 0 0 1</code></li>
+<li><code>deblank</code> function can remove trailing white spaces.<code>data = deblank(data)</code></li>
+</ul>
+</li>
+<li>Processing Data in Blocks:<ul>
+<li>You may need to programatically adjust your format specification string that you use to read in data with textscan. <code>repmat</code> function can help out: <code>formatSpecString = repmat(&#39;%q&#39;,1,5); formatSpecString = &#39;%q%q%q%q%q&#39;</code> <code>fstr = [&#39;%D&#39; repmat(&#39;%f&#39;,1,3)]    fstr = &#39;%D%f%f%f&#39;</code></li>
+<li><code>feof</code> function can test if a file has reached the end. This can be used in a <code>while</code> loop to read in data until the end of the file: <code>while ~feof(fid)  ... end</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="Review-of-data-types"><a href="#Review-of-data-types" class="headerlink" title="Review of data types"></a>Review of data types</h3><ul>
+<li>Extract Data from a Table:<ul>
+<li>use {} to extract the data as numeric format</li>
+<li>use () to extract the data as table format</li>
+</ul>
+</li>
+<li>Merge data:<ul>
+<li><code>key</code> variables are the variables that are common to all sources and uniquely identify each observation, or row: <code>T12 = join(T1,T2)</code></li>
+<li><code>innerjoin</code>: just select the observations that have key variables common to both tables: <code>C = innerjoin(A,B);</code></li>
+<li><code>outerjoin</code>: include every single observation (row) from both tables: <code>C = outerjoin(A,B)</code></li>
+<li>Set the <code>Mergekeys</code> property to <code>true</code> will return a table where the key values of A and B are merged into one variable in the C: <code>C = outerjoin(A,B,&#39;MergeKeys&#39;,true);</code></li>
+</ul>
+</li>
+<li>Represent Dates and Times:<ul>
+<li>To convert a cell array of strings of dates to a datetime array, use the <code>datetime</code> function: <code>dates = datetime(dates);</code></li>
+<li><code>hour</code> can get the hour time of the date</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/12/01/Matlab-visualization/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-MIT6006-Lec11" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -283,8 +897,7 @@ var _hmt = _hmt || [];
         </div>
     </div>
  -->
-        <h3 id="Irrationals"><a href="#Irrationals" class="headerlink" title="Irrationals"></a>Irrationals</h3><p><strong>Digression</strong></p>
-<p>Catalan numbers:</p>
+        <h3 id="Irrationals"><a href="#Irrationals" class="headerlink" title="Irrationals"></a>Irrationals</h3><p><strong>Digression</strong><br>Catalan numbers:</p>
 <ul>
 <li>Set P of balanced parentheses strings are recursively defined as<ul>
 <li>$λ ∈ P$ (λ is empty string)</li>
@@ -300,20 +913,20 @@ var _hmt = _hmt || [];
 <li>One paren pair comes explicitly from the rule.<ul>
 <li>$k$ pairs from $α$, $n − k$ pairs from $β$</li>
 <li>$C_{n+1} = \sum_{n=0}^n C_k \dot C_{n-k} \qquad n \ge 0$</li>
-<li>$C_0=1 C_1=C_0^2 = 1  C_2=C_0C_1 + C_1C_0 = 2 C_3 = \cdots = 5$</li>
+<li>$C_0=1 \quad C_1=C_0^2 = 1 \quad C_2=C_0C_1 + C_1C_0 = 2 \quad C_3 = \cdots = 5$</li>
 </ul>
 </li>
 </ul>
 <h3 id="Newton’s-Method"><a href="#Newton’s-Method" class="headerlink" title="Newton’s Method"></a>Newton’s Method</h3><ul>
-<li>Find root of $f(x) = 0$ through successive approximation e.g., $f(x) = x2 − a$</li>
+<li>Find root of $f(x) = 0$ through successive approximation e.g., $f(x) = x^2 − a$</li>
 <li>Tangent at $(x_i, f(x_i))$ is line $y = f(x_i)+ f’(x_i)·(x− x_i)$ where $f’(x_i)$ is the derivative. $x_{i+1}$ = intercept on x-axis<br>$$x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}$$</li>
 </ul>
-<h3 id="High-precision-multiply"><a href="#High-precision-multiply" class="headerlink" title="High precision multiply"></a>High precision multiply</h3><p>Multiplying two n-digit numbers (radix r = 2, 10) $0 ≤ x, y &lt; r^n$<br>$$x = x_1 · r^{n/2} + x_0 \quad x_1 = high half$$<br>$$y = y_1 · r^{n/2} + y_0 \quad x_0 = low half$$<br>$$0 \le x_0, x_1 &lt; r^{n/2}$$<br>$$0 \le y_0, y_1 &lt; r^{n/2}$$<br>$$z = x·y = x_1y_1·r^{n} + (x_0·y_1 + x_1·y_0)r^{n/2} + x_0·y_0$$</p>
+<h3 id="High-precision-multiply"><a href="#High-precision-multiply" class="headerlink" title="High precision multiply"></a>High precision multiply</h3><p>Multiplying two n-digit numbers (radix r = 2, 10) $0 ≤ x, y &lt; r^n$<br>$$x = x_1 · r^{n/2} + x_0 \quad x_1 = high \; half$$  $$y = y_1 · r^{n/2} + y_0 \quad x_0 = low \; half$$ $$0 \le x_0, x_1 &lt; r^{n/2}$$ $$0 \le y_0, y_1 &lt; r^{n/2}$$ $$z = x·y = x_1y_1·r^{n} + (x_0·y_1 + x_1·y_0)r^{n/2} + x_0·y_0$$</p>
 <ul>
 <li>4 multiplications of half-sized ⇒ quadratic algorithm $θ(n^2)$ time</li>
 </ul>
-<p><strong>Karatsuba’s Method</strong><br>Let<br>$$z_0 = x_0·y_0$$ $$z_2 = x_1·y_1$$ $$z_1 = (x_0+x_1)·(y_0+y_1) - z_0 - z_2 = x_0y_1+x_1y_0$$<br>$$z = z_2·r^n +z_1·r^{n/2} +z_0$$<br>There are three multiplies in the above calculations.<br>$$T(n) = time to multiply two n-digit numbers<br>        = 3T(n/2) + θ(n)<br>        = θ(n^{log_23}) = θ(n^{1.5849625···})$$</p>
-<p>A tutorial <a href="https://courses.csail.mit.edu/6.006/spring11/exams/notes3-karatsuba" target="_blank" rel="noopener">here</a></p>
+<p><strong>Karatsuba’s Method</strong><br>Let<br>$$z_0 = x_0·y_0$$ $$z_2 = x_1·y_1$$ $$z_1 = (x_0+x_1)·(y_0+y_1) - z_0 - z_2 = x_0y_1+x_1y_0$$ $$z = z_2·r^n +z_1·r^{n/2} +z_0$$<br>There are three multiplies in the above calculations.<br>$$T(n) = time \; to \; multiply \; two \; n-digit \; numbers<br>        = 3T(n/2) + θ(n)<br>        = θ(n^{log_23}) = θ(n^{1.5849625···})$$</p>
+<p>A tutorial about Karatsuba’s method can be found <a href="https://courses.csail.mit.edu/6.006/spring11/exams/notes3-karatsuba" target="_blank" rel="noopener">here</a></p>
 
       
 
@@ -371,19 +984,19 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-technique-Matlab" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Matlab-technique" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/24/technique-Matlab/">Higher Level Programming Technique using Matlab</a>
+      <a class="article-title" href="/blog/2018/11/24/Matlab-technique/">Higher Level Programming Technique using Matlab</a>
     </h1>
   
 
         
-        <a href="/blog/2018/11/24/technique-Matlab/" class="archive-article-date">
+        <a href="/blog/2018/11/24/Matlab-technique/" class="archive-article-date">
   	<time datetime="2018-11-23T23:39:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-24</time>
 </a>
         
@@ -439,8 +1052,8 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <p><strong>Code profiler</strong></p>
-<p>To know which parts of the code take the most time.</p>
 <ul>
+<li>To know which parts of the code take the most time.</li>
 <li>Click <code>Run and Time</code> opens <code>MATLAB Profiler</code> window</li>
 <li>Enter a line of code in the edit box and then press Enter or click the <code>Start Profiling</code> button.</li>
 <li>Note: The profiler report does not provide information on each individual call to a function, but rather only information on the conglomeration of all calls to a function.</li>
@@ -501,8 +1114,8 @@ var _hmt = _hmt || [];
 <li>Is any input empty?(isempty) No -&gt; Set default values</li>
 </ol>
 <p><strong>Creating Flexible Interfaces</strong></p>
-<p>use the property name-value pairs in the function syntax to allows the user to specify only a subset of the line attributes in <em>any order</em>.</p>
 <ul>
+<li>use the property name-value pairs in the function syntax to allows the user to specify only a subset of the line attributes in <em>any order</em>.</li>
 <li>Every input argument in the function call is mapped to a single variable in the function definition. However, you can map multiple input arguments to a single input variable <code>varargin</code> in the function definition.</li>
 <li>e.g. <code>function analyzeAndPlot(x,y,varargin)</code> can be called as <code>analyzeAndPlot(time,position,&#39;LineWidth&#39;,3,&#39;Color&#39;,&#39;r&#39;)</code> </li>
 <li><code>varargin</code> is a cell array. In the above example, starting with the third input, each input is assigned to a separate cell of varargin.</li>
@@ -568,15 +1181,15 @@ var _hmt = _hmt || [];
 <li>Structures can contain data of dissimilar types and sizes in one variable. Use dot notation to add a field to a structure.</li>
 </ul>
 <p><strong>Function Handles</strong></p>
-<p>You can use a function handle to store a command as a variable, which can then be passed as an input to a function.</p>
 <ul>
+<li>You can use a function handle to store a command as a variable, which can then be passed as an input to a function.</li>
 <li>construct a function handle by preceding the function name with an @ sign: <code>h = @sin</code></li>
 <li>call the function handle as the same way to call the function directly: <code>h(0)</code></li>
 <li>For functions requires an input, give the function handle (variable) as an input: <code>integral(h,0,pi)</code> , <code>integral(@log,1,2)</code></li>
 </ul>
 <p><strong>Anonymous Functions</strong></p>
-<p>use anonymous functions to create simple functions without creating a code file. That is to say, create a function directly in command line with only input variables.</p>
 <ul>
+<li>use anonymous functions to create simple functions without creating a code file. That is to say, create a function directly in command line with only input variables.</li>
 <li>syntax: <code>variableName = @(arg1,...) functionDefinition</code>, e.g. <code>f = @(x,y) sin(x) + y;</code></li>
 <li><em>variableName</em> is the Function Handle</li>
 <li>Call the function just need to give the input into the handle: <code>f(pi/6,0.5)</code></li>
@@ -598,8 +1211,8 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 <li><p>use <code>structfun</code> to apply the same to a structure, this returns a scalar for each cell</p>
-<pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">groups = </span><br><span class="line">    group1: [3x1 double]</span><br><span class="line">    group2: [2x1 double]</span><br><span class="line">    group3: [4x1 double]</span><br><span class="line">    structfun(@mean,groups)</span><br><span class="line">        ans = 3.03    4.30    5.05</span><br></pre></td></tr></table></figure>
-</code></pre></li>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">groups = </span><br><span class="line">    group1: [3x1 double]</span><br><span class="line">    group2: [2x1 double]</span><br><span class="line">    group3: [4x1 double]</span><br><span class="line">    structfun(@mean,groups)</span><br><span class="line">        ans = 3.03    4.30    5.05</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>Nonscalar output</p>
 <ul>
 <li>You may attempt to use <code>cellfun</code> or structfun with functions that return nonscalar outputs, such as sort, return an array.</li>
@@ -801,14 +1414,44 @@ var _hmt = _hmt || [];
 <p><strong>Adding Pre- and Post-Test Tasks</strong></p>
 <ul>
 <li>It can be useful to define tasks that should be performed immediately before and after running the actual tests defined in your test code. e.g., if you keep the test code and the application in separate locations, the location of the application code can be added to the MATLAB path for the tests to successfully run.</li>
-<li><p>ou can add pre- and post-test tasks to your testing function by adding functions with the special names <code>setupOnce</code> and <code>teardownOnce</code> which have the same signature as the other test functions.</p>
+<li><p>you can add pre- and post-test tasks to your testing function by adding functions with the special names <code>setupOnce</code> and <code>teardownOnce</code> which have the same signature as the other test functions.</p>
   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> setupOnce(testCase)</span><br><span class="line">    % save the name of the application folder you will add</span><br><span class="line">    % to the TestData structure</span><br><span class="line">    testCase.TestData.appDir = fullfile(<span class="string">'C:'</span>,<span class="string">'class'</span>,<span class="string">'work'</span>,<span class="string">'ApplicationDirectory'</span>);</span><br><span class="line"></span><br><span class="line">    % add the application folder to the path <span class="keyword">for</span> testing</span><br><span class="line">    addpath(testCase.TestData.appDir)</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> teardownOnce(testCase)</span><br><span class="line">    % removes the added path</span><br><span class="line">    rmpath(testCase.TestData.appDir)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>In the above example, the test code and the application code are in separate locations. You will use the application folder in the teardown function. So, rather than redefining it, you can save it in the testCase variable to the TestData property. This property is a structure variable to which you can add fields as you desire. Any fields that are added to this variable are accessible by all functions in the test function file.</p>
 </li>
 <li>remove the directory from the path in the teardownOnce function. See that the variable you previously defined, appDir, is accessible through testCase.TestData. Note that the structure TestData is named automatically, whereas you can name the function input, testCase in this example, whatever you want.</li>
 </ul>
-<h3 id="Creating-a-Toolbox"><a href="#Creating-a-Toolbox" class="headerlink" title="Creating a Toolbox"></a>Creating a Toolbox</h3>
+<h3 id="Creating-a-Toolbox"><a href="#Creating-a-Toolbox" class="headerlink" title="Creating a Toolbox"></a>Creating a Toolbox</h3><p><strong>Creating a Toolbox</strong></p>
+<ol>
+<li>Open the Package Toolbox dialog: Home - Add-Ons - Package ToolBox</li>
+<li>Specify the folder where your application is stored: need to ensure that all the required code files for the application are on the MATLAB path prior to specifying the folder.</li>
+<li>Fill in toolbox information: like author name, company</li>
+<li>Package the toolbox: <ul>
+<li>will create a <code>.mltbx</code> file that contains all the dependencies and path information needed for you to share the application.</li>
+<li>a <code>.prj</code> file is also created. This saves the project information that you just entered in the Packager window. This is useful if you later need to repackage your application after making changes to it.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Installing a Toolbox</strong></p>
+<ul>
+<li>by double-clicking the <code>.mltbx</code> file, this will start the installation process, which adds the files to the local installation of MATLAB</li>
+<li>The files are added to the MATLAB Add-Ons folder, and the proper folders are added to the path.</li>
+<li>The location of the MATLAB Add-Ons folder is set in the preferences</li>
+<li>to uninstall a toolbox, open the Add-On Manager</li>
+</ul>
+<p><strong>Including Custom Documentation (manual) in the Toolbox</strong></p>
+<ul>
+<li>To add documentation, first create an <code>info.xml</code> file at the <em>root</em> level of the toolbox folder. Use a standard template (which can be found in the documentation) to create the initial file.</li>
+<li>modify your toolbox’s name and specify the folder where you will store the documentation. In <code>&lt;name&gt;</code> and <code>&lt;help_location&gt;</code> part in the xml file</li>
+<li>Create the <code>doc</code> folder at the root level of your toolbox, thus matching where you specified it in info.xml.</li>
+<li>Create a <code>helptoc.xml</code> file in the doc folder. Again, use a template found in the documentation as a starting point.</li>
+<li>Specify the content structure of the documentation. This defines the pages that are listed in your documentation’s content tree (typically shown on the left side of the documentation).</li>
+<li>Specify the content structure of your documentation. This defines the pages that are listed in your documentation’s content tree (typically shown on the left side of the documentation).</li>
+<li>In the <code>doc</code> folder, create the HTML files that you specified in the helptoc.xml file. Note that you can use any tool you’d like to generate the HTML, such as hand-writing it or even using the MATLAB publish features.</li>
+<li>Then, the document is created<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># template info.xml</span></span><br><span class="line">&lt;productinfo</span><br><span class="line">    xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">    xsi:noNamespaceSchemaLocation=<span class="string">"optional"</span>&gt;</span><br><span class="line">    &lt;?xml-stylesheet <span class="built_in">type</span>=<span class="string">"text/xsl"</span> href=<span class="string">"optional"</span>?&gt;</span><br><span class="line">    &lt;matlabrelease&gt;2014b&lt;/matlabrelease&gt;</span><br><span class="line">    &lt;name&gt;My Toolbox&lt;/name&gt;</span><br><span class="line">    &lt;<span class="built_in">type</span>&gt;toolbox&lt;/<span class="built_in">type</span>&gt;</span><br><span class="line">    &lt;icon&gt;&lt;/icon&gt;</span><br><span class="line">    &lt;help_location&gt;doc&lt;/help_location&gt;</span><br><span class="line">    &lt;help_contents_icon&gt;<span class="variable">$toolbox</span>/matlab/icons/bookicon.gif&lt;/help_contents_icon&gt;</span><br><span class="line">&lt;/productinfo&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># template helpdoc.xml</span></span><br><span class="line">&lt;?xml version=<span class="string">'1.0'</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;toc version=<span class="string">"2.0"</span>&gt;</span><br><span class="line">    &lt;tocitem target=<span class="string">"mainPage.html"</span>&gt;Main Page</span><br><span class="line">        &lt;tocitem image=<span class="string">"HelpIcon.FUNCTION"</span>&gt;Functions</span><br><span class="line">            &lt;tocitem target=<span class="string">"fcnPage1.html"</span>&gt;Fcn 1&lt;/tocitem&gt;</span><br><span class="line">            &lt;tocitem target=<span class="string">"fcnPage2.html"</span>&gt;Fcn 2&lt;/tocitem&gt;</span><br><span class="line">        &lt;/tocitem&gt;</span><br><span class="line">    &lt;/tocitem&gt;</span><br><span class="line">&lt;/toc&gt;</span><br></pre></td></tr></table></figure>
       
 
       
@@ -835,7 +1478,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/24/technique-Matlab/">展开全文 >></a>
+          <a class="article-more-a" href="/blog/2018/11/24/Matlab-technique/">展开全文 >></a>
         </p>
       
 
@@ -865,19 +1508,19 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-ODE-Matlab" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Matlab-ODE" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/23/ODE-Matlab/">ODE in Matlab</a>
+      <a class="article-title" href="/blog/2018/11/23/Matlab-ODE/">ODE in Matlab</a>
     </h1>
   
 
         
-        <a href="/blog/2018/11/23/ODE-Matlab/" class="archive-article-date">
+        <a href="/blog/2018/11/23/Matlab-ODE/" class="archive-article-date">
   	<time datetime="2018-11-22T23:39:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-23</time>
 </a>
         
@@ -951,7 +1594,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/23/ODE-Matlab/">展开全文 >></a>
+          <a class="article-more-a" href="/blog/2018/11/23/Matlab-ODE/">展开全文 >></a>
         </p>
       
 
@@ -1570,534 +2213,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-MIT6006-Lec07" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/15/MIT6006-Lec07/">MIT6006 Lec07 Linear-Time Sorting</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/11/15/MIT6006-Lec07/" class="archive-article-date">
-  	<time datetime="2018-11-15T03:52:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Comparison-model"><span class="toc-number">1.</span> <span class="toc-text">Comparison model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Decision-tree"><span class="toc-number">1.1.</span> <span class="toc-text">Decision tree</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lower-Bounds"><span class="toc-number">2.</span> <span class="toc-text">Lower Bounds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linear-time-Sorting"><span class="toc-number">3.</span> <span class="toc-text">Linear-time Sorting</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Radix-sort"><span class="toc-number">3.1.</span> <span class="toc-text">Radix sort</span></a></li></ol></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Comparison-model"><span class="toc-text">Comparison model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Decision-tree"><span class="toc-text">Decision tree</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lower-Bounds"><span class="toc-text">Lower Bounds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linear-time-Sorting"><span class="toc-text">Linear-time Sorting</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Radix-sort"><span class="toc-text">Radix sort</span></a></li></ol></li></ol>
-        </div>
-    </div>
- -->
-        <p>Need to digest again!</p>
-<p>First lists some claims:</p>
-<ul>
-<li>searching among n preprocessed items requires $Ω(lg n)$ time: binary search, AVL tree search optimal</li>
-<li>sorting n items requires $Ω(nlg n)$: mergesort, heap sort, AVL sort optimal</li>
-</ul>
-<h3 id="Comparison-model"><a href="#Comparison-model" class="headerlink" title="Comparison model"></a>Comparison model</h3><ul>
-<li>All the input items are black boxes (ADTs)</li>
-<li>Only support comparisons (&gt;,&lt;, etc.)</li>
-<li>Time cost = number of comparisons</li>
-</ul>
-<h4 id="Decision-tree"><a href="#Decision-tree" class="headerlink" title="Decision tree"></a>Decision tree</h4><p>Any comparison algorithm can be viewed/specified as a tree of all possible comparison outcomes &amp; resulting output.</p>
-<ul>
-<li>internal node = binary decision</li>
-<li>leaf = output (algorithm is done)</li>
-<li>root-to-leaf path = algorithm execution</li>
-<li>path length (depth) = running time</li>
-<li>height of tree = worst-case running time</li>
-</ul>
-<p>In fact, binary decision tree model is more powerful than comparison model, and lower bounds extend to it</p>
-<blockquote>
-<p>A sorting algorithm is comparison based if it uses comparison operators to find the order between two numbers.  Comparison sorts can be viewed abstractly in terms of decision trees. A decision tree is a full binary tree that represents the comparisons between elements that are performed by a particular sorting algorithm operating on an input of a given size. The execution of the sorting algorithm corresponds to tracing a path from the root of the decision tree to a leaf. At each internal node, a comparison ai &lt;= aj is made. The left subtree then dictates subsequent comparisons for ai &lt;= aj, and the right subtree dictates subsequent comparisons for ai &gt; aj. When we come to a leaf, the sorting algorithm has established the ordering. </p>
-</blockquote>
-<h3 id="Lower-Bounds"><a href="#Lower-Bounds" class="headerlink" title="Lower Bounds"></a>Lower Bounds</h3><p><strong>Search Lower Bound</strong></p>
-<ul>
-<li>number of leaves &gt;= number of possible answers &gt;= n</li>
-<li>decision tree is binary</li>
-<li>height &gt;=  $lg Θ(n) = lg n ± Θ(1)$</li>
-</ul>
-<p><strong>Sorting Lower Bound</strong></p>
-<ul>
-<li>leaf specifies answer as permutation: A[3] ≤ A[1] ≤ A[9] ≤ . . .</li>
-<li>all n! are possible answers</li>
-<li>number of leaves &gt;= n!</li>
-</ul>
-<p>$$ \begin{align*}<br>height &amp; ≥ lg n! \\<br>&amp; = lg(1·2 /cdots (n − 1)·n) \\<br>&amp; = lg 1 + lg 2 + /cdots + lg(n − 1) + lg n \\<br>&amp; = \sum^n_{i=1} lg i \\<br>&amp; \ge \sum^n_{i=n/2} lg i \\<br>&amp; \ge \sum^n_{i=n/2} lg \frac n2 \\<br>&amp; = \frac n2 lg n - \frac n2 \\<br>&amp; = \Omega (n lg n)<br>\end{align*}$$</p>
-<p>Therefore, the lower bound for Comparison based sorting algorithm (Merge Sort, Heap Sort, Quick-Sort .. etc) is $Ω(nLogn)$, i.e., they cannot do better than $n logn$.</p>
-<h3 id="Linear-time-Sorting"><a href="#Linear-time-Sorting" class="headerlink" title="Linear-time Sorting"></a>Linear-time Sorting</h3><h4 id="Radix-sort"><a href="#Radix-sort" class="headerlink" title="Radix sort"></a>Radix sort</h4><p><a href="https://www.geeksforgeeks.org/counting-sort/" target="_blank" rel="noopener">Counting sort</a> is a linear time sorting algorithm that sort in $O(n+k)$ time when elements are in range from 1 to k. But if the elements are in range from 1 to $n^2$, counting sort will take $O(n^2)$.</p>
-<p>How to sort such an array in linear time? Use Radix sort.<br>The idea of Radix Sort is to do digit by digit sort starting from least significant digit to most significant digit. Radix sort uses counting sort as a subroutine to sort.</p>
-<p><br></p>
-<p>Reference:<br><a href="https://www.geeksforgeeks.org/lower-bound-on-comparison-based-sorting-algorithms/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/lower-bound-on-comparison-based-sorting-algorithms/</a><br><a href="https://www.geeksforgeeks.org/radix-sort/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/radix-sort/</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/15/MIT6006-Lec07/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MIT6006-Lec06" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/14/MIT6006-Lec06/">MIT6006 Lec06 AVL trees, AVL sort</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/11/14/MIT6006-Lec06/" class="archive-article-date">
-  	<time datetime="2018-11-14T03:52:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Tree-rotation"><span class="toc-number">1.</span> <span class="toc-text">Tree rotation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AVL-tree"><span class="toc-number">2.</span> <span class="toc-text">AVL tree</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AVL-Insert"><span class="toc-number">2.1.</span> <span class="toc-text">AVL Insert</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#General"><span class="toc-number">3.</span> <span class="toc-text">General</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Tree-rotation"><span class="toc-text">Tree rotation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AVL-tree"><span class="toc-text">AVL tree</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AVL-Insert"><span class="toc-text">AVL Insert</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#General"><span class="toc-text">General</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>Recall the properties of binary search tree:</p>
-<ul>
-<li>each node has <ul>
-<li>key</li>
-<li>left pointer</li>
-<li>right pointer</li>
-<li>parent pointer</li>
-</ul>
-</li>
-<li>height of the node  = length (number of edges) of longest downward path to a leaf</li>
-<li>BST will do all operations in $O(h)$ time, h = height</li>
-<li>h is between $lg n$ and $n$.</li>
-</ul>
-<p>The advantage of balanced tree is that it maintains $h=O(lg n)$, therefore, all operations run in $O(lg n)$ time.</p>
-<h3 id="Tree-rotation"><a href="#Tree-rotation" class="headerlink" title="Tree rotation"></a>Tree rotation</h3><p>The operation “rotation” is to make a tree balanced and will be used in fixing the inbalance of AVL tree.<br>There are two categories: single rotation and two rotations. </p>
-<p><strong>Left Rotation</strong><br><em>Application scenario</em>: When a node A’s <strong>right</strong> subtree becomes inbalanced after inserting another new one. Then need to apply the left rotation of that node (A).<br>After performing the left rotation of node A, A’s right child becomes its parent and A becomes the <strong>left child</strong>.</p>
-<p><strong>Right Rotation</strong><br><em>Application scenario</em>: When a node A’s <strong>left</strong> subtree becomes inbalanced after inserting another new one. Then need to apply the right rotation of that node (A).<br>After performing the right rotation of the unbalanced node A, it becomes the <strong>right child</strong> of its original left child.</p>
-<p><strong>Left-Right Rotation</strong><br><em>Application scenario</em>: When a node A becomes inbalanced after inserting another new one to the <strong>right subtree of the left subtree of A</strong>.<br><em>Steps</em>: </p>
-<ol>
-<li>Perform left rotation to the left subtree of A</li>
-<li>Perform right rotation of the A itself</li>
-</ol>
-<p><strong>Right-Left Rotation</strong><br><em>Application scenario</em>: When a node A becomes inbalanced after inserting another new one to the <strong>left subtree of the right subtree of A</strong>.<br><em>Steps</em>: </p>
-<ol>
-<li>Perform right rotation to the right subtree of A</li>
-<li>Perform left rotation of the A itself</li>
-</ol>
-<p><strong>Implementation</strong>:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">def left_rotate(self, x):</span><br><span class="line">    y = x.right</span><br><span class="line">    y.parent = x.parent</span><br><span class="line">    <span class="keyword">if</span> y.parent is None:</span><br><span class="line">        self.root = y</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">if</span> y.parent.left is x:</span><br><span class="line">            y.parent.left = y</span><br><span class="line">        <span class="keyword">elif</span> y.parent.right is x:</span><br><span class="line">            y.parent.right = y</span><br><span class="line">    x.right = y.left</span><br><span class="line">    <span class="keyword">if</span> x.right is not None:</span><br><span class="line">        x.right.parent = x</span><br><span class="line">    y.left = x</span><br><span class="line">    x.parent = y</span><br><span class="line">    update_height(x)</span><br><span class="line">    update_height(y)</span><br><span class="line"></span><br><span class="line">def right_rotate(self, x):</span><br><span class="line">    y = x.left</span><br><span class="line">    y.parent = x.parent</span><br><span class="line">    <span class="keyword">if</span> y.parent is None:</span><br><span class="line">        self.root = y</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">if</span> y.parent.left is x:</span><br><span class="line">            y.parent.left = y</span><br><span class="line">        <span class="keyword">elif</span> y.parent.right is x:</span><br><span class="line">            y.parent.right = y</span><br><span class="line">    x.left = y.right</span><br><span class="line">    <span class="keyword">if</span> x.left is not None:</span><br><span class="line">        x.left.parent = x</span><br><span class="line">    y.right = x</span><br><span class="line">    x.parent = y</span><br><span class="line">    update_height(x)</span><br><span class="line">    update_height(y)</span><br></pre></td></tr></table></figure></p>
-<p>Here is a very nice illustration: <a href="https://wiki2.org/en/Tree_rotation#/media/File:Tree_Rebalancing.gif" target="_blank" rel="noopener">https://wiki2.org/en/Tree_rotation#/media/File:Tree_Rebalancing.gif</a></p>
-<h3 id="AVL-tree"><a href="#AVL-tree" class="headerlink" title="AVL tree"></a>AVL tree</h3><ul>
-<li>named by the author.</li>
-<li>for every node, require height of left &amp; right children to differ by at most 1<ul>
-<li>nil tree as height -1</li>
-<li>each node stores its height (using data structure augmentation)</li>
-</ul>
-</li>
-</ul>
-<h4 id="AVL-Insert"><a href="#AVL-Insert" class="headerlink" title="AVL Insert"></a>AVL Insert</h4><ul>
-<li>Perform the normal BST insertion.</li>
-<li>The current node must be one of the ancestors of the newly inserted node. Update the height of the current node.</li>
-<li>Get the balance factor (left subtree height – right subtree height) of the current node.</li>
-<li>If balance factor is greater than 1, then the current node is unbalanced and we are either in Left Left case or left Right case. To check whether it is left left case or not, compare the newly inserted key with the key in left subtree root.</li>
-<li>If balance factor is less than -1, then the current node is unbalanced and we are either in Right Right case or Right-Left case. To check whether it is Right Right case or not, compare the newly inserted key with the key in right subtree root.</li>
-<li>Time: $\theta (nlg n)$</li>
-</ul>
-<p><strong>Code of rebalance the tree</strong>:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">def rebalance(self, node):</span><br><span class="line">    <span class="keyword">while</span> node is not None:</span><br><span class="line">        update_height(node)</span><br><span class="line">        <span class="keyword">if</span> height(node.left) &gt;= 2 + height(node.right):</span><br><span class="line">            <span class="keyword">if</span> height(node.left.left) &gt;= height(node.left.right):</span><br><span class="line">                self.right_rotate(node)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                self.left_rotate(node.left)</span><br><span class="line">                self.right_rotate(node)</span><br><span class="line">        <span class="keyword">elif</span> height(node.right) &gt;= 2 + height(node.left):</span><br><span class="line">            <span class="keyword">if</span> height(node.right.right) &gt;= height(node.right.left):</span><br><span class="line">                self.left_rotate(node)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                self.right_rotate(node.right)</span><br><span class="line">                self.left_rotate(node)</span><br><span class="line">        node = node.parent</span><br></pre></td></tr></table></figure></p>
-<h3 id="General"><a href="#General" class="headerlink" title="General"></a>General</h3><p><strong>Other balanced trees</strong>:</p>
-<ul>
-<li>B-Trees/2-3-4 Trees</li>
-<li>BB[α] Trees </li>
-<li>Red-black Trees </li>
-<li>(A) — Splay-Trees </li>
-<li>(R) — Skip Lists</li>
-<li>(A) — Scapegoat Trees </li>
-<li>(R) — Treaps<br>(R) = use random numbers to make decisions fast with high probability<br>(A) = “amortized”: adding up costs for several operations =⇒ fast on average</li>
-</ul>
-<p><strong>Data Structure (DS) vs Abstract Data Type (ADT)</strong></p>
-<ul>
-<li>ADT is a logical description and data structure is concrete. </li>
-<li>ADT is the logical picture of the data and the operations to manipulate the component elements of the data. </li>
-<li>Data structure is the actual representation of the data during the implementation and the algorithms to manipulate the data elements. </li>
-<li>ADT is in the logical level and data structure is in the implementation level.</li>
-</ul>
-<p>There are many possible DSs for one ADT.<br>Some common ADTs: </p>
-<ul>
-<li>stack, queue, priority queue, dictionary, sequence, set</li>
-</ul>
-<p>Some common DSs used to implement the above ADTS: </p>
-<ul>
-<li>array, linked list, hash table (open, closed, circular hashing) </li>
-<li>trees (binary search trees, heaps, AVL trees, 2-3 trees, tries, red/black trees, B-trees)</li>
-</ul>
-<p><br></p>
-<p>Reference:<br><a href="https://www.tutorialspoint.com/data_structures_algorithms/avl_tree_algorithm.htm" target="_blank" rel="noopener">https://www.tutorialspoint.com/data_structures_algorithms/avl_tree_algorithm.htm</a><br><a href="https://www.geeksforgeeks.org/avl-tree-set-1-insertion/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/avl-tree-set-1-insertion/</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/14/MIT6006-Lec06/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-slurm-exit-code" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/13/slurm-exit-code/">Slurm General Command and Exit Code</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/11/13/slurm-exit-code/" class="archive-article-date">
-  	<time datetime="2018-11-12T21:09:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#General-command"><span class="toc-number">1.</span> <span class="toc-text">General command</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exit-code"><span class="toc-number">2.</span> <span class="toc-text">Exit code</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Job-Termination-Signals"><span class="toc-number">2.1.</span> <span class="toc-text">Job Termination Signals</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Job-Exit-Status"><span class="toc-number">2.2.</span> <span class="toc-text">Job Exit Status</span></a></li></ol></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#General-command"><span class="toc-text">General command</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exit-code"><span class="toc-text">Exit code</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Job-Termination-Signals"><span class="toc-text">Job Termination Signals</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Job-Exit-Status"><span class="toc-text">Job Exit Status</span></a></li></ol></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="General-command"><a href="#General-command" class="headerlink" title="General command"></a>General command</h3><p><strong>submit a job</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sbatch myscript.sh</span><br><span class="line">sbatch --<span class="built_in">test</span>-only myscript.sh  <span class="comment"># test a job and find out when your job is estimated to run</span></span><br></pre></td></tr></table></figure></p>
-<p><strong>Information of jobs for a user</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">squeue -u &lt;username&gt;    <span class="comment"># List all current jobs for a user</span></span><br><span class="line">squeue -u &lt;username&gt; -t RUNNING <span class="comment"># List all running jobs for a user</span></span><br><span class="line">squeue -u &lt;username&gt; -t PENDING <span class="comment"># List all pending jobs for a user</span></span><br><span class="line">scontrol show jobid -dd &lt;jobid&gt; <span class="comment"># List detailed information for a job (useful for troubleshooting)</span></span><br><span class="line">sstat --format=AveCPU,AvePages,AveRSS,AveVMSize,JobID -j &lt;jobid&gt; --allsteps <span class="comment"># List status info for a currently running job</span></span><br></pre></td></tr></table></figure></p>
-<p><strong>Controlling jobs</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">scancel &lt;jobid&gt;   <span class="comment"># cancel one job</span></span><br><span class="line">scancel -u &lt;username&gt; <span class="comment"># cancel all the jobs for a user</span></span><br><span class="line">scancel -t PENDING -u &lt;username&gt; <span class="comment"># cancel all pending jobs for a user</span></span><br><span class="line">scontrol hold &lt;jobid&gt; <span class="comment"># pause a particular job</span></span><br><span class="line">scontrol requeue &lt;jobid&gt;    <span class="comment"># requeue (cancel and rerun) a particular job </span></span><br><span class="line">scancel &lt;jobid&gt;_&lt;index&gt; <span class="comment"># To cancel an indexed job in a job array</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="Exit-code"><a href="#Exit-code" class="headerlink" title="Exit code"></a>Exit code</h3><p>开始使用HPC时遇到很多问题，特别是用slurm deploy job的时候，如果在slurm文件中设置将开始，结束，失败的信息发送给自己邮箱时，它会针对每一种情况给一个code，这个code即表示一种状态。下面记录一些常见的 exit code 表明的意思。</p>
-<p>The exit code from a batch job is a standard Unix termination signal.<br>Typically, exit code 0 means successful completion.<br>Codes 1-127 are generated from the job calling exit() with a non-zero value to indicate an error.<br>Exit codes 129-255 represent jobs terminated by Unix signals.<br>Each signal has a corresponding value which is indicated in the job exit code</p>
-<h4 id="Job-Termination-Signals"><a href="#Job-Termination-Signals" class="headerlink" title="Job Termination Signals"></a>Job Termination Signals</h4><table>
-<thead>
-<tr>
-<th>Signal Name</th>
-<th>Signal Number</th>
-<th>Exit Type</th>
-<th>Reason</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SIGHUP</td>
-<td>1</td>
-<td>Term</td>
-<td>Hangup detected on controlling terminal or death of controlling process</td>
-</tr>
-<tr>
-<td>SIGINT</td>
-<td>2</td>
-<td>Term</td>
-<td>Interrupt from keyboard</td>
-</tr>
-<tr>
-<td>SIGQUIT</td>
-<td>3</td>
-<td>Core</td>
-<td>Quit from keyboard</td>
-</tr>
-<tr>
-<td>SIGILL</td>
-<td>4</td>
-<td>Core</td>
-<td>Illegal Instruction</td>
-</tr>
-<tr>
-<td>SIGABRT</td>
-<td>6</td>
-<td>Core</td>
-<td>Abort signal from abort(3)</td>
-</tr>
-<tr>
-<td>SIGFPE</td>
-<td>8</td>
-<td>Core</td>
-<td>Floating point exception</td>
-</tr>
-<tr>
-<td>SIGKILL</td>
-<td>9</td>
-<td>Term</td>
-<td>Kill signal</td>
-</tr>
-<tr>
-<td>SIGSEGV</td>
-<td>11</td>
-<td>Core</td>
-<td>Invalid memory reference</td>
-</tr>
-<tr>
-<td>SIGPIPE</td>
-<td>13</td>
-<td>Term</td>
-<td>Broken pipe: write to pipe with no readers</td>
-</tr>
-<tr>
-<td>SIGALRM</td>
-<td>14</td>
-<td>Term</td>
-<td>Timer signal from alarm(2)</td>
-</tr>
-<tr>
-<td>SIGTERM</td>
-<td>15</td>
-<td>Term</td>
-<td>Termination signal</td>
-</tr>
-</tbody>
-</table>
-<h4 id="Job-Exit-Status"><a href="#Job-Exit-Status" class="headerlink" title="Job Exit Status"></a>Job Exit Status</h4><table>
-<thead>
-<tr>
-<th>Exit Code</th>
-<th>Reason</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>9</td>
-<td>Ran out of CPU time.</td>
-</tr>
-<tr>
-<td>64</td>
-<td>The job ended nicely for but your job was running out of CPU time. The solution is to submit the job to a queue with more resources (bigger CPU time limit).</td>
-</tr>
-<tr>
-<td>125</td>
-<td>An ErrMsg(severe) was reached in your job.</td>
-</tr>
-<tr>
-<td>127</td>
-<td>Something wrong with the machine?</td>
-</tr>
-<tr>
-<td>130</td>
-<td>The job ran out of CPU or swap time. If swap time is the culprit, check for memory leaks.</td>
-</tr>
-<tr>
-<td>131</td>
-<td>The job ran out of CPU or swap time. If swap time is the culprit, check for memory leaks.</td>
-</tr>
-<tr>
-<td>134</td>
-<td>The job is killed with an abort signal, and you probably got core dumped. Often this is caused either by an assert() or an ErrMsg(fatal) being hit in your job. There may be a run-time bug in your code. Use a debugger like gdb or Totalview to find out what’s wrong.</td>
-</tr>
-<tr>
-<td>137</td>
-<td>The job was killed because it exceeded the time limit.</td>
-</tr>
-<tr>
-<td>139</td>
-<td>Segmentation violation. Usually indicates a pointer error.</td>
-</tr>
-<tr>
-<td>140</td>
-<td>The job exceeded the “wall clock” time limit (as opposed to the CPU time limit).</td>
-</tr>
-</tbody>
-</table>
-<p>Reference:<br><a href="https://www.rc.fas.harvard.edu/resources/documentation/convenient-slurm-commands/" target="_blank" rel="noopener">https://www.rc.fas.harvard.edu/resources/documentation/convenient-slurm-commands/</a><br><a href="https://sites.google.com/a/case.edu/hpc-upgraded-cluster/cluster-faq/running-jobs/exit-code-status" target="_blank" rel="noopener">https://sites.google.com/a/case.edu/hpc-upgraded-cluster/cluster-faq/running-jobs/exit-code-status</a><br><a href="https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference-list-of-run-time-error-messages" target="_blank" rel="noopener">https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference-list-of-run-time-error-messages</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Tools</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/13/slurm-exit-code/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/2/">Next &raquo;</a>
@@ -2129,7 +2244,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共29.2k字
+              本站总共33.4k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -2236,6 +2351,14 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Brain</a>
               </li>
              
@@ -2256,11 +2379,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2272,10 +2395,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
               </li>
              
@@ -2284,19 +2403,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
               </li>
              
               <li class="article-tag-list-item">
