@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://tracyxinwang.site/blog/blog/2018/12/09/MIT6006-Lec14/</loc>
-    <lastmod>2018-12-09T07:11:43.000Z</lastmod>
+    <loc>http://tracyxinwang.site/blog/blog/2018/12/10/MIT6006-Lec15/</loc>
+    <lastmod>2018-12-14T05:19:11.475Z</lastmod>
   </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/12/09/MIT6006-Lec13/</loc>
-    <lastmod>2018-12-09T07:08:02.000Z</lastmod>
+    <lastmod>2018-12-09T07:16:49.000Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2018/12/09/MIT6006-Lec14/</loc>
+    <lastmod>2018-12-09T07:11:43.000Z</lastmod>
   </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/12/01/Matlab-visualization/</loc>
     <lastmod>2018-12-09T00:30:06.000Z</lastmod>

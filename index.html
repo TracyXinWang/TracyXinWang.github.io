@@ -247,6 +247,148 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-MIT6006-Lec15" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/12/10/MIT6006-Lec15/">MIT6006 Lec15 Shortest Paths I&amp;II Intro and Dijkstra</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/12/10/MIT6006-Lec15/" class="archive-article-date">
+  	<time datetime="2018-12-10T03:10:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-I"><span class="toc-number">1.</span> <span class="toc-text">Part I</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Weighted-graphs"><span class="toc-number">1.1.</span> <span class="toc-text">Weighted graphs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#General-approach"><span class="toc-number">1.2.</span> <span class="toc-text">General approach</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimal-substructure"><span class="toc-number">1.3.</span> <span class="toc-text">Optimal substructure</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-II"><span class="toc-number">2.</span> <span class="toc-text">Part II</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DAG"><span class="toc-number">2.1.</span> <span class="toc-text">DAG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dijkstra’s-Algorithm"><span class="toc-number">2.2.</span> <span class="toc-text">Dijkstra’s Algorithm</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Dijkstra-Complexity"><span class="toc-number">2.2.1.</span> <span class="toc-text">Dijkstra Complexity</span></a></li></ol></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-I"><span class="toc-text">Part I</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Weighted-graphs"><span class="toc-text">Weighted graphs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#General-approach"><span class="toc-text">General approach</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimal-substructure"><span class="toc-text">Optimal substructure</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-II"><span class="toc-text">Part II</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DAG"><span class="toc-text">DAG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dijkstra’s-Algorithm"><span class="toc-text">Dijkstra’s Algorithm</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Dijkstra-Complexity"><span class="toc-text">Dijkstra Complexity</span></a></li></ol></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <h2 id="Part-I"><a href="#Part-I" class="headerlink" title="Part I"></a>Part I</h2><p>Two algorithms: </p>
+<ul>
+<li>Dijkstra $O(VlgV + E)$ assumes non-negative edge weights</li>
+<li>Bellman Ford $O(VE)$ is a general algorithm</li>
+</ul>
+<h3 id="Weighted-graphs"><a href="#Weighted-graphs" class="headerlink" title="Weighted graphs"></a>Weighted graphs</h3><p><strong>Single Source Shortest Paths</strong>:</p>
+<p>Given $G = (V, E)$, $w$ and a source vertex $S$, find $δ(S, V)$ [and the best path] from $S$ to each $v∈V$.</p>
+<p>Data structures:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">d[v] = value inside circle</span><br><span class="line">     = 0, <span class="keyword">if</span> v = s</span><br><span class="line">     = ∞, otherwise     ⇐ initially</span><br><span class="line">d[v] = δ (s,v)          ⇐ at end</span><br><span class="line">d[v] \le δ (s,v)        at all <span class="built_in">times</span></span><br></pre></td></tr></table></figure></p>
+<p>$d[v]$ decreases as we find better paths to v<br>$Π[v]$ = predecessor on best path to $v$, $Π[s] = NIL$</p>
+<p><strong>Negative-Weight Edges</strong>:</p>
+<p>If negative weight edges are present, s.p. algorithm should find negative weight cycles (e.g., Bellman Ford)</p>
+<h3 id="General-approach"><a href="#General-approach" class="headerlink" title="General approach"></a>General approach</h3><p>General structure of S.P. Algorithms (no negative cycles):<br><img src="/blog/images/MIT15_01.jpg"></p>
+<h3 id="Optimal-substructure"><a href="#Optimal-substructure" class="headerlink" title="Optimal substructure"></a>Optimal substructure</h3><p><strong>Theorem</strong>: Subpaths of shortest paths are shortest paths<br>Let $p = &lt; v_0, v_1, . . . v_k &gt;$ be a shortest path<br>Let $p_{ij} = &lt; v_i, v_{i+1}, . . . v_j &gt;$  $0 ≤ i ≤ j ≤ k$<br>Then $p_{ij}$ is a shortest path.</p>
+<h2 id="Part-II"><a href="#Part-II" class="headerlink" title="Part II"></a>Part II</h2><h3 id="DAG"><a href="#DAG" class="headerlink" title="DAG"></a>DAG</h3><ul>
+<li>Topologically sort the DAG. Path from u to v implies that u is before v in the linear ordering.</li>
+<li>One pass over vertices in topologically sorted order relaxing each edge that leaves each vertex. </li>
+</ul>
+<p>Note: Can’t have negative cycles because there are no cycles!</p>
+<h3 id="Dijkstra’s-Algorithm"><a href="#Dijkstra’s-Algorithm" class="headerlink" title="Dijkstra’s Algorithm"></a>Dijkstra’s Algorithm</h3><ul>
+<li>The idea is to maintain two sets</li>
+<li>one set contains vertices included in existing shortest path</li>
+<li>another set includes vertices not yet included. </li>
+<li>At every step of the algorithm, find a vertex <ul>
+<li>which is in the set with not included vertex and </li>
+<li>has a minimum distance from the source.</li>
+<li>update the distance of the shorted path set</li>
+</ul>
+</li>
+</ul>
+<p>For each edge $(u, v) \in E$, assume $w(u, v) ≥ 0$, maintain a set S of vertices whose final shortest path weights have been determined. Repeatedly select $u \in V − S$ with minimum shortest path estimate, add u to S, relax all edges out of u.</p>
+<p><strong>Pseudo-code</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Dijkstra (G, W, s)          //uses priority queue Q</span><br><span class="line">    Initialize (G, s)</span><br><span class="line">    S ← φ</span><br><span class="line">    Q ← V[G]               //Insert into Q</span><br><span class="line">    <span class="keyword">while</span> Q = φ</span><br><span class="line">        <span class="keyword">do</span> u ← EXTRACT-MIN(Q)   //deletes u from Q</span><br><span class="line">        S = S ∪ &#123;u&#125;</span><br><span class="line">        <span class="keyword">for</span> each vertex v $\<span class="keyword">in</span>$ Adj[u]</span><br><span class="line">            <span class="keyword">do</span> RELAX (u, v, w) ← this is an implicit DECREASE KEY operation</span><br></pre></td></tr></table></figure></p>
+<p><u>Strategy</u>: Dijkstra is a greedy algorithm: choose closest vertex in V − S to add to set S.<br><u>Correctness</u>: We know relaxation is safe. The key observation is that each time a vertex u is added to set S, we have $d[u] = δ(s, u)$.</p>
+<h4 id="Dijkstra-Complexity"><a href="#Dijkstra-Complexity" class="headerlink" title="Dijkstra Complexity"></a>Dijkstra Complexity</h4><p>$Θ(v)$ inserts into priority queue<br>$Θ(v)$ EXTRACT_MIN operations<br>$Θ(E)$ DECREASE_KEY operations</p>
+<p><strong>Array impl</strong>:</p>
+<ul>
+<li>Θ(v) time for extra min</li>
+<li>Θ(1) for decrease key<br>Total: Θ(V.V + E.1) = Θ(V^2 + E) = Θ(V^2)</li>
+</ul>
+<p><strong>Binary min-heap</strong>:</p>
+<ul>
+<li>Θ(lgV) for extract min</li>
+<li>Θ(lgV) for decrease key<br>Total: Θ(VlgV + ElgV )</li>
+</ul>
+<p><strong>Fibonacci heap</strong>:</p>
+<ul>
+<li>Θ(lgV ) for extract min</li>
+<li>Θ(1) for decrease key</li>
+<li>amortized cost<br>Total: Θ(VlgV + E)</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/12/10/MIT6006-Lec15/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-MIT6006-Lec14" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -2053,166 +2195,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-MIT6006-Lec08" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/17/MIT6006-Lec08/">MIT6006 Lec08 Hashing I</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/11/17/MIT6006-Lec08/" class="archive-article-date">
-  	<time datetime="2018-11-17T07:07:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dictionary-and-Motivation"><span class="toc-number">1.</span> <span class="toc-text">Dictionary and Motivation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Dictionary-problem"><span class="toc-number">1.1.</span> <span class="toc-text">Dictionary problem</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Motivation"><span class="toc-number">1.2.</span> <span class="toc-text">Motivation</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Prehashing-and-Hashing"><span class="toc-number">2.</span> <span class="toc-text">Prehashing and Hashing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Chaining"><span class="toc-number">3.</span> <span class="toc-text">Chaining</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Simple-uniform-hashing"><span class="toc-number">3.1.</span> <span class="toc-text">Simple uniform hashing</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hash-Function"><span class="toc-number">4.</span> <span class="toc-text">Hash Function</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dictionary-and-Motivation"><span class="toc-text">Dictionary and Motivation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Dictionary-problem"><span class="toc-text">Dictionary problem</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Motivation"><span class="toc-text">Motivation</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Prehashing-and-Hashing"><span class="toc-text">Prehashing and Hashing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Chaining"><span class="toc-text">Chaining</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Simple-uniform-hashing"><span class="toc-text">Simple uniform hashing</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hash-Function"><span class="toc-text">Hash Function</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="Dictionary-and-Motivation"><a href="#Dictionary-and-Motivation" class="headerlink" title="Dictionary and Motivation"></a>Dictionary and Motivation</h3><h4 id="Dictionary-problem"><a href="#Dictionary-problem" class="headerlink" title="Dictionary problem"></a>Dictionary problem</h4><ul>
-<li>Dictionary is a abstract data tupe(ADT).</li>
-<li>Which means it maintains a set of items, each with a key</li>
-<li>The available operations are:<ul>
-<li>insert(item): add item to the set (The key must be unique, otherwise overide an exsiting key)</li>
-<li>delete(item): remove item from set</li>
-<li>search(key): return item with key if it exists<br>Balanced BST solve in $O(lg n)$ time per operation. The goal is to make each operation $O(1)$ time.</li>
-</ul>
-</li>
-</ul>
-<p>(remember that BST etc. are data structure, which can be seen as the implementation of ADT)</p>
-<h4 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h4><p>Dictionaries are perhaps the most popular data structure in CS</p>
-<ul>
-<li>built into most modern programming languages (Python, Perl, Ruby, JavaScript, Java, C++, C#, . . . )</li>
-<li>e.g. best docdist code: word counts &amp; inner product</li>
-<li>implement databases: (DB HASH in Berkeley DB)<ul>
-<li>English word → definition (literal dict.)</li>
-<li>English words: for spelling correction</li>
-<li>word → all webpages containing that word</li>
-<li>username → account object</li>
-</ul>
-</li>
-<li>compilers &amp; interpreters: names → variables</li>
-<li>network routers: IP address → wire</li>
-<li>network server: port number → socket/app.</li>
-<li>virtual memory: virtual address → physical</li>
-</ul>
-<h3 id="Prehashing-and-Hashing"><a href="#Prehashing-and-Hashing" class="headerlink" title="Prehashing and Hashing"></a>Prehashing and Hashing</h3><p>How to solve the dictionary problem that is to make operation time to $O(1)$?</p>
-<p><strong>Simple Approach: Direct Access Table</strong><br>This means items would need to be stored in an array, indexed by key (random access). But this has two problems:</p>
-<ol>
-<li>keys must be nonnegative integers (or using two arrays, integers)</li>
-<li>if the key happens to have large range, then need large space — e.g. one key is 2256, even with no other keys, the table must have take that space.</li>
-</ol>
-<p><strong>Solution</strong><br><em>Solution to 1</em>: “prehash” keys to integers</p>
-<ul>
-<li>In theory, possible because keys are finite ⇒ set of keys is countable</li>
-<li>In Python: hash(object) (actually hash is misnomer, should be “prehash”) where object can be a number, string, tuple, etc. or object implementing hash (default = id = memory address)</li>
-<li>In theory, x = y ⇔ hash(x) = hash(y)</li>
-<li>Python applies some heuristics for practicality: for example, hash(‘\0B ’) = 64 = hash(‘\0\0C’)</li>
-<li>Object’s key should not change while in table (else cannot find it anymore)</li>
-<li>No mutable objects like lists</li>
-</ul>
-<p><em>Solution to 2</em>: hashing </p>
-<ul>
-<li>Reduce universe U of all keys (say, integers) down to reasonable size m for table</li>
-<li>idea: m ≈ n = number of keys stored in dictionary</li>
-<li><strong>hash function</strong> h: $U → {0, 1, . . . , m − 1}$</li>
-<li>two keys $k_i, k_j ∈ K$ collide if $h(k_i) = h(k_j)$</li>
-</ul>
-<p>Hash Function: A function that converts a given big phone number to a small practical integer value. The mapped integer value is used as an index in hash table.</p>
-<p>How do we deal with collisions? We will see two ways</p>
-<ol>
-<li>Chaining</li>
-<li>Open addressing: in Lec10</li>
-</ol>
-<h3 id="Chaining"><a href="#Chaining" class="headerlink" title="Chaining"></a>Chaining</h3><p>Linked list of colliding elements in each slot of table</p>
-<ul>
-<li>Search must go through whole list T[h(key)]</li>
-<li>Worst case: all n keys hash to same slot ⇒ Θ(n) per operation</li>
-</ul>
-<h4 id="Simple-uniform-hashing"><a href="#Simple-uniform-hashing" class="headerlink" title="Simple uniform hashing"></a>Simple uniform hashing</h4><p>An assumption (cheating): Each key is equally likely to be hashed to any slot of table, independent of where other keys are hashed.</p>
-<p>let n = number of keys stored in table<br>m = number of slots in table<br>load factor α = n/m = expected number of keys per slot = expected length of a chain</p>
-<p><em>Performance</em>:<br>This implies that expected running time for search is $Θ(1+α)$ — the 1 comes from applying the hash function and random access to the slot whereas the $α$ comes from searching the list. This is equal to $O(1)$ if $α = O(1)$, i.e., $m = Ω(n)$.</p>
-<h3 id="Hash-Function"><a href="#Hash-Function" class="headerlink" title="Hash Function"></a>Hash Function</h3><p>Following are three methods to achieve the above performance</p>
-<p><strong>Division Method</strong>:<br>$$h(k) = k \; mod \; m$$<br>This is practical when m is prime but not too close to power of 2 or 10 (then just depending on low bits/digits).<br>But it is inconvenient to find a prime number, and division is slow.</p>
-<p><strong>Multiplication Method</strong>:<br>$$h(k) = [(a · k) \; mod \; 2^w] \gg (w − r)$$<br>where a is random, k is w bits, and $m = 2^r$.<br>This is practical when a is odd &amp; $2^{w−1}$ &lt; $a$ &lt; $2^w$ &amp; a not too close to $2^{w−1}$ or $2^w$.<br>Multiplication and bit extraction are faster than division.</p>
-<p><strong>Universal Hashing</strong>:<br>For example: $h(k) = [(ak+b) \; mod \; p] mod \; m$ where a and b are random $∈ {0, 1, . . . p−1}$, and p is a large prime ($&gt; |U|$).<br>This implies that for worst case keys $k_1 \ne k_2$, (and for a, b choice of h): $$Pr_{a,b}(event \; X_{k_1k_2}) = Pr_{a,b}\{h(k_1)=h(k_2)\} = \frac 1m$$</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/17/MIT6006-Lec08/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/2/">Next &raquo;</a>
@@ -2244,7 +2226,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共33.4k字
+              本站总共33.9k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -2391,10 +2373,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
               </li>
              
@@ -2403,7 +2381,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2411,7 +2393,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
