@@ -247,6 +247,308 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Laplacian-matrix" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/10/05/Laplacian-matrix/">Laplacian Matrix and Spectral Clustering</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/10/05/Laplacian-matrix/" class="archive-article-date">
+  	<time datetime="2018-10-05T02:34:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-information"><span class="toc-number">1.</span> <span class="toc-text">Basic information:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Graph-Laplacian-and-properties"><span class="toc-number">2.</span> <span class="toc-text">Graph Laplacian and properties</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#The-unnormalized-Laplacian-matrix"><span class="toc-number">2.1.</span> <span class="toc-text">The unnormalized Laplacian matrix:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-normalized-Laplacian"><span class="toc-number">2.2.</span> <span class="toc-text">The normalized Laplacian:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spectral-clustering-algorithms"><span class="toc-number">3.</span> <span class="toc-text">Spectral clustering algorithms</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Unnormalized-spectral-clustering"><span class="toc-number">3.1.</span> <span class="toc-text">Unnormalized spectral clustering</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Normalized-spectral-clustering-using-L-rw"><span class="toc-number">3.2.</span> <span class="toc-text">Normalized spectral clustering using $L_{rw}$</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Normalized-spectral-clustering-using-L-sym"><span class="toc-number">3.3.</span> <span class="toc-text">Normalized spectral clustering using $L_{sym}$</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-information"><span class="toc-text">Basic information:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Graph-Laplacian-and-properties"><span class="toc-text">Graph Laplacian and properties</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#The-unnormalized-Laplacian-matrix"><span class="toc-text">The unnormalized Laplacian matrix:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-normalized-Laplacian"><span class="toc-text">The normalized Laplacian:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spectral-clustering-algorithms"><span class="toc-text">Spectral clustering algorithms</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Unnormalized-spectral-clustering"><span class="toc-text">Unnormalized spectral clustering</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Normalized-spectral-clustering-using-L-rw"><span class="toc-text">Normalized spectral clustering using $L_{rw}$</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Normalized-spectral-clustering-using-L-sym"><span class="toc-text">Normalized spectral clustering using $L_{sym}$</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <p>When I was reading paper, some people used this Laplacian metrix as a small step in their network analysis. I then found some papers and tutorials regarding this topic to have a general idea of what it is. The followings are some summary for reference.</p>
+<p>Either Laplacian graph or spectral clustering is in the field of spectral graph theory. It studies the properties of graphs via the eigenvalues and eigenvectors of their associated graph matrices: the adjacency matrix and the graph Laplacian and its variants.</p>
+<p>The most important application of the Laplacian is spectral clustering that corresponds to a computationally tractable solution to the graph partitionning problem.<br>Another application is spectral matching that solves for graph matching.</p>
+<h3 id="Basic-information"><a href="#Basic-information" class="headerlink" title="Basic information:"></a>Basic information:</h3><p><strong>Degree matrix</strong>: a diagonal matrix which contains information about the degree of each vertex — the sum of weights of all edges attached to that vertex. The value of diagonal is the degree of the vertex.<br><strong>Similarity function</strong>: also called similarity measures, to quantify the similarity between two objects and is the basic and preliminary thing to do clustering. Denoted as $s_{ij}$ between point i and point j. Some examples: Cosine similarity, kernel functions, Gaussian similarity ($s(x_i, x_j) = exp(-|x_i-x_j|^2/2\sigma^2)$).<br><strong>Similarity graph</strong>: to model the local neighborhood relationships between the data points. There are several similarity graphs can be chosen:</p>
+<ul>
+<li><strong>ε-neighborhood graph</strong>: connect all points whose pairwise distances that are smaller than ε. The ε-neighborhood graph is usually considered as an unweighted graph. (以数值来说话)</li>
+<li><strong>k-nearest neighbor graphs</strong>: connect vertex $v_i$ with vertex $v_j$ if $v_j$ is among the k-nearest neighbors of $v_i$. (Attention: this definition can lead to a directed graph, as the neighborhood relationship is not symmetric, e.g. vertex $v_j$ can be the k-th nearest neighbor of $v_i$ but $v_i$ may not be the k-th nearest neighbor of $v_j$) (以个数来说话)</li>
+<li><strong>fully connected graph</strong>: simply connect all points with positive similarity with each other, and weight all edges by $s_{ij}$. As the graph should represent the local neighborhood relationships, this construction is only useful if the similarity function itself models local neighborhoods, e.g. Gaussian similarity function. </li>
+</ul>
+<p><br></p>
+<h3 id="Graph-Laplacian-and-properties"><a href="#Graph-Laplacian-and-properties" class="headerlink" title="Graph Laplacian and properties"></a>Graph Laplacian and properties</h3><h4 id="The-unnormalized-Laplacian-matrix"><a href="#The-unnormalized-Laplacian-matrix" class="headerlink" title="The unnormalized Laplacian matrix:"></a>The unnormalized Laplacian matrix:</h4><p>$$ L = D - A $$<br>where, D is the degree matrix and A is the adjacency matrix of the graph.</p>
+<p><strong>Property of the unnormalized laplacian matrix</strong>:</p>
+<ul>
+<li>For every vector $f\in R^n$: $f’Lf=\frac12\sum_{i,j=1}^nw_{ij}(f_i-f_j)^2$</li>
+<li>L is symmetric and positive semi-definite</li>
+<li>The smallest eigenvalue of L is 0, the corresponding eigenvextor is the constant one vector 1.</li>
+<li>L has $n$ non-negative, real-valued eigenvalues $0=\lambda_1 \le \lambda_2 \le … \le \lambda_n$</li>
+</ul>
+<p><br></p>
+<h4 id="The-normalized-Laplacian"><a href="#The-normalized-Laplacian" class="headerlink" title="The normalized Laplacian:"></a>The normalized Laplacian:</h4><p>There are two matrices that are called normalized graph Laplacians in literature:<br>$$L_{sym} = D^{-1/2}LD^{-1/2} = I - D^{-1/2}WD^{-1/2}$$<br>$$L_{rm} = D^{-1}L = I - D^{-1}W$$<br>The first matrix is denoted by $L_{sym}$ as it is symmetric matrix.<br>The seond one is denoted by $L_{rm}$ as it is closely related to a random walk.</p>
+<p><strong>Property of the normalized laplacian matrix</strong>:</p>
+<ul>
+<li>For every vector $f\in R^n$: $f’L_{sym}f=\frac12\sum_{i,j=1}^nw_{ij}(\frac{f_i}{\sqrt {d_i}} - \frac{f_j}{\sqrt {d_j}})^2$</li>
+<li>$\lambda$ is an eigenvalue of $L_{rw}$ with eigenvector $u$ if and only if $\lambda$ is an eigenvalue of $L_{sym}$ with eigenvector $w=D^{1/2}u$</li>
+<li>$\lambda$ is an eigenvalue of $L_{rw}$ with eigenvector $u$ if and only if $\lambda$  and $u$  solve the generalized eigenproblem $Lu = λDu$</li>
+<li>0 is an eigenvalue of $L_{rw}$ with the constant one vector 1 as eigenvector. 0 is an eigenvalue of $L_{sym}$ with eigenvector $D^{1/2}1$.</li>
+<li>$L_{sym}$ and $L_{rw}$ are positive semi-definite and have $n$ nonnegative real-valued eigenvalues $0 = λ_1 ≤···≤ λ_n$.</li>
+</ul>
+<p><br></p>
+<h3 id="Spectral-clustering-algorithms"><a href="#Spectral-clustering-algorithms" class="headerlink" title="Spectral clustering algorithms"></a>Spectral clustering algorithms</h3><p>Assume the data consists of $n$ “points” $x_1,…,x_n$ which can be arbitrary objects. We measure their pairwise similarities $s_{ij} = s(x_i,x_j)$ by some similarity function which is symmetric and non-negative, and we denote the corresponding similarity matrixby $S = (s_{ij} )_{i,j=1,…,n}$.</p>
+<h4 id="Unnormalized-spectral-clustering"><a href="#Unnormalized-spectral-clustering" class="headerlink" title="Unnormalized spectral clustering"></a>Unnormalized spectral clustering</h4><p><strong>Input</strong>: Similarity matrix $S ∈ R^{n×n}$, number k of clusters to construct.</p>
+<blockquote>
+<ol>
+<li>Construct a similarity graph by one of similarity functions. Let $W$ be its weighted adjacency matrix.</li>
+<li>Compute the unnormalized Laplacian $L$.</li>
+<li>Compute the first $k$ eigenvectors $u_1,…,u_k$ of $L$</li>
+<li>Let $U ∈ R^{n×k}$ be the matrix containing the vectors $u_1,…,u_k$ as columns.</li>
+<li>For $i = 1,…,n$, let $y_i ∈ R^k$ be the vector corresponding to the i-th row of $U$</li>
+<li>Cluster the points $(y_i)_{i=1,…,n}$ in $R^k$ with the k-means algorithm into clusters $C_1,…,C_k$</li>
+</ol>
+</blockquote>
+<p><strong>Output</strong>: Clusters $A_1,…,A_k$ with $A_i =\{j|y_j ∈ C_i\}$.</p>
+<p><br></p>
+<h4 id="Normalized-spectral-clustering-using-L-rw"><a href="#Normalized-spectral-clustering-using-L-rw" class="headerlink" title="Normalized spectral clustering using $L_{rw}$"></a>Normalized spectral clustering using $L_{rw}$</h4><p><strong>Input</strong>: Similarity matrix $S ∈ R^{n×n}$, number k of clusters to construct.</p>
+<blockquote>
+<ol>
+<li>Construct a similarity graph by one of similarity functions. Let $W$ be its weighted adjacency matrix.</li>
+<li>Compute the unnormalized Laplacian $L$.</li>
+<li>Compute the first k generalized eigenvectors $u_1,…,u_k$ of the generalized eigenproblem $Lu=λDu$</li>
+<li>Let $U ∈ R^{n×k}$ be the matrix containing the vectors $u_1,…,u_k$ as columns.</li>
+<li>For $i = 1,…,n$, let $y_i ∈ R^k$ be the vector corresponding to the i-th row of $U$</li>
+<li>Cluster the points $(y_i)_{i=1,…,n}$ in $R^k$ with the k-means algorithm into clusters $C_1,…,C_k$</li>
+</ol>
+</blockquote>
+<p><strong>Output</strong>: Clusters $A_1,…,A_k$ with $A_i =\{j|y_j ∈ C_i\}$.</p>
+<p><br></p>
+<h4 id="Normalized-spectral-clustering-using-L-sym"><a href="#Normalized-spectral-clustering-using-L-sym" class="headerlink" title="Normalized spectral clustering using $L_{sym}$"></a>Normalized spectral clustering using $L_{sym}$</h4><p><strong>Input</strong>: Similarity matrix $S ∈ R^{n×n}$, number k of clusters to construct.</p>
+<blockquote>
+<ol>
+<li>Construct a similarity graph by one of similarity functions. Let $W$ be its weighted adjacency matrix.</li>
+<li>Compute the normalized Laplacian $L_{sym}$.</li>
+<li>Compute the first k eigenvectors $u_1,…,u_k$ of $L_{sym}$</li>
+<li>Form the matrix $T ∈ R^{n×k}$ from $U$ by normalizing the rows to norm 1,that is set $t_{ij} =u_{ij}/(\sum_k u_{ik}^2)^{1/2}$.</li>
+<li>For $i = 1,…,n$, let $y_i ∈ R^k$ be the vector corresponding to the i-th row of $T$</li>
+<li>Cluster the points $(y_i)_{i=1,…,n}$ in $R^k$ with the k-means algorithm into clusters $C_1,…,C_k$</li>
+</ol>
+</blockquote>
+<p><strong>Output</strong>: Clusters $A_1,…,A_k$ with $A_i =\{j|y_j ∈ C_i\}$.</p>
+<p><br></p>
+<p><strong>Attention</strong>: Eigenvalues will always be ordered increasingly, respecting multiplicities. Therefore, “the first k eigenvectors” refers to the eigenvectors corresponding to the k smallest eigenvalues.</p>
+<p><br></p>
+<p>Reference:<br><a href="https://www.sciencedirect.com/science/article/pii/S1053811917305463" target="_blank" rel="noopener">https://www.sciencedirect.com/science/article/pii/S1053811917305463</a><br><a href="https://link.springer.com/content/pdf/10.1007%2Fs11222-007-9033-z.pdf" target="_blank" rel="noopener">https://link.springer.com/content/pdf/10.1007%2Fs11222-007-9033-z.pdf</a><br><a href="http://www2.imm.dtu.dk/projects/manifold/Papers/Laplacian.pdf" target="_blank" rel="noopener">http://www2.imm.dtu.dk/projects/manifold/Papers/Laplacian.pdf</a><br><a href="https://csustan.csustan.edu/~tom/Clustering/GraphLaplacian-tutorial.pdf" target="_blank" rel="noopener">https://csustan.csustan.edu/~tom/Clustering/GraphLaplacian-tutorial.pdf</a><br><a href="https://www.youtube.com/watch?v=FRZvgNvALJ4" target="_blank" rel="noopener">https://www.youtube.com/watch?v=FRZvgNvALJ4</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/10/05/Laplacian-matrix/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-thinking-system" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/10/03/thinking-system/">思维模型总结</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/10/03/thinking-system/" class="archive-article-date">
+  	<time datetime="2018-10-03T13:09:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#二阶模型"><span class="toc-number">1.</span> <span class="toc-text">二阶模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#整体思维"><span class="toc-number">2.</span> <span class="toc-text">整体思维</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#系统思维"><span class="toc-number">3.</span> <span class="toc-text">系统思维</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#二阶模型"><span class="toc-text">二阶模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#整体思维"><span class="toc-text">整体思维</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#系统思维"><span class="toc-text">系统思维</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <p><em>大部分内容来源于L先生说，此处是一些个人总结。</em></p>
+<p>思维模型(Mental model): 每个人认知世界、思考问题的基本模式和习惯</p>
+<p>Keywords: <strong>本质，规律，原则</strong></p>
+<p>本质：一个事物在变化的过程中，或者穷尽各种可能性的前提下，所维持不变的那一部分。</p>
+<p>For example:<br>公司的本质是整合资源。无论什么行业、什么领域，只要资源存在错配和空缺，公司就得以存在；而一旦资源能高效运作、对接起来，公司就没必要存在。<br>汽车的本质是出行。在这个过程中，保证便捷、安全、高效，才是汽车最核心的存在理由。其他一切，都只是建筑在这个本质上面的浅层需求罢了。</p>
+<h3 id="二阶模型"><a href="#二阶模型" class="headerlink" title="二阶模型"></a>二阶模型</h3><ul>
+<li>如果这样做，短时间内会得到什么样的结果 （一阶）</li>
+<li>如果得到了这个结果，在较长时间后，会产生哪些新的可能性和结果？（二阶）</li>
+</ul>
+<p>本质上是个可能性分析的问题，有必要时可跟概率进行联系。</p>
+<h3 id="整体思维"><a href="#整体思维" class="headerlink" title="整体思维"></a>整体思维</h3><p>整体思维基于两个假设：</p>
+<ul>
+<li>一切事物在底层上都是相互联系的</li>
+<li>整体能够提供比个体本身更多的信息<br><br></li>
+</ul>
+<p>关于整体思维的训练方式：</p>
+<ul>
+<li>它的背景和场景是什么</li>
+<li>它为什么出现</li>
+<li>它的出现带来了什么，导致了什么？</li>
+</ul>
+<p>其实这个思维方式可以理解成 3W 问题，即：Where, Why, What. 对于要研究的对象，建立联系图，挖掘底层的东西，并与自己的所知道的系统进行联系。</p>
+<h3 id="系统思维"><a href="#系统思维" class="headerlink" title="系统思维"></a>系统思维</h3><p>系统就是「元素」和「结构」的组合。把一定的元素，通过不同的结构、方式组合起来，使它们具备整体性，这就构成了一个「系统」。</p>
+<p>基于的假设：系统就是一个<em>转换</em> (transformation)的过程。<br>即，系统的存在，一定是因为它达成了一种「转换」：能将某些不够好的、无序的状态，转变成更优的、有序的状态。</p>
+<p>从工程上来讲，a system has input and output. 如果以系统思维来思考问题的话，其实就是理解什么是input, system中的transfer function 指代的是什么，以及output 可以有哪些情况。</p>
+<p>系统思维在生活中的应用：公司可以看作系统，城市可以看做系统，一个餐饮店，一个班级，一个公众号，都可以看做一个完备的、小小的系统。</p>
+<hr>
+<p>关于寻求本质的一些思维模型：</p>
+<p><strong>输入 - 输出模型(IO模型)</strong><br>问： 一个行为、过程和系统，它的初始形态是什么？它的最终形态又是什么？<br>去关注：一样事物，它变化之前是什么，变化之后又是什么？</p>
+<blockquote>
+<p>不要去关注产品，而是要去关注：消费者想通过这个产品，达到一种什么样的状态？我们有没有什么方法帮助他们达到这个状态？这就是创新的要义。</p>
+</blockquote>
+<p><br></p>
+<p><strong>供给 - 需求模型(SD模型)</strong><br>问：它们为什么可以连接起来？彼此的供给和需求是什么？</p>
+<ul>
+<li>我有什么？</li>
+<li>谁需要这些东西？</li>
+<li>我如何能把已有的东西，转变为别人需要的东西？<br><br></li>
+</ul>
+<p><strong>动力 - 阻力模型(PO模型)</strong><br>很多问题的本质，其实都是动力和阻力的博弈。动力超过阻力，改变就会发生，行为就会成立，反之，就会停滞。<br>问：推动一件事情的动力是什么？如果它发生了，阻力又是什么？<br><br></p>
+<p><strong>改变 - 不变模型(CS模型)</strong><br>对于生活中的现象和事实，问：经历了这些复杂的过程，它改变的是什么？不变的又是什么？<br>这些不变的东西，很可能就是它所赖以持存、构成其本质的部分。</p>
+<p>当你接触到一个陌生领域时，多搜集一些相关的材料去观察：在这些材料里面，有没有哪几个关键词、哪几个概念，是一直都存在，没有改变过的？如果有，它们往往就是这个领域的关键节点。试着去把它们「连接」起来，就可以找到的是这个领域的本质。</p>
+<p><br></p>
+<p>Reference：<br>L先生说，36氪</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">思考</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">思维模型</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/10/03/thinking-system/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-PinDuoDuo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -950,7 +1252,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共33.9k字
+              本站总共34.5k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -1073,19 +1375,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂文</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂文</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1097,15 +1399,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+                <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1113,7 +1411,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1122,6 +1420,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
               </li>
             
             <div class="clearfix"></div>

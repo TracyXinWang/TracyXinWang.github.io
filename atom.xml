@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="http://tracyxinwang.site/blog/"/>
-  <updated>2018-12-14T05:19:11.475Z</updated>
+  <updated>2018-12-22T06:53:00.000Z</updated>
   <id>http://tracyxinwang.site/blog/</id>
   
   <author>
@@ -15,6 +15,58 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MIT6006 Lec18 Speeding up Dijkstra</title>
+    <link href="http://tracyxinwang.site/blog/2018/12/20/MIT6006-Lec18/"/>
+    <id>http://tracyxinwang.site/blog/2018/12/20/MIT6006-Lec18/</id>
+    <published>2018-12-20T09:50:13.000Z</published>
+    <updated>2018-12-22T06:53:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Bi-Directional-Search"><a href="#Bi-Directional-Search" class="headerlink" title="Bi-Directional Search"></a>Bi-Directional Search</h3><ul><li>Bidirectional search means to start search from both direction simutaneously.</li><li>The reason to use bidirectional is that in many cases it is faster, it dramatically reduce the amount of required exploration.</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Alternate forward search from s</span><br><span class="line">          backward search from t</span><br><span class="line">          (follow edges backward)</span><br><span class="line">df(u) distances <span class="keyword">for</span> forward search</span><br><span class="line">db(u) distances <span class="keyword">for</span> backward search</span><br></pre></td></tr></table></figure><ul><li>Algorithm terminates when some vertex w has been processed, i.e., deleted from the queue of both searches, $Q_f$ and $Q_b$</li><li>Subtlety: After search terminates, find node x with minimum value of df(x) + db(x). x may not be the vertex w that caused termination as in example to the left!</li><li>Find shortest path from s to x using $Π_f$ and shortest path backwards from t to x using $Πb$. Note: x will have been deleted from either $Q_f$ or $Q_b$ or both.</li></ul><h3 id="Goal-directed-search-or-A"><a href="#Goal-directed-search-or-A" class="headerlink" title="Goal directed search or A*"></a>Goal directed search or A*</h3><ul><li>A* Search algorithm is one of the best and popular technique used in path-finding and graph traversals.</li></ul><p>Modify edge weights with potential function over vertices.<br>$$\bar w(u,v) = w(u,v) - \lambda (u) + \lambda (v)$$</p><p>For A* algorithm, one of the item is the real distance, another one is heuristic distance, which can be manhattan, eucliean or other distance. </p><p><br></p><p>Reference:<br><a href="https://www.geeksforgeeks.org/a-search-algorithm/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/a-search-algorithm/</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;Bi-Directional-Search&quot;&gt;&lt;a href=&quot;#Bi-Directional-Search&quot; class=&quot;headerlink&quot; title=&quot;Bi-Directional Search&quot;&gt;&lt;/a&gt;Bi-Directional Search&lt;/
+      
+    
+    </summary>
+    
+    
+      <category term="Algorithm" scheme="http://tracyxinwang.site/blog/tags/Algorithm/"/>
+    
+      <category term="Learning" scheme="http://tracyxinwang.site/blog/tags/Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MIT6006 Lec17 Bellman-Ford algorithm</title>
+    <link href="http://tracyxinwang.site/blog/2018/12/20/MIT6006-Lec17/"/>
+    <id>http://tracyxinwang.site/blog/2018/12/20/MIT6006-Lec17/</id>
+    <published>2018-12-20T08:50:13.000Z</published>
+    <updated>2018-12-20T06:41:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<ul><li>Dijkstra doesn’t work for graphs with negative weight edges, Bellman-Ford works for such graphs. </li><li>Bellman-Ford is also simpler than Dijkstra and suites well for distributed systems. </li><li>But time complexity of Bellman-Ford is $O(VE)$, which is more than Dijkstra.</li></ul><p><strong>Steps</strong></p><ul><li>Initialize d’s, π’s, and set s.d = 0 ⇒ $O(V)$</li><li>Loop |V|-1 times through all edges checking the relaxation condition to compute minimum distances ⇒ $(|V|-1) O(E) = O(VE)$</li><li>Loop through all edges checking for negative weight cycles which occurs if any of the relaxation conditions fail ⇒ $O(E)$<br>The run time of the Bellman-Ford algorithm is $O(V + VE + E) = O(VE)$.</li></ul><p><strong>Pseudo Code</strong>:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">BELLMAN-FORD(G,w,s)</span><br><span class="line">  INITIALIZE-SINGLE-SOURCE(G,s)</span><br><span class="line">  <span class="keyword">for</span> i = 1 to |G.V|-1                  <span class="comment"># the reason using V-1 is that assuming the maximum edges for the shortest path have the V-1 hops through that path </span></span><br><span class="line">     <span class="keyword">for</span> each edge (u,v) ∈ G.E          <span class="comment"># Note: the order of update for eadges is predifined and every iteration use the same order</span></span><br><span class="line">        RELAX(u,v,w)</span><br><span class="line">  <span class="keyword">for</span> each edge (u,v) ∈ G.E</span><br><span class="line">     <span class="keyword">if</span> v.d &gt; u.d + w(u,v)</span><br><span class="line">        <span class="built_in">return</span> FALSE            <span class="comment"># so no solution if detecting a negative circle</span></span><br><span class="line">  <span class="built_in">return</span> TRUE</span><br><span class="line"></span><br><span class="line">INITIALIZE-SINGLE-SOURCE(G,s)</span><br><span class="line">  <span class="keyword">for</span> each vertex v ∈ G.V</span><br><span class="line">     v.d = ∞</span><br><span class="line">     v.pi = NIL</span><br><span class="line">  s.d = 0</span><br><span class="line"></span><br><span class="line">RELAX(u,v,w)</span><br><span class="line">  <span class="keyword">if</span> v.d &gt; u.d + w(u,v)</span><br><span class="line">     v.d = u.d + w(u,v)</span><br><span class="line">     v.pi = u       <span class="comment"># pi is the predecessor</span></span><br></pre></td></tr></table></figure></p><p>Note that if the graph is a DAG (which means no cycles), we can make Bellman-Ford more efficient by first topologically sorting G ($O(V+E)$), performing the same initialization ($O(V)$), and then simply looping through each vertex u in topological order relaxing only the edges in Adj[u] ($O(E)$). This method only takes $O(V + E)$ time. </p><p><br></p><p>Reference:<br><a href="https://www.programiz.com/dsa/bellman-ford-algorithm" target="_blank" rel="noopener">https://www.programiz.com/dsa/bellman-ford-algorithm</a><br><a href="https://www-m9.ma.tum.de/graph-algorithms/spp-bellman-ford/index_en.html" target="_blank" rel="noopener">https://www-m9.ma.tum.de/graph-algorithms/spp-bellman-ford/index_en.html</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ul&gt;
+&lt;li&gt;Dijkstra doesn’t work for graphs with negative weight edges, Bellman-Ford works for such graphs. &lt;/li&gt;
+&lt;li&gt;Bellman-Ford is also sim
+      
+    
+    </summary>
+    
+    
+      <category term="Algorithm" scheme="http://tracyxinwang.site/blog/tags/Algorithm/"/>
+    
+      <category term="Learning" scheme="http://tracyxinwang.site/blog/tags/Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>MIT6006 Lec15 Shortest Paths I&amp;II Intro and Dijkstra</title>

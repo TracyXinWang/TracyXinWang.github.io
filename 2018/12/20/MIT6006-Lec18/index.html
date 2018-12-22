@@ -6,22 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://tracyxinwang.site/blog">
-  <title>Playing with Orange Pi - Setting up the system | Xin Wang&#39;s Blog</title>
+  <title>MIT6006 Lec18 Speeding up Dijkstra | Xin Wang&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="起因是这样的，想建一个本地的服务器，通过内网穿透的方法，让我在外边的时候也能接入到我实验室的电脑，下载资料或者拷数据。弼哥告诉我用树莓派或者其他的一些派就能做到，于是买了最便宜的香橙派，原因嘛，emm…自然是我喜欢吃橙子多过喜欢吃莓，并不是因为香橙派便宜（呵呵哒）。。。 本篇文章主要记录拿到香橙派之后的初始配置。 准备清单 Orange Pi PC 2: 来自淘宝 带HDMI的显示器: 用于初始设">
-<meta name="keywords" content="Linux,OrangePi">
+  <meta name="description" content="Bi-Directional Search Bidirectional search means to start search from both direction simutaneously. The reason to use bidirectional is that in many cases it is faster, it dramatically reduce the amoun">
+<meta name="keywords" content="Algorithm,Learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Playing with Orange Pi - Setting up the system">
-<meta property="og:url" content="http://tracyxinwang.site/blog/2018/09/27/OrangePi1/index.html">
+<meta property="og:title" content="MIT6006 Lec18 Speeding up Dijkstra">
+<meta property="og:url" content="http://tracyxinwang.site/blog/2018/12/20/MIT6006-Lec18/index.html">
 <meta property="og:site_name" content="Xin Wang&#39;s Blog">
-<meta property="og:description" content="起因是这样的，想建一个本地的服务器，通过内网穿透的方法，让我在外边的时候也能接入到我实验室的电脑，下载资料或者拷数据。弼哥告诉我用树莓派或者其他的一些派就能做到，于是买了最便宜的香橙派，原因嘛，emm…自然是我喜欢吃橙子多过喜欢吃莓，并不是因为香橙派便宜（呵呵哒）。。。 本篇文章主要记录拿到香橙派之后的初始配置。 准备清单 Orange Pi PC 2: 来自淘宝 带HDMI的显示器: 用于初始设">
+<meta property="og:description" content="Bi-Directional Search Bidirectional search means to start search from both direction simutaneously. The reason to use bidirectional is that in many cases it is faster, it dramatically reduce the amoun">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://tracyxinwang.site/blog/images/pi_1.jpg">
-<meta property="og:updated_time" content="2018-09-27T02:28:51.617Z">
+<meta property="og:updated_time" content="2018-12-22T06:53:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Playing with Orange Pi - Setting up the system">
-<meta name="twitter:description" content="起因是这样的，想建一个本地的服务器，通过内网穿透的方法，让我在外边的时候也能接入到我实验室的电脑，下载资料或者拷数据。弼哥告诉我用树莓派或者其他的一些派就能做到，于是买了最便宜的香橙派，原因嘛，emm…自然是我喜欢吃橙子多过喜欢吃莓，并不是因为香橙派便宜（呵呵哒）。。。 本篇文章主要记录拿到香橙派之后的初始配置。 准备清单 Orange Pi PC 2: 来自淘宝 带HDMI的显示器: 用于初始设">
-<meta name="twitter:image" content="http://tracyxinwang.site/blog/images/pi_1.jpg">
+<meta name="twitter:title" content="MIT6006 Lec18 Speeding up Dijkstra">
+<meta name="twitter:description" content="Bi-Directional Search Bidirectional search means to start search from both direction simutaneously. The reason to use bidirectional is that in many cases it is faster, it dramatically reduce the amoun">
   
     <link rel="alternative" href="/atom.xml" title="Xin Wang&#39;s Blog" type="application/atom+xml">
   
@@ -248,20 +246,20 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-OrangePi1" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-MIT6006-Lec18" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Playing with Orange Pi - Setting up the system
+      MIT6006 Lec18 Speeding up Dijkstra
     </h1>
   
 
         
-        <a href="/blog/2018/09/27/OrangePi1/" class="archive-article-date">
-  	<time datetime="2018-09-27T00:04:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-27</time>
+        <a href="/blog/2018/12/20/MIT6006-Lec18/" class="archive-article-date">
+  	<time datetime="2018-12-20T09:50:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-20</time>
 </a>
         
       </header>
@@ -271,7 +269,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备清单"><span class="toc-number">1.</span> <span class="toc-text">准备清单</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将操作系统写入TF卡"><span class="toc-number"></span> <span class="toc-text">将操作系统写入TF卡</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#操作系统的下载"><span class="toc-number">1.</span> <span class="toc-text">操作系统的下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作系统写入"><span class="toc-number">2.</span> <span class="toc-text">操作系统写入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动-Orange-Pi-并配置"><span class="toc-number"></span> <span class="toc-text">启动 Orange Pi 并配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#硬件连接"><span class="toc-number">1.</span> <span class="toc-text">硬件连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更改密码"><span class="toc-number">2.</span> <span class="toc-text">更改密码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置-SSH-登录"><span class="toc-number"></span> <span class="toc-text">设置 SSH 登录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看IP-并设置为固定IP"><span class="toc-number">1.</span> <span class="toc-text">查看IP 并设置为固定IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置SSH"><span class="toc-number">2.</span> <span class="toc-text">设置SSH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程登录"><span class="toc-number">3.</span> <span class="toc-text">远程登录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关闭-Orange-Pi"><span class="toc-number"></span> <span class="toc-text">关闭 Orange Pi</span></a>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bi-Directional-Search"><span class="toc-number">1.</span> <span class="toc-text">Bi-Directional Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Goal-directed-search-or-A"><span class="toc-number">2.</span> <span class="toc-text">Goal directed search or A*</span></a></li></ol>
             </div>
            -->
         <!--  
@@ -280,57 +278,27 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备清单"><span class="toc-text">准备清单</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将操作系统写入TF卡"><span class="toc-text">将操作系统写入TF卡</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#操作系统的下载"><span class="toc-text">操作系统的下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作系统写入"><span class="toc-text">操作系统写入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动-Orange-Pi-并配置"><span class="toc-text">启动 Orange Pi 并配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#硬件连接"><span class="toc-text">硬件连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更改密码"><span class="toc-text">更改密码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置-SSH-登录"><span class="toc-text">设置 SSH 登录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看IP-并设置为固定IP"><span class="toc-text">查看IP 并设置为固定IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置SSH"><span class="toc-text">设置SSH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程登录"><span class="toc-text">远程登录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关闭-Orange-Pi"><span class="toc-text">关闭 Orange Pi</span></a>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bi-Directional-Search"><span class="toc-text">Bi-Directional Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Goal-directed-search-or-A"><span class="toc-text">Goal directed search or A*</span></a></li></ol>
         </div>
     </div>
  -->
-        <p>起因是这样的，想建一个本地的服务器，通过内网穿透的方法，让我在外边的时候也能接入到我实验室的电脑，下载资料或者拷数据。弼哥告诉我用树莓派或者其他的一些派就能做到，于是买了最便宜的<a href="http://www.orangepi.cn/" target="_blank" rel="noopener">香橙派</a>，原因嘛，emm…自然是我喜欢吃橙子多过喜欢吃莓，并不是因为香橙派便宜（呵呵哒）。。。</p>
-<p>本篇文章主要记录拿到香橙派之后的初始配置。</p>
-<h3 id="准备清单"><a href="#准备清单" class="headerlink" title="准备清单"></a>准备清单</h3><ul>
-<li>Orange Pi PC 2: 来自淘宝</li>
-<li>带HDMI的显示器: 用于初始设置时候看</li>
-<li>带USB接口的键盘：开机需要用户名密码OK?</li>
-<li>网线</li>
-<li>圆孔那种电源线：我能说我买的这块板子不支持 Micro-USB 吗。。</li>
-<li>TF卡及读卡器</li>
+        <h3 id="Bi-Directional-Search"><a href="#Bi-Directional-Search" class="headerlink" title="Bi-Directional Search"></a>Bi-Directional Search</h3><ul>
+<li>Bidirectional search means to start search from both direction simutaneously.</li>
+<li>The reason to use bidirectional is that in many cases it is faster, it dramatically reduce the amount of required exploration.</li>
 </ul>
-<h2 id="将操作系统写入TF卡"><a href="#将操作系统写入TF卡" class="headerlink" title="将操作系统写入TF卡"></a>将操作系统写入TF卡</h2><p>新到的派是没有操作系统的，既然作为一个小主机，那必然是需要操作系统来支持的。整个过程大致是这样的，操作系统的镜像将会被拷入TF卡，然后将TF卡插入派里面，启动派就OK了。</p>
-<h3 id="操作系统的下载"><a href="#操作系统的下载" class="headerlink" title="操作系统的下载"></a>操作系统的下载</h3><p>操作系统是通过 <a href="https://www.openmediavault.org/" target="_blank" rel="noopener">openmediavault</a> 镜像下载的, 以下简称OMV。</p>
-<blockquote>
-<p>OMV 是个开源的基于Debian Linux的下一代网络附加存储(network attached storage (NAS))解决方案。(来自官网)<br>可用于家庭环境或小型的办公环境等场景。</p>
-</blockquote>
-<p>也就是说，我们可以直接下载这个OMV，它已经集成了Linux系统，并且还包含其他拓展，方便后续的使用。</p>
-<p>进入官网后，点击下载，因为我们是会讲它写入TF卡中，所以这里我们下载ISO镜像，<a href="https://sourceforge.net/projects/openmediavault/files/" target="_blank" rel="noopener">点进去</a>之后会发现有很多可适用的文件，点击第一个 “OMV 4.x for Single Board Computers”, <a href="https://sourceforge.net/projects/openmediavault/files/OMV%204.x%20for%20Single%20Board%20Computers/" target="_blank" rel="noopener">进去</a>之后会发现竟然有Orange Pi对应的安装包！找到那个 <code>OMV_4_Orange_Pi_PC_2.img.xz</code> 下载下来就好了。至此，操作系统下载部分完成。</p>
-<h3 id="操作系统写入"><a href="#操作系统写入" class="headerlink" title="操作系统写入"></a>操作系统写入</h3><p>下载完之后，就是要将该操作系统写入到TF卡中了。写入软件用的是 <a href="https://etcher.io/" target="_blank" rel="noopener">Etcher</a>, 没有什么特别的原因，就是简单，只有三步，多余的统统不要。。。 下载Etcher的安装包并安装好之后，打开该软件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Alternate forward search from s</span><br><span class="line">          backward search from t</span><br><span class="line">          (follow edges backward)</span><br><span class="line">df(u) distances <span class="keyword">for</span> forward search</span><br><span class="line">db(u) distances <span class="keyword">for</span> backward search</span><br></pre></td></tr></table></figure>
 <ul>
-<li>第一步是 <code>Select image</code>, 就选择刚刚下载的那个OMV的镜像</li>
-<li>第二步是 <code>Select drive</code>, 默认为你的TF卡已经插入电脑并且能看到，选择你的TF卡对应的盘，注意不要选错了。。选到自己电脑本身的盘的话就GG了。。。</li>
-<li>第三步就是 <code>Flash!</code>, 然后你就静等它写入并最后看到完成就好了。然后退出TF卡，放到Orange Pi对应的口中去。</li>
+<li>Algorithm terminates when some vertex w has been processed, i.e., deleted from the queue of both searches, $Q_f$ and $Q_b$</li>
+<li>Subtlety: After search terminates, find node x with minimum value of df(x) + db(x). x may not be the vertex w that caused termination as in example to the left!</li>
+<li>Find shortest path from s to x using $Π_f$ and shortest path backwards from t to x using $Πb$. Note: x will have been deleted from either $Q_f$ or $Q_b$ or both.</li>
 </ul>
-<p>这个过程中要注意的是，因为这个TF卡在被写入过程中是会被软件反复插拔的， windows 就会弹出一些提醒，不用管那些提醒，都叉掉。<br>至此操作系统写入部分完成。</p>
-<h2 id="启动-Orange-Pi-并配置"><a href="#启动-Orange-Pi-并配置" class="headerlink" title="启动 Orange Pi 并配置"></a>启动 Orange Pi 并配置</h2><h3 id="硬件连接"><a href="#硬件连接" class="headerlink" title="硬件连接"></a>硬件连接</h3><p>如下图：<br><img src="/blog/images/pi_1.jpg" width="50%" height="50%"></p>
-<ul>
-<li>电源是那个圆孔的</li>
-<li>HDMI接你的显示器</li>
-<li>USB那个接的键盘</li>
+<h3 id="Goal-directed-search-or-A"><a href="#Goal-directed-search-or-A" class="headerlink" title="Goal directed search or A*"></a>Goal directed search or A*</h3><ul>
+<li>A* Search algorithm is one of the best and popular technique used in path-finding and graph traversals.</li>
 </ul>
-<h3 id="更改密码"><a href="#更改密码" class="headerlink" title="更改密码"></a>更改密码</h3><p>接入显示器之后就看到出现一串关于OMV的一些东西，最下面是这个:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">orangepipc2 login:</span><br></pre></td></tr></table></figure></p>
-<p>这个即是要你输入用户名，初始用户名是 <code>root</code>，输入之后出现这个：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Password:</span><br></pre></td></tr></table></figure></p>
-<p>那就是要你输入密码了，初始密码为 <code>openmediavault</code>. 注意Linux系统下输入密码是不会显示的，自我感觉输完之后按回车就行了。然后会要求你更改初始密码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(current) UNIX password:</span><br><span class="line">Enter new UNIX password:</span><br><span class="line">Retype new UNIX password:</span><br></pre></td></tr></table></figure></p>
-<p>以此输入就可以了。接下来你就会看到一个大大的 <code>OrangePiPC2</code> 的字样。。接着一些Welcome和系统的基本配置信息，如内存，CPU等等<br>最下面是Linux的命令行界面了：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roo@orangepipc2:~<span class="comment"># _</span></span><br></pre></td></tr></table></figure></p>
-<p>这就表示你可以完全操作这个系统了</p>
-<h2 id="设置-SSH-登录"><a href="#设置-SSH-登录" class="headerlink" title="设置 SSH 登录"></a>设置 SSH 登录</h2><p>因为我们现在是接入显示器来看这个操作界面的，但是为了这么个小PC专门搞个显示器是有点不太合适的。Linux系统的一大好处就是可以通过SSH远程登录操作，所以这里记录设置SSH设置。</p>
-<h3 id="查看IP-并设置为固定IP"><a href="#查看IP-并设置为固定IP" class="headerlink" title="查看IP 并设置为固定IP"></a>查看IP 并设置为固定IP</h3><p>首先请插上网线。。。要远程登录，就需要主机的IP地址，插好网线后，输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip a</span><br></pre></td></tr></table></figure></p>
-<p>然后就能看到出来下面这种：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1: lo XXX</span><br><span class="line">2: eth0: XXX</span><br><span class="line">    link/ether XXX</span><br><span class="line">    inet 192.168.3.78/24 brd XXX</span><br><span class="line">    inet6 XXX</span><br></pre></td></tr></table></figure></p>
-<p>XXX 是省略的内容。。。那个<code>eth0</code>下面的<code>inet</code>后面的就是派的ip地址了。由于这个IP是动态的，加入哪天这个IP变了，那我们就SSH不上了，所以最好是设置一个静态的IP，步骤如下：<br>输入：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/network/interfaces</span><br></pre></td></tr></table></figure></p>
-<p>然后就会打开一个文件，找到如下字行并修改：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">iface eth0 inet static</span><br><span class="line">address 193.168.3.222</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.3.1</span><br></pre></td></tr></table></figure></p>
-<p>即改为static 的，同时改下面的地址为你想要的网址，子网掩码，网关都设置为跟你目前所在的局域网对应<strong>一致</strong>就行了。<br>更改好之后，按住 <code>ctrl+x</code> 就能退出编辑页面了，然后会提示你是否保存，输入<code>Y</code>再回车就好了。一定不要把文件名改了！直接回车！<br>更改网络之后需要重启主机才能生效，输入 <code>reboot</code> 就好了</p>
-<h3 id="设置SSH"><a href="#设置SSH" class="headerlink" title="设置SSH"></a>设置SSH</h3><p>正常情况下，linux是不会让远程登录的，所以需要更改配置。输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure></p>
-<p>找到下面有个 <code>PermitRootLogin</code>, 更改为<code>yes</code>，表明你可以以root身份进入系统，当然这样做是很冒险的，最好的办法是新建一个账户，通过那个账户来远程登录，但是目前基础版的话我就这样设置了。改完之后 <code>ctrl+x</code> 并保存就好了，然后重启ssh 服务：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service ssh restart</span><br></pre></td></tr></table></figure></p>
-<h3 id="远程登录"><a href="#远程登录" class="headerlink" title="远程登录"></a>远程登录</h3><p>设置完ssh就该来试试远程登录的效果了！在我Windows下，我用的是 <a href="https://mobaxterm.mobatek.net/" target="_blank" rel="noopener">MobaXterm</a> 软件来登录的，当然传统的<code>WinSCP</code>, <code>Putty</code> 都是可以的。<br>打开MobaXterm软件，点击<code>New session</code>, <code>Remote host</code>输入派的IP:192.168.3.222, 勾选<code>Specify name</code> 并写上 <code>root</code>, <code>Port</code>口保持22不变。然后就可以接入了，需要你输入密码，之后就能远程控制了！</p>
-<p>需要主要的是，如果遇到 <code>Access denied</code> 情况，那就可能是SSH那里没有更改对，或者密码跟用户名不对应。<br>前面说了，最安全的方法是新建一个账户，用这个账户登，这样的话，这里的name就应该是那个账户名，密码也应该是那个密码。</p>
-<h2 id="关闭-Orange-Pi"><a href="#关闭-Orange-Pi" class="headerlink" title="关闭 Orange Pi"></a>关闭 Orange Pi</h2><p>在shell 里面直接输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo shutdown -h now</span><br></pre></td></tr></table></figure></p>
-<p>Reference:<br><a href="http://www.orangepi.cn/quickstartcn/startcn_2e17631567a387efd2a3d252fa79.html" target="_blank" rel="noopener">Orange Pi website</a><br><a href="https://www.instructables.com/id/Orange-Pi-Plus-2-Armbian/" target="_blank" rel="noopener">https://www.instructables.com/id/Orange-Pi-Plus-2-Armbian/</a></p>
+<p>Modify edge weights with potential function over vertices.<br>$$\bar w(u,v) = w(u,v) - \lambda (u) + \lambda (v)$$</p>
+<p>For A* algorithm, one of the item is the real distance, another one is heuristic distance, which can be manhattan, eucliean or other distance. </p>
+<p><br></p>
+<p>Reference:<br><a href="https://www.geeksforgeeks.org/a-search-algorithm/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/a-search-algorithm/</a></p>
 
       
 
@@ -375,11 +343,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">OrangePi</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
         		</li>
       		
 		</ul>
@@ -435,7 +403,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://tracyxinwang.site/blog/2018/09/27/OrangePi1/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://tracyxinwang.site/blog/2018/12/20/MIT6006-Lec18/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -449,18 +417,9 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/blog/2018/09/27/SMB-Samba/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Ubuntu与Windows共享资源
-        
-      </div>
-    </a>
   
-  
-    <a href="/blog/2018/09/25/My-First-Post/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">My First Post - 献给Hexo</div>
+    <a href="/blog/2018/12/20/MIT6006-Lec17/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MIT6006 Lec17 Bellman-Ford algorithm</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -487,7 +446,7 @@ var _hmt = _hmt || [];
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备清单"><span class="toc-number">1.</span> <span class="toc-text">准备清单</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将操作系统写入TF卡"><span class="toc-number"></span> <span class="toc-text">将操作系统写入TF卡</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#操作系统的下载"><span class="toc-number">1.</span> <span class="toc-text">操作系统的下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作系统写入"><span class="toc-number">2.</span> <span class="toc-text">操作系统写入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动-Orange-Pi-并配置"><span class="toc-number"></span> <span class="toc-text">启动 Orange Pi 并配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#硬件连接"><span class="toc-number">1.</span> <span class="toc-text">硬件连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更改密码"><span class="toc-number">2.</span> <span class="toc-text">更改密码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置-SSH-登录"><span class="toc-number"></span> <span class="toc-text">设置 SSH 登录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看IP-并设置为固定IP"><span class="toc-number">1.</span> <span class="toc-text">查看IP 并设置为固定IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置SSH"><span class="toc-number">2.</span> <span class="toc-text">设置SSH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程登录"><span class="toc-number">3.</span> <span class="toc-text">远程登录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关闭-Orange-Pi"><span class="toc-number"></span> <span class="toc-text">关闭 Orange Pi</span></a>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bi-Directional-Search"><span class="toc-number">1.</span> <span class="toc-text">Bi-Directional Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Goal-directed-search-or-A"><span class="toc-number">2.</span> <span class="toc-text">Goal directed search or A*</span></a></li></ol>
                     </div>
                 </span>
             </div>

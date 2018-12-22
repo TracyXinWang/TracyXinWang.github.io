@@ -247,6 +247,215 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-MIT6006-Lec18" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/12/20/MIT6006-Lec18/">MIT6006 Lec18 Speeding up Dijkstra</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/12/20/MIT6006-Lec18/" class="archive-article-date">
+  	<time datetime="2018-12-20T09:50:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bi-Directional-Search"><span class="toc-number">1.</span> <span class="toc-text">Bi-Directional Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Goal-directed-search-or-A"><span class="toc-number">2.</span> <span class="toc-text">Goal directed search or A*</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bi-Directional-Search"><span class="toc-text">Bi-Directional Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Goal-directed-search-or-A"><span class="toc-text">Goal directed search or A*</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="Bi-Directional-Search"><a href="#Bi-Directional-Search" class="headerlink" title="Bi-Directional Search"></a>Bi-Directional Search</h3><ul>
+<li>Bidirectional search means to start search from both direction simutaneously.</li>
+<li>The reason to use bidirectional is that in many cases it is faster, it dramatically reduce the amount of required exploration.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Alternate forward search from s</span><br><span class="line">          backward search from t</span><br><span class="line">          (follow edges backward)</span><br><span class="line">df(u) distances <span class="keyword">for</span> forward search</span><br><span class="line">db(u) distances <span class="keyword">for</span> backward search</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Algorithm terminates when some vertex w has been processed, i.e., deleted from the queue of both searches, $Q_f$ and $Q_b$</li>
+<li>Subtlety: After search terminates, find node x with minimum value of df(x) + db(x). x may not be the vertex w that caused termination as in example to the left!</li>
+<li>Find shortest path from s to x using $Π_f$ and shortest path backwards from t to x using $Πb$. Note: x will have been deleted from either $Q_f$ or $Q_b$ or both.</li>
+</ul>
+<h3 id="Goal-directed-search-or-A"><a href="#Goal-directed-search-or-A" class="headerlink" title="Goal directed search or A*"></a>Goal directed search or A*</h3><ul>
+<li>A* Search algorithm is one of the best and popular technique used in path-finding and graph traversals.</li>
+</ul>
+<p>Modify edge weights with potential function over vertices.<br>$$\bar w(u,v) = w(u,v) - \lambda (u) + \lambda (v)$$</p>
+<p>For A* algorithm, one of the item is the real distance, another one is heuristic distance, which can be manhattan, eucliean or other distance. </p>
+<p><br></p>
+<p>Reference:<br><a href="https://www.geeksforgeeks.org/a-search-algorithm/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/a-search-algorithm/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/12/20/MIT6006-Lec18/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-MIT6006-Lec17" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/12/20/MIT6006-Lec17/">MIT6006 Lec17 Bellman-Ford algorithm</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/12/20/MIT6006-Lec17/" class="archive-article-date">
+  	<time datetime="2018-12-20T08:50:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              
+            </div>
+           -->
+        <!--   -->
+        <ul>
+<li>Dijkstra doesn’t work for graphs with negative weight edges, Bellman-Ford works for such graphs. </li>
+<li>Bellman-Ford is also simpler than Dijkstra and suites well for distributed systems. </li>
+<li>But time complexity of Bellman-Ford is $O(VE)$, which is more than Dijkstra.</li>
+</ul>
+<p><strong>Steps</strong></p>
+<ul>
+<li>Initialize d’s, π’s, and set s.d = 0 ⇒ $O(V)$</li>
+<li>Loop |V|-1 times through all edges checking the relaxation condition to compute minimum distances ⇒ $(|V|-1) O(E) = O(VE)$</li>
+<li>Loop through all edges checking for negative weight cycles which occurs if any of the relaxation conditions fail ⇒ $O(E)$<br>The run time of the Bellman-Ford algorithm is $O(V + VE + E) = O(VE)$.</li>
+</ul>
+<p><strong>Pseudo Code</strong>:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">BELLMAN-FORD(G,w,s)</span><br><span class="line">  INITIALIZE-SINGLE-SOURCE(G,s)</span><br><span class="line">  <span class="keyword">for</span> i = 1 to |G.V|-1                  <span class="comment"># the reason using V-1 is that assuming the maximum edges for the shortest path have the V-1 hops through that path </span></span><br><span class="line">     <span class="keyword">for</span> each edge (u,v) ∈ G.E          <span class="comment"># Note: the order of update for eadges is predifined and every iteration use the same order</span></span><br><span class="line">        RELAX(u,v,w)</span><br><span class="line">  <span class="keyword">for</span> each edge (u,v) ∈ G.E</span><br><span class="line">     <span class="keyword">if</span> v.d &gt; u.d + w(u,v)</span><br><span class="line">        <span class="built_in">return</span> FALSE            <span class="comment"># so no solution if detecting a negative circle</span></span><br><span class="line">  <span class="built_in">return</span> TRUE</span><br><span class="line"></span><br><span class="line">INITIALIZE-SINGLE-SOURCE(G,s)</span><br><span class="line">  <span class="keyword">for</span> each vertex v ∈ G.V</span><br><span class="line">     v.d = ∞</span><br><span class="line">     v.pi = NIL</span><br><span class="line">  s.d = 0</span><br><span class="line"></span><br><span class="line">RELAX(u,v,w)</span><br><span class="line">  <span class="keyword">if</span> v.d &gt; u.d + w(u,v)</span><br><span class="line">     v.d = u.d + w(u,v)</span><br><span class="line">     v.pi = u       <span class="comment"># pi is the predecessor</span></span><br></pre></td></tr></table></figure></p>
+<p>Note that if the graph is a DAG (which means no cycles), we can make Bellman-Ford more efficient by first topologically sorting G ($O(V+E)$), performing the same initialization ($O(V)$), and then simply looping through each vertex u in topological order relaxing only the edges in Adj[u] ($O(E)$). This method only takes $O(V + E)$ time. </p>
+<p><br></p>
+<p>Reference:<br><a href="https://www.programiz.com/dsa/bellman-ford-algorithm" target="_blank" rel="noopener">https://www.programiz.com/dsa/bellman-ford-algorithm</a><br><a href="https://www-m9.ma.tum.de/graph-algorithms/spp-bellman-ford/index_en.html" target="_blank" rel="noopener">https://www-m9.ma.tum.de/graph-algorithms/spp-bellman-ford/index_en.html</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/12/20/MIT6006-Lec17/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-MIT6006-Lec15" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1924,277 +2133,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-MIT6006-Lec10" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/22/MIT6006-Lec10/">MIT6006 Lec10 Hashing III Open Addressing</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/11/22/MIT6006-Lec10/" class="archive-article-date">
-  	<time datetime="2018-11-21T23:38:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Open-addressing"><span class="toc-number">1.</span> <span class="toc-text">Open addressing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Probing-strategies"><span class="toc-number">2.</span> <span class="toc-text">Probing strategies</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Uniform-Hashing-Assumption"><span class="toc-number">3.</span> <span class="toc-text">Uniform Hashing Assumption</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Open-Addressing-vs-Chaining"><span class="toc-number">3.1.</span> <span class="toc-text">Open Addressing vs. Chaining</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cryptographic-Hashing"><span class="toc-number">4.</span> <span class="toc-text">Cryptographic Hashing</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Open-addressing"><span class="toc-text">Open addressing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Probing-strategies"><span class="toc-text">Probing strategies</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Uniform-Hashing-Assumption"><span class="toc-text">Uniform Hashing Assumption</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Open-Addressing-vs-Chaining"><span class="toc-text">Open Addressing vs. Chaining</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cryptographic-Hashing"><span class="toc-text">Cryptographic Hashing</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="Open-addressing"><a href="#Open-addressing" class="headerlink" title="Open addressing"></a>Open addressing</h3><ul>
-<li>is another approach to solve collisions</li>
-<li>no chaining; instead, all items stored in table</li>
-<li>one item per slot ⇒ $m ≥ n$</li>
-<li><strong>hash function</strong> will specify the order of slots to probe (try) for a key (for insert/search/delete), not just one slot. (since when collision occurs, you need to have further trials to find an spare slot)</li>
-<li>in math notation: to design a function $h$, with the property that for all $k ∈ U$:<ul>
-<li>the universe of keys $\times$ trial count, mapps to the slot in table<br>$$h: U \times \{0,1,…,m-1\} \to \{0,1,…,m-1\}$$</li>
-</ul>
-</li>
-<li>$\langle h(k, 0), h(k, 1), . . . , h(k, m − 1)\rangle$ is a permutation of 0, 1, …, m − 1. That means if keep trying h(k, i) for increasing i, we will eventually hit all slots of the table.</li>
-</ul>
-<p>Operations are as follows:</p>
-<ul>
-<li><strong>Insert(k,v)</strong>: Keep probing until an empty slot is found. Insert item into that slot.</li>
-<li><strong>Search(k)</strong>: As long as the slots you encounter by probing are occupied by keys = k, keep probing until you either encounter k or find an empty slot—return success or failure respectively.</li>
-<li><strong>Deleting Items</strong>: rather than setting none in the slot of the deleted item, replace it with special flag: “DeleteMe”, which <em>Insert</em> treats as None but <em>Search</em> doesn’t</li>
-</ul>
-<h3 id="Probing-strategies"><a href="#Probing-strategies" class="headerlink" title="Probing strategies"></a>Probing strategies</h3><p><strong>Linear Probing</strong><br>$h(k, i) = (h’(k) +i)\; mod\; m$ where h’(k) is ordinary hash function</p>
-<p>But have a problem: clustering—cluster: consecutive group of occupied slots as clusters become longer, it gets more likely to grow further.</p>
-<p><strong>Double Hashing</strong><br>$h(k, i) =(h_1(k) +i·h_2(k)) \; mod\; m$ where $h_1(k)$ and $h_2(k)$ are two ordinary hash functions.</p>
-<ul>
-<li>actually hit all slots (permutation) if $h_2(k)$ is relatively prime to m for all k</li>
-</ul>
-<h3 id="Uniform-Hashing-Assumption"><a href="#Uniform-Hashing-Assumption" class="headerlink" title="Uniform Hashing Assumption"></a>Uniform Hashing Assumption</h3><ul>
-<li>is not Simple Uniform Hashing Assumption</li>
-<li>Each key is equally likely to have any one of the m! permutations as its probe sequence(not really true, but double hashing can come close)</li>
-</ul>
-<h4 id="Open-Addressing-vs-Chaining"><a href="#Open-Addressing-vs-Chaining" class="headerlink" title="Open Addressing vs. Chaining"></a>Open Addressing vs. Chaining</h4><ul>
-<li>Open Addressing: better cache performance (better memory usage, no pointers needed)</li>
-<li>Chaining: less sensitive to hash functions (OA requires extra care to avoid clustering) and the load factor α (OA degrades past 70% or so and in any event cannot support values larger than 1)</li>
-</ul>
-<h3 id="Cryptographic-Hashing"><a href="#Cryptographic-Hashing" class="headerlink" title="Cryptographic Hashing"></a>Cryptographic Hashing</h3><p><br></p>
-<p>A demo of different probng tsrategies can be found <a href="https://www.cse.cuhk.edu.hk/irwin.king/_media/teaching/csc2100b/tu6.pdf" target="_blank" rel="noopener">here</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/22/MIT6006-Lec10/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MIT6006-Lec09" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/19/MIT6006-Lec09/">MIT6006 Lec09 Hashing II</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/11/19/MIT6006-Lec09/" class="archive-article-date">
-  	<time datetime="2018-11-18T21:36:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Table-Resizing-and-Amortization"><span class="toc-number">1.</span> <span class="toc-text">Table Resizing and Amortization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#String-Matching-and-Karp-Rabin"><span class="toc-number">2.</span> <span class="toc-text">String Matching and Karp-Rabin</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Karp-Rabin-Algorithm"><span class="toc-number">2.1.</span> <span class="toc-text">Karp-Rabin Algorithm</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rolling-Hash"><span class="toc-number">3.</span> <span class="toc-text">Rolling Hash</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Table-Resizing-and-Amortization"><span class="toc-text">Table Resizing and Amortization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#String-Matching-and-Karp-Rabin"><span class="toc-text">String Matching and Karp-Rabin</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Karp-Rabin-Algorithm"><span class="toc-text">Karp-Rabin Algorithm</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rolling-Hash"><span class="toc-text">Rolling Hash</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="Table-Resizing-and-Amortization"><a href="#Table-Resizing-and-Amortization" class="headerlink" title="Table Resizing and Amortization"></a>Table Resizing and Amortization</h3><p>In ‘Hashing I’, we know that we will create a hash table with chaining to save the data. The size of the table is <code>m</code>, which is smaller than <code>n</code>, the number of keys(data). But then one problem comes, how to choose <code>m</code>? the size of the table. </p>
-<ul>
-<li>want $m=\theta(n)$ at all times.</li>
-<li>but don’t know how large n will get at creation</li>
-<li>if m is too small ⇒ slow; m too big ⇒ wasteful</li>
-</ul>
-<p>The idea is to start small (constant) and grow (or shrink) as necessary.</p>
-<p><strong>Rehashing</strong><br>When n reaches m, grow the table.</p>
-<ul>
-<li>If grow the table by <code>m+=1</code><ul>
-<li>need to rebuild every step</li>
-<li>n inserts cost $Θ(1+2+ \cdots +n) = Θ(n2)$</li>
-</ul>
-</li>
-<li>If grow the table by <code>m ∗ =2</code><ul>
-<li>just to rebuild at insertion $2^i$</li>
-<li>n inserts cost $Θ(1+2+4+8+ \cdots +n)$ where n is really the next power of $2=Θ(n)$ (This is called table doubling)</li>
-</ul>
-</li>
-</ul>
-<p><strong>Pseudo code</strong><br><em>Insert</em>:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># m is the size of the table, n is the number of the elements in that table</span></span><br><span class="line"><span class="keyword">function</span> Insert(x, A, m, n)</span><br><span class="line">    <span class="keyword">if</span> (n = m) <span class="keyword">then</span></span><br><span class="line">        Create new array A2 with size 2m;</span><br><span class="line">        <span class="keyword">for</span> i ← 1 to m <span class="keyword">do</span></span><br><span class="line">            A2[i] ← A[i];</span><br><span class="line">        end</span><br><span class="line">        Replace array A with A2;</span><br><span class="line">        m ← 2m;</span><br><span class="line">    end</span><br><span class="line">    n ← n + 1;</span><br><span class="line">    A[n] ← x;</span><br></pre></td></tr></table></figure></p>
-<p><em>Delete</em>:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> Delete(x, A, m, n)</span><br><span class="line">    x ← A[n];</span><br><span class="line">    n ← n − 1;</span><br><span class="line">    <span class="keyword">if</span> (n ≤ m/4) and (m ≥ 4) <span class="keyword">then</span></span><br><span class="line">        Create new array A2 with size m/2;</span><br><span class="line">        <span class="keyword">for</span> i ← 1 to n <span class="keyword">do</span></span><br><span class="line">            A2[i] ← A[i];</span><br><span class="line">        end</span><br><span class="line">        Replace array A with A2;</span><br><span class="line">        m ← m/2;</span><br><span class="line">    end</span><br></pre></td></tr></table></figure></p>
-<p><strong>Amortization</strong></p>
-<ul>
-<li>operation has amortized cost $T(n)$ if $k$ operations cost $≤ k · T(n)$</li>
-<li>“T(n) amortized” roughly means T(n) “on average”, but averaged over all operations.</li>
-<li>e.g. inserting into a hash table takes O(1) amortized time.</li>
-</ul>
-<h3 id="String-Matching-and-Karp-Rabin"><a href="#String-Matching-and-Karp-Rabin" class="headerlink" title="String Matching and Karp-Rabin"></a>String Matching and Karp-Rabin</h3><p>Given two strings s and t, does s occur as a substring of t? </p>
-<p><strong>Simple Algorithm</strong><br>any(s == t[i : i + len(s)] for i in range(len(t) − len(s)))<br>— O(|s|) time for each substring comparison<br>⇒ O(|s| · (|t| − |s|)) time<br>= O(|s| · |t|)<br>potentially quadratic</p>
-<h4 id="Karp-Rabin-Algorithm"><a href="#Karp-Rabin-Algorithm" class="headerlink" title="Karp-Rabin Algorithm"></a>Karp-Rabin Algorithm</h4><ul>
-<li>Compare h(s) == h(t[i : i + len(s)])</li>
-<li>If hash values match, likely so do strings<ul>
-<li>can check s == t[i : i + len(s)] to be sure ∼ cost $O(|s|)$</li>
-<li>if yes, found match — done</li>
-<li>if no, happened with probability &lt; $\frac 1{|s|}$ ⇒ expected cost is $O(1)$ per i.</li>
-</ul>
-</li>
-<li>need suitable hash function.</li>
-<li>expected time = O(|s| + |t| · cost(h)).<ul>
-<li>naively h(x) costs |x|</li>
-<li>we’ll achieve O(1)!</li>
-<li>idea: t[i : i + len(s)] ≈ t[i + 1 : i + 1 + len(s)]</li>
-</ul>
-</li>
-</ul>
-<p>So using Rabin Karp algorithm needs to calculate hash values for strings first. The hash function suggested by Rabin and Karp calculates an integer value. The integer value for a string is numeric value of a string. </p>
-<h3 id="Rolling-Hash"><a href="#Rolling-Hash" class="headerlink" title="Rolling Hash"></a>Rolling Hash</h3><p>The idea is to compute the hash value of a substring using the hash value of previous substring if you use the right hash function. A polynomial with the string characters as coefficients works well. </p>
-<p>Let the following be the hash function for string c:<br>$$H(c) = c[0]a^{n-1} + c[1]a^{n-2} + \cdots + c[n-1]$$<br>All the operations will be done modulo a prime number so that we don’t have to deal with large integers.</p>
-<p>List an example for calculating the hash value for a string:<br>$$H(S[i+1 … i+n]) = S[i+1]a^{n-1} + S[i+2]a^{n-2} + … + S[i+n]$$<br>where n is the length of the string that we want to match<br>By adding and substracting $S[i]a^n$, get $$a(S[i]a^{n-1} + S[i+1]a^{n-2} + S[i+2]a^{n-3} + … + S[i+n-1]) + S[i+n] = aH(S[i … i+n-1]) - S[i]a^n + S[i+n]$$</p>
-<p><br></p>
-<p>Reference:<br><a href="http://web.cse.ohio-state.edu/~rademacher.10/Sp16_2331/datastructII.pdf" target="_blank" rel="noopener">http://web.cse.ohio-state.edu/~rademacher.10/Sp16_2331/datastructII.pdf</a><br><a href="https://www.geeksforgeeks.org/rabin-karp-algorithm-for-pattern-searching/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/rabin-karp-algorithm-for-pattern-searching/</a><br><a href="https://www.infoarena.ro/blog/rolling-hash" target="_blank" rel="noopener">https://www.infoarena.ro/blog/rolling-hash</a><br><a href="https://brilliant.org/wiki/rabin-karp-algorithm/" target="_blank" rel="noopener">https://brilliant.org/wiki/rabin-karp-algorithm/</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/19/MIT6006-Lec09/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/2/">Next &raquo;</a>
@@ -2226,7 +2164,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共33.9k字
+              本站总共34.5k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -2349,19 +2287,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂文</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂文</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2373,15 +2311,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+                <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2389,7 +2323,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2398,6 +2332,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
               </li>
             
             <div class="clearfix"></div>
