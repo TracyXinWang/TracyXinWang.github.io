@@ -2,10 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/12/20/MIT6006-Lec18/</loc>
-    <lastmod>2018-12-22T06:53:00.000Z</lastmod>
+    <lastmod>2018-12-22T07:33:45.962Z</lastmod>
   </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/12/20/MIT6006-Lec17/</loc>
-    <lastmod>2018-12-20T06:41:24.000Z</lastmod>
+    <lastmod>2018-12-22T07:31:38.573Z</lastmod>
   </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/12/10/MIT6006-Lec15/</loc>
     <lastmod>2018-12-14T05:19:11.475Z</lastmod>

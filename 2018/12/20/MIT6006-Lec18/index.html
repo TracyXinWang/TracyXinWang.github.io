@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Xin Wang&#39;s Blog">
 <meta property="og:description" content="Bi-Directional Search Bidirectional search means to start search from both direction simutaneously. The reason to use bidirectional is that in many cases it is faster, it dramatically reduce the amoun">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-22T06:53:00.000Z">
+<meta property="og:updated_time" content="2018-12-22T07:33:45.962Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT6006 Lec18 Speeding up Dijkstra">
 <meta name="twitter:description" content="Bi-Directional Search Bidirectional search means to start search from both direction simutaneously. The reason to use bidirectional is that in many cases it is faster, it dramatically reduce the amoun">
@@ -287,10 +287,11 @@ var _hmt = _hmt || [];
 <li>The reason to use bidirectional is that in many cases it is faster, it dramatically reduce the amount of required exploration.</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Alternate forward search from s</span><br><span class="line">          backward search from t</span><br><span class="line">          (follow edges backward)</span><br><span class="line">df(u) distances <span class="keyword">for</span> forward search</span><br><span class="line">db(u) distances <span class="keyword">for</span> backward search</span><br></pre></td></tr></table></figure>
+<p>Note:</p>
 <ul>
 <li>Algorithm terminates when some vertex w has been processed, i.e., deleted from the queue of both searches, $Q_f$ and $Q_b$</li>
 <li>Subtlety: After search terminates, find node x with minimum value of df(x) + db(x). x may not be the vertex w that caused termination as in example to the left!</li>
-<li>Find shortest path from s to x using $Π_f$ and shortest path backwards from t to x using $Πb$. Note: x will have been deleted from either $Q_f$ or $Q_b$ or both.</li>
+<li>Find shortest path from s to x using $Π_f$ and shortest path backwards from t to x using $Π_b$. Note: x will have been deleted from either $Q_f$ or $Q_b$ or both.</li>
 </ul>
 <h3 id="Goal-directed-search-or-A"><a href="#Goal-directed-search-or-A" class="headerlink" title="Goal directed search or A*"></a>Goal directed search or A*</h3><ul>
 <li>A* Search algorithm is one of the best and popular technique used in path-finding and graph traversals.</li>
@@ -599,27 +600,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Brain</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">MRI</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -631,6 +616,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
               </li>
              
@@ -639,7 +636,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -647,11 +644,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -659,11 +656,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
+                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
               </li>
             
             <div class="clearfix"></div>
