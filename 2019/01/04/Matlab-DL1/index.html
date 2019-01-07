@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://tracyxinwang.site/blog">
-  <title>MIT6006 Lec04 Priority queue and Heap | Xin Wang&#39;s Blog</title>
+  <title>Deep learning in Matlab I | Xin Wang&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Priority Queues Defination: A data structure implementing a set S of elements, each associated with a key. Every element has its own key. And the key represents the priority of that element. Keys are">
-<meta name="keywords" content="Algorithm,Learning">
+  <meta name="description" content="Use pretrained network use imread function to import images: I = imread(&amp;#39;filename.png&amp;#39;); imshow to display an image:  imshow(I)  Make prediction  use alexnet function to create a copy of the p">
+<meta name="keywords" content="Matlab,Deep learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MIT6006 Lec04 Priority queue and Heap">
-<meta property="og:url" content="http://tracyxinwang.site/blog/2018/11/06/MIT6006-Lec04/index.html">
+<meta property="og:title" content="Deep learning in Matlab I">
+<meta property="og:url" content="http://tracyxinwang.site/blog/2019/01/04/Matlab-DL1/index.html">
 <meta property="og:site_name" content="Xin Wang&#39;s Blog">
-<meta property="og:description" content="Priority Queues Defination: A data structure implementing a set S of elements, each associated with a key. Every element has its own key. And the key represents the priority of that element. Keys are">
+<meta property="og:description" content="Use pretrained network use imread function to import images: I = imread(&amp;#39;filename.png&amp;#39;); imshow to display an image:  imshow(I)  Make prediction  use alexnet function to create a copy of the p">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-06T10:08:25.972Z">
+<meta property="og:updated_time" content="2019-01-07T03:07:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MIT6006 Lec04 Priority queue and Heap">
-<meta name="twitter:description" content="Priority Queues Defination: A data structure implementing a set S of elements, each associated with a key. Every element has its own key. And the key represents the priority of that element. Keys are">
+<meta name="twitter:title" content="Deep learning in Matlab I">
+<meta name="twitter:description" content="Use pretrained network use imread function to import images: I = imread(&amp;#39;filename.png&amp;#39;); imshow to display an image:  imshow(I)  Make prediction  use alexnet function to create a copy of the p">
   
     <link rel="alternative" href="/atom.xml" title="Xin Wang&#39;s Blog" type="application/atom+xml">
   
@@ -246,20 +246,20 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-MIT6006-Lec04" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Matlab-DL1" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      MIT6006 Lec04 Priority queue and Heap
+      Deep learning in Matlab I
     </h1>
   
 
         
-        <a href="/blog/2018/11/06/MIT6006-Lec04/" class="archive-article-date">
-  	<time datetime="2018-11-06T02:48:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-06</time>
+        <a href="/blog/2019/01/04/Matlab-DL1/" class="archive-article-date">
+  	<time datetime="2019-01-04T08:07:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
 </a>
         
       </header>
@@ -269,7 +269,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Priority-Queues"><span class="toc-number">1.</span> <span class="toc-text">Priority Queues</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap"><span class="toc-number">2.</span> <span class="toc-text">Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap-sort"><span class="toc-number">3.</span> <span class="toc-text">Heap sort</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-pretrained-network"><span class="toc-number">1.</span> <span class="toc-text">Use pretrained network</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Managing-Collections-of-Data"><span class="toc-number">2.</span> <span class="toc-text">Managing Collections of Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Performing-Transfer-Learning"><span class="toc-number">3.</span> <span class="toc-text">Performing Transfer Learning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-number">4.</span> <span class="toc-text">Summary</span></a></li></ol>
             </div>
            -->
         <!--  
@@ -278,80 +278,259 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Priority-Queues"><span class="toc-text">Priority Queues</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap"><span class="toc-text">Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap-sort"><span class="toc-text">Heap sort</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-pretrained-network"><span class="toc-text">Use pretrained network</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Managing-Collections-of-Data"><span class="toc-text">Managing Collections of Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Performing-Transfer-Learning"><span class="toc-text">Performing Transfer Learning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-text">Summary</span></a></li></ol>
         </div>
     </div>
  -->
-        <p><br></p>
-<h3 id="Priority-Queues"><a href="#Priority-Queues" class="headerlink" title="Priority Queues"></a>Priority Queues</h3><ul>
-<li>Defination: A data structure implementing a set S of elements, each associated with a <strong>key</strong>.</li>
-<li>Every element has its own key. And the key represents the priority of that element. Keys are not necessarily unique.</li>
-<li>It supports the following operations:<ul>
-<li><code>insert(S,x)</code>: insert element x into set S</li>
-<li><code>max(S)</code>: return element of S with largest key</li>
-<li><code>extract_max(S)</code>: return element of S with largest key and remove it from S</li>
-<li><code>increase_key(S,x,k)</code>: increase the value of element x’ s key to new value k (assumed to be as large as current value)</li>
+        <h3 id="Use-pretrained-network"><a href="#Use-pretrained-network" class="headerlink" title="Use pretrained network"></a>Use pretrained network</h3><ul>
+<li>use <code>imread</code> function to import images: <code>I = imread(&#39;filename.png&#39;);</code></li>
+<li><code>imshow</code> to display an image:  <code>imshow(I)</code></li>
 </ul>
-</li>
-</ul>
-<h3 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h3><ul>
-<li>Heap is an implementation of a priority queue</li>
-<li>is also an <strong>array</strong> visualized as a nearly complete <em>binary tree</em></li>
-<li>Heaps can be convert to max heap or min heap when sorting them.</li>
-<li><strong>Max heap</strong>: the key of a node is ≥ than the keys of its children. (analogously as min heap)</li>
-<li>Heap as a tree:<ul>
-<li>Root of the tree: the first element (i=1) in the array</li>
-<li>parent(i)=i/2: returns index of node’s parent</li>
-<li>left(i)=2i: returns index of node’s left child</li>
-<li>right(i)=2i+1: returns index of node’s right child</li>
-<li>The height of a binary heap is $O(lg n)$</li>
-</ul>
-</li>
-<li>Heap operations:<ul>
-<li><code>build_max_heap</code>: produce a max-heap from an unordered array</li>
-<li><code>max_heapify</code>: correct a single violation of the heap property in a subtree at its root</li>
-<li><code>insert</code>, <code>extract_max</code>, <code>heapsort</code></li>
-</ul>
-</li>
-</ul>
-<p><strong>Max_heapify</strong>: </p>
+<p><strong>Make prediction</strong></p>
 <ul>
-<li>the assumption is that the trees rooted at left(i) and right(i) are max-heaps. </li>
-<li>If element A[i] violates the max-heap property, correct violation by “trickling” element A[i] down the tree, making the subtree rooted at index i a max-heap.</li>
-<li>Pseudocode:  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">l = left(i)</span><br><span class="line">r = right(i)</span><br><span class="line"><span class="keyword">if</span> (l &lt;= heap-size(A) and A[l] &gt; A[i])</span><br><span class="line">    <span class="keyword">then</span> largest = l <span class="keyword">else</span> largest = i</span><br><span class="line"><span class="keyword">if</span> (r &lt;= heap-size(A) and A[r] &gt; A[largest])</span><br><span class="line">    <span class="keyword">then</span> largest = r</span><br><span class="line"><span class="keyword">if</span> largest != i</span><br><span class="line">    <span class="keyword">then</span> exchange A[i] and A[largest]</span><br><span class="line">Max_Heapify(A, largest)</span><br></pre></td></tr></table></figure>
-</li>
+<li>use <code>alexnet</code> function to create a copy of the predefined deep network “AlexNet” in the MATLAB workspace: <code>net = alexnet</code></li>
+<li>use <code>classify</code> function to make a prediction on an image: <code>pred = classify(net,img)</code></li>
 </ul>
-<p><strong>Build_Max_Heap</strong>:</p>
+<p><strong>CNN Architecture</strong></p>
 <ul>
-<li>Converts A[1…n] to a max heap</li>
-<li><p>Build_Max_Heap(A):</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i=n/2 downto 1</span><br><span class="line"><span class="keyword">do</span> Max_Heapify(A, i)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>The reason to start at n/2 is that element A[n/2+1 … n] are all leaves. There is no need to build max_heap for leaves which has only one element (its own).</p>
-</li>
-<li>Time costs: $O(nlog n)$ via simple analysis</li>
-<li>Observe however that Max_Heapify takes $O(1)$ for time for nodes that are one level above the leaves(叶子层的上一层，即倒数第二层)，$O(l)$ for the nodes that are $l$ levels above the leaves. There are n/4 nodes in level 1(即 倒数第二层), n/8 in level 2 (再往上的的一层) and so on till in $lg n$ level remains one root node.</li>
-<li>Therefore, the total amount of work in the for loop is (括号里面的是那一层的Node个数):<br>$$\frac n4(1c) + \frac n8 (2c) + \frac n{16} (3c) + … + 1(lgn c)$$</li>
-<li>set $\frac n4=2^k$简化上式可得：$c 2^k (\frac1{2^0}+\frac2{2^1}+\frac3{2^2}+ … + \frac{(k+1)}{2^k})$, 括号里面上界是个常数</li>
-<li>Therefore, Build_max_heap is $O(n)$</li>
+<li>use <code>Layers</code> property to inspect the layers of the network: <code>ly = net.Layers</code></li>
+<li>The <code>Layers</code> variable is an array of network layers. use array indexing to inspect an individual layer: <code>layer3 = ly(3)</code></li>
+<li>Each layer of the network has properties relevant to that type of layer. An important property for an input layer is <strong>InputSize</strong>, which is the size (dimensions) of images the network expects as input: <code>insz = inlayer.InputSize</code></li>
+<li>AlexNet requires an input image of size 227-by-227-by-3, meaning a color image 227 pixels high and 227 pixels wide.</li>
+<li>The <code>Classes</code> property of an output layer gives the names of the categories the network is trained to predict: <code>categorynames = outlayer.Classes</code></li>
 </ul>
-<h3 id="Heap-sort"><a href="#Heap-sort" class="headerlink" title="Heap sort"></a>Heap sort</h3><ul>
-<li>Sort strategy:<ol>
-<li>Build Max Heap from unordered array;</li>
-<li>Find maximum element A[1];</li>
-<li>Swap elements A[n] and A[1]: now max element is at the end of the array!</li>
-<li>Discard node n from heap (by decrementing heap-size variable)</li>
-<li>New root may violate max heap property, but its children are max heaps. Run max_heapify to fix this.</li>
-<li>Go to Step 2 unless heap is empty</li>
-</ol>
-</li>
-<li>Running time:<ul>
-<li>after n iterations the Heap is empty</li>
-<li>every iteration involves a swap and a max_heapify operation; hence it takes O(log n) time</li>
-<li>Overall $O(nlog n)$</li>
+<p><strong>Investigating Predictions</strong></p>
+<ul>
+<li><code>classify</code> function gives the class to which the network assigns the <em>highest</em> score. </li>
+<li>We can obtain the predicted scores for all the classes by requesting a second output from classify: <code>[pred,scrs] = classify(net,img)</code></li>
+<li>need to set threshold for the final prediction propability to have a better view of the prediction. e.g. set the threshold of one standard deviation above the median score: <code>thresh = median(scores) + std(scores);</code></li>
+</ul>
+<h3 id="Managing-Collections-of-Data"><a href="#Managing-Collections-of-Data" class="headerlink" title="Managing Collections of Data"></a>Managing Collections of Data</h3><p><strong>Image Datastore</strong></p>
+<ul>
+<li>use the <code>imageDatastore</code> function to create a datastore in MATLAB for later use of image classification: <code>ds = imageDatastore(&#39;foo*.png&#39;)</code></li>
+<li>use the <code>read</code>, <code>readimage</code>, and <code>readall</code> functions to read images:<ul>
+<li><code>read</code> imports images one at a time, in order; </li>
+<li><code>readimage</code> imports a single specific image: <code>I = readimage(ds,n)</code></li>
+<li><code>readall</code> imports all the images into a single cell array (with each image in a separate cell).</li>
 </ul>
 </li>
-<li>A nice demo here: <a href="https://www.geeksforgeeks.org/heap-sort/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/heap-sort/</a></li>
+<li>can use an image datastore in place of an individual image in CNN functions such as classify: <code>preds = classify(net,ds)</code>. The result will be an array of predicted classes, one for each image in the datastore.</li>
+</ul>
+<p><strong>Prepare Images</strong></p>
+<ul>
+<li>can use the <code>InputSize</code> property of input layer to see what is the expected image size: <code>expectedSize = inlayer.InputSize</code></li>
+<li>use <code>imresize</code> function to resize an image to match the expected input size: <code>imgresz = imresize(img,[numrows numcols]);</code></li>
+</ul>
+<p><strong>Preprocessing Images in a Datastore</strong></p>
+<ul>
+<li>to perform the same preprocessing steps on the entire data set, which is more efficient </li>
+<li>use <code>augmentedImageDatastore</code> function to perform basic preprocessing: <code>auds = augmentedImageDatastore([r c],imds)</code>, r, c are the expected image size</li>
+<li>use <code>montage</code> function to display the images in the datastore: <code>montage(imds)</code></li>
+<li>use ‘ColorPreprocessing’ option to convert these images to a 3-D array: <code>auds = augmentedImageDatastore([n m],imds,&#39;ColorPreprocessing&#39;,&#39;gray2rgb&#39;)</code><ul>
+<li>This will replicate the grayscale image three times to create a 3-D array.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Create Datasore Uisng Subfolders</strong></p>
+<ul>
+<li>use the <code>IncludeSubfolders</code> option to look for images within subfolders of the given folder: <code>ds = imageDatastore(&#39;folder&#39;,&#39;IncludeSubfolders&#39;,true)</code></li>
+</ul>
+<h3 id="Performing-Transfer-Learning"><a href="#Performing-Transfer-Learning" class="headerlink" title="Performing Transfer Learning"></a>Performing Transfer Learning</h3><p><strong>The benefits of transfer learning</strong></p>
+<ul>
+<li>It is extremely easy to get started using a pretrained network like AlexNet. But you have no flexibility in the way the network operates, and the network probably won’t solve the exact problem you are trying to solve.</li>
+<li>You can build and train a network yourself, starting with just the network architecture and random weights. But achieving reasonable results requires a lot of effort: (1) knowledge and experience with network architecture, (2) a huge amount of training data, and (3) a lot of computer time.</li>
+<li>Transfer learning is an efficient solution for many problems. Training requires some data and computer time, but much less than training from scratch, and the result is a network suited to your specific problem.</li>
+</ul>
+<p><strong>Components of transfer learning</strong></p>
+<ul>
+<li>Network layers of the pretrained network, which serves as the starting point</li>
+<li>Training data</li>
+<li>Algorithms options: batch size, max iteration, learning rate</li>
+</ul>
+<p><strong>Prepare Training Data</strong></p>
+<ul>
+<li>Importing labels:<ul>
+<li>The labels needed for training can be stored in the <code>Labels</code> property of the image datastore. By default, the <code>Labels</code> property is empty.</li>
+<li>We can have the datastore automatically determine the labels from the folder names by specifying the <code>LabelSource</code> option: <code>ds = imageDatastore(folder,&#39;IncludeSubfolders&#39;,true,&#39;LabelSource&#39;,&#39;foldernames&#39;)</code></li>
+</ul>
+</li>
+<li>Split the data:<ul>
+<li>use the <code>splitEachLabel</code> function to divide the images in a datastore into two separate datastores: <code>[ds1,ds2] = splitEachLabel(imds,p)</code>, p is the proportion of images with each label from <code>imds</code> that should be contained in <code>ds1</code>.</li>
+<li>By default, <code>splitEachLabel</code> keeps the files in order. We can randomly shuffle the files by adding the optional <code>randomized</code> flag: <code>[ds1,ds2] = splitEachLabel(imds,p,&#39;randomized&#39;)</code></li>
+<li>To avoid the unbalanced classes in training dataset, we can also specify an exact number of files to take from each label to assign to ds1: <code>[ds1,ds2] = splitEachLabel(imds,n)</code>.</li>
+<li>This ensures that every label in <code>ds1</code> has <code>n</code> images, even if the categories do not all contain the same number of images.</li>
+<li>We can also split your data into three sets: training, validation during training, and testing. This can be made by specifying multiple values of p or n as inputs, and ask for the appropriate number of datastores as outputs.</li>
+</ul>
+</li>
+<li>Augmented traning data:<ul>
+<li>use <code>augmentedImageDatastore</code> function to add the variaty to the images</li>
+<li>use <code>imageDataAugmenter</code> function to set the tranformation to the images: rotation, reflection, translation, shear, scaling</li>
+</ul>
+</li>
+</ul>
+<p><strong>Modify Network Layers</strong></p>
+<ul>
+<li>Normally transfer learnig only need to change the last few layers, which means they apply the same feature extraction but output different classes</li>
+<li>To modify a preexisting network, you create a new layer. Then index into the layer array that represents the network and overwrite the chosen layer with the newly created layer: <code>fc= fullyConnectedLayer(12); layers(23) = fc;</code></li>
+<li>The <code>fullyConnectedLayer</code> function creates a new fully connected layer, with a given number of neurons: <code>fclayer = fullyConnectedLayer(n)</code></li>
+<li>Also the output layer still uses the previous labels in the pretrained network. We need to replace the output layer with a new, blank output layer.</li>
+<li>use the <code>classificationLayer</code> function to create a new output layer for an image classification network: <code>cl = classificationLayer</code></li>
+</ul>
+<p><strong>Set Training Options</strong></p>
+<ul>
+<li>use the <code>trainingOptions</code> function to see the available options for the training algorithm: <code>opts = trainingOptions(&#39;sgdm&#39;)</code>. This creates a variable <code>opts</code> that contains the default options for the training algorithm, “stochastic gradient descent with momentum”.</li>
+<li>when performing transfer learning, you will typically want to start with the <code>InitialLearnRate</code> set to a smaller value than the default of 0.01: <code>opts = trainingOptions(&#39;sgdm&#39;,&#39;InitialLearnRate&#39;,0.001)</code></li>
+</ul>
+<p><strong>Train the Network</strong></p>
+<ul>
+<li>“Mini-batch”<ul>
+<li>At each iteration, a subset of the training images, known as a <strong>mini-batch</strong>, is used to update the weights. Each iteration uses a different mini-batch. Once the whole training set has been used, that’s known as an <strong>epoch</strong>.</li>
+<li>The maximum number of epochs (<code>MaxEpochs</code>) and the size of the mini-batches (<code>MiniBatchSize</code>) are parameters you can set in the training algorithm options.</li>
+<li>Note that the loss and accuracy reported during training are for the mini-batch being used in the current iteration.</li>
+<li>By default, the images are shuffled once prior to being divided into mini-batches. You can control this behavior with the <code>Shuffle</code> option.</li>
+</ul>
+</li>
+<li>Using GPUs<ul>
+<li>If have an appropriate GPU and Parallel Computing Toolbox installed, the trainNetwork function will automatically perform the training on the GPU – no special coding required.</li>
+<li>If not, the training will be done on your computer’s CPU instead.</li>
+</ul>
+</li>
+<li>Transfer Learning Example Script:</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Get training images</span></span><br><span class="line">flower_ds = imageDatastore(<span class="string">'Flowers'</span>,<span class="string">'IncludeSubfolders'</span>,<span class="literal">true</span>,<span class="string">'LabelSource'</span>,<span class="string">'foldernames'</span>);</span><br><span class="line">[trainImgs,testImgs] = splitEachLabel(flower_ds,0.6);</span><br><span class="line">numClasses = numel(categories(flower_ds.Labels));</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Create a network by modifying AlexNet</span></span><br><span class="line">net = alexnet;</span><br><span class="line">layers = net.Layers;</span><br><span class="line">layers(end-2) = fullyConnectedLayer(numClasses);</span><br><span class="line">layers(end) = classificationLayer;</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Set training algorithm options</span></span><br><span class="line">options = trainingOptions(<span class="string">'sgdm'</span>,<span class="string">'InitialLearnRate'</span>, 0.001);</span><br><span class="line"></span><br><span class="line"><span class="comment"># Perform training</span></span><br><span class="line"><span class="comment"># The variable flowernet contains the network obtained by performing transfer learning on AlexNet with the flower species data. </span></span><br><span class="line"><span class="comment"># The variable info is a structure containing information on the training.</span></span><br><span class="line">[flowernet,info] = trainNetwork(trainImgs, layers, options);   </span><br><span class="line"></span><br><span class="line"><span class="comment"># Use trained network to classify test images</span></span><br><span class="line">testpreds = classify(flowernet,testImgs);</span><br></pre></td></tr></table></figure>
+<p><strong>Evaluate Performance</strong></p>
+<ul>
+<li>The fields <code>TrainingLoss</code> and <code>TrainingAccuracy</code> in <code>info</code> variable above contain a record of the performance of the network on the training data at each iteration.</li>
+<li>Determine how many of the test images the network correctly classified by comparing the predicted classification with the known classification. The known classifications are stored in the <code>Labels</code> property of the datastore: <code>flwrActual = testImgs.Labels; numCorrect = nnz(flwrPreds == flwrActual)</code></li>
+<li>Investigate Performance by class:<ul>
+<li>The <code>confusionchart</code> function calculates and displays the confusion matrix for the predicted classifications: <code>confusionchart(knownclass,predictedclass)</code></li>
+<li>The (j,k) element of the confusion matrix is a count of how many images from class j the network predicted to be in class k. Hence, diagonal elements represent correct classifications; off-diagonal elements represent misclassifications.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p><strong>Create a model</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>alexnet</code></td>
+<td>Load pretrained network “AlexNet”</td>
+</tr>
+<tr>
+<td><a href="https://au.mathworks.com/solutions/deep-learning/models.html" target="_blank" rel="noopener">supported networks</a></td>
+<td>a list of available pretrained networks</td>
+</tr>
+<tr>
+<td><code>fullyConnectedLayer</code></td>
+<td>Create new fully connected network layer</td>
+</tr>
+<tr>
+<td><code>classificationLayer</code></td>
+<td>Create new output layer for a classification network</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Get training images</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>imageDatastore</code></td>
+<td>Create datastore reference to image files</td>
+</tr>
+<tr>
+<td><code>augmentedImageDatastore</code></td>
+<td>Preprocess a collection of image files</td>
+</tr>
+<tr>
+<td><code>splitEachLabel</code></td>
+<td>Divide datastore into multiple datastores</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Set training algorithm options</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>trainingOptions</code></td>
+<td>Create variable containing training algorithm options</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Perform training</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>trainNetwork</code></td>
+<td>Perform training</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Use trained network to perform classifications</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>classify</code></td>
+<td>Obtain trained network’s classifications of input images</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Evaluate trained network</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nnz</code></td>
+<td>Count non-zero elements in an array</td>
+</tr>
+<tr>
+<td><code>confusionchart</code></td>
+<td>Calculate confusion matrix</td>
+</tr>
+<tr>
+<td><code>heatmap</code></td>
+<td>Visualize confusion matrix as a heatmap</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>Some resources:</p>
+<ul>
+<li>Mathwork blogs for deep learning <a href="https://blogs.mathworks.com/deep-learning/" target="_blank" rel="noopener">https://blogs.mathworks.com/deep-learning/</a></li>
+<li>Deep learning toolbox: <a href="https://au.mathworks.com/help/deeplearning/index.html" target="_blank" rel="noopener">https://au.mathworks.com/help/deeplearning/index.html</a></li>
 </ul>
 
       
@@ -397,11 +576,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Deep learning</a>
         		</li>
       		
 		</ul>
@@ -457,7 +636,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://tracyxinwang.site/blog/2018/11/06/MIT6006-Lec04/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://tracyxinwang.site/blog/2019/01/04/Matlab-DL1/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -471,18 +650,9 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/blog/2018/11/07/MIT6006-Lec05/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          MIT6006 Lec05 Binary search trees, BST sort
-        
-      </div>
-    </a>
   
-  
-    <a href="/blog/2018/11/06/notes-matlab/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">MATLAB 常用语法记录</div>
+    <a href="/blog/2018/12/30/MIT6006-Lec19/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MIT6006 Lec19 DP I &amp; II</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -509,7 +679,7 @@ var _hmt = _hmt || [];
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Priority-Queues"><span class="toc-number">1.</span> <span class="toc-text">Priority Queues</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap"><span class="toc-number">2.</span> <span class="toc-text">Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap-sort"><span class="toc-number">3.</span> <span class="toc-text">Heap sort</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-pretrained-network"><span class="toc-number">1.</span> <span class="toc-text">Use pretrained network</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Managing-Collections-of-Data"><span class="toc-number">2.</span> <span class="toc-text">Managing Collections of Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Performing-Transfer-Learning"><span class="toc-number">3.</span> <span class="toc-text">Performing Transfer Learning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-number">4.</span> <span class="toc-text">Summary</span></a></li></ol>
                     </div>
                 </span>
             </div>

@@ -6,20 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://tracyxinwang.site/blog">
-  <title>MIT6006 Lec04 Priority queue and Heap | Xin Wang&#39;s Blog</title>
+  <title>Archives: 2019/1 | Xin Wang&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Priority Queues Defination: A data structure implementing a set S of elements, each associated with a key. Every element has its own key. And the key represents the priority of that element. Keys are">
-<meta name="keywords" content="Algorithm,Learning">
-<meta property="og:type" content="article">
-<meta property="og:title" content="MIT6006 Lec04 Priority queue and Heap">
-<meta property="og:url" content="http://tracyxinwang.site/blog/2018/11/06/MIT6006-Lec04/index.html">
+  <meta name="description" content="CUHK在读博士生">
+<meta name="keywords" content="大脑建模，前通信狗，程序媛">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Xin Wang&#39;s Blog">
+<meta property="og:url" content="http://tracyxinwang.site/blog/archives/2019/01/index.html">
 <meta property="og:site_name" content="Xin Wang&#39;s Blog">
-<meta property="og:description" content="Priority Queues Defination: A data structure implementing a set S of elements, each associated with a key. Every element has its own key. And the key represents the priority of that element. Keys are">
+<meta property="og:description" content="CUHK在读博士生">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-06T10:08:25.972Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MIT6006 Lec04 Priority queue and Heap">
-<meta name="twitter:description" content="Priority Queues Defination: A data structure implementing a set S of elements, each associated with a key. Every element has its own key. And the key represents the priority of that element. Keys are">
+<meta name="twitter:title" content="Xin Wang&#39;s Blog">
+<meta name="twitter:description" content="CUHK在读博士生">
   
     <link rel="alternative" href="/atom.xml" title="Xin Wang&#39;s Blog" type="application/atom+xml">
   
@@ -246,289 +245,64 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-MIT6006-Lec04" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      MIT6006 Lec04 Priority queue and Heap
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/blog/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/blog/2019/01/04/Matlab-DL1/" class="archive-article-date">
+  	<time datetime="2019-01-04T08:07:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/blog/2019/01/04/Matlab-DL1/">Deep learning in Matlab I</a>
     </h1>
   
 
-        
-        <a href="/blog/2018/11/06/MIT6006-Lec04/" class="archive-article-date">
-  	<time datetime="2018-11-06T02:48:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Priority-Queues"><span class="toc-number">1.</span> <span class="toc-text">Priority Queues</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap"><span class="toc-number">2.</span> <span class="toc-text">Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap-sort"><span class="toc-number">3.</span> <span class="toc-text">Heap sort</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Priority-Queues"><span class="toc-text">Priority Queues</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap"><span class="toc-text">Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap-sort"><span class="toc-text">Heap sort</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p><br></p>
-<h3 id="Priority-Queues"><a href="#Priority-Queues" class="headerlink" title="Priority Queues"></a>Priority Queues</h3><ul>
-<li>Defination: A data structure implementing a set S of elements, each associated with a <strong>key</strong>.</li>
-<li>Every element has its own key. And the key represents the priority of that element. Keys are not necessarily unique.</li>
-<li>It supports the following operations:<ul>
-<li><code>insert(S,x)</code>: insert element x into set S</li>
-<li><code>max(S)</code>: return element of S with largest key</li>
-<li><code>extract_max(S)</code>: return element of S with largest key and remove it from S</li>
-<li><code>increase_key(S,x,k)</code>: increase the value of element x’ s key to new value k (assumed to be as large as current value)</li>
-</ul>
-</li>
-</ul>
-<h3 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h3><ul>
-<li>Heap is an implementation of a priority queue</li>
-<li>is also an <strong>array</strong> visualized as a nearly complete <em>binary tree</em></li>
-<li>Heaps can be convert to max heap or min heap when sorting them.</li>
-<li><strong>Max heap</strong>: the key of a node is ≥ than the keys of its children. (analogously as min heap)</li>
-<li>Heap as a tree:<ul>
-<li>Root of the tree: the first element (i=1) in the array</li>
-<li>parent(i)=i/2: returns index of node’s parent</li>
-<li>left(i)=2i: returns index of node’s left child</li>
-<li>right(i)=2i+1: returns index of node’s right child</li>
-<li>The height of a binary heap is $O(lg n)$</li>
-</ul>
-</li>
-<li>Heap operations:<ul>
-<li><code>build_max_heap</code>: produce a max-heap from an unordered array</li>
-<li><code>max_heapify</code>: correct a single violation of the heap property in a subtree at its root</li>
-<li><code>insert</code>, <code>extract_max</code>, <code>heapsort</code></li>
-</ul>
-</li>
-</ul>
-<p><strong>Max_heapify</strong>: </p>
-<ul>
-<li>the assumption is that the trees rooted at left(i) and right(i) are max-heaps. </li>
-<li>If element A[i] violates the max-heap property, correct violation by “trickling” element A[i] down the tree, making the subtree rooted at index i a max-heap.</li>
-<li>Pseudocode:  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">l = left(i)</span><br><span class="line">r = right(i)</span><br><span class="line"><span class="keyword">if</span> (l &lt;= heap-size(A) and A[l] &gt; A[i])</span><br><span class="line">    <span class="keyword">then</span> largest = l <span class="keyword">else</span> largest = i</span><br><span class="line"><span class="keyword">if</span> (r &lt;= heap-size(A) and A[r] &gt; A[largest])</span><br><span class="line">    <span class="keyword">then</span> largest = r</span><br><span class="line"><span class="keyword">if</span> largest != i</span><br><span class="line">    <span class="keyword">then</span> exchange A[i] and A[largest]</span><br><span class="line">Max_Heapify(A, largest)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><strong>Build_Max_Heap</strong>:</p>
-<ul>
-<li>Converts A[1…n] to a max heap</li>
-<li><p>Build_Max_Heap(A):</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i=n/2 downto 1</span><br><span class="line"><span class="keyword">do</span> Max_Heapify(A, i)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>The reason to start at n/2 is that element A[n/2+1 … n] are all leaves. There is no need to build max_heap for leaves which has only one element (its own).</p>
-</li>
-<li>Time costs: $O(nlog n)$ via simple analysis</li>
-<li>Observe however that Max_Heapify takes $O(1)$ for time for nodes that are one level above the leaves(叶子层的上一层，即倒数第二层)，$O(l)$ for the nodes that are $l$ levels above the leaves. There are n/4 nodes in level 1(即 倒数第二层), n/8 in level 2 (再往上的的一层) and so on till in $lg n$ level remains one root node.</li>
-<li>Therefore, the total amount of work in the for loop is (括号里面的是那一层的Node个数):<br>$$\frac n4(1c) + \frac n8 (2c) + \frac n{16} (3c) + … + 1(lgn c)$$</li>
-<li>set $\frac n4=2^k$简化上式可得：$c 2^k (\frac1{2^0}+\frac2{2^1}+\frac3{2^2}+ … + \frac{(k+1)}{2^k})$, 括号里面上界是个常数</li>
-<li>Therefore, Build_max_heap is $O(n)$</li>
-</ul>
-<h3 id="Heap-sort"><a href="#Heap-sort" class="headerlink" title="Heap sort"></a>Heap sort</h3><ul>
-<li>Sort strategy:<ol>
-<li>Build Max Heap from unordered array;</li>
-<li>Find maximum element A[1];</li>
-<li>Swap elements A[n] and A[1]: now max element is at the end of the array!</li>
-<li>Discard node n from heap (by decrementing heap-size variable)</li>
-<li>New root may violate max heap property, but its children are max heaps. Run max_heapify to fix this.</li>
-<li>Go to Step 2 unless heap is empty</li>
-</ol>
-</li>
-<li>Running time:<ul>
-<li>after n iterations the Heap is empty</li>
-<li>every iteration involves a swap and a max_heapify operation; hence it takes O(log n) time</li>
-<li>Overall $O(nlog n)$</li>
-</ul>
-</li>
-<li>A nice demo here: <a href="https://www.geeksforgeeks.org/heap-sort/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/heap-sort/</a></li>
-</ul>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢老板<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/blog/images/alipay.jpg">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/blog/images/wechatpay.jpg">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Deep learning</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://tracyxinwang.site/blog/2018/11/06/MIT6006-Lec04/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/blog/2018/11/07/MIT6006-Lec05/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          MIT6006 Lec05 Binary search trees, BST sort
-        
-      </div>
-    </a>
   
   
-    <a href="/blog/2018/11/06/notes-matlab/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">MATLAB 常用语法记录</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Priority-Queues"><span class="toc-number">1.</span> <span class="toc-text">Priority Queues</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap"><span class="toc-number">2.</span> <span class="toc-text">Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap-sort"><span class="toc-number">3.</span> <span class="toc-text">Heap sort</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -571,8 +345,8 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

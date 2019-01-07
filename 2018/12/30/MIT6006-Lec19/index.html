@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://tracyxinwang.site/blog">
-  <title>MIT6006 Lec04 Priority queue and Heap | Xin Wang&#39;s Blog</title>
+  <title>MIT6006 Lec19 DP I &amp; II | Xin Wang&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Priority Queues Defination: A data structure implementing a set S of elements, each associated with a key. Every element has its own key. And the key represents the priority of that element. Keys are">
+  <meta name="description" content="Dynamic Programming (DP) Powerful algorithmic design technique Large class of seemingly exponential problems have a polynomial solution (“only”) via DP Particularly for optimization problems (min / ma">
 <meta name="keywords" content="Algorithm,Learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MIT6006 Lec04 Priority queue and Heap">
-<meta property="og:url" content="http://tracyxinwang.site/blog/2018/11/06/MIT6006-Lec04/index.html">
+<meta property="og:title" content="MIT6006 Lec19 DP I &amp; II">
+<meta property="og:url" content="http://tracyxinwang.site/blog/2018/12/30/MIT6006-Lec19/index.html">
 <meta property="og:site_name" content="Xin Wang&#39;s Blog">
-<meta property="og:description" content="Priority Queues Defination: A data structure implementing a set S of elements, each associated with a key. Every element has its own key. And the key represents the priority of that element. Keys are">
+<meta property="og:description" content="Dynamic Programming (DP) Powerful algorithmic design technique Large class of seemingly exponential problems have a polynomial solution (“only”) via DP Particularly for optimization problems (min / ma">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-06T10:08:25.972Z">
+<meta property="og:updated_time" content="2018-12-31T05:55:43.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MIT6006 Lec04 Priority queue and Heap">
-<meta name="twitter:description" content="Priority Queues Defination: A data structure implementing a set S of elements, each associated with a key. Every element has its own key. And the key represents the priority of that element. Keys are">
+<meta name="twitter:title" content="MIT6006 Lec19 DP I &amp; II">
+<meta name="twitter:description" content="Dynamic Programming (DP) Powerful algorithmic design technique Large class of seemingly exponential problems have a polynomial solution (“only”) via DP Particularly for optimization problems (min / ma">
   
     <link rel="alternative" href="/atom.xml" title="Xin Wang&#39;s Blog" type="application/atom+xml">
   
@@ -246,20 +246,20 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-MIT6006-Lec04" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-MIT6006-Lec19" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      MIT6006 Lec04 Priority queue and Heap
+      MIT6006 Lec19 DP I &amp; II
     </h1>
   
 
         
-        <a href="/blog/2018/11/06/MIT6006-Lec04/" class="archive-article-date">
-  	<time datetime="2018-11-06T02:48:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-06</time>
+        <a href="/blog/2018/12/30/MIT6006-Lec19/" class="archive-article-date">
+  	<time datetime="2018-12-30T12:52:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-30</time>
 </a>
         
       </header>
@@ -269,7 +269,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Priority-Queues"><span class="toc-number">1.</span> <span class="toc-text">Priority Queues</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap"><span class="toc-number">2.</span> <span class="toc-text">Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap-sort"><span class="toc-number">3.</span> <span class="toc-text">Heap sort</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Programming-DP"><span class="toc-number">1.</span> <span class="toc-text">Dynamic Programming (DP)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fibonacci-Numbers"><span class="toc-number">1.1.</span> <span class="toc-text">Fibonacci Numbers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shortest-Paths"><span class="toc-number">1.2.</span> <span class="toc-text">Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Guessing"><span class="toc-number">2.</span> <span class="toc-text">Guessing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-number">3.</span> <span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Easy-Steps-to-Dynamic-Programming"><span class="toc-number">3.1.</span> <span class="toc-text">5 Easy Steps to Dynamic Programming</span></a></li></ol></li></ol>
             </div>
            -->
         <!--  
@@ -278,81 +278,99 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Priority-Queues"><span class="toc-text">Priority Queues</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap"><span class="toc-text">Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap-sort"><span class="toc-text">Heap sort</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Programming-DP"><span class="toc-text">Dynamic Programming (DP)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fibonacci-Numbers"><span class="toc-text">Fibonacci Numbers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shortest-Paths"><span class="toc-text">Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Guessing"><span class="toc-text">Guessing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Easy-Steps-to-Dynamic-Programming"><span class="toc-text">5 Easy Steps to Dynamic Programming</span></a></li></ol></li></ol>
         </div>
     </div>
  -->
-        <p><br></p>
-<h3 id="Priority-Queues"><a href="#Priority-Queues" class="headerlink" title="Priority Queues"></a>Priority Queues</h3><ul>
-<li>Defination: A data structure implementing a set S of elements, each associated with a <strong>key</strong>.</li>
-<li>Every element has its own key. And the key represents the priority of that element. Keys are not necessarily unique.</li>
-<li>It supports the following operations:<ul>
-<li><code>insert(S,x)</code>: insert element x into set S</li>
-<li><code>max(S)</code>: return element of S with largest key</li>
-<li><code>extract_max(S)</code>: return element of S with largest key and remove it from S</li>
-<li><code>increase_key(S,x,k)</code>: increase the value of element x’ s key to new value k (assumed to be as large as current value)</li>
+        <h3 id="Dynamic-Programming-DP"><a href="#Dynamic-Programming-DP" class="headerlink" title="Dynamic Programming (DP)"></a>Dynamic Programming (DP)</h3><ul>
+<li>Powerful algorithmic design technique</li>
+<li>Large class of seemingly exponential problems have a <u>polynomial</u> solution (“only”) via DP</li>
+<li>Particularly for optimization problems (min / max) (e.g., shortest paths)</li>
+<li>DP $\approx$ “controlled brute force”</li>
+<li>DP $\approx$ recursion + re-use</li>
 </ul>
-</li>
-</ul>
-<h3 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h3><ul>
-<li>Heap is an implementation of a priority queue</li>
-<li>is also an <strong>array</strong> visualized as a nearly complete <em>binary tree</em></li>
-<li>Heaps can be convert to max heap or min heap when sorting them.</li>
-<li><strong>Max heap</strong>: the key of a node is ≥ than the keys of its children. (analogously as min heap)</li>
-<li>Heap as a tree:<ul>
-<li>Root of the tree: the first element (i=1) in the array</li>
-<li>parent(i)=i/2: returns index of node’s parent</li>
-<li>left(i)=2i: returns index of node’s left child</li>
-<li>right(i)=2i+1: returns index of node’s right child</li>
-<li>The height of a binary heap is $O(lg n)$</li>
-</ul>
-</li>
-<li>Heap operations:<ul>
-<li><code>build_max_heap</code>: produce a max-heap from an unordered array</li>
-<li><code>max_heapify</code>: correct a single violation of the heap property in a subtree at its root</li>
-<li><code>insert</code>, <code>extract_max</code>, <code>heapsort</code></li>
-</ul>
-</li>
-</ul>
-<p><strong>Max_heapify</strong>: </p>
+<blockquote>
+<p>Dynamic Programming is mainly an optimization over plain recursion. Wherever we see a recursive solution that has repeated calls for same inputs, we can optimize it using Dynamic Programming. The idea is to simply store the results of subproblems, so that we do not have to re-comupute them when needed later. This simple optimization reduces time complexities from exponential to polynomial. For example, if we write simple recursive solution for Fibonacci Numbers, we get exponential time complexity and if we optimize it by storing solutions of subproblems, time complexity reduces to linear.</p>
+</blockquote>
+<h4 id="Fibonacci-Numbers"><a href="#Fibonacci-Numbers" class="headerlink" title="Fibonacci Numbers"></a>Fibonacci Numbers</h4><p>$$F1 = F2 = 1; \qquad F_n = F_{n−1} + F_{n−2}$$<br>Goal: compute $F_n$</p>
+<p><strong>Naive Algorithm</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fib(n):</span><br><span class="line">    if n &lt;= 2: return f=1</span><br><span class="line">    else: return f = fib(n-1) + fib(n-2)</span><br></pre></td></tr></table></figure></p>
+<p>⇒ $T(n) = T(n − 1) + T(n − 2) + O(1) ≥ Fn ≈ ϕ^n$<br>$≥ 2T(n − 2) + O(1) ≥ 2n/2$<br>EXPONENTIAL — BAD!<br>(As some items will be calculated twice, which consumes times)</p>
+<p><strong>Memoized DP Algorithm</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">memo = &#123; &#125;</span><br><span class="line">fib(n):</span><br><span class="line">    if n in memo: return memo[n]</span><br><span class="line">    else: if n ≤ 2 : f = 1</span><br><span class="line">        else: f = fib(n − 1) + fib(n − 2)</span><br><span class="line">        memo[n] = f</span><br><span class="line">        return f</span><br></pre></td></tr></table></figure></p>
+<p>Remember:<br>• ⇒ fib(k) only recurses first time called, ∀k<br>• ⇒ only n nonmemoized calls: k = n, n − 1, . . . , 1<br>• memoized calls free ($Θ(1)$ time)<br>• ⇒ $Θ(1)$ time per call (ignoring recursion)<br>POLYNOMIAL — GOOD!</p>
+<p>DP ≈ recursion + memoization</p>
 <ul>
-<li>the assumption is that the trees rooted at left(i) and right(i) are max-heaps. </li>
-<li>If element A[i] violates the max-heap property, correct violation by “trickling” element A[i] down the tree, making the subtree rooted at index i a max-heap.</li>
-<li>Pseudocode:  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">l = left(i)</span><br><span class="line">r = right(i)</span><br><span class="line"><span class="keyword">if</span> (l &lt;= heap-size(A) and A[l] &gt; A[i])</span><br><span class="line">    <span class="keyword">then</span> largest = l <span class="keyword">else</span> largest = i</span><br><span class="line"><span class="keyword">if</span> (r &lt;= heap-size(A) and A[r] &gt; A[largest])</span><br><span class="line">    <span class="keyword">then</span> largest = r</span><br><span class="line"><span class="keyword">if</span> largest != i</span><br><span class="line">    <span class="keyword">then</span> exchange A[i] and A[largest]</span><br><span class="line">Max_Heapify(A, largest)</span><br></pre></td></tr></table></figure>
+<li>memoize (remember) &amp; re-use solutions to subproblems that help solve problem<ul>
+<li>in Fibonacci, subproblems are F1, F2, . . . , Fn</li>
+</ul>
+</li>
+<li>⇒ time = # of subproblems x time/subproblem<ul>
+<li>Fibonacci: # of subproblems is n, and time/subproblem is Θ(1) = Θ(n) (ignore recursion!).</li>
+</ul>
 </li>
 </ul>
-<p><strong>Build_Max_Heap</strong>:</p>
+<p><strong>Bottom-up DP Algorithm</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fib = &#123;&#125;</span><br><span class="line">for k in [1, 2, . . . , n]:</span><br><span class="line">    if k ≤ 2: f = 1</span><br><span class="line">    else: f = fib[k − 1] + fib[k − 2]</span><br><span class="line">    fib[k] = f</span><br><span class="line">return fib[n]</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>Converts A[1…n] to a max heap</li>
-<li><p>Build_Max_Heap(A):</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i=n/2 downto 1</span><br><span class="line"><span class="keyword">do</span> Max_Heapify(A, i)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>The reason to start at n/2 is that element A[n/2+1 … n] are all leaves. There is no need to build max_heap for leaves which has only one element (its own).</p>
-</li>
-<li>Time costs: $O(nlog n)$ via simple analysis</li>
-<li>Observe however that Max_Heapify takes $O(1)$ for time for nodes that are one level above the leaves(叶子层的上一层，即倒数第二层)，$O(l)$ for the nodes that are $l$ levels above the leaves. There are n/4 nodes in level 1(即 倒数第二层), n/8 in level 2 (再往上的的一层) and so on till in $lg n$ level remains one root node.</li>
-<li>Therefore, the total amount of work in the for loop is (括号里面的是那一层的Node个数):<br>$$\frac n4(1c) + \frac n8 (2c) + \frac n{16} (3c) + … + 1(lgn c)$$</li>
-<li>set $\frac n4=2^k$简化上式可得：$c 2^k (\frac1{2^0}+\frac2{2^1}+\frac3{2^2}+ … + \frac{(k+1)}{2^k})$, 括号里面上界是个常数</li>
-<li>Therefore, Build_max_heap is $O(n)$</li>
+<li>exactly the same computation as memoized DP (recursion “unrolled”)</li>
+<li>in general: topological sort of subproblem dependency DAG</li>
+<li>practically faster: no recursion</li>
+<li>analysis more obvious</li>
+<li>can save space: just remember last 2 fibs ⇒ Θ(1)</li>
 </ul>
-<h3 id="Heap-sort"><a href="#Heap-sort" class="headerlink" title="Heap sort"></a>Heap sort</h3><ul>
-<li>Sort strategy:<ol>
-<li>Build Max Heap from unordered array;</li>
-<li>Find maximum element A[1];</li>
-<li>Swap elements A[n] and A[1]: now max element is at the end of the array!</li>
-<li>Discard node n from heap (by decrementing heap-size variable)</li>
-<li>New root may violate max heap property, but its children are max heaps. Run max_heapify to fix this.</li>
-<li>Go to Step 2 unless heap is empty</li>
+<h4 id="Shortest-Paths"><a href="#Shortest-Paths" class="headerlink" title="Shortest Paths"></a>Shortest Paths</h4><ul>
+<li>Recursive formulation:<br>$$δ(s, v) = min{δ(s, u) + w(u, v) | (u, v) ∈ E}$$</li>
+<li>Memoized DP algorithm: takes infinite time if cycles!<ul>
+<li>in some sense necessary to handle negative cycles</li>
+</ul>
+</li>
+<li>works for directed acyclic graphs in $O(V + E)$<ul>
+<li>effectively DFS/topological sort + Bellman-Ford round rolled into a single recursion<br>Subproblem dependency should be acyclic</li>
+</ul>
+</li>
+<li>more subproblems remove cyclic dependence:<br>$$δ_k(s, v) = shortest \quad s → v \quad path \quad using ≤ k \quad edges$$</li>
+<li>recurrence:<br>$δ<em>k(s, v) = min{δ</em>{k−1}(s, u) + w(u, v)|(u, v) ∈ E}$<br>$δ_0(s, v) = ∞$ for s $\ne$ v (base case)<br>$δ_k(s, s) = 0$ for any k (base case, if no negative cycles)$</li>
+<li>Goal: $δ(s, v) = δ_{|V|−1}(s, v)$ (if no negative cycles)</li>
+<li>memorize</li>
+<li>time: # of subproblems($|V|·|V|$) x time/subproblem($O(v) = 0(V^3)$)</li>
+<li>actually $Θ(indegree(v))$ for $δ_k(s, v)$</li>
+<li>⇒ time = $Θ(V\sum_{v∈V} indegree(V)) = Θ(VE)$</li>
+</ul>
+<h3 id="Guessing"><a href="#Guessing" class="headerlink" title="Guessing"></a>Guessing</h3><p>How to design recurrence:</p>
+<ul>
+<li>want shortest s → v path</li>
+<li>what is the last edge in path? dunno</li>
+<li>guess it is (u, v)</li>
+<li>then path is shortest s → u path + edge(u, v)</li>
+<li>the cost is $δ<em>{k−1}(s, u) + w(u, v)$, and $δ</em>{k−1}(s, u)$ is another subproblem</li>
+<li>to find best guess, try all (|V| choices) and use best</li>
+<li>key: small (polynomial) # possible guesses per subproblem — typically this dominates time/subproblem<br>DP ≈ recursion + memoization + guessing</li>
+</ul>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><ul>
+<li>DP $\approx$ “careful brute force”</li>
+<li>DP $\approx$ guessing + recursion + memoization</li>
+<li>DP ≈ dividing into reasonable # of subproblems whose solutions relate -  acyclicly - usually via guessing parts of solution.</li>
+<li>time = # subproblems × time/subproblem<ul>
+<li>essentially an amortization</li>
+<li>count each subproblem only once; after first time, costs O(1) via memoization</li>
+</ul>
+</li>
+<li>DP ≈ shortest paths in some DAG</li>
+</ul>
+<h4 id="5-Easy-Steps-to-Dynamic-Programming"><a href="#5-Easy-Steps-to-Dynamic-Programming" class="headerlink" title="5 Easy Steps to Dynamic Programming"></a>5 Easy Steps to Dynamic Programming</h4><ol>
+<li>define subproblems           count # subproblems</li>
+<li>guess (part of solution)     count # choices</li>
+<li>relate subproblem solutions  compute time/subproblem</li>
+<li>recurse + memoize            time = time/subproblem x # subproblems<ul>
+<li>OR build DP table bottom-up</li>
+<li>check subproblems acyclic/topological order</li>
+</ul>
+</li>
+<li>solve original problem: = a subproblem<ul>
+<li>OR by combining subproblem solutions ⇒ extra time</li>
+</ul>
+</li>
 </ol>
-</li>
-<li>Running time:<ul>
-<li>after n iterations the Heap is empty</li>
-<li>every iteration involves a swap and a max_heapify operation; hence it takes O(log n) time</li>
-<li>Overall $O(nlog n)$</li>
-</ul>
-</li>
-<li>A nice demo here: <a href="https://www.geeksforgeeks.org/heap-sort/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/heap-sort/</a></li>
-</ul>
+<p><br></p>
+<p>Reference:<br><a href="https://www.geeksforgeeks.org/dynamic-programming/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/dynamic-programming/</a></p>
 
       
 
@@ -457,7 +475,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://tracyxinwang.site/blog/2018/11/06/MIT6006-Lec04/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://tracyxinwang.site/blog/2018/12/30/MIT6006-Lec19/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -471,18 +489,18 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/blog/2018/11/07/MIT6006-Lec05/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/blog/2019/01/04/Matlab-DL1/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          MIT6006 Lec05 Binary search trees, BST sort
+          Deep learning in Matlab I
         
       </div>
     </a>
   
   
-    <a href="/blog/2018/11/06/notes-matlab/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">MATLAB 常用语法记录</div>
+    <a href="/blog/2018/12/20/MIT6006-Lec18/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MIT6006 Lec18 Speeding up Dijkstra</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -509,7 +527,7 @@ var _hmt = _hmt || [];
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Priority-Queues"><span class="toc-number">1.</span> <span class="toc-text">Priority Queues</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap"><span class="toc-number">2.</span> <span class="toc-text">Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap-sort"><span class="toc-number">3.</span> <span class="toc-text">Heap sort</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Programming-DP"><span class="toc-number">1.</span> <span class="toc-text">Dynamic Programming (DP)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fibonacci-Numbers"><span class="toc-number">1.1.</span> <span class="toc-text">Fibonacci Numbers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shortest-Paths"><span class="toc-number">1.2.</span> <span class="toc-text">Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Guessing"><span class="toc-number">2.</span> <span class="toc-text">Guessing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-number">3.</span> <span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Easy-Steps-to-Dynamic-Programming"><span class="toc-number">3.1.</span> <span class="toc-text">5 Easy Steps to Dynamic Programming</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
