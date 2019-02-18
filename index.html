@@ -247,6 +247,713 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-UnifyAI" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/02/16/UnifyAI/">读《浅谈人工智能》有感</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/02/16/UnifyAI/" class="archive-article-date">
+  	<time datetime="2019-02-16T06:51:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              
+            </div>
+           -->
+        <!--   -->
+        <p>之前看一个师兄写的文章里面，提到推荐做AI的人看下朱松纯教授写的那篇《人工智能的现状、任务、构架和统一》。我虽然不做纯AI，但我一直在想找一个人脑与AI的结合点，非常希望能建立起自己的一个认知框架。隔了大半年了，终于有时间找来读一读。下面大概介绍一下朱教授的观点和我自己的思考。</p>
+<p>朱教授把人工智能分为六大板块：</p>
+<ul>
+<li>计算机视觉： 包括模式识别，图像处理</li>
+<li>自然语言理解与交流： 包括语音识别，对话</li>
+<li>认知与推理： 包括物理和社会常识</li>
+<li>机器人学： 机械，控制，设计，运动规划和任务规划等</li>
+<li>博弈与伦理： multi-agent 的交互，对抗与合作等</li>
+<li>机器学习： 各种统计的建模，分析工具</li>
+</ul>
+<p>在我读PhD的初期，其实是有机会做真的图像处理，做deep learning那一套东西的，可我大致研究了一下，我觉得太火了，不管是本来就是这个领域的，还是其他领域的，都在朝这个方向转，都在发相关的paper。这让我当时就想起了一个词，大跃进。虽然我理解得也不深刻，但我觉得其实还远不到人们想的那样，DL可以实现真正的人工智能。我当时想，别人都在做的，那我不做，既然有这样一个机会让我搞一下真的人脑，那我就来看看，到底真的人脑是什么样子的？然后一直搞到现在，我发现这个坑是真的多，神经科学这个领域从我开始踏入，到现在，一直没有什么质的进展。但是AI的大潮，已经从CV，转到NLP了。上个月参加谷歌组织的机器学习冬令营，我发现做视觉的相对来说少一些，但是做NLP的，一大把。这是一个很有趣的现象，因为CV那块，像朱教授说的那样，刷榜刷得差不多了，在图像识别本身来说，已经没有什么可以进步的了，除非和其他的领域结合。于是人们又自然而然转到NLP上面去。下一个浪潮是哪里呢？我猜是机器人学，因为前两者都要结合啊，需要一个载体或者说agent来帮助表明这东西有多牛逼啊。而且机器人本身，也是需要加上前两者，才能实现智能这一特性的。可是这还是缺思考，缺认知这一块，所以认知和推理，我觉得是下下个浪潮，也是我现在想研究的方向。</p>
+<p>这其实有点像一个统一的过程，分而治之，再合成一个完整的学科。从朱教授的介绍来讲，人工智能发展的60年有两个阶段：</p>
+<ol>
+<li>前30年以数理逻辑的表达和推理为主： 这一期的领军人物懂很多认知科学的东西，有很强的全局观念，但是没有落地，所以不了了之。</li>
+<li>后30年以概率统计的建模、学习和计算为主： 几大学科独立发展，基于概率建模和随机计算，AI再度繁荣</li>
+</ol>
+<p>后30年的代表人物中，朱教授有提到Judea Pearl这个人，11年的图灵奖获得者。巧的是我当时也追过这个人的paper，因为他的因果模型，我觉得是很有希望用在大脑建模过程当中的，找来他的那本著作看，无奈数学推导对我太难，而后放弃，但这个理论，还依然在我的to do list里面。</p>
+<p>那这几大学科怎么统一到AI上面呢？框架是什么？<br>教授给出的方向是：小数据，大任务范式</p>
+<p>他认为智能系统的根源可以追溯到两个基本前提条件：</p>
+<ol>
+<li>物理环境客观的现实与因果链条：这个我理解的是input, 也就是所见所观所得，这些是外部条件来的</li>
+<li>智能物种与生俱来的任务与价值链条：这个我理解的是 inner sense。也就是所思所做，即文章提到的价值观和决策函数。<br>这有点像一个控制里面的系统，有自己内部的构造和决策，加上外界的input，然后推导出output. 而其实我们想达到的AI，也就是一个智能系统罢了。</li>
+</ol>
+<p>但是这个系统不是一层不变的，就像我们的人脑，每时每刻的状态其实都是不一样的。那为什么会变呢，也就是为什么会有学习这个过程呢？</p>
+<ol>
+<li>外来的数据：外部世界通过各种感知信号，传递到人脑，塑造模型。这些数据来源于观察和实践。观察的数据用于学习各种统计模型，即相关性。实践的数据用于学习因果模型，即将行为和结果联系在一起。</li>
+<li>内在的任务：即由内在的价值函数驱动行为，以达到某种目的。</li>
+</ol>
+<p>这个学习的缘由其实和上面的前提条件很像，都是一个是input的东西，一个是inner的东西。不同的在于，前面那个是初始状态，是静止的，后面那个是学习的过程，是动态的，且一直都在变的。</p>
+<p>那怎么根据这些前提条件和驱动因子实现小数据，大任务范式这个统一框架呢？朱教授提到了暗物质，这个暗物质不是物理学中的那个暗物质。我理解的是，它其实代表了一种 common sense 的建立和因果的推理。你看到的，不仅仅是你看到的，还有那些物体背后的联系和因果关系。而这些，就是那些在暗处的东西，那些能促使小数据完成大任务的因子。那这需要什么学科的知识呢？答案是认知，mind。这就涉及到心理学和神经科学相关的东西了。</p>
+<p>在介绍到认知的时候，朱教授引入了博弈伦理。其中提到了两大类的学习方法，我觉得是很有必要单独拿出来看看的，因为这两个学习的方法，其实也是我们真的学习的过程：</p>
+<ol>
+<li><strong>归纳学习(Inductive learning)</strong>: 通过观察大量数据样本来学习，这些样本就是对某个时期、某个地域、某个人群达成的准平衡态的观察。归纳学习的结果就是一个时空因果的概率模型。</li>
+<li><strong>演绎学习(Deductive learning)</strong>: 这个东西文献中很少，也就是从价值函数（还有物理因果）出发，直接推导出这些准平衡态。<br>这就像我们人类早期的学习，都是归纳学习来的，通过观察别人，学习别人，来逐步形成自己的人生观价值观世界观。而后成长到一定年纪的时候，就是演绎学习了，没有见过的东西，通过分析和推理，依然可以得出正确的结论。<br>只可惜我们很多人，一辈子都没有到演绎学习的阶段，从来只是从别人那里听来读来，并没有形成自己的一套方法论。</li>
+</ol>
+<p>我还想提的一点是，归纳学习有点像现在的强化学习，用很少的样本，就是不断去尝试啊，然后得出结果，有一套因果推导在里面。这也是为什么我很关注强化学习的另一个原因。</p>
+<p>之后朱教授讲到学习的极限，停机问题，说实话我对这个方向不是很了解，就不过多分析了。</p>
+<p>最后文章的总结题目是：智能科学-牛顿与达尔文理论体系的统一。提到物理学的责任是寻找支配自然各种现象的统一的力。而智能科学的研究对象是什么呢？是把物理学排除在外的生物意志给拿进来，研究一个物理与生物混合的复杂系统。这里朱教授提到了力的概念，提到了人与人之间，人与物，物与物之间，那些联系其实可用看成一种力，因为这些力是可以真实用数学表达式表达出来的，而且在物理学上是已经很统一很规范了的。那我们要做的其实就是把生物这块的东西，跟物理结合起来。</p>
+<p>在我以前最开始思考AI与人脑的结合的时候，并没有从物理这个方向去想，一是完全没有意识，二是觉得没有什么联系。对物理的理解并不深，所以我对这个观点的看法不加评论。但是有没有一种大统一，是可以独立于物理啊这些理论，在智能的内部（包括人工智能和真人智能），有一个统一的理论，来解释所有的因果和相关呢？我觉得是有的，这也是我一直想找到的一个统一的理论来链接AI和human brain.</p>
+<p>整篇文章让我特别感动的是介绍到David Mumford的时候，说他念念不忘人工智能，从头开始学统计概率，直奔关键体系，而不是拿着锤子找钉子。这恰恰是我目前想追求的，但现实里我却智能拿着锤子找钉子，如果条件允许，我想我还是会钻到统计概率那边，再去学习的，因为我目前的知识体系，还缺少这一块，而这一块又是我认为很重要的。当然，再学个物理也是极好的。</p>
+<p>All in all, 现在的Artificial intelligence 只能算是 engineering，而不是一门真正的science，等真正有人站出来统一这个学科了，或许才能真正称之为 Science of Intelligence。 我希望自己能在有生之年，能够成为这个science of intelligence 建立的推动者。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂文</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">碎碎念</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/02/16/UnifyAI/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Nonlinear" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/02/08/Nonlinear/">Gauss-Newton method to solve Nonlinear Least Square Problem</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/02/08/Nonlinear/" class="archive-article-date">
+  	<time datetime="2019-02-08T06:28:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#先验知识"><span class="toc-number">1.</span> <span class="toc-text">先验知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gauss-Newton-method"><span class="toc-number">2.</span> <span class="toc-text">Gauss-Newton method</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Pros-amd-Cons"><span class="toc-number">2.1.</span> <span class="toc-text">Pros amd Cons</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#先验知识"><span class="toc-text">先验知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gauss-Newton-method"><span class="toc-text">Gauss-Newton method</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Pros-amd-Cons"><span class="toc-text">Pros amd Cons</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <p><br></p>
+<h3 id="先验知识"><a href="#先验知识" class="headerlink" title="先验知识"></a>先验知识</h3><ul>
+<li><strong>Jacobian</strong>:<ul>
+<li>is the matrix of all first-order partial derivatives of a <strong>vector-valued</strong> function.</li>
+<li>that is to say, the function $f(x)$ maps $R^n \to R^m$</li>
+<li>the Jacobian of $f(x)$ is </li>
+<li>$$\mathbf {J} = {\begin{bmatrix}{\frac {\partial \mathbf {f} }{\partial x_{1}}} &amp; \cdots &amp; {\frac {\partial \mathbf {f} }{\partial x_{n}}} \end{bmatrix}} = {\begin{bmatrix} {\dfrac {\partial f_{1}}{\partial x_{1}}} &amp; \cdots &amp; {\frac {\partial f_{1}}{\partial x_{n}}} \\ \vdots &amp; \ddots &amp; \vdots \\ {\dfrac {\partial f_{m}}{\partial x_{1}}} &amp; \cdots  &amp; {\dfrac {\partial f_{m}}{\partial x_{n}}}\end{bmatrix}}$$</li>
+</ul>
+</li>
+<li><strong>Hessian</strong>:<ul>
+<li>a square matrix of second-order partial derivatives of a <strong>scalar-valued</strong> function, or scalar field.</li>
+<li>that is to say, the function $f(x)$ maps $R^n \to R$</li>
+<li>the Hessian of $f(x)$ is </li>
+<li>$$\mathbf {H} ={\begin{bmatrix}{\dfrac {\partial ^{2}f}{\partial x_{1}^{2}}}&amp;{\dfrac {\partial ^{2}f}{\partial x_{1}\,\partial x_{2}}} &amp; \cdots &amp; {\dfrac {\partial ^{2}f}{\partial x_{1}\,\partial x_{n}}} \\ {\dfrac {\partial ^{2}f}{\partial x_{2}\,\partial x_{1}}}&amp;{\dfrac {\partial ^{2}f}{\partial x_{2}^{2}}}&amp;\cdots &amp;{\dfrac {\partial ^{2}f}{\partial x_{2}\,\partial x_{n}}}\\ \vdots &amp;\vdots &amp;\ddots &amp;\vdots \\ {\dfrac {\partial ^{2}f}{\partial x_{n}\,\partial x_{1}}}&amp;{\dfrac {\partial ^{2}f}{\partial x_{n}\,\partial x_{2}}}&amp;\cdots &amp;{\dfrac {\partial ^{2}f}{\partial x_{n}^{2}}}\end{bmatrix}} $$</li>
+</ul>
+</li>
+<li>Newton’s method in optimization<ul>
+<li>generally, Newton’s method is an iterative method to find the roots of a differentiable function: $f(x)=0$</li>
+<li>在优化当中，找极值时，我们一般会用过求导的方式来找该函数导数为零的点，因为这个点就意味着极值。</li>
+<li>所以Newton’s method在优化运用中，is to find the root of th ederivative of function f: $f’(x)=0$</li>
+<li>In one-dimensional problem, we hope to find the min or max to satisfy: $f’(x^*)=0$</li>
+<li>将f(x)泰勒展开：$$f(x) = f(x_n+\Delta x) \approx f(x_n) + f’(x_n)\Delta x + \frac12 f’’(x_n)\Delta x^2$$</li>
+<li>我们希望在n次迭代后，能找到那个 $x^*$, 此时这个点满足 $f’(x)$, 即：$$f’(x)=0 \to f’(x_n+\Delta x) = 0$$ $$\frac {\partial f(x_n+\Delta x)}{\partial \Delta x} = 0$$ $$\frac {\partial (f(x_n)+f’(x_n)\Delta x + \frac 12 f’’(x_n)\Delta x^2)}{\partial \Delta x} = 0$$ $$f’(x_n) + \frac 12 f’’(x_n)\Delta x^2 =0 $$ $$\therefore \Delta x = - \frac {f’(x_n)}{f’’(x_n)}$$</li>
+<li>所以在Newton’s method中, 寻找极值的方向就是$\Delta x = - \frac {f’(x_n)}{f’’(x_n)}$</li>
+<li>在高阶当中，$\Delta x = - [Hf(x_n)]^{-1} \Delta {f(x_n)}$</li>
+</ul>
+</li>
+</ul>
+<h3 id="Gauss-Newton-method"><a href="#Gauss-Newton-method" class="headerlink" title="Gauss-Newton method"></a>Gauss-Newton method</h3><ul>
+<li>the problem is as follows:$$min_{x\in R^n} f(x) = \frac 12 \sum_{i=1}^m r_i(x)^2$$<ul>
+<li>where $m \ge n$</li>
+<li>n is thge number of parameters</li>
+<li>m is the number of observations</li>
+<li>r(x) is the vector of residuals $r(x) = {\begin{bmatrix} r_1(x) \\ r_2(x) \\ \vdots \\ r_m(x) \end{bmatrix}}$</li>
+</ul>
+</li>
+<li>Note that there could be 3 spaces when considering such probelm:<ul>
+<li>the parameter space</li>
+<li>the observation space</li>
+<li>the model space </li>
+</ul>
+</li>
+<li>the gradient of f(x) is: $$\Delta f(x) = \Delta r(x) r(x) = J(x)^Tr(x)$$<ul>
+<li>where $J(x) = \Delta r(x)^T$, the Jacobian of r(x). (Note only r(x) can have Jacobian but not f(x))</li>
+<li>推导过程直接对原式求导即可</li>
+</ul>
+</li>
+<li>the Hessian of f(x) is: $$\Delta^2 f(x) = \Delta r(x) \Delta r(x)^T + \sum_{i=1}^m r_i(x) \Delta^2 r_i(x)$$ $$= J(x)^TJ(x) + Q(x)$$\</li>
+<li>In optimization, we hope that the residual can approximate 0, if so, $r(x)=0$, and $Q(x) = 0$</li>
+<li><strong>A method that uses the approximation Q(x)=0 is called Gauss-Newton method</strong></li>
+<li>If the search direction using Newton equation: $$\Delta^2 f(x) p^N = - \Delta f(x)$$<ul>
+<li>代入以上的hessian式子： $$(J^T(x)J(x) + Q(x))P^N = - \Delta f(x)$$</li>
+<li>if Q(x) 接近0，$$J^T(x)J(x)P^{GN} = - \Delta f(x) = -J(x)^Tr(x)$$</li>
+<li>if J(x) is full rank, we can have a unique solution; but if not, the problem gets under-deterined ot over-determined.</li>
+</ul>
+</li>
+</ul>
+<h4 id="Pros-amd-Cons"><a href="#Pros-amd-Cons" class="headerlink" title="Pros amd Cons"></a>Pros amd Cons</h4><ul>
+<li>If $r(x^∗) = 0$, then the approximation $Q(x) ≈ 0$ is good and the Gauss-Newton method will behave like the Newton method close to the solution, i.e. converge quadratically if $J(x^∗)$ has full rank. </li>
+<li>The advantage over the Newton method is that we do not need to calculate the second-order derivatives $∇^2 r_i(x)$.</li>
+<li>However, if any residual component $r_i(x^∗)$ and/or the corresponding curvature $∇^2 r_i(x)$ is large, the approximation $Q(x) ≈ 0$ will be poor, and the Gauss-Newton method will converge slower than the Newton method.</li>
+<li>For such problems, the Gauss-Newton method may not even be locally convergent, i.e. without a global strategy such as the line search, it wouldn’t converge no matter how close to the solution we start.</li>
+</ul>
+<p><br></p>
+<p>Reference:<br><a href="https://www8.cs.umu.se/kurser/5DA001/HT07/lectures/lsq-handouts.pdf" target="_blank" rel="noopener">https://www8.cs.umu.se/kurser/5DA001/HT07/lectures/lsq-handouts.pdf</a><br><a href="http://fourier.eng.hmc.edu/e176/lectures/NM/" target="_blank" rel="noopener">http://fourier.eng.hmc.edu/e176/lectures/NM/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/02/08/Nonlinear/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Matlab-DL2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/01/07/Matlab-DL2/">Deep learning in Matlab II</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/01/07/Matlab-DL2/" class="archive-article-date">
+  	<time datetime="2019-01-07T07:40:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#neural-network-theory"><span class="toc-number">1.</span> <span class="toc-text">neural network theory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Interpreting-Network-Behavior"><span class="toc-number">1.1.</span> <span class="toc-text">Interpreting Network Behavior</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-Networks"><span class="toc-number">1.2.</span> <span class="toc-text">Create Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Train-Networks"><span class="toc-number">1.3.</span> <span class="toc-text">Train Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Improve-Performance"><span class="toc-number">1.4.</span> <span class="toc-text">Improve Performance</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sequence-classification-and-regression"><span class="toc-number">2.</span> <span class="toc-text">sequence classification and regression.</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Perform-Regression"><span class="toc-number">2.1.</span> <span class="toc-text">Perform Regression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Detect-Objects-in-images"><span class="toc-number">2.2.</span> <span class="toc-text">Detect Objects in images</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Sequence-Data-with-Recurrent-Networks"><span class="toc-number">2.3.</span> <span class="toc-text">Classify Sequence Data with Recurrent Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Categorical-Sequences"><span class="toc-number">2.4.</span> <span class="toc-text">Classify Categorical Sequences</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-Sequences-of-Output"><span class="toc-number">2.5.</span> <span class="toc-text">Generate Sequences of Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-number">2.6.</span> <span class="toc-text">Summary</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#neural-network-theory"><span class="toc-text">neural network theory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Interpreting-Network-Behavior"><span class="toc-text">Interpreting Network Behavior</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-Networks"><span class="toc-text">Create Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Train-Networks"><span class="toc-text">Train Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Improve-Performance"><span class="toc-text">Improve Performance</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sequence-classification-and-regression"><span class="toc-text">sequence classification and regression.</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Perform-Regression"><span class="toc-text">Perform Regression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Detect-Objects-in-images"><span class="toc-text">Detect Objects in images</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Sequence-Data-with-Recurrent-Networks"><span class="toc-text">Classify Sequence Data with Recurrent Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Categorical-Sequences"><span class="toc-text">Classify Categorical Sequences</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-Sequences-of-Output"><span class="toc-text">Generate Sequences of Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-text">Summary</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <h2 id="neural-network-theory"><a href="#neural-network-theory" class="headerlink" title="neural network theory"></a>neural network theory</h2><h3 id="Interpreting-Network-Behavior"><a href="#Interpreting-Network-Behavior" class="headerlink" title="Interpreting Network Behavior"></a>Interpreting Network Behavior</h3><p><strong>Extracting and Visualizing Activations</strong>:</p>
+<ul>
+<li>use the <code>activations</code> function to extract features from an input image: <ul>
+<li>it accepts three inputs: the network, the input image, and the layer to extract features from.</li>
+<li><code>features = activations(net,img,layerName)</code></li>
+</ul>
+</li>
+<li>Each convolution layer consists of many 2-D arrays called channels. </li>
+<li>Most CNNs learn to detect features like color and edges in the first convolution layer. In deeper layers, the network learns more complicated features.</li>
+<li>use the function <code>mat2gray</code> to normalize the activations</li>
+<li>use <code>montage</code> to show the images side by side</li>
+</ul>
+<p><strong>Representing Signal Data as Images</strong></p>
+<ul>
+<li>CNN use the images as input, which means every 2-D array can be input to CNN. Therefore, we can represent the signals in to 2-D array for use of CNN</li>
+<li>There are two ways to convert 1-D signal to images: use <code>spectrogram</code> or a continuous wavelet transform using <code>cwt</code>. </li>
+</ul>
+<p><strong>Feature Extraction for Machine Learning</strong>:</p>
+<ul>
+<li>It is difficult to perform deep learning on a computer without a GPU because of the long training time. </li>
+<li>An alternative is to use pretrained networks for feature extraction. Then you can use traditional machine learning methods to classify these features. </li>
+<li>CNNs learn to extract useful features while learning how to classify image data. As you’ve seen, <u>the early layers read an input image and extract features. Then, fully connected layers use these features to classify the image.</u></li>
+<li>With deep learning, you can use the <code>activations</code> function to extract features. These features can be used as the predictor variables for machine learning.</li>
+<li>We can set the <code>OutputAs</code> option to store the features from activation as rows for the machine learning model: <code>testFeatures = activations(net,testImgs,&#39;fc7&#39;,&#39;OutputAs&#39;,&#39;rows&#39;)</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># extract the features from a pretrained net</span></span><br><span class="line">trainingFeatures = activations(net,trainImgs,<span class="string">'fc7'</span>,<span class="string">'OutputAs'</span>,<span class="string">'rows'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment"># train the maching leanring classifier e.g. naive bayes</span></span><br><span class="line">classifier = fitcnb(trainingFeatures,trainImgs.Labels)</span><br><span class="line"></span><br><span class="line"><span class="comment">#W extract the features for test data and use the trained classifer above to predict</span></span><br><span class="line">testFeatures = activations(net,testImgs,<span class="string">'fc7'</span>,<span class="string">'OutputAs'</span>,<span class="string">'rows'</span>);</span><br><span class="line">predictedLabels = predict(classifier,testFeatures)</span><br><span class="line"></span><br><span class="line"><span class="comment"># compute accuracy and plot the confusion matrix</span></span><br><span class="line">accuracy = nnz(predictedLabels==testImgs.Labels)/numel(predictedLabels)</span><br><span class="line">confusionchart(testImgs.Labels, predictedLabels)</span><br></pre></td></tr></table></figure>
+<h3 id="Create-Networks"><a href="#Create-Networks" class="headerlink" title="Create Networks"></a>Create Networks</h3><p>Many pretrained networks need the input to be 3-D data and some restriction for the size of the images. If the data you want to train doesn’t satisfy these requirment (like the have more than 3 dimensions), we then need to build our own model.</p>
+<p><strong>Create Network Architectures</strong></p>
+<ul>
+<li>The first layer of any convolutional neural network is an image input layer. Function <code>imageInputLayer(inputSize)</code> can do this. The input size is a three-element vector corresponding to the height, width, and number of channels of that image: <code>inLayer = imageInputLayer([28 28 3])</code></li>
+<li>Convolution layers learn features in the input image by applying different filters to the image. To create a convolution layer, you need to specify the filter size and the number of filters: <code>convolution2dLayer([h w],n)</code>, <code>convLayer = convolution2dLayer([5 5],20)</code></li>
+<li><strong>Convolution layers</strong> are generally followed by rectified linear unit (ReLU) and max pooling layers.</li>
+<li>A <strong>ReLU</strong> layer sets all negative values to zero: <code>reluLayer()</code>. The function does not require any inputs.</li>
+<li><strong>Max pooling layers</strong> perform down-sampling by “pooling” rectangular regions together and computing the maximum of each region. Use the pool size as input: <code>maxPooling2dLayer([h w])</code></li>
+<li>The last three layers of a convolutional neural network are<ul>
+<li><strong>fullyConnectedLayer</strong>: it requires the output size as input. This is the number of classes that the network can predict.</li>
+<li><strong>softmaxLayer</strong>: does not require any inputs.</li>
+<li><strong>classificationLayer</strong>: does not require any inputs.</li>
+</ul>
+</li>
+<li>To train a network, we need an array of your entire network architecture. The last step is to stack all the layers you have created into a single array.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># To create an architecture that can be used to classify 28-by-28 color images into two classes.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create input layer that expects RGB images sized 28-by-28.</span></span><br><span class="line">inLayer = imageInputLayer([28 28 3])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create convolution layer with 20 filters sized 5-by-5.</span></span><br><span class="line">convLayer = convolution2dLayer([5 5],20)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create middle layers with a ReLU layer and a max pooling layer with a pool size of 2-by-2. </span></span><br><span class="line">midLayers = [reluLayer(); maxPooling2dLayer([2 2])]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create output layers with a fully connected layer for two classes and a softmax layer and a classification layer.</span></span><br><span class="line">outLayers = [fullyConnectedLayer(2); softmaxLayer(); classificationLayer()]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Combine layers</span></span><br><span class="line">layers = [inLayer; convLayer; midLayers; outLayers]</span><br><span class="line"></span><br><span class="line"><span class="comment"># set the training options and train</span></span><br><span class="line">options = trainingOptions(<span class="string">'sgdm'</span>,<span class="string">'MaxEpochs'</span>,5,<span class="string">'InitialLearnRate'</span>,0.0001)</span><br><span class="line">net = trainNetwork(XTrain,YTrain,layers,options);</span><br><span class="line"></span><br><span class="line"><span class="comment"># Prediction</span></span><br><span class="line">testpreds = classify(net,XTest)</span><br></pre></td></tr></table></figure>
+<p><strong>Understanding Neural Networks</strong></p>
+<ul>
+<li>Each layer in the network performs some operation on its inputs and outputs a new value.</li>
+<li>The first layer is an image input layer. This layer defines the input size of the network and normalizes the input images. By default, an image input layer subtracts the mean image of the training data set. This centers the images around zero.</li>
+<li>2-D convolution layers apply sliding filters to the input image. Convolution layers are a key part of the CNN architecture. They rely on the spatial structure of the input image.</li>
+<li>Convolution layers are usually followed by a nonlinear activation layer such as a rectified linear unit (ReLU). A ReLU layer performs a threshold operation to each element of the input. Any value less than zero is set to zero.</li>
+<li>A maximum pooling layer performs down-sampling by dividing the input into rectangular pooling regions and computing the maximum of each region. Pooling reduces the network complexity and creates a more general network.</li>
+<li>Features passing through the network are stored in a collection of matrices until they reach the fully connected layer. At the fully connected layer, the input is “flattened” (which means to tansform the matrix to a vector) so that it can be mapped to the output classes. This layer is a classical neural network.</li>
+<li>The output size for this layer is the number of classes for your classification problem. For example, if you were classifying cats and dogs, the output size would be two.</li>
+<li>The softmax layer converts the values for each output class into normalized scores using a normalized exponential function. You can interpret each value as the probability that the input image belongs to each class.</li>
+<li>The softmax layer converts the values for each output class into normalized scores using a normalized exponential function. You can interpret each value as the probability that the input image belongs to each class.</li>
+<li>The classification output layer returns the name of the most likely class.</li>
+</ul>
+<p><strong>Convolutional Layers</strong></p>
+<ul>
+<li>Convolution layers in CNNs perform convolution using learned filters. </li>
+<li>A matrix called a kernel is used to filter the image. </li>
+<li>We can use kernel with the <code>conv2</code> function to apply a filter to an image: <code>filteredim = conv2(kernel,im)</code></li>
+<li>Using empty brackets as the second input in <code>imshow</code> will scale the display based on the minimum and maximum values present in the image: <code>imshow(im,[])</code></li>
+<li>Or you can also use the <code>imfilter</code> function to apply the same kernels to the entire RGB image, which means the 3-D data. <code>conv2</code> can only apply to a 2-D image.</li>
+</ul>
+<p><strong>Summary</strong><br><a href="https://au.mathworks.com/help/deeplearning/ug/list-of-deep-learning-layers.html" target="_blank" rel="noopener">List of layer functions</a></p>
+<h3 id="Train-Networks"><a href="#Train-Networks" class="headerlink" title="Train Networks"></a>Train Networks</h3><p><strong>Understand the network training</strong>:</p>
+<ul>
+<li>Mini-Batch</li>
+<li>Learning rate</li>
+<li>Learning algorithm</li>
+</ul>
+<p><strong>Monitor Training Progress</strong></p>
+<ul>
+<li>can use the <code>Plots</code> option to monitor network training: <code>options = trainingOptions(&#39;sgdm&#39;,&#39;MaxEpochs&#39;,2,&#39;InitialLearnRate&#39;,0.0001,&#39;Plots&#39;,&#39;training-progress&#39;);</code></li>
+</ul>
+<p><strong>Validation</strong></p>
+<ul>
+<li>About different dataset:<ul>
+<li>Training data: used during training to update weights.</li>
+<li>Validation data: used during training to evaluate performance.</li>
+<li>Testing data: used after training to evaluate performance.</li>
+</ul>
+</li>
+<li>Validation data is useful to detect if your network is overfitting. Even if the training loss is decreasing, if the validation loss is increasing, you should stop training because the network is learning details about the training data that aren’t relevant to new images. </li>
+<li>There are three training options related to validation. <ul>
+<li><code>ValidationData</code>: Validation data and labels.</li>
+<li><code>ValidationFrequency</code>: Number of iterations between each evaluation of the validation data.</li>
+<li><code>ValidationPatience</code>: The number of validations to check before stopping training. Fluctuations in the loss from one iteration to another are normal, so you generally don’t want to stop training as soon as the validation loss increases. Instead, perform several validations. If the loss has not reached a new minimum in that time, then stop the training.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Improve-Performance"><a href="#Improve-Performance" class="headerlink" title="Improve Performance"></a>Improve Performance</h3><p>After testing on the test dataset, if the accuracy is not adequate. We need to improve the network. Any of the inputs to trainNetwork can be modified to train a different network that may perform better.</p>
+<ul>
+<li>From <strong>training algorithm options</strong>: Modifying the training options is generally the first place to begin improving a network. </li>
+<li><strong>Training Data</strong>: If no enough training data, the network may not generalize to new data. If you cannot get more training data, augmentation is a good alternative.</li>
+<li><strong>Architecture</strong>: If you are performing transfer learning, you often do not need to modify the network architecture to train an effective network. One alternative is to try using a pretrained network with a directed acyclic architecture like GoogLeNet or ResNet-50.</li>
+</ul>
+<p><strong>Training Options</strong>:</p>
+<ul>
+<li>Decrease learning rate: If there is a large spike in loss, or loss values are no longer being plotted, your initial learning rate is probably too high. Decrease the learning rate by a power of ten until your loss decreases.</li>
+<li>When you train a network, there is always a trade-off between accuracy and training time.</li>
+<li>The following chart shows some general guidelines when training a convolutional neural network.<br><img src="/blogs/images/DLmatlab_01.jpg" width="50%" height="80%"></li>
+</ul>
+<p><strong>Augmented Datastores</strong>:</p>
+<ul>
+<li>The <code>imageDataAugmenter</code> function can be used to choose your augmentation. Possible augmentations include transformations like reflection, translation, and scaling.</li>
+<li>Generally, you should choose an augmentation that is relevant to your data set: <code>imageDataAugmenter(&#39;RandRotation&#39;,[min max])</code></li>
+<li>When you create an augmented image datastore, you need to specify the output image size, the source of the files, and the augmenter using <code>augmentedImageDatastore</code>: <code>augmentedImageDatastore(size,ds,&#39;DataAugmentation&#39;,augmenter)</code></li>
+<li>You can read data from an augmented datastore with the <code>read</code> function. Instead of returning one image, <code>read</code> will return a batch of data. Each returned image has a different random augmentation: <code>data = read(augImds)</code></li>
+<li>The variable containing the augmented images is named <code>input</code>: <code>im = data.input{n}</code></li>
+</ul>
+<p><strong>Directed Acyclic Graphs</strong>:</p>
+<ul>
+<li>All the networks we have used or created are represented in MATLAB as a column vector of layers. This is called a <strong>series architecture</strong>. </li>
+<li>An alternate way to organize layers in a network is called a <strong>directed acyclic graph</strong> (DAG). DAGs have a more complex architecture where layers can have inputs from, or outputs to, multiple layers.</li>
+<li>A DAG architecture is defined with layers and connections between these layers. In MATLAB, these are represented in separate network properties. Some pretrained networks – e.g., GoogLeNet, ResNet-50, and SqueezeNet – are DAG networks. </li>
+<li>Transfer learn from a DAG:<ul>
+<li>To modify the architecture of DAG network, we first need to get a graph of its layers. A layer graph contains both the layers and connections of a DAG: <code>lgraph = layerGraph(net)</code></li>
+<li>view the architecture by using the layer graph as input to the plot function: <code>plot(lgraph)</code></li>
+<li>Connections between layers in a DAG are defined by each layer’s name. When creating a new layer for a DAG network, you should name it by setting the ‘Name’ option: <code>newly = fullyConnectedLayer(n,&#39;Name&#39;,&#39;layerName&#39;)</code></li>
+<li>replace a layer using the <code>replaceLayer</code> function. The three inputs are the layer graph, the name of the layer to replace, and the variable containing the new layer: <code>newgraph = replaceLayer(graph,&#39;oldLayerName&#39;,newly)</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="sequence-classification-and-regression"><a href="#sequence-classification-and-regression" class="headerlink" title="sequence classification and regression."></a>sequence classification and regression.</h2><h3 id="Perform-Regression"><a href="#Perform-Regression" class="headerlink" title="Perform Regression"></a>Perform Regression</h3><p><strong>Transfer learning for regression</strong></p>
+<ul>
+<li>Use Alexnet to perform transfer learning</li>
+<li>We need to delete the last three layers before replacing them with the correct layers because they are for classification. Now is a regression problem: <code>layers(end-n+1:end) = []</code></li>
+<li>For regression problems, the last two layers must be a fully connected layer and a regression layer. The corresponding functions are <code>fullyConnectedLayer(outputSize)</code> and <code>regressionLayer()</code>. Regression networks do not need a softmax layer.</li>
+<li>When a regression network is trained, <strong>root-mean-square error (RMSE)</strong> is calculated instead of accuracy. </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># build and train a netwotk</span></span><br><span class="line">net = alexnet;</span><br><span class="line">ly = net.Layers;</span><br><span class="line">ly(end-2:end) = [];</span><br><span class="line">newlayers = [fullyConnectedLayer(1);regressionLayer()];</span><br><span class="line">ly = [ly;newlayers];</span><br><span class="line"></span><br><span class="line"><span class="comment"># evaluate regression network</span></span><br><span class="line">pred = predict(mynet,testImage);</span><br><span class="line">err = trueValue - pred;</span><br><span class="line"><span class="comment"># RMSE</span></span><br><span class="line">rmse = sqrt(sum(err.^2));</span><br></pre></td></tr></table></figure>
+<h3 id="Detect-Objects-in-images"><a href="#Detect-Objects-in-images" class="headerlink" title="Detect Objects in images"></a>Detect Objects in images</h3><ul>
+<li>use <code>insertObjectAnnotation</code> to add the bounding box to a image: <code>alteredImg = insertObjectAnnotation(image,&#39;rectangle&#39;,boxposition,label)</code></li>
+</ul>
+<p><strong>Regions with Convolutional Neural Networks (R-CNN)</strong></p>
+<ul>
+<li>R-CNN workflow:<ul>
+<li>Find regions likely to contain objects</li>
+<li>Extract and resize each region to CNN input size</li>
+<li>Use CNN to predict class of each region</li>
+</ul>
+</li>
+<li>Training and Using an R-CNN: <ul>
+<li>There are three different types of object detectors in MATLAB: R-CNN, Fast R-CNN, and Faster R-CNN. The corresponding functions are <code>trainRCNNObjectDetector</code>, <code>trainFastRCNNObjectDetector</code>, and <code>trainFasterRCNNObjectDetector</code>. </li>
+<li>These networks differ between training time and detection time. For example, a R-CNN can be trained quickly, but the time to detect a new image is slower than a Faster R-CNN network. You should choose between these networks depending on your application. </li>
+<li>All of these functions have the same inputs and outputs: data, network, options</li>
+<li>data is the ground truth stored as a table. The first variable is a directory and filename for each image. The remaining variables are labels and the corresponding bounding boxes.</li>
+<li>use <code>detect</code> function to detect new images: <code>[bboxes,scores,labels] = detect(detector,image)</code></li>
+</ul>
+</li>
+<li>Evaluating an Object Detector:<ul>
+<li><strong>Precision</strong>: function <code>evaluateDetectionPrecision</code> calculates a precision metric using an overlap threshold between the predicted and true bounding boxes. Precision is a ratio of true positive instances to all positive instances of objects in the detector.</li>
+<li><strong>Miss rate</strong>:  we also need to consider the case when the detector fails to find an object. This is called the miss rate. You can calculate a miss rate metric using <code>evaluateDetectionMissRate</code>.</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># train a RCNN</span></span><br><span class="line">net = alexnet;</span><br><span class="line">options = trainingOptions(<span class="string">'sgdm'</span>,<span class="string">'InitialLearnRate'</span>,0.0001,<span class="string">'MaxEpochs'</span>,2);</span><br><span class="line">rcnn = trainRCNNObjectDetector(petGroundTruth,net,options);</span><br><span class="line"></span><br><span class="line"><span class="comment"># test on a image</span></span><br><span class="line">[dbox,dscore,dlabel] = detect(rcnn,dogim)</span><br><span class="line">detectedDogs = insertObjectAnnotation(dogim,<span class="string">'rectangle'</span>,dbox,cellstr(dlabel))</span><br><span class="line">imshow(detectedDogs)</span><br></pre></td></tr></table></figure>
+<h3 id="Classify-Sequence-Data-with-Recurrent-Networks"><a href="#Classify-Sequence-Data-with-Recurrent-Networks" class="headerlink" title="Classify Sequence Data with Recurrent Networks"></a>Classify Sequence Data with Recurrent Networks</h3><p><strong>Long Short-term memory network (LSTM)</strong></p>
+<ul>
+<li>Sequence classification</li>
+<li>Bidirectional LSTMs</li>
+</ul>
+<p><strong>Structuring Sequence Data</strong></p>
+<ul>
+<li>Training an LSTM requires the data to be stored in a particular format: <ul>
+<li>The input data is a cell array with one column.</li>
+<li>Each element in the cell array is one sample, or sequence. This sample is a numeric matrix.</li>
+<li>The columns in each sample are the time steps. Every sample can have a different number of time steps.<br>-The rows correspond to the feature dimension of the sample. This could be signal data from different sensors, or different letters in a vocabulary. All samples must have the same number of rows.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Sequence Classification</strong>：</p>
+<ul>
+<li>Create LSTM architecture<ul>
+<li>The network begins with an input layer, follows with a BiLSTM layer, and ends with the same output layers as a CNN.</li>
+<li>The first layer of an LSTM is a sequence input layer: <code>sequenceInputLayer(inputSize)</code>. The input to this function is the number of features, or the number of rows in a sample.</li>
+<li>Next is a bidirectional LSTM layer. You should set the number of nodes and the output mode when creating this layer: <code>bilstmLayer(numNodes,&#39;OutputMode&#39;,&#39;last&#39;)</code></li>
+<li>The last three layers in the LSTM are the same layers as a CNN for classification: fullyConnectedLayer, softmaxLayer and classificationLayer</li>
+</ul>
+</li>
+<li>Train an LSTM</li>
+<li>Use LSTM to classify sequences<ul>
+<li>The classify function can be used with an LSTM: <code>predictedLabel = classify(net,testdata)</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">inLayer = sequenceInputLayer(1)</span><br><span class="line">lstm = bilstmLayer(100,<span class="string">'OutputMode'</span>,<span class="string">'last'</span>)</span><br><span class="line">outLayers = [fullyConnectedLayer(3); softmaxLayer(); classificationLayer()]</span><br><span class="line"><span class="comment"># combine all layers</span></span><br><span class="line">layers = [inLayer; lstm; outLayers]</span><br><span class="line"></span><br><span class="line"><span class="comment"># train the network</span></span><br><span class="line">options = trainingOptions(<span class="string">'adam'</span>, ...</span><br><span class="line"><span class="string">'MaxEpochs'</span>,250, ...</span><br><span class="line"><span class="string">'InitialLearnRate'</span>,0.005, ...</span><br><span class="line"><span class="string">'GradientThreshold'</span>,1, ...</span><br><span class="line"><span class="string">'Shuffle'</span>,<span class="string">'every-epoch'</span>, ...</span><br><span class="line"><span class="string">'Plots'</span>,<span class="string">'training-progress'</span>, ...</span><br><span class="line"><span class="string">'LearnRateDropPeriod'</span>,200,...</span><br><span class="line"><span class="string">'LearnRateSchedule'</span>,<span class="string">'piecewise'</span>);</span><br><span class="line"></span><br><span class="line">net = trainNetwork(Xtrain,Ytrain,layers,options);</span><br><span class="line"></span><br><span class="line">testPred = classify(net,XTest)</span><br><span class="line">confusionchart(YTest,testPred)</span><br></pre></td></tr></table></figure>
+<p><strong>Improving LSTM Performance</strong></p>
+<ul>
+<li>Sequences can be normalized using a variety of methods. </li>
+<li>Sequence length and padding is specific to LSTMs. </li>
+<li>Sequence length: <ul>
+<li>Sequences can contain any number of time steps. This is convenient, but you should be cautious if your sequences have different lengths. </li>
+<li>During training, the sequences in each mini-batch are padded with a number, usually zero, to equalize the lengths. A network cannot distinguish between values created for padding and values that are part of the sequence. </li>
+<li>You should minimize the amount of padding by <strong>sorting your data</strong> by sequence length and carefully choosing the mini-batch size. </li>
+<li>You can also use the ‘shortest’ option to trim longer sequences to the same length as the shortest sequence. This option has no padding, but can remove important data from your sequences.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Classify-Categorical-Sequences"><a href="#Classify-Categorical-Sequences" class="headerlink" title="Classify Categorical Sequences"></a>Classify Categorical Sequences</h3><ul>
+<li>Training an LSTM requires the sequences to be numeric. If your sequences are categorical, how can you train a deep network? </li>
+<li>Categorical sequences could be a sequence of the weather, DNA, or music notes. </li>
+<li>One option is to assign a number to each category. However, this results in imposing a false numerical structure on the observations. For example, if you assign the numbers 1 through 4 to four categories in a predictor, it implies that the distance between the categories 1 and 4 is longer than the distance between the categories 3 and 4. </li>
+<li>Instead of assigning a number to each category, create dummy predictors for the categories. Each dummy predictor can have only two values – 0 or 1. For any given observation, only one of the dummy predictors can have the value equal to 1. You can create a matrix of dummy variables using the function dummyvar: <code>d = dummyvar(c)</code></li>
+<li>You can train a network on text data by creating dummy predictors from a categorical representation of your text. The rows of the dummy predictor matrix correspond to each letter in the vocabulary.</li>
+</ul>
+<h3 id="Generate-Sequences-of-Output"><a href="#Generate-Sequences-of-Output" class="headerlink" title="Generate Sequences of Output"></a>Generate Sequences of Output</h3><h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p><strong>Create a model</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>alexnet</code></td>
+<td>Load pretrained network “AlexNet”</td>
+</tr>
+<tr>
+<td><a href="https://au.mathworks.com/solutions/deep-learning/models.html" target="_blank" rel="noopener">supported networks</a></td>
+<td>a list of available pretrained networks</td>
+</tr>
+<tr>
+<td><code>fullyConnectedLayer</code></td>
+<td>Create new fully connected network layer</td>
+</tr>
+<tr>
+<td><code>classificationLayer</code></td>
+<td>Create new output layer for a classification network</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Get training images</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>imageDatastore</code></td>
+<td>Create datastore reference to image files</td>
+</tr>
+<tr>
+<td><code>augmentedImageDatastore</code></td>
+<td>Preprocess a collection of image files</td>
+</tr>
+<tr>
+<td><code>splitEachLabel</code></td>
+<td>Divide datastore into multiple datastores</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Set training algorithm options</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>trainingOptions</code></td>
+<td>Create variable containing training algorithm options</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Perform training</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>trainNetwork</code></td>
+<td>Perform training</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Use trained network to perform classifications</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>classify</code></td>
+<td>Obtain trained network’s classifications of input images</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Evaluate trained network</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nnz</code></td>
+<td>Count non-zero elements in an array</td>
+</tr>
+<tr>
+<td><code>confusionchart</code></td>
+<td>Calculate confusion matrix</td>
+</tr>
+<tr>
+<td><code>heatmap</code></td>
+<td>Visualize confusion matrix as a heatmap</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>Some resources:</p>
+<ul>
+<li>Mathwork blogs for deep learning <a href="https://blogs.mathworks.com/deep-learning/" target="_blank" rel="noopener">https://blogs.mathworks.com/deep-learning/</a></li>
+<li>Deep learning toolbox: <a href="https://au.mathworks.com/help/deeplearning/index.html" target="_blank" rel="noopener">https://au.mathworks.com/help/deeplearning/index.html</a></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Deep learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/01/07/Matlab-DL2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Matlab-DL1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -546,11 +1253,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Deep learning</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Deep learning</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
         		</li>
       		
 		</ul>
@@ -613,7 +1320,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Programming-DP"><span class="toc-number">1.</span> <span class="toc-text">Dynamic Programming (DP)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fibonacci-Numbers"><span class="toc-number">1.1.</span> <span class="toc-text">Fibonacci Numbers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shortest-Paths"><span class="toc-number">1.2.</span> <span class="toc-text">Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Guessing"><span class="toc-number">2.</span> <span class="toc-text">Guessing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-number">3.</span> <span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Easy-Steps-to-Dynamic-Programming"><span class="toc-number">3.1.</span> <span class="toc-text">5 Easy Steps to Dynamic Programming</span></a></li></ol></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Programming-DP"><span class="toc-number">1.</span> <span class="toc-text">Dynamic Programming (DP)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fibonacci-Numbers"><span class="toc-number">1.1.</span> <span class="toc-text">Fibonacci Numbers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shortest-Paths"><span class="toc-number">1.2.</span> <span class="toc-text">Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Guessing"><span class="toc-number">2.</span> <span class="toc-text">Guessing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-number">3.</span> <span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Easy-Steps-to-Dynamic-Programming"><span class="toc-number">3.1.</span> <span class="toc-text">5 Easy Steps to Dynamic Programming</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Examples"><span class="toc-number">4.</span> <span class="toc-text">Examples</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Text-Justification"><span class="toc-number">4.1.</span> <span class="toc-text">Text Justification</span></a></li></ol></li></ol>
             </div>
            -->
         <!--  
@@ -622,7 +1329,7 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Programming-DP"><span class="toc-text">Dynamic Programming (DP)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fibonacci-Numbers"><span class="toc-text">Fibonacci Numbers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shortest-Paths"><span class="toc-text">Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Guessing"><span class="toc-text">Guessing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Easy-Steps-to-Dynamic-Programming"><span class="toc-text">5 Easy Steps to Dynamic Programming</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Programming-DP"><span class="toc-text">Dynamic Programming (DP)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fibonacci-Numbers"><span class="toc-text">Fibonacci Numbers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shortest-Paths"><span class="toc-text">Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Guessing"><span class="toc-text">Guessing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Easy-Steps-to-Dynamic-Programming"><span class="toc-text">5 Easy Steps to Dynamic Programming</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Examples"><span class="toc-text">Examples</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Text-Justification"><span class="toc-text">Text Justification</span></a></li></ol></li></ol>
         </div>
     </div>
  -->
@@ -633,6 +1340,7 @@ var _hmt = _hmt || [];
 <li>DP $\approx$ “controlled brute force”</li>
 <li>DP $\approx$ recursion + re-use</li>
 </ul>
+<p><br></p>
 <blockquote>
 <p>Dynamic Programming is mainly an optimization over plain recursion. Wherever we see a recursive solution that has repeated calls for same inputs, we can optimize it using Dynamic Programming. The idea is to simply store the results of subproblems, so that we do not have to re-comupute them when needed later. This simple optimization reduces time complexities from exponential to polynomial. For example, if we write simple recursive solution for Fibonacci Numbers, we get exponential time complexity and if we optimize it by storing solutions of subproblems, time complexity reduces to linear.</p>
 </blockquote>
@@ -712,6 +1420,23 @@ var _hmt = _hmt || [];
 <li>OR by combining subproblem solutions ⇒ extra time</li>
 </ul>
 </li>
+</ol>
+<h3 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h3><h4 id="Text-Justification"><a href="#Text-Justification" class="headerlink" title="Text Justification"></a>Text Justification</h4><p>Content:<br>Split text into good lines</p>
+<ul>
+<li>obvious(MS Word) algorithm: put as many words that fit on first line, repeat</li>
+<li>but this can make very bad lines<br>Redefine the problem:</li>
+<li>Define badness(i,j) for line of words: [i,j]<ul>
+<li>e.g. if $\inf$ total length &gt; page width, else (page width - total length)^3</li>
+</ul>
+</li>
+<li>goal: split words into lines to min $\sum$ badness</li>
+</ul>
+<ol>
+<li><strong>subproblem</strong> = min. badness for suffix words[i :]<br>⇒ number of subproblems = Θ(n) where n = number of words</li>
+<li><strong>guessing</strong> = where to end first line, say i:j<br>⇒ number of choices = $n − i = O(n)$</li>
+<li><strong>recurrence</strong>:<br>• DP[i] = min(badness (i,j) + DP[j] for j in range (i+1,n+1))<br>• DP[n] = 0<br>⇒ time per subproblem = Θ(n)</li>
+<li><strong>order</strong>: for i=n,n-1,…,1,0<br>total time = $Θ(n^2)$</li>
+<li>solution = DP[0]</li>
 </ol>
 <p><br></p>
 <p>Reference:<br><a href="https://www.geeksforgeeks.org/dynamic-programming/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/dynamic-programming/</a></p>
@@ -1404,991 +2129,9 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-Matlab-visualization" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/12/01/Matlab-visualization/">Visualization in Matlab</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/12/01/Matlab-visualization/" class="archive-article-date">
-  	<time datetime="2018-12-01T10:07:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Import-Tabular-Data"><span class="toc-number">1.</span> <span class="toc-text">Import Tabular Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Preprocessing-Data"><span class="toc-number">2.</span> <span class="toc-text">Preprocessing Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Graphics-Formatting-Function"><span class="toc-number">3.</span> <span class="toc-text">Graphics Formatting Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Importing-Data-from-Multiple-Files"><span class="toc-number">4.</span> <span class="toc-text">Importing Data from Multiple Files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analyzing-Groups-within-Data"><span class="toc-number">5.</span> <span class="toc-text">Analyzing Groups within Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Customizing-Graphics-Objects"><span class="toc-number">6.</span> <span class="toc-text">Customizing Graphics Objects</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Images-and-3-D-Surface-Plots"><span class="toc-number">7.</span> <span class="toc-text">Images and 3-D Surface Plots</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Import-Unstructured-Data"><span class="toc-number">8.</span> <span class="toc-text">Import Unstructured Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Review-of-data-types"><span class="toc-number">9.</span> <span class="toc-text">Review of data types</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Import-Tabular-Data"><span class="toc-text">Import Tabular Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Preprocessing-Data"><span class="toc-text">Preprocessing Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Graphics-Formatting-Function"><span class="toc-text">Graphics Formatting Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Importing-Data-from-Multiple-Files"><span class="toc-text">Importing Data from Multiple Files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analyzing-Groups-within-Data"><span class="toc-text">Analyzing Groups within Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Customizing-Graphics-Objects"><span class="toc-text">Customizing Graphics Objects</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Images-and-3-D-Surface-Plots"><span class="toc-text">Images and 3-D Surface Plots</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Import-Unstructured-Data"><span class="toc-text">Import Unstructured Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Review-of-data-types"><span class="toc-text">Review of data types</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p><br></p>
-<h3 id="Import-Tabular-Data"><a href="#Import-Tabular-Data" class="headerlink" title="Import Tabular Data"></a>Import Tabular Data</h3><ul>
-<li>Tabular data can be in a single spreadsheet or a delimited text file</li>
-<li><code>readtable</code> function: <ul>
-<li><code>myTable = readtable(&#39;tablename.txt&#39;);</code></li>
-<li>access the variable using dot notation: <code>P=myTable.Pressure;</code></li>
-<li>when there is additional header in text file, provide additional inputs to indicate the number of header lines in the file: <code>myTable = readtable(&#39;tablename.txt&#39;,&#39;HeaderLines&#39;,5)</code></li>
-<li>use the option <code>CommentStyle</code> to ignore some lines with specific symbols: <code>myTable = readtable(&#39;tablename.txt&#39;,&#39;CommentStyle&#39;,&#39;##&#39;);</code></li>
-</ul>
-</li>
-<li><p>Representing Discrete Categories:</p>
-<ul>
-<li>By default, the values of finite variables are imported as a cell array. But it may consume the memory</li>
-<li>therefore using <code>categorical</code> variables to store those data.</li>
-<li><code>x = categorical(x)</code></li>
-<li><p>can specify all the possible values as additional inputs to <code>categorical</code>: the <em>second</em> input indicates the unique category values in the original array, and the <em>third</em> input indicates the names that correspond to these categories:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">v = [ 10 5 0 0 ];</span><br><span class="line">levels = &#123; <span class="string">'beg'</span> <span class="string">'mid'</span> <span class="string">'last'</span> &#125;;</span><br><span class="line">categorical(v,[0 5 10],levels)</span><br><span class="line">ans = </span><br><span class="line">    last      mid      beg      beg</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>to remain the inherent ordering, use <code>Ordinal</code>: </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">v = [2 4 1 1];</span><br><span class="line">levels = &#123;<span class="string">'tiny'</span>,<span class="string">'small'</span>,<span class="string">'big'</span>,<span class="string">'huge'</span>&#125;;</span><br><span class="line">c = categorical(v,[1 2 3 4],levels,<span class="string">'Ordinal'</span>,<span class="literal">true</span>)</span><br><span class="line">ans = </span><br><span class="line">    small huge tiny tiny</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Categorical arrays allow the use of <code>==, &gt;, &lt;</code> for comparison: <code>y==&#39;small&#39;</code></p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="Preprocessing-Data"><a href="#Preprocessing-Data" class="headerlink" title="Preprocessing Data"></a>Preprocessing Data</h3><ul>
-<li>Calculations Involving NaNs:<ul>
-<li>mean without NaN: <code>y=mean(y,&#39;omitnan&#39;)</code></li>
-<li>median without NaN: <code>y=median(y,&#39;omitnan&#39;)</code></li>
-<li>test an array for numeric equality, as well as determining if the NaNs align, use <code>isequaln</code>: <code>test = isequaln(x,y)</code></li>
-</ul>
-</li>
-<li>Locating Missing Data:<ul>
-<li>replace the NaN value with zero: <code>x(isnan(x)) = 0</code></li>
-<li>delete the NaN value: <code>x(isnan(x)) = [];</code></li>
-<li>use <code>ismissing</code> on a table to identify location of any kind of missing values: <code>missingDataLocations = ismissing(tableName);</code></li>
-<li>Use <code>any</code> function to determine which <em>rows</em> have any true values: <code>trueRows = any(grid,2)</code>, <code>2</code> indicates that the function should search for nonzero elements along the 2nd (column) dimension.</li>
-</ul>
-</li>
-<li>Categories and Set Operations:<ul>
-<li><code>categories</code> function returns the unique categories within a categorical array: <code>cats = categories(variableName);</code></li>
-<li><code>setdiff</code> function performs the set difference between the first and the second input: <code>d = setdiff(a,b)</code>, returned variable d has values in a that are not present in b.</li>
-<li>merge different categories in a categorical array: <code>a = mergecats(a,{&#39;small&#39; &#39;medium&#39; &#39;large&#39;},&#39;size&#39;)</code></li>
-</ul>
-</li>
-<li>Discretizing Continuous Data:<ul>
-<li><code>discretize</code> function to categorize values into discrete bins: <code>binNum = discretize(x,0:0.2:1)</code>. </li>
-<li>Note that any NaNs or values outside the range of the bins are unclassified. Add <code>-Inf</code> or <code>Inf</code> to the vector of bin edges if want to include bins for values outside of the edges.</li>
-<li>To discretize data into categories, use the <code>Categorical</code> option: <code>cats = {&#39;on&#39;,&#39;off&#39;}; binNum = discretize(x,0:0.5:1,&#39;Categorical&#39;,cats);</code></li>
-</ul>
-</li>
-</ul>
-<h3 id="Graphics-Formatting-Function"><a href="#Graphics-Formatting-Function" class="headerlink" title="Graphics Formatting Function"></a>Graphics Formatting Function</h3><ul>
-<li>A plot in MATLAB is a collection of graphics objects. You can change the properties of the graphics object by providing additional inputs to the function that created the graphics object.</li>
-<li>Plot line properties:<ul>
-<li><code>plot(x,y,&#39;*&#39;,&#39;MarkerSize&#39;,8,&#39;MarkerFaceColor&#39;,[0.5 0.5 1])</code></li>
-</ul>
-</li>
-<li>Scatter plot:<ul>
-<li>scale the size of the markers by supplying it as the <em>third</em> optional input which must be either a scalar or the same length as the input values: <code>scatter([4 5 6 7],[9 11 13 15],[25 50 75 100])</code></li>
-<li>specify marker style: <code>plot(xData,yData,15,&#39;kd&#39;)</code> to plot with black diamond markers</li>
-<li>fill the marker: <code>scatter(xData,yData,15,&#39;kd&#39;,&#39;filled&#39;)</code></li>
-</ul>
-</li>
-<li>Functions for Customizing Appearance:<ul>
-<li><code>xlim</code> function will change the limits of the x-axis: <code>xlim([1 10])</code></li>
-<li><code>grid</code> command to control whether or not grid lines are displayed: <code>grid(&#39;on&#39;)</code> or <code>grid(&#39;minor&#39;)</code></li>
-<li><code>axis</code> command to change the style of the axes: <code>axis(&#39;tight&#39;)</code> <code>axis(&#39;square&#39;)</code></li>
-</ul>
-</li>
-</ul>
-<h3 id="Importing-Data-from-Multiple-Files"><a href="#Importing-Data-from-Multiple-Files" class="headerlink" title="Importing Data from Multiple Files"></a>Importing Data from Multiple Files</h3><ul>
-<li>Create Datastores:<ul>
-<li>A datastore is just a reference to a file or a set of files. Creating a datastore does not automatically import any data into MATLAB.</li>
-<li>use <code>datastore</code> function with the file or folder location as the input: <code>ds = datastore(&#39;dirName/fileName.txt&#39;);</code> At this point, we have only created a reference to the data file.  </li>
-<li><code>preview</code> function help see the first few lines of data in the file: <code>preview(datastoreVariable)</code></li>
-<li>Since the datastore variable does not contain any data but only the information about the file, we can access this information through its properties: <code>ds.propertyName</code>. The properties can be <code>VariableNames</code>, <code>Files</code>, <code>NumHeaderLines</code>, <code>MissingValue</code></li>
-</ul>
-</li>
-<li>Modify Datastore Properties<ul>
-<li>ignore that begin with the character sequence ‘//‘ by modifying the <code>CommenStyle</code> property: <code>dat.CommentStyle = &#39;//&#39;</code></li>
-<li>set the <code>ReadVariableNames</code> property to false if there isn’t a line containing the variable names: <code>dat.ReadVariableNames = false</code></li>
-<li>Set the variable name: <code>dat.VariableNames ={&#39;color&#39;,&#39;size&#39;,&#39;act&#39;,&#39;age&#39;,&#39;inflated&#39;}</code></li>
-</ul>
-</li>
-<li>Import Data into MATLAB<ul>
-<li><code>read</code> and <code>readall</code>: to read data using datastore:  <code>data = ds.read;</code></li>
-<li>the <code>read</code> function will read data up to the number of lines specified by the <code>ReadSize</code> property of the datastore (20000 by default).</li>
-<li>If File1.txt has more than 20000 rows, only first 20000 are read. When <code>read</code> again, the rest part are readed.</li>
-<li><code>reset</code> function: reset the datastore to the beginning of the first data file.</li>
-<li>After resetting, use the function <code>readall</code> to read all the data.</li>
-</ul>
-</li>
-<li>Importing Datatypes Directly<ul>
-<li><code>TextscanFormats</code> property will return a cell array with the format used to read in each column of data: <code>fmt = dat.TextscanFormats</code></li>
-<li>By default, the numeric columns are represented with <code>%f</code> and non-numeric columns are interpreted to be strings denoted by <code>%q</code>. The format specifier for a categorical is <code>%C</code>. Datatime is <code>%D</code></li>
-<li>To modify the datatype of a variable while importing, use curly braces to index into a cell of TextscanFormats and set it to the appropriate value: <code>ds.TextscanFormats{1} = &#39;%q&#39;</code></li>
-</ul>
-</li>
-<li>Skipping Columns of Data<ul>
-<li>to import only a subset of columns, use <code>SelectedVariableNames</code>. Only the variables listed in the <code>SelectedVariableNames</code> property are imported: <code>ds.SelectedVariableNames = {&#39;Name&#39;,&#39;Date&#39;}</code></li>
-</ul>
-</li>
-</ul>
-<h3 id="Analyzing-Groups-within-Data"><a href="#Analyzing-Groups-within-Data" class="headerlink" title="Analyzing Groups within Data"></a>Analyzing Groups within Data</h3><ul>
-<li>Find unique groups of data<ul>
-<li><code>findgroups</code> function can group the values in an array and get the group numbers for each value: <code>v = {&#39;tiger&#39; &#39;lion&#39; &#39;lion&#39; &#39;tiger&#39;}; grpNums = findgroups(v)</code></li>
-<li>return the group values from findgroups by requesting a second output: <code>[grpNum,grpVal] = findgroups(v)</code>, then <code>grpval=&#39;lion&#39;, &#39;tiger&#39;</code></li>
-<li><code>histcounts</code> can count the number of observations in each group: <code>counts = histcounts(grpNum,&#39;BinMethod&#39;,&#39;integers&#39;);</code></li>
-<li><code>findgroups</code> allows for grouping with multiple inputs. In addition to the group number, it can also return the group values from each input variable: <code>[grpNum,petVals,genderVals] = findgroups(pets,gender)</code></li>
-</ul>
-</li>
-<li>Aggregating Grouped Data<ul>
-<li>function <code>splitapply</code> to perform different operations on groups of data: <code>splitapply(@min,data,grpNums)</code></li>
-<li>after that, you can plot the grouped results using <code>bar</code> chart: <code>[gNum1,gName1] = findgroups(mnth); avgWS = splitapply(@mean,hurrs.Windspeed,gNum1); bar(avgWS);xticklabels(gName1)</code></li>
-<li><code>monthNum2Name</code> can help convert month to names: <code>xticklabels(monthNum2Name(gName1)); xtickangle(45)</code></li>
-</ul>
-</li>
-<li>Aggregating Grouped Data into a Prescribed Format<ul>
-<li>You might want to see the correlations between the groups by aggregating groups and storing the results in a particular structure. <code>accumarray</code> can do that.</li>
-<li>The first input to <code>accumarray</code> is the results from <code>findgroups</code>, with columns representing the group numbers. The second input is the data to be aggregated. The third input is left blank and the fourth input is the function to be used for aggregation: <code>avgP = accumarray([G1 G2],Price,[],@mean)</code></li>
-</ul>
-</li>
-</ul>
-<h3 id="Customizing-Graphics-Objects"><a href="#Customizing-Graphics-Objects" class="headerlink" title="Customizing Graphics Objects"></a>Customizing Graphics Objects</h3><ul>
-<li>Accessing Graphics Objects<ul>
-<li>To modify the properties of a graphics object, the first step is to obtaining a variable (sometimes called a handle) that refers to the particular graphics object.</li>
-<li>Obtain the graphics object variable by assigning output from the graphics functions: <code>f = figure</code></li>
-<li>By assigning output from the <code>plot</code> command, you can obtain a line object variable: <code>p=plot(x,y)</code></li>
-<li>To get the graphics object variables for a plot that is already created, use the functions <code>gcf</code>, <code>gca</code>, and <code>gco</code> to obtain the current figure, axes and selected object (“get current figure/axes/object”): <code>fig = gcf;</code></li>
-</ul>
-</li>
-<li><p>Querying and Modifying Properties:</p>
-<ul>
-<li>use dot notation with the property name to return object property value, e.g.: <code>ax = gca; fw = ax.FontWeight</code></li>
-<li>use the dot notation to assign a value to an object property: <code>ax.FontWeight = &#39;bold&#39;</code>, <code>ax.XTick = [1,4,8,12]</code></li>
-<li>modify the data values of an existing plot: <code>p.XData = linspace(0,1,12)</code></li>
-<li>rememeber that if you want to change the property of axes, then use gca.<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># create a figure containing 2 axes and 2 line plots </span></span><br><span class="line">fig = figure;</span><br><span class="line">ax1 = axes;</span><br><span class="line">l1 = plot(t,y1)</span><br><span class="line">axis tight;</span><br><span class="line">ax2 = axes(<span class="string">'Position'</span>,[.6 .6 .25 .25])</span><br><span class="line">l2 = plot(ax2,t,y2);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>The Graphics Object Hierarchy</p>
-<ul>
-<li>All graphics objects are part of a hierarchy that starts with the root, the main display containing the MATLAB environment. You can make use of the graphics object hierarchy to obtain a specific graphics object after a plot is created.</li>
-<li>besides using <code>gca</code> to get axes object, we can also get the axes graphics object using the <code>Children</code> property of the figure: <code>ax = fig.Children</code></li>
-<li>The scatter and line plots are the children of the axes: <code>p = ax.Children</code></li>
-<li><p>X Y axis are the children of axes: </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xLab = ax.XLabel; </span><br><span class="line">xLab.FontName = <span class="string">'Garamond'</span>; % only change the font of x axis</span><br><span class="line">xAx = ax.XAxis; </span><br><span class="line">xAx.TickDirection = <span class="string">'out'</span>;</span><br><span class="line">xAx.FontName = <span class="string">'Courier'</span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>After ploting a bar chart with two or more bars, if you want to change the property of only one of the bars:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ax = gca;</span><br><span class="line">b = ax.Children;</span><br><span class="line">b(1).FaceColor = [1 0 0];</span><br><span class="line"></span><br><span class="line">xAx = ax.XAxis;</span><br><span class="line">xAx.FontWeight = <span class="string">'bold'</span>;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>The following is a summary of this section:</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">ds = datastore(<span class="string">'fuelEconomy2.txt'</span>)</span><br><span class="line">ds.ReadSize = 362;</span><br><span class="line">data = ds.read;</span><br><span class="line"> </span><br><span class="line">[gNum, gNames] = findgroups(data.NumCyl )</span><br><span class="line">avgMPG = splitapply(@mean, data.CombinedMPG, gNum)</span><br><span class="line"> </span><br><span class="line">b = bar(avgMPG);</span><br><span class="line">xlabel(<span class="string">'Number of cylinders'</span>)</span><br><span class="line">title(<span class="string">'Average MPG'</span>)</span><br><span class="line"></span><br><span class="line">% Customize the chart</span><br><span class="line">f = gcf;</span><br><span class="line">a = gca;</span><br><span class="line"></span><br><span class="line">f.Color = [0.81 0.87 0.9];</span><br><span class="line"></span><br><span class="line">a.Color = [0.81 0.87 0.9];</span><br><span class="line">a.Box = <span class="string">'off'</span>;</span><br><span class="line">a.YAxisLocation = <span class="string">'right'</span>;</span><br><span class="line">a.YGrid = <span class="string">'on'</span>;</span><br><span class="line">a.GridColor = [1 1 1];</span><br><span class="line">a.GridAlpha = 1;</span><br><span class="line">a.XTickLabel = gVal;</span><br><span class="line">a.YLim = [0 40];</span><br><span class="line"></span><br><span class="line">ax = a.XAxis;</span><br><span class="line">ax.TickDirection = <span class="string">'out'</span>;</span><br><span class="line"></span><br><span class="line">b.FaceColor = [0,0.31,0.42];</span><br><span class="line">b.BarWidth = 0.5;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="Images-and-3-D-Surface-Plots"><a href="#Images-and-3-D-Surface-Plots" class="headerlink" title="Images and 3-D Surface Plots"></a>Images and 3-D Surface Plots</h3><ul>
-<li>Making grid<ul>
-<li><code>meshgrid</code> function converts vectors of points into matrices that can represent a grid of points in the x-y plane: <code>[X,Y] = meshgrid(x,y)</code></li>
-</ul>
-</li>
-<li>Interpolating Scattered Data<ul>
-<li>Interpolating irregularly located data to a regular grid requires two steps: 1) Using the scattered data to create an interpolating function and 2) Evaluating the interpolant at desired locations. Use <code>griddata</code></li>
-<li><code>griddata</code> function: the first three inputs represent the original data and the next two inputs contain the locations at which you would like to get the interpolated data: <code>zInterp = griddata(xOrig,yOrig,zOrig, xNew,yNew);</code></li>
-</ul>
-</li>
-<li>Visualizing Surfaces:<ul>
-<li><code>surf(X,Y,Z)</code></li>
-<li>The color of the lines between the patches is determined by the <code>EdgeColor</code> property: <code>s.EdgeColor = &#39;interp&#39;</code></li>
-</ul>
-</li>
-<li>Colormaps and Indexed Colors:<ul>
-<li>The colors in a surface are determined by indexing into a color lookup table associated with the parent figure window, called a <code>colormap</code>.</li>
-<li>Each point on a surface has a color data value. These values are stored in the <code>CData</code> property of the surface.</li>
-<li>The color data value is mapped to a range of values. The range is set by the axes using the <code>CLim</code> property of the axes: <code>c = ax.CLim</code></li>
-<li>The default colormap of a figure is called <code>parula</code>. You can modify this using the colormap function: <code>colormap(jet)</code></li>
-</ul>
-</li>
-<li>Creating Indexed-Color Images<ul>
-<li>Using <code>pcolor</code>: the <code>pcolor</code> function has the same syntax as <code>surf</code>. In fact, it actually creates a flat surface with <code>ZData</code> all set to 0 and <code>CData</code> set to Z.</li>
-<li>The direction of the y-axis can be changed using the axis command: <code>axis xy</code> or <code>axis ij</code></li>
-</ul>
-</li>
-</ul>
-<h3 id="Import-Unstructured-Data"><a href="#Import-Unstructured-Data" class="headerlink" title="Import Unstructured Data"></a>Import Unstructured Data</h3><ul>
-<li>Low-Level File I/O<ul>
-<li><code>fopen</code> function: to open a file. This does not open the file in an editor but instead opens a connection between MATLAB and the file for reading and writing the data: <code>fi = fopen(&#39;economy.txt&#39;);</code></li>
-<li>The returned value is a unique file identifier used to reference the open file.</li>
-<li>Once the file is opened, you can use the file identifier to read data from the file. <code>fgetl</code> function takes the file identifier as input in order to read in the first line of code.: <code>fgetl(fi) ans = date, unrate, gdp, feddebt</code></li>
-<li>Subsequent file reads will read in subsequent lines. The file position indicator moves to the beginning of the next line after each read. So when using <code>fgetl</code> the second time, it will return the second line of the file.</li>
-<li>use <code>frewind</code> command to move the file position indicator back to the beginning of the file: <code>frewind(fi)</code></li>
-<li>To close a file that has been opened by <code>fopen</code>, use the <code>fclose</code> function: <code>fclose(fi)</code></li>
-<li>if a file was opened, but an identifier was not stored, use <code>fclose(&#39;all&#39;)</code> to close all opened files.</li>
-</ul>
-</li>
-<li>Importing a Block of Formatted Data:<ul>
-<li>You can read in data from a file with arbitrary formatting using the <code>textscan</code> function</li>
-<li><code>textscan</code> function has two required inputs: a file identifier and a format specification string, e.g. <code>data = textscan(fid,&#39;%D%q%f%f%f&#39;)</code>, this is to convert the first unit of data to a date, <code>%D</code>, the second to a string, <code>%q</code>, and the next three units to double precision numbers, <code>%f</code>. This pattern is repeated indefinitely, so the sixth unit is a date, the seventh is a string and so on.</li>
-<li>use cell indexing to extract the data from a column； <code>secondColumn = data{2}</code></li>
-<li><code>%q</code> specifier can read both numbers and strings</li>
-<li>Data is read from the file sequentially in blocks delimited by whitespace (by default) or a specific delimiting character (if provided): <code>data = textscan(fid,&#39;%D%f%q%C&#39;,&#39;Delimiter&#39;,&#39;\t&#39;)</code></li>
-<li>the data will stop being read as soon as a match was not found, even though there were additional matches later in the file. Generally, textscan matches the format string pattern as many times as possible until a match is not found.</li>
-<li>When a text file contains header lines, you can still import data by instructing <code>textscan</code> to skip a number of lines before attempting to read data: <code>data = textscan(fid,&#39;%D%f&#39;,&#39;HeaderLines&#39;,5);</code></li>
-<li>To read only a specific number of lines from a file, specify the number using a <em>third input</em> to textscan. The following code will read five rows: <code>data = textscan(fid,&#39;%D%f%f&#39;,5);</code> Remember there will also be an indicator in textscan, so when it’s used the second time, it will not start from the beginning but the stop point from last time been called.</li>
-<li>Reading Sections with Headers: </li>
-</ul>
-</li>
-<li>Parsing Data in Text:<ul>
-<li>use the <code>strfind</code> function to determine the index values where certain phrases or characters appear: <code>iv = strfind(&#39;cat,dog,goat&#39;,&#39;,&#39;)  iv = 4  8</code></li>
-<li><code>strsplit</code> function can split up a line of text into individual strings in a cell array. This function will split on whitespace unless a delimiter is provided as an optional input value: <code>C = strsplit(&#39;cat dog goat&#39;)   C = &#39;cat&#39;    &#39;dog&#39;    &#39;goat&#39;</code></li>
-<li><code>strcmp</code> function can find a word within a list of strings in a cell array. This function will compare values and return a logical array: <code>strcmp(C,&#39;goat&#39;)   ans = 0 0 1</code></li>
-<li><code>deblank</code> function can remove trailing white spaces.<code>data = deblank(data)</code></li>
-</ul>
-</li>
-<li>Processing Data in Blocks:<ul>
-<li>You may need to programatically adjust your format specification string that you use to read in data with textscan. <code>repmat</code> function can help out: <code>formatSpecString = repmat(&#39;%q&#39;,1,5); formatSpecString = &#39;%q%q%q%q%q&#39;</code> <code>fstr = [&#39;%D&#39; repmat(&#39;%f&#39;,1,3)]    fstr = &#39;%D%f%f%f&#39;</code></li>
-<li><code>feof</code> function can test if a file has reached the end. This can be used in a <code>while</code> loop to read in data until the end of the file: <code>while ~feof(fid)  ... end</code></li>
-</ul>
-</li>
-</ul>
-<h3 id="Review-of-data-types"><a href="#Review-of-data-types" class="headerlink" title="Review of data types"></a>Review of data types</h3><ul>
-<li>Extract Data from a Table:<ul>
-<li>use {} to extract the data as numeric format</li>
-<li>use () to extract the data as table format</li>
-</ul>
-</li>
-<li>Merge data:<ul>
-<li><code>key</code> variables are the variables that are common to all sources and uniquely identify each observation, or row: <code>T12 = join(T1,T2)</code></li>
-<li><code>innerjoin</code>: just select the observations that have key variables common to both tables: <code>C = innerjoin(A,B);</code></li>
-<li><code>outerjoin</code>: include every single observation (row) from both tables: <code>C = outerjoin(A,B)</code></li>
-<li>Set the <code>Mergekeys</code> property to <code>true</code> will return a table where the key values of A and B are merged into one variable in the C: <code>C = outerjoin(A,B,&#39;MergeKeys&#39;,true);</code></li>
-</ul>
-</li>
-<li>Represent Dates and Times:<ul>
-<li>To convert a cell array of strings of dates to a datetime array, use the <code>datetime</code> function: <code>dates = datetime(dates);</code></li>
-<li><code>hour</code> can get the hour time of the date</li>
-</ul>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/12/01/Matlab-visualization/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MIT6006-Lec11" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/26/MIT6006-Lec11/">MIT6006 Lec11 Numerics I</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/11/26/MIT6006-Lec11/" class="archive-article-date">
-  	<time datetime="2018-11-26T07:42:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Irrationals"><span class="toc-number">1.</span> <span class="toc-text">Irrationals</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Newton’s-Method"><span class="toc-number">2.</span> <span class="toc-text">Newton’s Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#High-precision-multiply"><span class="toc-number">3.</span> <span class="toc-text">High precision multiply</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Irrationals"><span class="toc-text">Irrationals</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Newton’s-Method"><span class="toc-text">Newton’s Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#High-precision-multiply"><span class="toc-text">High precision multiply</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="Irrationals"><a href="#Irrationals" class="headerlink" title="Irrationals"></a>Irrationals</h3><p><strong>Digression</strong><br>Catalan numbers:</p>
-<ul>
-<li>Set P of balanced parentheses strings are recursively defined as<ul>
-<li>$λ ∈ P$ (λ is empty string)</li>
-<li>If $α, β ∈ P$, then $(α)β ∈ P$</li>
-</ul>
-</li>
-<li>Every nonempty balanced paren string can be obtained via Rule 2 from a unique α, β pair</li>
-</ul>
-<p><strong>Enumeration</strong></p>
-<ul>
-<li>$C_n$: number of balanced parentheses strings with exactly n pairs of parentheses $C_0 = 1$ empty string</li>
-<li>$C_{n+1}$? Every string with n+1 pairs of parentheses can be obtained in a unique way via rule 2.</li>
-<li>One paren pair comes explicitly from the rule.<ul>
-<li>$k$ pairs from $α$, $n − k$ pairs from $β$</li>
-<li>$C_{n+1} = \sum_{n=0}^n C_k \dot C_{n-k} \qquad n \ge 0$</li>
-<li>$C_0=1 \quad C_1=C_0^2 = 1 \quad C_2=C_0C_1 + C_1C_0 = 2 \quad C_3 = \cdots = 5$</li>
-</ul>
-</li>
-</ul>
-<h3 id="Newton’s-Method"><a href="#Newton’s-Method" class="headerlink" title="Newton’s Method"></a>Newton’s Method</h3><ul>
-<li>Find root of $f(x) = 0$ through successive approximation e.g., $f(x) = x^2 − a$</li>
-<li>Tangent at $(x_i, f(x_i))$ is line $y = f(x_i)+ f’(x_i)·(x− x_i)$ where $f’(x_i)$ is the derivative. $x_{i+1}$ = intercept on x-axis<br>$$x_{i+1} = x_i - \frac{f(x_i)}{f’(x_i)}$$</li>
-</ul>
-<h3 id="High-precision-multiply"><a href="#High-precision-multiply" class="headerlink" title="High precision multiply"></a>High precision multiply</h3><p>Multiplying two n-digit numbers (radix r = 2, 10) $0 ≤ x, y &lt; r^n$<br>$$x = x_1 · r^{n/2} + x_0 \quad x_1 = high \; half$$  $$y = y_1 · r^{n/2} + y_0 \quad x_0 = low \; half$$ $$0 \le x_0, x_1 &lt; r^{n/2}$$ $$0 \le y_0, y_1 &lt; r^{n/2}$$ $$z = x·y = x_1y_1·r^{n} + (x_0·y_1 + x_1·y_0)r^{n/2} + x_0·y_0$$</p>
-<ul>
-<li>4 multiplications of half-sized ⇒ quadratic algorithm $θ(n^2)$ time</li>
-</ul>
-<p><strong>Karatsuba’s Method</strong><br>Let<br>$$z_0 = x_0·y_0$$ $$z_2 = x_1·y_1$$ $$z_1 = (x_0+x_1)·(y_0+y_1) - z_0 - z_2 = x_0y_1+x_1y_0$$ $$z = z_2·r^n +z_1·r^{n/2} +z_0$$<br>There are three multiplies in the above calculations.<br>$$T(n) = time \; to \; multiply \; two \; n-digit \; numbers<br>        = 3T(n/2) + θ(n)<br>        = θ(n^{log_23}) = θ(n^{1.5849625···})$$</p>
-<p>A tutorial about Karatsuba’s method can be found <a href="https://courses.csail.mit.edu/6.006/spring11/exams/notes3-karatsuba" target="_blank" rel="noopener">here</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/26/MIT6006-Lec11/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Matlab-technique" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/24/Matlab-technique/">Higher Level Programming Technique using Matlab</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/11/24/Matlab-technique/" class="archive-article-date">
-  	<time datetime="2018-11-23T23:39:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Utilizing-Development-Tools"><span class="toc-number">1.</span> <span class="toc-text">Utilizing Development Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Createing-Robust-Application"><span class="toc-number">2.</span> <span class="toc-text">Createing Robust Application</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Review-of-Data-Type"><span class="toc-number">3.</span> <span class="toc-text">Review of Data Type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Structing-Data"><span class="toc-number">4.</span> <span class="toc-text">Structing Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Structing-Code"><span class="toc-number">5.</span> <span class="toc-text">Structing Code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Performance-and-Memory"><span class="toc-number">6.</span> <span class="toc-text">Performance and Memory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Verifying-Application-Behavior"><span class="toc-number">7.</span> <span class="toc-text">Verifying Application Behavior</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Creating-a-Toolbox"><span class="toc-number">8.</span> <span class="toc-text">Creating a Toolbox</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Utilizing-Development-Tools"><span class="toc-text">Utilizing Development Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Createing-Robust-Application"><span class="toc-text">Createing Robust Application</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Review-of-Data-Type"><span class="toc-text">Review of Data Type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Structing-Data"><span class="toc-text">Structing Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Structing-Code"><span class="toc-text">Structing Code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Performance-and-Memory"><span class="toc-text">Performance and Memory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Verifying-Application-Behavior"><span class="toc-text">Verifying Application Behavior</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Creating-a-Toolbox"><span class="toc-text">Creating a Toolbox</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>This is a note taken from MATLAB online self-paced course.</p>
-<h3 id="Utilizing-Development-Tools"><a href="#Utilizing-Development-Tools" class="headerlink" title="Utilizing Development Tools"></a>Utilizing Development Tools</h3><p><strong>Directory reports</strong></p>
-<ul>
-<li>Commonly used folder reports in MATLAB<ul>
-<li>Code Analyzer report: displays code analyzer findings for each code file</li>
-<li>Dependency report: shows the function dependencies of the code files in the current folder</li>
-<li>Help report: provides each code file’s help text in a single report</li>
-<li>TODO/FIXME report: lists the instances of “TODO”, “FIXME”, or other custom text that exist in comments</li>
-</ul>
-</li>
-<li>To run these reports, navigate to the desired folder in MATLAB and then use the <code>Current Folder Actions</code> menu.</li>
-</ul>
-<p><strong>Code Analyzer</strong></p>
-<ul>
-<li>出现红色波浪线(即warning)时，右键单击，就有显示的帮助fix的选项</li>
-<li>如果没有fix，并且你觉得没有问题时，就可以右键选择”Suppress XXX”, 这时MATLAB会帮助你在后面加上一个注释 <code>#Ok&lt;AGROW&gt;</code>  来表示没有问题</li>
-</ul>
-<p><strong>MATLAB debugger</strong></p>
-<ul>
-<li>use breakpoint </li>
-<li>run MATLAB with <code>Pause on Errors</code> can help relief the work to find where is the bug.</li>
-</ul>
-<p><strong>Execution time measurements</strong></p>
-<ul>
-<li><code>tic</code> and <code>toc</code> functions can help measure the execution time of MATLAB code<ul>
-<li>Because tic and toc measure clock time, your computer’s background tasks can cause the timing measurements to vary slightly. Therefore, tic and toc may give different results for consecutive timings of the same code.</li>
-</ul>
-</li>
-<li>Average several running times is a good idea:  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tic; x = rand(1000); t(1) = toc;	</span><br><span class="line">tic; x = rand(1000); t(2) = toc;	</span><br><span class="line">tic; x = rand(1000); t(3) = toc;</span><br><span class="line">mean(t)</span><br><span class="line">    ans =</span><br><span class="line">        0.0305</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><strong>Code profiler</strong></p>
-<ul>
-<li>To know which parts of the code take the most time.</li>
-<li>Click <code>Run and Time</code> opens <code>MATLAB Profiler</code> window</li>
-<li>Enter a line of code in the edit box and then press Enter or click the <code>Start Profiling</code> button.</li>
-<li>Note: The profiler report does not provide information on each individual call to a function, but rather only information on the conglomeration of all calls to a function.</li>
-</ul>
-<h3 id="Createing-Robust-Application"><a href="#Createing-Robust-Application" class="headerlink" title="Createing Robust Application"></a>Createing Robust Application</h3><p><strong>Custom Warnings and Errors</strong></p>
-<ul>
-<li>use <code>warning</code> and <code>error</code> to customize</li>
-<li>Warnings and errors both contain two components: an <em>identifier</em> and a <em>displayed</em> message</li>
-<li>Identifier:<ul>
-<li>Hidden from the user</li>
-<li>At least contains two components and separated by ‘:’</li>
-<li>First component is typically the name of the application</li>
-<li>Second component identifies the condition for the error or the warning</li>
-</ul>
-</li>
-<li>Error or warning message<ul>
-<li>is displayed to the user</li>
-<li>Errors are displayed in red and warnings in orange</li>
-</ul>
-</li>
-<li>e.g. <code>warning(&#39;MyProject:ValueOutOfRange&#39;,&#39;The value must be between 1 and 10.&#39;)</code></li>
-</ul>
-<p><strong>Validating Function Inputs</strong></p>
-<ul>
-<li>MATLAB provides <a href="https://au.mathworks.com/help/matlab/ref/is.html" target="_blank" rel="noopener">several</a> functions for validating the attributes of a variable.</li>
-<li>Validating Multiple Attributes: <ul>
-<li><code>validateattributes(name,class,attributes)</code></li>
-<li><code>name</code>: the variable name</li>
-<li><code>class</code>: should be a cell array containing strings, e.g: {‘double’}, {‘cell’}, {‘numeric’}, etc.</li>
-<li><code>attributes</code>: should be a cell array containing the list of attributes and their expected values, e.g.: {‘vector’}, {‘nonempty’}, {‘scalar’,’&gt;’,10}, etc.</li>
-<li>e.g.: checks that the data passed into the variable r is a numeric scalar greater than 0: <code>validateattributes(&#39;r&#39;,{&#39;numeric&#39;},{&#39;scalar&#39;,&#39;&gt;=&#39;,0})</code></li>
-</ul>
-</li>
-<li><p>You can also provide additional flexibility to the user by converting the input provided by the user into something that is acceptable to the program.</p>
-<ul>
-<li>e.g. calling the following by <code>int = calculateInterest(500,2,&#39;2%&#39;)</code>, and return <code>int = 20</code>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> interest = calculateInterest(p,n,r)</span><br><span class="line">    <span class="keyword">if</span> ischar(r)</span><br><span class="line">        r = str2num(r(1:end-1));</span><br><span class="line">    end</span><br><span class="line">    interest = p*n*r/100;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>numel</code> can be used to check the number of elements in a array</p>
-</li>
-</ul>
-<p><strong>Setting Default Input Values</strong></p>
-<ul>
-<li><em>Missing input</em>: use function <code>nargin</code> to check if all the inputs were provided in the function call<ul>
-<li><code>nargin</code> returns the number of inputs that were passed</li>
-</ul>
-</li>
-<li><em>Empty Input</em>: <ul>
-<li>use an empty array <code>[]</code> to skip specifying some inputs</li>
-<li>usie function <code>isempty</code> to check if the input is given. If it is empty, we can assign a default value.</li>
-</ul>
-</li>
-</ul>
-<p>The program flow within the function goes as follows now:</p>
-<ol>
-<li>Are all inputs provided?(nargin) No -&gt; Set default values</li>
-<li>Is any input empty?(isempty) No -&gt; Set default values</li>
-</ol>
-<p><strong>Creating Flexible Interfaces</strong></p>
-<ul>
-<li>use the property name-value pairs in the function syntax to allows the user to specify only a subset of the line attributes in <em>any order</em>.</li>
-<li>Every input argument in the function call is mapped to a single variable in the function definition. However, you can map multiple input arguments to a single input variable <code>varargin</code> in the function definition.</li>
-<li>e.g. <code>function analyzeAndPlot(x,y,varargin)</code> can be called as <code>analyzeAndPlot(time,position,&#39;LineWidth&#39;,3,&#39;Color&#39;,&#39;r&#39;)</code> </li>
-<li><code>varargin</code> is a cell array. In the above example, starting with the third input, each input is assigned to a separate cell of varargin.</li>
-<li>The contents of varargin can be passed to other MATLAB functions using like <code>varargin{:}</code></li>
-<li><code>varargin</code> is the last input in the function declaration.</li>
-</ul>
-<p><strong>Try-Catch: Unexpected Errors</strong></p>
-<ul>
-<li>The MException Object: <ul>
-<li>Error information in MATLAB is stored in a specialized datatype called an MException object.</li>
-<li>can access the MException object for the last error that occurred using the command: <code>MException.last</code></li>
-</ul>
-</li>
-<li><p>The try-catch Construct:</p>
-<ul>
-<li><p>This special programming construct attempts to run the code within the try block. If an error condition occurs, then the execution is interrupted and switched immediately into the catch block.</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">try</span><br><span class="line">    % Attempt code</span><br><span class="line">catch mexc</span><br><span class="line">    % Backup <span class="keyword">case</span> – something went wrong</span><br><span class="line">    % An MException object called mexc now exists</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>You can provide the name of a variable after the keyword catch (<code>mexc</code> in the above example). </p>
-</li>
-<li>If an error is generated in the try block the program can then proceed in one of the following ways in the catch block:<ul>
-<li>Try to recover from the error and continue execution.</li>
-<li>Provide a customized error message and halt the execution.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="Review-of-Data-Type"><a href="#Review-of-Data-Type" class="headerlink" title="Review of Data Type"></a>Review of Data Type</h3><ul>
-<li><code>whos</code>: show variables in the workspace and compare their properties.</li>
-</ul>
-<p><strong>Table</strong>:</p>
-<ul>
-<li>Create a table: <ul>
-<li>You can use the table function with the workspace variables as inputs to create a table.</li>
-<li><code>tableName = table(variable1,variable2,variable3,&#39;VariableNames&#39;,{&#39;A&#39;,&#39;B&#39;,&#39;C&#39;})</code></li>
-</ul>
-</li>
-<li>Combine tables: <code>tableC = [tableA tableB]</code></li>
-<li>Extracting <em>portions</em> of a table: <ul>
-<li>by using column or row number: <code>tableC = tableA(:,1:2)</code></li>
-<li>by using variable name in single quotes: <code>tableC = tableA(:,&#39;FirstVariableName&#39;</code> or <code>tableC = tableA(:,{&#39;Var1&#39;,&#39;Var5&#39;})</code></li>
-<li>mixied indexing: <code>tableC = tableA([1 3 5],{&#39;Var1&#39;,&#39;Var5&#39;})</code></li>
-</ul>
-</li>
-<li>Extracting <em>Data</em> from a Table<ul>
-<li>dot notation: <code>data = tableName.VariableName</code></li>
-<li>Add new variable to a table: <code>table.NewVariable = [5 27 14]&#39;</code></li>
-<li>Curly Braces: <code>na1 = patientData{:,{&#39;Name&#39;,&#39;Age&#39;}}</code> or <code>patientData.Name{3} = &#39;NewName&#39;</code> (可直接赋值：<code>patientData{[1 4],&#39;HeartRate&#39;} = [80 ; 75]</code>)</li>
-</ul>
-</li>
-<li>use <code>tablename.Properties.VariableNames</code> to get the variabe names in a table or index into the VariableNames field to change a variable name: <code>myTable.Properties.VariableNames{2} = &#39;NewName&#39;</code></li>
-</ul>
-<p><strong>Cell Array</strong></p>
-<ul>
-<li>using <em>parentheses</em>, returns a subset cell array: <code>currencies(1)</code> -&gt; <code>ans={&#39;Euro&#39;}</code> (提取出来的还是cell)</li>
-<li>using <em>curly braces</em> will return a string: <code>currencies{1}</code> -&gt; <code>ans=&#39;Euro&#39;</code> (提取出来的 cell 本身的类型，即自身的内容)</li>
-<li>using <em>curly braces</em> can also replace or add a content: <code>currencies{1,3} = &#39;Yen&#39;</code></li>
-<li>remove an element from an array, use parentheses and set the result to an empty array, <code>ezone(2) = [];</code></li>
-</ul>
-<p><strong>Structures</strong></p>
-<ul>
-<li>Structures can contain data of dissimilar types and sizes in one variable. Use dot notation to add a field to a structure.</li>
-</ul>
-<p><strong>Function Handles</strong></p>
-<ul>
-<li>You can use a function handle to store a command as a variable, which can then be passed as an input to a function.</li>
-<li>construct a function handle by preceding the function name with an @ sign: <code>h = @sin</code></li>
-<li>call the function handle as the same way to call the function directly: <code>h(0)</code></li>
-<li>For functions requires an input, give the function handle (variable) as an input: <code>integral(h,0,pi)</code> , <code>integral(@log,1,2)</code></li>
-</ul>
-<p><strong>Anonymous Functions</strong></p>
-<ul>
-<li>use anonymous functions to create simple functions without creating a code file. That is to say, create a function directly in command line with only input variables.</li>
-<li>syntax: <code>variableName = @(arg1,...) functionDefinition</code>, e.g. <code>f = @(x,y) sin(x) + y;</code></li>
-<li><em>variableName</em> is the Function Handle</li>
-<li>Call the function just need to give the input into the handle: <code>f(pi/6,0.5)</code></li>
-</ul>
-<h3 id="Structing-Data"><a href="#Structing-Data" class="headerlink" title="Structing Data"></a>Structing Data</h3><p><strong>Structuring Data Considerations</strong></p>
-<ul>
-<li>Data that contains values from a finite set of categories, may be converted to categorical data using the <code>categorical</code> function: <code>gender = {&#39;M&#39; &#39;M&#39; &#39;F&#39; &#39;M&#39; &#39;F&#39; &#39;F&#39;}; gender = categorical(gender);</code></li>
-<li>use <code>cat</code> to concatenate the output: <code>allSums = cat(1,groupSum{:})</code></li>
-</ul>
-<p><strong>Extracting multiple elements</strong></p>
-<p><strong>Applying scalar functions to data</strong></p>
-<ul>
-<li><p>use <code>cellfun</code> function to find the group attributes of each cell:</p>
-<ul>
-<li><code>cellfun</code> function applies the specified function to each element of the cell.</li>
-<li>the specified function is called once per cell element.</li>
-<li>The specified function is typically a function which accepts a single input and produces a single output. e.g.  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">groups = </span><br><span class="line">    [3x1 double]    [2x1 double]    [4x1 double]</span><br><span class="line">cellfunc(@mean, groups)</span><br><span class="line">    ans = 3.03  4.30    5.05</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>use <code>structfun</code> to apply the same to a structure, this returns a scalar for each cell</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">groups = </span><br><span class="line">    group1: [3x1 double]</span><br><span class="line">    group2: [2x1 double]</span><br><span class="line">    group3: [4x1 double]</span><br><span class="line">    structfun(@mean,groups)</span><br><span class="line">        ans = 3.03    4.30    5.05</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Nonscalar output</p>
-<ul>
-<li>You may attempt to use <code>cellfun</code> or structfun with functions that return nonscalar outputs, such as sort, return an array.</li>
-<li><p>To handle this situation, you can specify that the outputs will be different sizes using the <code>UniformOutput</code> property. This returns a nonscalar for each cell. e.g.</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">groups = </span><br><span class="line">    [3x1 double]    [2x1 double]    [4x1 double]</span><br><span class="line">cellfun(@sort,groups,<span class="string">'UniformOutput'</span>,<span class="literal">false</span>)	</span><br><span class="line">    ans = </span><br><span class="line">        [3x1 double]    [2x1 double]    [4x1 double]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>can also use anonymous functions as inputs to <code>cellfun</code>: <code>cellfun( @(x) mean(x.price), c)</code></p>
-</li>
-</ul>
-</li>
-</ul>
-<p><strong>Converting data types</strong></p>
-<ul>
-<li><code>num2cell</code>: converts an m-by-n numeric matrix into an m-by-n cell array, where each cell contains a scalar value</li>
-<li><code>mat2cell</code>: converts a numeric matrix into a cell array where the cells contain matrices of various sizes. <ul>
-<li>the second input indicates how to subdivide the rows</li>
-<li>the third input indicates how to subdivide the columns</li>
-<li>e.g. <code>c = mat2cell(r,[2,4],[2,1])</code> means to convert the matrix r to four matrix cell, each cell has the matrix of dimension: 2x2, 2x1, 4x2, 4x1</li>
-</ul>
-</li>
-<li><code>cell2struct</code>: converts a cell array into a structure.<ul>
-<li>e.g. 4-by-2 cell array <code>c</code> is converted into a 2 element structure, <code>s</code>, with 4 fields: <code>s = cell2struct(c,{&#39;fA&#39;,&#39;fB&#39;,&#39;fC&#39;,&#39;fD&#39;},1)</code></li>
-<li>first input: the cell array</li>
-<li>second input: a cell of strings containing the field names</li>
-<li>third input: the dimension on which the fields are named. (i.e. row or column)</li>
-</ul>
-</li>
-<li><code>cell2table</code>: converts a cell array into a table</li>
-<li><em>character array</em>:  <code>cellstr</code> converts a list of strings to a cell array with the trailing spaces removed.</li>
-</ul>
-<h3 id="Structing-Code"><a href="#Structing-Code" class="headerlink" title="Structing Code"></a>Structing Code</h3><p><strong>Private Functions</strong></p>
-<ul>
-<li>To prevent your application’s internal functions from being accessible outside the application, you can place them in a folder named <em>private</em></li>
-<li>Functions in a private folder can only be called by<ul>
-<li>Functions within the parent folder</li>
-<li>Other functions within the private folder</li>
-</ul>
-</li>
-<li>private functions can call any other functions on the MATLAB path.</li>
-<li><em>private</em> folders cannot be added to the MATLAB path. Therefore, functions within them generally cannot be called from the command line unless the MATLAB current folder is the private folder itself.</li>
-</ul>
-<p><strong>Local Functions</strong></p>
-<ul>
-<li>To create local functions, place them below the primary function in the same code file</li>
-<li>When using local functions<ul>
-<li>The primary function can call the local functions</li>
-<li>The local functions can call other local functions and the primary function</li>
-<li>External code (outside of the code file) can call the primary function, but not the local functions</li>
-</ul>
-</li>
-<li>As with functions in separate files, local functions <em>have their own workspaces</em></li>
-<li>When creating local functions, you may or may not choose to use the <code>end</code> keyword for each function. However, whichever you choose, you must stay consistent. Some local functions have <code>end</code> while others don’t is invalid in MATLAB </li>
-</ul>
-<p><strong>Change the Function Interface with Anonymous Functions</strong></p>
-<ul>
-<li>One way to modify a function’s interface (without modifying the function itself) is to use a wrapper function.</li>
-<li><p>Functions with multiple inputs may not be used directly with other functions like <code>fzero</code>, <code>ode45</code>, using anonymous functions can help this:</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> y = myquad(x,a,b,c)</span><br><span class="line">    y = a*x^2 + b*x + c;</span><br><span class="line"></span><br><span class="line">a = 1; b = 5; c = -10;</span><br><span class="line"></span><br><span class="line">f = @(x) myquad(x,a,b,c)</span><br><span class="line"></span><br><span class="line">fzero(f,3)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>And the input variables can be the variables in the workspace.</p>
-</li>
-</ul>
-<h3 id="Performance-and-Memory"><a href="#Performance-and-Memory" class="headerlink" title="Performance and Memory"></a>Performance and Memory</h3><p><strong>Datatypes and Memory</strong></p>
-<ul>
-<li>can determine the memory used by a variable by choosing to display the <code>&#39;Bytes&#39;</code> column in MATLAB workspace. </li>
-<li>Container variables (tables, cell arrays, and structure arrays) require <em>overhead</em> in addition to the data they store. <ul>
-<li>This additional memory is used to store information about the contents of the variable. </li>
-<li>The amount of the overhead depends on the size of the variable.</li>
-<li>Each <code>cell</code> of a cell array requires memory overhead.</li>
-<li>A <code>table</code> requires <strong>minimal</strong> overhead for each variable and for storing table properties.</li>
-<li>A <code>structure</code> requires 64 bytes of overhead for each field name. If a structure array has more than one element, each element will require additional overhead.</li>
-</ul>
-</li>
-<li>Special Variable Types: MATLAB has datatypes that are designed to be used with data having specific characteristics. These datatypes can significantly reduce the memory consumption.<ul>
-<li><code>Categorical arrays</code> can be used to store a list of text labels or strings containing many repeated entries.</li>
-<li>The memory saved increases as the size of the list and the number of the repeated entries increase.</li>
-<li><code>Datetime arrays</code> can be used to store a list of dates. They also provide memory saving over a cell array storing individual date strings.</li>
-</ul>
-</li>
-</ul>
-<p><strong>Preallocation</strong></p>
-<ul>
-<li>Preallocating Numeric Arrays:<ul>
-<li>can use the functions <code>zeros</code> and <code>ones</code> to preallocate numeric arrays</li>
-<li>another way to preallocate an array is to assign a value to the last element of the array.</li>
-</ul>
-</li>
-<li>Preallocating Cells and Structures<br>:<ul>
-<li><strong>benefit when a for loop used</strong>, since frequently change the size will consume lots of time</li>
-<li>Preallocating a cell array or a structure array assigns space for the containers themselves, not the contents</li>
-<li>This means that preallocation of the container variables is most beneficial when the container array itself is large, regardless of the size of the contents of the individual containers.</li>
-<li>using <code>cell</code> to preallocate a cell array: <code>C = cell(1,4)</code> </li>
-<li>preallocate a structure array, start by defining the last element of the array. MATLAB will automatically replicate the field names to all of the preceding elements in the array. <code>S(5) = struct(&#39;field1&#39;,6,&#39;field2&#39;,7)</code></li>
-</ul>
-</li>
-</ul>
-<p><strong>Vectorization</strong></p>
-<ul>
-<li>a subset of vectorized functions in MATLAB: <code>diff</code>, <code>prod</code>, <code>cumprod</code>, <code>cumsum</code>, <code>union</code>,<code>setdiff</code>,<code>setxor</code> etc.</li>
-</ul>
-<p><strong>Binary Singleton Expansion (bsxfun)</strong> </p>
-<ul>
-<li>Binary: the function should accept two inputs</li>
-<li>Scalar: the function should return a scalar output  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x = [4;5;6]</span><br><span class="line">y = [1 2 3; 4 5 6; 7 8 9];</span><br><span class="line">bsxfun(@gt,x,y)</span><br><span class="line">ans =</span><br><span class="line">    1   1   1</span><br><span class="line">    1   0   0</span><br><span class="line">    0   0   0</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><strong>Memory Usage</strong></p>
-<ul>
-<li>use the <code>memory</code> command to display information about the memory</li>
-<li>or with output structures: <code>[user,sys] = memory</code></li>
-<li>The output structures have the following information:<ul>
-<li><em>Total System Memory</em>(sys.SystemMemory.Available): Physical RAM available + Page File (or swap) available. </li>
-<li><em>MATLAB Process Virtual Memory</em>(sys.VirtualAddressSpace): Total and available memory associated with the whole MATLAB process. It is limited by processor architecture and operating system.</li>
-<li><em>MATLAB Workspace</em>(user.MemAvailableAllArrays) and <em>Largest block</em>(user.MaxPossibleArrayBytes): The effective workspace available for data is the MATLAB process virtual address space minus system DLLs, Java™ (JVM), MATLAB.exe and DLLs. The largest block (for numerical arrays) is affected by fragmentation, third-party DLLs , and other running processes.</li>
-</ul>
-</li>
-</ul>
-<p><strong>Copy-on-Write Behavior</strong></p>
-<ul>
-<li>also named lazy-copying, ensures that no additional memory is assigned to an input variable until it is modified within the function.</li>
-</ul>
-<p><strong>In-Place Optimizations</strong></p>
-<ul>
-<li>declare and call a function using the same variable to define the input and output arguments: <code>x=myFun(x)</code></li>
-</ul>
-<p><strong>Nested Functions</strong></p>
-<ul>
-<li>a nested function is also used to organize several functions in a single function file and it often acts as a helper function to the primary function.</li>
-<li>However, nested functions exihibit one additional feature: They allow functions in the file to <em>share workspace variables</em>.</li>
-<li>To nest a function inside another function, the extents of the functions must be marked explicitly by using the keywords <em>function</em> and <em>end</em>.</li>
-<li><p>When to use a nested function?</p>
-<ul>
-<li>Sharing large data: Auxiliary functions that are intended to modify the data of the parent function can be written as nested functions.</li>
-<li><p>In the following example, even though <code>x</code> is not explicitly passed to the nested function <code>movingAverage</code>, the nested function can access and modify <code>x</code> from the workspace of the primary function <code>analyzeData</code>:</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> y = analyzeData(x)</span><br><span class="line">movingAverage(3);</span><br><span class="line">...</span><br><span class="line"><span class="keyword">function</span> movingAverage(n)</span><br><span class="line">window = ones(1,n)/n;</span><br><span class="line">x = conv(x,window);</span><br><span class="line">end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Using a function which requires specific function <em>signature</em>: Some functions in MATLAB, such as fzero, require you to pass handles to your own functions as inputs.</p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="Verifying-Application-Behavior"><a href="#Verifying-Application-Behavior" class="headerlink" title="Verifying Application Behavior"></a>Verifying Application Behavior</h3><p><strong>What Is a Test?</strong></p>
-<ul>
-<li>A test allows you to verify that your code works correctly by testing specific inputs and validating that expected values have been created.</li>
-<li>A simple test should:<ul>
-<li>Set up the circumstances under which you want to test the application.</li>
-<li>Call the application.</li>
-<li>Define the expected value.</li>
-<li>Compare the actual and expected behaviors.</li>
-</ul>
-</li>
-</ul>
-<p><strong>Test Response</strong></p>
-<ul>
-<li>A formal testing framework should produce either no response, to indicate that the test was passed, or an error, to indicate failure.</li>
-<li><code>assert</code> function takes a logical input (or an expression that evaluates to a logical result), and generates an error only if the input is false.  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; assert(<span class="literal">true</span>)</span><br><span class="line">    <span class="comment"># (No response)	</span></span><br><span class="line">&gt;&gt; assert(<span class="literal">false</span>)</span><br><span class="line">Assertion failed.</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><strong>Writing and Running a Test Script</strong></p>
-<ul>
-<li>A test script is simply a MATLAB script that is divided into sections and uses the assert function.</li>
-<li>Code sections allow you to compile multiple tests into a single file. The section header describes the test. Use <code>%% Test XXX</code> to seperate each section.</li>
-<li>Each section of a test script maintains its own workspace. Thus, in each section, you must define all needed variables.</li>
-<li>to run each and every section of a test script, use the <code>runtests</code> function: <code>result = runtests(&#39;myTests&#39;);</code><ul>
-<li>If run the test script as a regular script, any failed tests will produce an error, halting execution. Thus, the remaining tests will not be performed. </li>
-<li>Whereas, the runtests function will move to the next section of the script after an error is encountered so that all the tests run.</li>
-</ul>
-</li>
-<li>Output variable of <code>runtests</code> is a specialized MATLAB object designed to hold test result information.</li>
-</ul>
-<p><strong>Avoiding Bugs in Comparisons</strong></p>
-<ul>
-<li><em>Numerical Precision</em>: use a tolerance value for equality comparisons: <code>abs(x-y) &lt; 1e-6</code></li>
-</ul>
-<p><strong>Writing Test Functions</strong></p>
-<ul>
-<li><p>Creating a Test Function: A test function follows a specific template:</p>
-<ul>
-<li>note: the test local function name should be ended with <code>Test</code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="built_in">test</span> = mainFunctionName</span><br><span class="line">    <span class="built_in">test</span> = functiontests(localfunctions);</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> testName1(testcase)</span><br><span class="line">    % code <span class="keyword">for</span> <span class="built_in">test</span> 1</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> testName2(testcase)</span><br><span class="line">    % code <span class="keyword">for</span> <span class="built_in">test</span> 2</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>For each test:</p>
-<ul>
-<li>Create a local function.</li>
-<li>Name each test function starting or ending with the word “test.”</li>
-<li>Pass a single input variable.</li>
-</ul>
-</li>
-</ul>
-<p><strong>Verifying Behavior</strong></p>
-<ul>
-<li>to verify that an application behaves in a certain way, such as generating an error or not generating warnings under specific conditions</li>
-<li><em>Verification functions</em>: <code>verifyClass</code>, <code>verifyError</code>, <code>verifyWarningFree</code>, etc.</li>
-<li>The local test functions have a single input, named <code>testcase</code> in the example below. Your test code should use it as the first input to the verification function.  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> posRootTest(testcase)</span><br><span class="line">x = linspace(0,pi);</span><br><span class="line">y = sqrt(x);</span><br><span class="line">verifyTrue(testcase,isreal(y))</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><strong>Passing Commands as Inputs</strong><br>    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> testStringInput(testcase)</span><br><span class="line">    errorMessage = <span class="string">'MATLAB:UndefinedFunction'</span>;</span><br><span class="line">    cmd = @()sqrt(<span class="string">'ZureyBug'</span>);</span><br><span class="line">    verifyError(testcase,cmd,errorMessage)</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
-<p><strong>Adding Pre- and Post-Test Tasks</strong></p>
-<ul>
-<li>It can be useful to define tasks that should be performed immediately before and after running the actual tests defined in your test code. e.g., if you keep the test code and the application in separate locations, the location of the application code can be added to the MATLAB path for the tests to successfully run.</li>
-<li><p>you can add pre- and post-test tasks to your testing function by adding functions with the special names <code>setupOnce</code> and <code>teardownOnce</code> which have the same signature as the other test functions.</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> setupOnce(testCase)</span><br><span class="line">    % save the name of the application folder you will add</span><br><span class="line">    % to the TestData structure</span><br><span class="line">    testCase.TestData.appDir = fullfile(<span class="string">'C:'</span>,<span class="string">'class'</span>,<span class="string">'work'</span>,<span class="string">'ApplicationDirectory'</span>);</span><br><span class="line"></span><br><span class="line">    % add the application folder to the path <span class="keyword">for</span> testing</span><br><span class="line">    addpath(testCase.TestData.appDir)</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> teardownOnce(testCase)</span><br><span class="line">    % removes the added path</span><br><span class="line">    rmpath(testCase.TestData.appDir)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>In the above example, the test code and the application code are in separate locations. You will use the application folder in the teardown function. So, rather than redefining it, you can save it in the testCase variable to the TestData property. This property is a structure variable to which you can add fields as you desire. Any fields that are added to this variable are accessible by all functions in the test function file.</p>
-</li>
-<li>remove the directory from the path in the teardownOnce function. See that the variable you previously defined, appDir, is accessible through testCase.TestData. Note that the structure TestData is named automatically, whereas you can name the function input, testCase in this example, whatever you want.</li>
-</ul>
-<h3 id="Creating-a-Toolbox"><a href="#Creating-a-Toolbox" class="headerlink" title="Creating a Toolbox"></a>Creating a Toolbox</h3><p><strong>Creating a Toolbox</strong></p>
-<ol>
-<li>Open the Package Toolbox dialog: Home - Add-Ons - Package ToolBox</li>
-<li>Specify the folder where your application is stored: need to ensure that all the required code files for the application are on the MATLAB path prior to specifying the folder.</li>
-<li>Fill in toolbox information: like author name, company</li>
-<li>Package the toolbox: <ul>
-<li>will create a <code>.mltbx</code> file that contains all the dependencies and path information needed for you to share the application.</li>
-<li>a <code>.prj</code> file is also created. This saves the project information that you just entered in the Packager window. This is useful if you later need to repackage your application after making changes to it.</li>
-</ul>
-</li>
-</ol>
-<p><strong>Installing a Toolbox</strong></p>
-<ul>
-<li>by double-clicking the <code>.mltbx</code> file, this will start the installation process, which adds the files to the local installation of MATLAB</li>
-<li>The files are added to the MATLAB Add-Ons folder, and the proper folders are added to the path.</li>
-<li>The location of the MATLAB Add-Ons folder is set in the preferences</li>
-<li>to uninstall a toolbox, open the Add-On Manager</li>
-</ul>
-<p><strong>Including Custom Documentation (manual) in the Toolbox</strong></p>
-<ul>
-<li>To add documentation, first create an <code>info.xml</code> file at the <em>root</em> level of the toolbox folder. Use a standard template (which can be found in the documentation) to create the initial file.</li>
-<li>modify your toolbox’s name and specify the folder where you will store the documentation. In <code>&lt;name&gt;</code> and <code>&lt;help_location&gt;</code> part in the xml file</li>
-<li>Create the <code>doc</code> folder at the root level of your toolbox, thus matching where you specified it in info.xml.</li>
-<li>Create a <code>helptoc.xml</code> file in the doc folder. Again, use a template found in the documentation as a starting point.</li>
-<li>Specify the content structure of the documentation. This defines the pages that are listed in your documentation’s content tree (typically shown on the left side of the documentation).</li>
-<li>Specify the content structure of your documentation. This defines the pages that are listed in your documentation’s content tree (typically shown on the left side of the documentation).</li>
-<li>In the <code>doc</code> folder, create the HTML files that you specified in the helptoc.xml file. Note that you can use any tool you’d like to generate the HTML, such as hand-writing it or even using the MATLAB publish features.</li>
-<li>Then, the document is created<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># template info.xml</span></span><br><span class="line">&lt;productinfo</span><br><span class="line">    xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">    xsi:noNamespaceSchemaLocation=<span class="string">"optional"</span>&gt;</span><br><span class="line">    &lt;?xml-stylesheet <span class="built_in">type</span>=<span class="string">"text/xsl"</span> href=<span class="string">"optional"</span>?&gt;</span><br><span class="line">    &lt;matlabrelease&gt;2014b&lt;/matlabrelease&gt;</span><br><span class="line">    &lt;name&gt;My Toolbox&lt;/name&gt;</span><br><span class="line">    &lt;<span class="built_in">type</span>&gt;toolbox&lt;/<span class="built_in">type</span>&gt;</span><br><span class="line">    &lt;icon&gt;&lt;/icon&gt;</span><br><span class="line">    &lt;help_location&gt;doc&lt;/help_location&gt;</span><br><span class="line">    &lt;help_contents_icon&gt;<span class="variable">$toolbox</span>/matlab/icons/bookicon.gif&lt;/help_contents_icon&gt;</span><br><span class="line">&lt;/productinfo&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># template helpdoc.xml</span></span><br><span class="line">&lt;?xml version=<span class="string">'1.0'</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;toc version=<span class="string">"2.0"</span>&gt;</span><br><span class="line">    &lt;tocitem target=<span class="string">"mainPage.html"</span>&gt;Main Page</span><br><span class="line">        &lt;tocitem image=<span class="string">"HelpIcon.FUNCTION"</span>&gt;Functions</span><br><span class="line">            &lt;tocitem target=<span class="string">"fcnPage1.html"</span>&gt;Fcn 1&lt;/tocitem&gt;</span><br><span class="line">            &lt;tocitem target=<span class="string">"fcnPage2.html"</span>&gt;Fcn 2&lt;/tocitem&gt;</span><br><span class="line">        &lt;/tocitem&gt;</span><br><span class="line">    &lt;/tocitem&gt;</span><br><span class="line">&lt;/toc&gt;</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/24/Matlab-technique/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/5/">5</a><a class="extend next" rel="next" href="/blog/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -2417,7 +2160,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共36.8k字
+              本站总共43.8k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -2532,7 +2275,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂文</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2544,11 +2291,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂文</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2556,11 +2299,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
+                <a href="javascript:void(0)" class="js-tag color4">Deep learning</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2568,15 +2311,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2584,15 +2319,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Tools</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
+                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Deep learning</a>
+                <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
               </li>
             
             <div class="clearfix"></div>

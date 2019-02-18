@@ -247,6 +247,537 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-slurm-exit-code" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/11/13/slurm-exit-code/">Slurm General Command and Exit Code</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/11/13/slurm-exit-code/" class="archive-article-date">
+  	<time datetime="2018-11-12T21:09:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#General-command"><span class="toc-number">1.</span> <span class="toc-text">General command</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exit-code"><span class="toc-number">2.</span> <span class="toc-text">Exit code</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Job-Termination-Signals"><span class="toc-number">2.1.</span> <span class="toc-text">Job Termination Signals</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Job-Exit-Status"><span class="toc-number">2.2.</span> <span class="toc-text">Job Exit Status</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#General-command"><span class="toc-text">General command</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exit-code"><span class="toc-text">Exit code</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Job-Termination-Signals"><span class="toc-text">Job Termination Signals</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Job-Exit-Status"><span class="toc-text">Job Exit Status</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="General-command"><a href="#General-command" class="headerlink" title="General command"></a>General command</h3><p><strong>submit a job</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sbatch myscript.sh</span><br><span class="line">sbatch --<span class="built_in">test</span>-only myscript.sh  <span class="comment"># test a job and find out when your job is estimated to run</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Information of jobs for a user</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">squeue -u &lt;username&gt;    <span class="comment"># List all current jobs for a user</span></span><br><span class="line">squeue -u &lt;username&gt; -t RUNNING <span class="comment"># List all running jobs for a user</span></span><br><span class="line">squeue -u &lt;username&gt; -t PENDING <span class="comment"># List all pending jobs for a user</span></span><br><span class="line">scontrol show jobid -dd &lt;jobid&gt; <span class="comment"># List detailed information for a job (useful for troubleshooting)</span></span><br><span class="line">sstat --format=AveCPU,AvePages,AveRSS,AveVMSize,JobID -j &lt;jobid&gt; --allsteps <span class="comment"># List status info for a currently running job</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Controlling jobs</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">scancel &lt;jobid&gt;   <span class="comment"># cancel one job</span></span><br><span class="line">scancel -u &lt;username&gt; <span class="comment"># cancel all the jobs for a user</span></span><br><span class="line">scancel -t PENDING -u &lt;username&gt; <span class="comment"># cancel all pending jobs for a user</span></span><br><span class="line">scontrol hold &lt;jobid&gt; <span class="comment"># pause a particular job</span></span><br><span class="line">scontrol requeue &lt;jobid&gt;    <span class="comment"># requeue (cancel and rerun) a particular job </span></span><br><span class="line">scancel &lt;jobid&gt;_&lt;index&gt; <span class="comment"># To cancel an indexed job in a job array</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="Exit-code"><a href="#Exit-code" class="headerlink" title="Exit code"></a>Exit code</h3><p>开始使用HPC时遇到很多问题，特别是用slurm deploy job的时候，如果在slurm文件中设置将开始，结束，失败的信息发送给自己邮箱时，它会针对每一种情况给一个code，这个code即表示一种状态。下面记录一些常见的 exit code 表明的意思。</p>
+<p>The exit code from a batch job is a standard Unix termination signal.<br>Typically, exit code 0 means successful completion.<br>Codes 1-127 are generated from the job calling exit() with a non-zero value to indicate an error.<br>Exit codes 129-255 represent jobs terminated by Unix signals.<br>Each signal has a corresponding value which is indicated in the job exit code</p>
+<h4 id="Job-Termination-Signals"><a href="#Job-Termination-Signals" class="headerlink" title="Job Termination Signals"></a>Job Termination Signals</h4><table>
+<thead>
+<tr>
+<th>Signal Name</th>
+<th>Signal Number</th>
+<th>Exit Type</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SIGHUP</td>
+<td>1</td>
+<td>Term</td>
+<td>Hangup detected on controlling terminal or death of controlling process</td>
+</tr>
+<tr>
+<td>SIGINT</td>
+<td>2</td>
+<td>Term</td>
+<td>Interrupt from keyboard</td>
+</tr>
+<tr>
+<td>SIGQUIT</td>
+<td>3</td>
+<td>Core</td>
+<td>Quit from keyboard</td>
+</tr>
+<tr>
+<td>SIGILL</td>
+<td>4</td>
+<td>Core</td>
+<td>Illegal Instruction</td>
+</tr>
+<tr>
+<td>SIGABRT</td>
+<td>6</td>
+<td>Core</td>
+<td>Abort signal from abort(3)</td>
+</tr>
+<tr>
+<td>SIGFPE</td>
+<td>8</td>
+<td>Core</td>
+<td>Floating point exception</td>
+</tr>
+<tr>
+<td>SIGKILL</td>
+<td>9</td>
+<td>Term</td>
+<td>Kill signal</td>
+</tr>
+<tr>
+<td>SIGSEGV</td>
+<td>11</td>
+<td>Core</td>
+<td>Invalid memory reference</td>
+</tr>
+<tr>
+<td>SIGPIPE</td>
+<td>13</td>
+<td>Term</td>
+<td>Broken pipe: write to pipe with no readers</td>
+</tr>
+<tr>
+<td>SIGALRM</td>
+<td>14</td>
+<td>Term</td>
+<td>Timer signal from alarm(2)</td>
+</tr>
+<tr>
+<td>SIGTERM</td>
+<td>15</td>
+<td>Term</td>
+<td>Termination signal</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Job-Exit-Status"><a href="#Job-Exit-Status" class="headerlink" title="Job Exit Status"></a>Job Exit Status</h4><table>
+<thead>
+<tr>
+<th>Exit Code</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9</td>
+<td>Ran out of CPU time.</td>
+</tr>
+<tr>
+<td>64</td>
+<td>The job ended nicely for but your job was running out of CPU time. The solution is to submit the job to a queue with more resources (bigger CPU time limit).</td>
+</tr>
+<tr>
+<td>125</td>
+<td>An ErrMsg(severe) was reached in your job.</td>
+</tr>
+<tr>
+<td>127</td>
+<td>Something wrong with the machine?</td>
+</tr>
+<tr>
+<td>130</td>
+<td>The job ran out of CPU or swap time. If swap time is the culprit, check for memory leaks.</td>
+</tr>
+<tr>
+<td>131</td>
+<td>The job ran out of CPU or swap time. If swap time is the culprit, check for memory leaks.</td>
+</tr>
+<tr>
+<td>134</td>
+<td>The job is killed with an abort signal, and you probably got core dumped. Often this is caused either by an assert() or an ErrMsg(fatal) being hit in your job. There may be a run-time bug in your code. Use a debugger like gdb or Totalview to find out what’s wrong.</td>
+</tr>
+<tr>
+<td>137</td>
+<td>The job was killed because it exceeded the time limit.</td>
+</tr>
+<tr>
+<td>139</td>
+<td>Segmentation violation. Usually indicates a pointer error.</td>
+</tr>
+<tr>
+<td>140</td>
+<td>The job exceeded the “wall clock” time limit (as opposed to the CPU time limit).</td>
+</tr>
+</tbody>
+</table>
+<p>Reference:<br><a href="https://www.rc.fas.harvard.edu/resources/documentation/convenient-slurm-commands/" target="_blank" rel="noopener">https://www.rc.fas.harvard.edu/resources/documentation/convenient-slurm-commands/</a><br><a href="https://sites.google.com/a/case.edu/hpc-upgraded-cluster/cluster-faq/running-jobs/exit-code-status" target="_blank" rel="noopener">https://sites.google.com/a/case.edu/hpc-upgraded-cluster/cluster-faq/running-jobs/exit-code-status</a><br><a href="https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference-list-of-run-time-error-messages" target="_blank" rel="noopener">https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference-list-of-run-time-error-messages</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Tools</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/11/13/slurm-exit-code/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-MIT6006-Lec05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/11/07/MIT6006-Lec05/">MIT6006 Lec05 Binary search trees, BST sort</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/11/07/MIT6006-Lec05/" class="archive-article-date">
+  	<time datetime="2018-11-06T22:28:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Preliminary-things"><span class="toc-number">1.</span> <span class="toc-text">Preliminary things</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Difference-between-array-and-list"><span class="toc-number">1.1.</span> <span class="toc-text">Difference between array and list</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Runway-Reservation-System-problem"><span class="toc-number">2.</span> <span class="toc-text">Runway Reservation System problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Binary-Search-Trees-BST"><span class="toc-number">3.</span> <span class="toc-text">Binary Search Trees (BST)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Augmenting-the-BST-Structure"><span class="toc-number">3.1.</span> <span class="toc-text">Augmenting the BST Structure</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Preliminary-things"><span class="toc-text">Preliminary things</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Difference-between-array-and-list"><span class="toc-text">Difference between array and list</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Runway-Reservation-System-problem"><span class="toc-text">Runway Reservation System problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Binary-Search-Trees-BST"><span class="toc-text">Binary Search Trees (BST)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Augmenting-the-BST-Structure"><span class="toc-text">Augmenting the BST Structure</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="Preliminary-things"><a href="#Preliminary-things" class="headerlink" title="Preliminary things"></a>Preliminary things</h3><h4 id="Difference-between-array-and-list"><a href="#Difference-between-array-and-list" class="headerlink" title="Difference between array and list"></a>Difference between array and list</h4><p><strong>Array</strong></p>
+<ul>
+<li>每个元素都有一个index, 通过index来操作该元素的所有动作。</li>
+<li>Array 的大小是一开始就确定的，储存的个数不能超过这个最大限制。然而在实际当中，这个upper limit很少会被达到，但是分出去了就分出去了，不能拿来做别的事情，所以会造成内存的浪费</li>
+<li>插入一个新元素会比较 expensive, 因为新元素之后的所有元素都需要移动。同理删除。</li>
+<li>Array allow both direct and sequential access to element</li>
+</ul>
+<p><strong>List</strong></p>
+<ul>
+<li>是有个有序的集合，由指针(链表)来确定位置的，根据不同的implementation, 可分为 linked list 和 dynamic array</li>
+<li>每个元素(node), 包含数据同时还有指向下一个元素的指针</li>
+<li>大小是动态的，可随时变的</li>
+<li>插入和删除操作花费较少</li>
+<li>lists allow only sequential access. Therefore, cannot do binary search with linked lists.</li>
+<li>Extra memory space for a pointer is required with each element of the list.</li>
+</ul>
+<p>A binary tree is made of nodes, where each node contains a “left” reference, a “right” reference, and a data element. </p>
+<h3 id="Runway-Reservation-System-problem"><a href="#Runway-Reservation-System-problem" class="headerlink" title="Runway Reservation System problem"></a>Runway Reservation System problem</h3><ul>
+<li>Airport with single (very busy) runway</li>
+<li>Have “reservations” for future landings</li>
+<li>When plane lands, it is removed from set of pending events</li>
+<li>Reserve req specify “requested landing time” t</li>
+<li>Add t to the set if no other landings are scheduled within k minutes either way. Assume that k can vary.</li>
+<li>Algorithm: Keep R as a sorted list<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">init: R = [ ]</span><br><span class="line">req(t): if t &lt; now: return &quot;error&quot;</span><br><span class="line">for i in range (len(R)):</span><br><span class="line">    if abs(t-R[i]) &lt; k: return &quot;error&quot;</span><br><span class="line">R.append(t)</span><br><span class="line">R = sorted(R)</span><br><span class="line">land: t = R[0]</span><br><span class="line">if (t != now) return error</span><br><span class="line">R = R[1: ]          (drop R[0] from R)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>If using sorted list:<br>Appending and sorting takes $Θ(nlg n)$ time. However, it is possible to insert new time/plane rather than append and sort but insertion takes $Θ(n)$ time. A k minute check can be done in O(1) once the insertion point is found.</p>
+<p>If using Sorted array:<br>It is possible to do binary search to find place to insert in $O(lg n)$ time. Using binary search, we find the smallest i such that R[i] ≥ t, i.e., the next larger element. We then compare R[i] and R[i − 1] against t. Actual insertion however requires shifting elements which requires Θ(n) time.</p>
+<p>If using Unsorted list/array:<br>k minute check takes O(n) time.</p>
+<p>If using Min-Heap:<br>It is possible to insert in $O(lg n)$ time. However, the k minute check will require $O(n)$ time since we need to compare both sides of the heap.</p>
+<p>If using Dictionary or Python Set:<br>Insertion is $O(1)$ time. k minute check takes $Ω(n)$ time</p>
+<h3 id="Binary-Search-Trees-BST"><a href="#Binary-Search-Trees-BST" class="headerlink" title="Binary Search Trees (BST)"></a>Binary Search Trees (BST)</h3><p><strong>Properties</strong>:</p>
+<ul>
+<li>Each node x in the binary tree has a key $key(x)$.</li>
+<li>Nodes other than the root have a parent p(x). </li>
+<li>Nodes may have a left child left(x) and/or a right child right(x). These are pointers unlike in a heap</li>
+<li>For any node x, for all nodes y in the left subtree of x, $key(y) ≤ key(x)$. For all nodes y in the right subtree of x $key(y) ≥ key(x)$.</li>
+</ul>
+<p><strong>Operations</strong>:</p>
+<ul>
+<li>insert(val): Follow left and right pointers till you find the position (or see the value)</li>
+<li>find(val): Follow left and right pointers until you find it or hit NIL</li>
+<li>findmin(): Key is to just go left till you cannot go left anymore.</li>
+</ul>
+<p><strong>Complexity</strong>:<br>All operations are $O(h)$ where h is height of the BST.</p>
+<h4 id="Augmenting-the-BST-Structure"><a href="#Augmenting-the-BST-Structure" class="headerlink" title="Augmenting the BST Structure"></a>Augmenting the BST Structure</h4><p>When a data structure doesn’t support some of the operations that we need. Then we can often augment the data strucutre by adding a data member or two and an additional operation or two.</p>
+<p>Rank(t): give the number of planes are scheduled to land at times ≤ t<br>Solution: by adding a subtree size memeber into the structure, like another key to the node</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/11/07/MIT6006-Lec05/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-MIT6006-Lec04" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/11/06/MIT6006-Lec04/">MIT6006 Lec04 Priority queue and Heap</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/11/06/MIT6006-Lec04/" class="archive-article-date">
+  	<time datetime="2018-11-06T02:48:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Priority-Queues"><span class="toc-number">1.</span> <span class="toc-text">Priority Queues</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap"><span class="toc-number">2.</span> <span class="toc-text">Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap-sort"><span class="toc-number">3.</span> <span class="toc-text">Heap sort</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Priority-Queues"><span class="toc-text">Priority Queues</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap"><span class="toc-text">Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap-sort"><span class="toc-text">Heap sort</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <p><br></p>
+<h3 id="Priority-Queues"><a href="#Priority-Queues" class="headerlink" title="Priority Queues"></a>Priority Queues</h3><ul>
+<li>Defination: A data structure implementing a set S of elements, each associated with a <strong>key</strong>.</li>
+<li>Every element has its own key. And the key represents the priority of that element. Keys are not necessarily unique.</li>
+<li>It supports the following operations:<ul>
+<li><code>insert(S,x)</code>: insert element x into set S</li>
+<li><code>max(S)</code>: return element of S with largest key</li>
+<li><code>extract_max(S)</code>: return element of S with largest key and remove it from S</li>
+<li><code>increase_key(S,x,k)</code>: increase the value of element x’ s key to new value k (assumed to be as large as current value)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h3><ul>
+<li>Heap is an implementation of a priority queue</li>
+<li>is also an <strong>array</strong> visualized as a nearly complete <em>binary tree</em></li>
+<li>Heaps can be convert to max heap or min heap when sorting them.</li>
+<li><strong>Max heap</strong>: the key of a node is ≥ than the keys of its children. (analogously as min heap)</li>
+<li>Heap as a tree:<ul>
+<li>Root of the tree: the first element (i=1) in the array</li>
+<li>parent(i)=i/2: returns index of node’s parent</li>
+<li>left(i)=2i: returns index of node’s left child</li>
+<li>right(i)=2i+1: returns index of node’s right child</li>
+<li>The height of a binary heap is $O(lg n)$</li>
+</ul>
+</li>
+<li>Heap operations:<ul>
+<li><code>build_max_heap</code>: produce a max-heap from an unordered array</li>
+<li><code>max_heapify</code>: correct a single violation of the heap property in a subtree at its root</li>
+<li><code>insert</code>, <code>extract_max</code>, <code>heapsort</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>Max_heapify</strong>: </p>
+<ul>
+<li>the assumption is that the trees rooted at left(i) and right(i) are max-heaps. </li>
+<li>If element A[i] violates the max-heap property, correct violation by “trickling” element A[i] down the tree, making the subtree rooted at index i a max-heap.</li>
+<li>Pseudocode:  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">l = left(i)</span><br><span class="line">r = right(i)</span><br><span class="line"><span class="keyword">if</span> (l &lt;= heap-size(A) and A[l] &gt; A[i])</span><br><span class="line">    <span class="keyword">then</span> largest = l <span class="keyword">else</span> largest = i</span><br><span class="line"><span class="keyword">if</span> (r &lt;= heap-size(A) and A[r] &gt; A[largest])</span><br><span class="line">    <span class="keyword">then</span> largest = r</span><br><span class="line"><span class="keyword">if</span> largest != i</span><br><span class="line">    <span class="keyword">then</span> exchange A[i] and A[largest]</span><br><span class="line">Max_Heapify(A, largest)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>Build_Max_Heap</strong>:</p>
+<ul>
+<li>Converts A[1…n] to a max heap</li>
+<li><p>Build_Max_Heap(A):</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i=n/2 downto 1</span><br><span class="line"><span class="keyword">do</span> Max_Heapify(A, i)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>The reason to start at n/2 is that element A[n/2+1 … n] are all leaves. There is no need to build max_heap for leaves which has only one element (its own).</p>
+</li>
+<li>Time costs: $O(nlog n)$ via simple analysis</li>
+<li>Observe however that Max_Heapify takes $O(1)$ for time for nodes that are one level above the leaves(叶子层的上一层，即倒数第二层)，$O(l)$ for the nodes that are $l$ levels above the leaves. There are n/4 nodes in level 1(即 倒数第二层), n/8 in level 2 (再往上的的一层) and so on till in $lg n$ level remains one root node.</li>
+<li>Therefore, the total amount of work in the for loop is (括号里面的是那一层的Node个数):<br>$$\frac n4(1c) + \frac n8 (2c) + \frac n{16} (3c) + … + 1(lgn c)$$</li>
+<li>set $\frac n4=2^k$简化上式可得：$c 2^k (\frac1{2^0}+\frac2{2^1}+\frac3{2^2}+ … + \frac{(k+1)}{2^k})$, 括号里面上界是个常数</li>
+<li>Therefore, Build_max_heap is $O(n)$</li>
+</ul>
+<h3 id="Heap-sort"><a href="#Heap-sort" class="headerlink" title="Heap sort"></a>Heap sort</h3><ul>
+<li>Sort strategy:<ol>
+<li>Build Max Heap from unordered array;</li>
+<li>Find maximum element A[1];</li>
+<li>Swap elements A[n] and A[1]: now max element is at the end of the array!</li>
+<li>Discard node n from heap (by decrementing heap-size variable)</li>
+<li>New root may violate max heap property, but its children are max heaps. Run max_heapify to fix this.</li>
+<li>Go to Step 2 unless heap is empty</li>
+</ol>
+</li>
+<li>Running time:<ul>
+<li>after n iterations the Heap is empty</li>
+<li>every iteration involves a swap and a max_heapify operation; hence it takes O(log n) time</li>
+<li>Overall $O(nlog n)$</li>
+</ul>
+</li>
+<li>A nice demo here: <a href="https://www.geeksforgeeks.org/heap-sort/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/heap-sort/</a></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/11/06/MIT6006-Lec04/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-notes-matlab" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1082,343 +1613,9 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-DTI-basics" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/10/23/DTI-basics/">DTI Basics</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/10/23/DTI-basics/" class="archive-article-date">
-  	<time datetime="2018-10-22T23:01:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Processing-Data-with-FSL’s-FDT-Diffusion"><span class="toc-number">1.</span> <span class="toc-text">Processing Data with FSL’s FDT Diffusion</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Processing-Data-with-FSL’s-FDT-Diffusion"><span class="toc-text">Processing Data with FSL’s FDT Diffusion</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>You will also need to acquire a reference image with no diffusion information to calculate the ADC value (divide diffusion scan by reference scan). You can vary the amount of diffusion weighting (level of sensitivity to diffusion). The amount of diffusion weighting is measured by the b-value. If the b-value equals 0, there is no diffusion weighting (reference scan). If the diffusion value is very high, you can get greater resolution, but also more noise. The standard b-value for adults is 1000. In children, you typically use 600. If looking outside the brain, typically around 500.</p>
-<p>converted to NIfTI format and includes the b-values and gradient idrections: .bval and .bvec</p>
-<p> mean B0 image is not sensitive to diffusion direction.<br>in diffusion image, the brightness varies dramatically in the white matter depending on the alignment of the fibers. More diffusion yields a darker pixel because you lose signal as the water molecule can go anywhere. Higher ADC values mean it can go very far without interruption, and it takes the signal with it. This is not necessarily related to anisotropy. </p>
-<p>Eddy current correction of DTI data is analogous to motion correction of fMRI data.</p>
-<h3 id="Processing-Data-with-FSL’s-FDT-Diffusion"><a href="#Processing-Data-with-FSL’s-FDT-Diffusion" class="headerlink" title="Processing Data with FSL’s FDT Diffusion"></a>Processing Data with FSL’s FDT Diffusion</h3><p>The reference volume is typically 0 (this is the volume with a b-value of 0, dcm2nii should automatically ensure that the initial volume is the volume with zero b-value, but you should ensure this is correct with your data which you can do by viewing the volumes with MRIcron).</p>
-<p>The basic processing pipeline has the following elements:<br>Convert data from scanner to scalar image<br>Run distortion correction<br>EPI distortion correction with fieldmap/TOPUP<br>Eddy current correction<br>Brain extraction<br>Tensor fitting<br>Produce scalars (FA, MD, AD, RD, RGB)</p>
-<p>Advanced processing:<br>Normalization<br>Scalar normalization, or<br>Tensor normalization<br>Fiber tracking<br>Deterministic, or<br>Probabilistic<br>Whole brain analysis<br>Voxel-based analysis, or<br>Track-based analysis</p>
-<p>步骤：FA -&gt; Tensors -&gt; Fiber tracking -&gt; white matter delineation</p>
-<p><a href="http://www.cabiatl.com/Resources/Course/tutorial/html/dti.html" target="_blank" rel="noopener">http://www.cabiatl.com/Resources/Course/tutorial/html/dti.html</a><br><a href="http://brainimaging.waisman.wisc.edu/~tromp/DTI_101.pdf" target="_blank" rel="noopener">http://brainimaging.waisman.wisc.edu/~tromp/DTI_101.pdf</a><br><a href="http://www.diffusion-imaging.com/2015/10/dti-tutorial-1-from-scanner-to-tensor.html" target="_blank" rel="noopener">http://www.diffusion-imaging.com/2015/10/dti-tutorial-1-from-scanner-to-tensor.html</a><br><a href="https://mrtrix.readthedocs.io/en/latest/quantitative_structural_connectivity/ismrm_hcp_tutorial.html" target="_blank" rel="noopener">https://mrtrix.readthedocs.io/en/latest/quantitative_structural_connectivity/ismrm_hcp_tutorial.html</a><br><a href="http://dbic.dartmouth.edu/wiki/index.php/Diffusion_Tensor_Imaging_Analysis" target="_blank" rel="noopener">http://dbic.dartmouth.edu/wiki/index.php/Diffusion_Tensor_Imaging_Analysis</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">MRI</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/10/23/DTI-basics/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-panda-use" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/10/19/panda-use/">Panda软件使用笔记</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/10/19/panda-use/" class="archive-article-date">
-  	<time datetime="2018-10-18T23:01:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#开始使用之前"><span class="toc-number">1.</span> <span class="toc-text">开始使用之前</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件格式准备"><span class="toc-number">2.</span> <span class="toc-text">文件格式准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Full-pipeline"><span class="toc-number">3.</span> <span class="toc-text">Full pipeline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tracking-amp-Network-parameters"><span class="toc-number">4.</span> <span class="toc-text">Tracking &amp; Network parameters</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#开始使用之前"><span class="toc-text">开始使用之前</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件格式准备"><span class="toc-text">文件格式准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Full-pipeline"><span class="toc-text">Full pipeline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tracking-amp-Network-parameters"><span class="toc-text">Tracking &amp; Network parameters</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="开始使用之前"><a href="#开始使用之前" class="headerlink" title="开始使用之前"></a>开始使用之前</h3><ul>
-<li>将Panda的文件夹安装在MATLAB的路径当中</li>
-<li>MATLAB必须从 terminal 处打开，不能用shortcut的图标打开</li>
-</ul>
-<h3 id="文件格式准备"><a href="#文件格式准备" class="headerlink" title="文件格式准备"></a>文件格式准备</h3><ul>
-<li>subject name folder - DTI folder - DTI files 这种格式</li>
-<li>DTI files 应该有三个文件：B value file(bval), b vector file(bvec), nii file</li>
-<li>用 MRIcron 可以直接将 Dicom 的原始文件 convert 过去</li>
-</ul>
-<h3 id="Full-pipeline"><a href="#Full-pipeline" class="headerlink" title="Full pipeline"></a>Full pipeline</h3><ul>
-<li>Pipeline mode: 如果只是一台电脑的话就选 batch; Max_Queued 是根据电脑的核数来的，会自动识别，所以不用改</li>
-<li>Diffusion parameters: <ul>
-<li>Resampling resolution:  作者推荐使用 $2×2×2mm^3$， 较高的resolution 会耗费处理时间</li>
-<li>删除raw NII file 以节约空间</li>
-<li>f(skull reovel): 去除DTI image中的brain tissue, 选用default值 0.25</li>
-<li>cropping gap(mm): 就是图像外面的空白大小，选用默认值 3mm</li>
-<li>Orientation patch: </li>
-<li>剩下全是默认</li>
-</ul>
-</li>
-</ul>
-<h3 id="Tracking-amp-Network-parameters"><a href="#Tracking-amp-Network-parameters" class="headerlink" title="Tracking &amp; Network parameters"></a>Tracking &amp; Network parameters</h3><ul>
-<li>Deterministic fiber tracking: <ul>
-<li>Propagation algorithm: FACT</li>
-<li>Angle threshold: 45</li>
-<li>FA_threshold: 0.2~1</li>
-</ul>
-</li>
-<li><p>Network node definition</p>
-<ul>
-<li>选择 parcellated native space: 这里我们使用 Freesurfer generate 出来的atlas.</li>
-<li>需注意这个atlas需要是跟DTI data coregister 之后的，不然会fail掉，因为两个图像不match, 所以需要先生成DTI的file，再拿这个file去跟atlas做 coregistration.</li>
-<li>生成DTI file: 此时 ‘Network Node Definition’ 及以下都不选择，运行到上面的fiber traking就能生成想要的文件，生成的文件是<code>trackvis</code> folder 下的<code>dti_fa_color.nii.gz</code></li>
-<li>Coregistraion: 找到Freesurfer 生成的文件，用AFNI的suma function之后，会有一个 SUMA 的文件夹，该文件夹下面应该有一个 <code>aparc+aseg_REN_all.nii.gz</code>和<code>aparc.a2009s+aseg_REN_all.nii.gz</code>的文件，这两个文件就是我们要coregister的，可以任选一个，分别代表不同的T1 segmentation的atlas. 将 <code>dti_fa_color.nii.gz</code> 复制到该 SUMA 文件夹下</li>
-<li><p>Coregistration 的代码如下:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">3dcalc -a dti_fa_color.nii.gz -expr <span class="string">'a'</span> -prefix dti_fa_color</span><br><span class="line">align_epi_anat.py -anat aparc+aseg_REN_all.nii.gz -epi dti_fa_color+orig -epi_base 0 -anat_has_skull no -epi_strip 3dAutomask -volreg off -tshift off -big_move</span><br><span class="line">3dAllineate -1Dmatrix_apply aparc+aseg_REN_all_al_mat.aff12.1D -input aparc+aseg_REN_all.nii.gz -prefix aparc+aseg_REN_all_reg -NN -final NN</span><br><span class="line">3dcalc -a aparc+aseg_REN_all_reg+orig -expr <span class="string">'a'</span> -short -prefix aparc+aseg_REN_all_short</span><br><span class="line">3dfractionize -template dti_fa_color+orig -input aparc+aseg_REN_all_short+orig -clip 0.2 -preserve -prefix aparc+aseg_REN_all_coreg</span><br><span class="line">3dAFNItoNIFTI -prefix aparc+aseg_REN_all_coreg aparc+aseg_REN_all_coreg+orig</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>得到的 <code>aparc+aseg_REN_all_coreg</code> 就是要放在 <code>parcellated native space</code> 处的文件。选择好之后再运行一遍就OK。</p>
-</li>
-</ul>
-</li>
-<li>Network construction: 用 deterministic</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Tools</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/10/19/panda-use/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-problem-matlab-gcc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/10/18/problem-matlab-gcc/">Problem solve - `GLIBCXX_3.4.21&#39; not found</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/10/18/problem-matlab-gcc/" class="archive-article-date">
-  	<time datetime="2018-10-18T04:11:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              
-            </div>
-           -->
-        <!--   -->
-        <p>在才开始使用Panda的过程中遇到了一个问题，这个问题之前遇到过，后来解决了也没再管过，没想到过了接近半年之后还会再使用Panda，搞了半天才找到解决办法，觉得还是真的要记录下来每个问题及当时的解决方法，保不准下一次又遇到了。。。</p>
-<p>问题如下：<br>运行之后直接出现error:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/<span class="built_in">local</span>/MATLAB/R2016b/sys/os/glnxa64/libstdc++.so.6: version `GLIBCXX_3.4.21<span class="string">' not found (required by /usr/share/fsl/5.0/bin/fslchfiletype_exe</span></span><br></pre></td></tr></table></figure></p>
-<p>首先 not found 有两种情况：</p>
-<ol>
-<li>这个 GLIBCXX_3.4.21 本来就不存在</li>
-<li>这个 GLIBCXX_3.4.21 存在，但是matlab找不到，没有链接过去</li>
-</ol>
-<p>在terminal处先通过以下代码看这个到底有没有：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strings /usr/lib/libstdc++.so.6 | grep GLIBCXX</span><br></pre></td></tr></table></figure></p>
-<p>下面会出来一串相关的存在的 GLIBCXX. 找下有没有MATLAB说的那个 `GLIBCXX_3.4.21’。</p>
-<p>如果存在的话，那就说明是matlab 链接的问题，只需要在terminal处用以下方式打开matlab就行了：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LD_PRELOAD=<span class="string">"/usr/lib/x86_64-linux-gnu/libstdc++.so.6"</span> matlab</span><br></pre></td></tr></table></figure></p>
-<p>如果不存在的话，执行以下代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libstdc++6</span><br><span class="line">sudo add-apt-repository ppa:ubuntu-toolchain-r/<span class="built_in">test</span> </span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get dist-upgrade</span><br></pre></td></tr></table></figure></p>
-<p><br><br>Reference:<br><a href="https://askubuntu.com/questions/719028/version-glibcxx-3-4-21-not-found" target="_blank" rel="noopener">https://askubuntu.com/questions/719028/version-glibcxx-3-4-21-not-found</a><br><a href="https://stackoverflow.com/questions/44773296/libstdc-so-6-version-glibcxx-3-4-20-not-found" target="_blank" rel="noopener">https://stackoverflow.com/questions/44773296/libstdc-so-6-version-glibcxx-3-4-20-not-found</a><br><a href="https://askubuntu.com/questions/575505/glibcxx-3-4-20-not-found-how-to-fix-this-error" target="_blank" rel="noopener">https://askubuntu.com/questions/575505/glibcxx-3-4-20-not-found-how-to-fix-this-error</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/10/18/problem-matlab-gcc/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/blog/page/2/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/blog/page/2/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/blog/page/4/">4</a><a class="page-number" href="/blog/page/5/">5</a><a class="extend next" rel="next" href="/blog/page/4/">Next &raquo;</a>
     </nav>
   
 
@@ -1447,7 +1644,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共36.8k字
+              本站总共43.8k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -1562,7 +1759,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂文</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1574,11 +1775,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂文</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1586,11 +1783,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
+                <a href="javascript:void(0)" class="js-tag color4">Deep learning</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1598,15 +1795,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1614,15 +1803,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Tools</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
+                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Deep learning</a>
+                <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
               </li>
             
             <div class="clearfix"></div>

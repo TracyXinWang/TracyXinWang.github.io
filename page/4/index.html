@@ -247,6 +247,340 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-DTI-basics" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/10/23/DTI-basics/">DTI Basics</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/10/23/DTI-basics/" class="archive-article-date">
+  	<time datetime="2018-10-22T23:01:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Processing-Data-with-FSL’s-FDT-Diffusion"><span class="toc-number">1.</span> <span class="toc-text">Processing Data with FSL’s FDT Diffusion</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Processing-Data-with-FSL’s-FDT-Diffusion"><span class="toc-text">Processing Data with FSL’s FDT Diffusion</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <p>You will also need to acquire a reference image with no diffusion information to calculate the ADC value (divide diffusion scan by reference scan). You can vary the amount of diffusion weighting (level of sensitivity to diffusion). The amount of diffusion weighting is measured by the b-value. If the b-value equals 0, there is no diffusion weighting (reference scan). If the diffusion value is very high, you can get greater resolution, but also more noise. The standard b-value for adults is 1000. In children, you typically use 600. If looking outside the brain, typically around 500.</p>
+<p>converted to NIfTI format and includes the b-values and gradient idrections: .bval and .bvec</p>
+<p> mean B0 image is not sensitive to diffusion direction.<br>in diffusion image, the brightness varies dramatically in the white matter depending on the alignment of the fibers. More diffusion yields a darker pixel because you lose signal as the water molecule can go anywhere. Higher ADC values mean it can go very far without interruption, and it takes the signal with it. This is not necessarily related to anisotropy. </p>
+<p>Eddy current correction of DTI data is analogous to motion correction of fMRI data.</p>
+<h3 id="Processing-Data-with-FSL’s-FDT-Diffusion"><a href="#Processing-Data-with-FSL’s-FDT-Diffusion" class="headerlink" title="Processing Data with FSL’s FDT Diffusion"></a>Processing Data with FSL’s FDT Diffusion</h3><p>The reference volume is typically 0 (this is the volume with a b-value of 0, dcm2nii should automatically ensure that the initial volume is the volume with zero b-value, but you should ensure this is correct with your data which you can do by viewing the volumes with MRIcron).</p>
+<p>The basic processing pipeline has the following elements:<br>Convert data from scanner to scalar image<br>Run distortion correction<br>EPI distortion correction with fieldmap/TOPUP<br>Eddy current correction<br>Brain extraction<br>Tensor fitting<br>Produce scalars (FA, MD, AD, RD, RGB)</p>
+<p>Advanced processing:<br>Normalization<br>Scalar normalization, or<br>Tensor normalization<br>Fiber tracking<br>Deterministic, or<br>Probabilistic<br>Whole brain analysis<br>Voxel-based analysis, or<br>Track-based analysis</p>
+<p>步骤：FA -&gt; Tensors -&gt; Fiber tracking -&gt; white matter delineation</p>
+<p><a href="http://www.cabiatl.com/Resources/Course/tutorial/html/dti.html" target="_blank" rel="noopener">http://www.cabiatl.com/Resources/Course/tutorial/html/dti.html</a><br><a href="http://brainimaging.waisman.wisc.edu/~tromp/DTI_101.pdf" target="_blank" rel="noopener">http://brainimaging.waisman.wisc.edu/~tromp/DTI_101.pdf</a><br><a href="http://www.diffusion-imaging.com/2015/10/dti-tutorial-1-from-scanner-to-tensor.html" target="_blank" rel="noopener">http://www.diffusion-imaging.com/2015/10/dti-tutorial-1-from-scanner-to-tensor.html</a><br><a href="https://mrtrix.readthedocs.io/en/latest/quantitative_structural_connectivity/ismrm_hcp_tutorial.html" target="_blank" rel="noopener">https://mrtrix.readthedocs.io/en/latest/quantitative_structural_connectivity/ismrm_hcp_tutorial.html</a><br><a href="http://dbic.dartmouth.edu/wiki/index.php/Diffusion_Tensor_Imaging_Analysis" target="_blank" rel="noopener">http://dbic.dartmouth.edu/wiki/index.php/Diffusion_Tensor_Imaging_Analysis</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">MRI</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/10/23/DTI-basics/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-panda-use" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/10/19/panda-use/">Panda软件使用笔记</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/10/19/panda-use/" class="archive-article-date">
+  	<time datetime="2018-10-18T23:01:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#开始使用之前"><span class="toc-number">1.</span> <span class="toc-text">开始使用之前</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件格式准备"><span class="toc-number">2.</span> <span class="toc-text">文件格式准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Full-pipeline"><span class="toc-number">3.</span> <span class="toc-text">Full pipeline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tracking-amp-Network-parameters"><span class="toc-number">4.</span> <span class="toc-text">Tracking &amp; Network parameters</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#开始使用之前"><span class="toc-text">开始使用之前</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件格式准备"><span class="toc-text">文件格式准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Full-pipeline"><span class="toc-text">Full pipeline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tracking-amp-Network-parameters"><span class="toc-text">Tracking &amp; Network parameters</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="开始使用之前"><a href="#开始使用之前" class="headerlink" title="开始使用之前"></a>开始使用之前</h3><ul>
+<li>将Panda的文件夹安装在MATLAB的路径当中</li>
+<li>MATLAB必须从 terminal 处打开，不能用shortcut的图标打开</li>
+</ul>
+<h3 id="文件格式准备"><a href="#文件格式准备" class="headerlink" title="文件格式准备"></a>文件格式准备</h3><ul>
+<li>subject name folder - DTI folder - DTI files 这种格式</li>
+<li>DTI files 应该有三个文件：B value file(bval), b vector file(bvec), nii file</li>
+<li>用 MRIcron 可以直接将 Dicom 的原始文件 convert 过去</li>
+</ul>
+<h3 id="Full-pipeline"><a href="#Full-pipeline" class="headerlink" title="Full pipeline"></a>Full pipeline</h3><ul>
+<li>Pipeline mode: 如果只是一台电脑的话就选 batch; Max_Queued 是根据电脑的核数来的，会自动识别，所以不用改</li>
+<li>Diffusion parameters: <ul>
+<li>Resampling resolution:  作者推荐使用 $2×2×2mm^3$， 较高的resolution 会耗费处理时间</li>
+<li>删除raw NII file 以节约空间</li>
+<li>f(skull reovel): 去除DTI image中的brain tissue, 选用default值 0.25</li>
+<li>cropping gap(mm): 就是图像外面的空白大小，选用默认值 3mm</li>
+<li>Orientation patch: </li>
+<li>剩下全是默认</li>
+</ul>
+</li>
+</ul>
+<h3 id="Tracking-amp-Network-parameters"><a href="#Tracking-amp-Network-parameters" class="headerlink" title="Tracking &amp; Network parameters"></a>Tracking &amp; Network parameters</h3><ul>
+<li>Deterministic fiber tracking: <ul>
+<li>Propagation algorithm: FACT</li>
+<li>Angle threshold: 45</li>
+<li>FA_threshold: 0.2~1</li>
+</ul>
+</li>
+<li><p>Network node definition</p>
+<ul>
+<li>选择 parcellated native space: 这里我们使用 Freesurfer generate 出来的atlas.</li>
+<li>需注意这个atlas需要是跟DTI data coregister 之后的，不然会fail掉，因为两个图像不match, 所以需要先生成DTI的file，再拿这个file去跟atlas做 coregistration.</li>
+<li>生成DTI file: 此时 ‘Network Node Definition’ 及以下都不选择，运行到上面的fiber traking就能生成想要的文件，生成的文件是<code>trackvis</code> folder 下的<code>dti_fa_color.nii.gz</code></li>
+<li>Coregistraion: 找到Freesurfer 生成的文件，用AFNI的suma function之后，会有一个 SUMA 的文件夹，该文件夹下面应该有一个 <code>aparc+aseg_REN_all.nii.gz</code>和<code>aparc.a2009s+aseg_REN_all.nii.gz</code>的文件，这两个文件就是我们要coregister的，可以任选一个，分别代表不同的T1 segmentation的atlas. 将 <code>dti_fa_color.nii.gz</code> 复制到该 SUMA 文件夹下</li>
+<li><p>Coregistration 的代码如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">3dcalc -a dti_fa_color.nii.gz -expr <span class="string">'a'</span> -prefix dti_fa_color</span><br><span class="line">align_epi_anat.py -anat aparc+aseg_REN_all.nii.gz -epi dti_fa_color+orig -epi_base 0 -anat_has_skull no -epi_strip 3dAutomask -volreg off -tshift off -big_move</span><br><span class="line">3dAllineate -1Dmatrix_apply aparc+aseg_REN_all_al_mat.aff12.1D -input aparc+aseg_REN_all.nii.gz -prefix aparc+aseg_REN_all_reg -NN -final NN</span><br><span class="line">3dcalc -a aparc+aseg_REN_all_reg+orig -expr <span class="string">'a'</span> -short -prefix aparc+aseg_REN_all_short</span><br><span class="line">3dfractionize -template dti_fa_color+orig -input aparc+aseg_REN_all_short+orig -clip 0.2 -preserve -prefix aparc+aseg_REN_all_coreg</span><br><span class="line">3dAFNItoNIFTI -prefix aparc+aseg_REN_all_coreg aparc+aseg_REN_all_coreg+orig</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>得到的 <code>aparc+aseg_REN_all_coreg</code> 就是要放在 <code>parcellated native space</code> 处的文件。选择好之后再运行一遍就OK。</p>
+</li>
+</ul>
+</li>
+<li>Network construction: 用 deterministic</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Tools</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/10/19/panda-use/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-problem-matlab-gcc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/10/18/problem-matlab-gcc/">Problem solve - `GLIBCXX_3.4.21&#39; not found</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/10/18/problem-matlab-gcc/" class="archive-article-date">
+  	<time datetime="2018-10-18T04:11:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              
+            </div>
+           -->
+        <!--   -->
+        <p>在才开始使用Panda的过程中遇到了一个问题，这个问题之前遇到过，后来解决了也没再管过，没想到过了接近半年之后还会再使用Panda，搞了半天才找到解决办法，觉得还是真的要记录下来每个问题及当时的解决方法，保不准下一次又遇到了。。。</p>
+<p>问题如下：<br>运行之后直接出现error:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/<span class="built_in">local</span>/MATLAB/R2016b/sys/os/glnxa64/libstdc++.so.6: version `GLIBCXX_3.4.21<span class="string">' not found (required by /usr/share/fsl/5.0/bin/fslchfiletype_exe</span></span><br></pre></td></tr></table></figure></p>
+<p>首先 not found 有两种情况：</p>
+<ol>
+<li>这个 GLIBCXX_3.4.21 本来就不存在</li>
+<li>这个 GLIBCXX_3.4.21 存在，但是matlab找不到，没有链接过去</li>
+</ol>
+<p>在terminal处先通过以下代码看这个到底有没有：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strings /usr/lib/libstdc++.so.6 | grep GLIBCXX</span><br></pre></td></tr></table></figure></p>
+<p>下面会出来一串相关的存在的 GLIBCXX. 找下有没有MATLAB说的那个 `GLIBCXX_3.4.21’。</p>
+<p>如果存在的话，那就说明是matlab 链接的问题，只需要在terminal处用以下方式打开matlab就行了：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LD_PRELOAD=<span class="string">"/usr/lib/x86_64-linux-gnu/libstdc++.so.6"</span> matlab</span><br></pre></td></tr></table></figure></p>
+<p>如果不存在的话，执行以下代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libstdc++6</span><br><span class="line">sudo add-apt-repository ppa:ubuntu-toolchain-r/<span class="built_in">test</span> </span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get dist-upgrade</span><br></pre></td></tr></table></figure></p>
+<p><br><br>Reference:<br><a href="https://askubuntu.com/questions/719028/version-glibcxx-3-4-21-not-found" target="_blank" rel="noopener">https://askubuntu.com/questions/719028/version-glibcxx-3-4-21-not-found</a><br><a href="https://stackoverflow.com/questions/44773296/libstdc-so-6-version-glibcxx-3-4-20-not-found" target="_blank" rel="noopener">https://stackoverflow.com/questions/44773296/libstdc-so-6-version-glibcxx-3-4-20-not-found</a><br><a href="https://askubuntu.com/questions/575505/glibcxx-3-4-20-not-found-how-to-fix-this-error" target="_blank" rel="noopener">https://askubuntu.com/questions/575505/glibcxx-3-4-20-not-found-how-to-fix-this-error</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/10/18/problem-matlab-gcc/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-GRF-BMI-thoughts" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1240,303 +1574,9 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-My-First-Post" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/09/25/My-First-Post/">My First Post - 献给Hexo</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/09/25/My-First-Post/" class="archive-article-date">
-  	<time datetime="2018-09-25T00:23:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作及环境"><span class="toc-number">1.</span> <span class="toc-text">准备工作及环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装及配置"><span class="toc-number">2.</span> <span class="toc-text">安装及配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装前提"><span class="toc-number">2.1.</span> <span class="toc-text">安装前提</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装-Hexo"><span class="toc-number">2.2.</span> <span class="toc-text">安装 Hexo:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置"><span class="toc-number">2.3.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#主题-theme-的确定"><span class="toc-number">2.4.</span> <span class="toc-text">主题(theme)的确定</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开写你的第一篇博客"><span class="toc-number">3.</span> <span class="toc-text">开写你的第一篇博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在本地查看并生成静态网页"><span class="toc-number">4.</span> <span class="toc-text">在本地查看并生成静态网页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#部署-（这部分很让我头疼）"><span class="toc-number">5.</span> <span class="toc-text">部署 （这部分很让我头疼）</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作及环境"><span class="toc-text">准备工作及环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装及配置"><span class="toc-text">安装及配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装前提"><span class="toc-text">安装前提</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装-Hexo"><span class="toc-text">安装 Hexo:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#主题-theme-的确定"><span class="toc-text">主题(theme)的确定</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开写你的第一篇博客"><span class="toc-text">开写你的第一篇博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在本地查看并生成静态网页"><span class="toc-text">在本地查看并生成静态网页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#部署-（这部分很让我头疼）"><span class="toc-text">部署 （这部分很让我头疼）</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>在网上查找资料的时候偶然看到有人提到用Hexo来写博客，界面非常简洁，而且支持 markdown 解析，瞬间打算在我<a href="http://tracyxinwang.site/">个人的学术网站</a>上加入这个blog页面。之前写博客都是在现成的博客网站上写的，比如 网易的 和 <a href="https://blog.csdn.net/u013036695" target="_blank" rel="noopener">CSDN</a> 这种还算比较大型的技术博客，无奈广告实在是太多了，后来转战 google 的 blog，但是它的编辑页面实在是难用，就放弃了。所以现在打算试试这个 Hexo。</p>
-<p>Hexo 用官方的来说就是一个快速，简洁且高效的博客框架。我用了大概不到一天的时间，就从安装到部署搞定了，虽然过程很崎岖，掉了很多坑。。。但是总体还是觉得挺不错的，所以接下来我会大致叙述一下整个过程，希望能够让看到的朋友少掉坑。</p>
-<p>先附上<a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>网址，也有<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">中文</a>的。个人觉得基本上按照网页上的指导，前面的步骤基本都是没问题的。由于我是一开始就打算在我个人网页中加入这个博客页面作为一个子页面，所以我是在 coding.net 而非 git 上面建库。另外操作系统是win10.</p>
-<h3 id="准备工作及环境"><a href="#准备工作及环境" class="headerlink" title="准备工作及环境"></a>准备工作及环境</h3><ol>
-<li>在 coding 上新建一个项目库，命名 “blog”，同时设置 <a href="https://coding.net/pages/" target="_blank" rel="noopener">Pages服务</a></li>
-<li>在电脑上一个你觉得不错的位置新建一个文件夹，命名随意，这个名字没太大关系，我命名为”Hexo_blog”, 这文件夹是用来放所有跟你这个博客相关的东西的。</li>
-</ol>
-<h3 id="安装及配置"><a href="#安装及配置" class="headerlink" title="安装及配置"></a>安装及配置</h3><h4 id="安装前提"><a href="#安装前提" class="headerlink" title="安装前提"></a>安装前提</h4><p>须有 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a> 和 <a href="https://git-scm.com/" target="_blank" rel="noopener">Git</a></p>
-<ul>
-<li>Node.js 安装：在官网下载好你电脑对应的版本之后，点安装包进行安装，在接近最后一步是，选择 “Add to PATH” 选项进行安装</li>
-<li>git 安装：略</li>
-</ul>
-<h4 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo:"></a>安装 Hexo:</h4><p>使用 npm 安装 Hexo:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure></p>
-<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><ol>
-<li><p>新建框架<br> 去到你刚刚创建的那个要放所有Hexo东西的文件夹下，执行以下命令：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
-<p> 这个命令就是告诉hexo这里要建一个框架，然后它就会生成整个框架所需要的材料。<br> 新建完成后，可以看见有很多的文件夹，具体每个文件夹啥作用请看<a href="https://hexo.io/zh-cn/docs/setup" target="_blank" rel="noopener">官网</a>。这里面有一个叫 _config.yml 的东西，非常重要，是你整个博客配置的基础。</p>
-</li>
-<li><p>基本配置(只列出可能有坑的地方)：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">language: zh-Hans</span><br><span class="line">url: http://yoursite.com/blog</span><br><span class="line">root: /blog/</span><br></pre></td></tr></table></figure>
-<p> 前面说了我是打算我个人网站子页面下加入这个blog，所以那个url, 对我来说是后面加上这个子目录名字，然后root那个地方也需要改成，如果你本身是一个网页来的(比如git的页面)，那就不用设置这个root了。其他的配置具体可参见<a href="https://hexo.io/zh-cn/docs/configuration" target="_blank" rel="noopener">网页</a>。最后关于主题(theme)和部署(deploy)的，接下来讲。</p>
-</li>
-</ol>
-<h4 id="主题-theme-的确定"><a href="#主题-theme-的确定" class="headerlink" title="主题(theme)的确定"></a>主题(theme)的确定</h4><p>主题顾名思义就是你的博客的风格，Hexo有很多模板可供选择，要使用哪个模板，就需要将该主题拷贝到themes文件夹下，然后在_config.yml 更改主题的名字。我用的是 <a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="noopener">yilia</a> 的主题，下面以此为例写步骤：</p>
-<ul>
-<li><p>进入你放创建的hexo文件夹(e.g. Hexo_blog)下, 使用如下命令安装：</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/litten/hexo-theme-yilia.git themes/yilia</span><br></pre></td></tr></table></figure>
-<p>  这需要你先找到该主题的github，也可以直接下载然后解压到你的themes文件夹下</p>
-</li>
-<li>进入Hexo_blog 下面那个 _config.yml， 修改 ‘themes: yilia’</li>
-<li>进入Hexo_blog/themes/yilia, 里面也有一个 _config.yml, 在上面更改你想命名的主页的menu和其他的基本个人设置</li>
-</ul>
-<h3 id="开写你的第一篇博客"><a href="#开写你的第一篇博客" class="headerlink" title="开写你的第一篇博客"></a>开写你的第一篇博客</h3><p>这个很简单，直接执行：<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new  my-first-post</span><br></pre></td></tr></table></figure></p>
-<p>那个 my-first-post 是你的文章题目。所有的文章都会被放在 /source/posts 文件夹下。在这个文件夹下你可以看到一个 my-first-post.md 的文件。打开这个文件然后就在下面用markdown的语法就写好了。</p>
-<h3 id="在本地查看并生成静态网页"><a href="#在本地查看并生成静态网页" class="headerlink" title="在本地查看并生成静态网页"></a>在本地查看并生成静态网页</h3><ol>
-<li><p>由于有文件的改动，所以需要先生成静态文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>生成之后可以hexo server来查看新建的文章或者网站：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>然后就能看到说在 <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> 下可以打开。如果一切都没问题，那么就可以部署到真的网页上面了。</p>
-<h3 id="部署-（这部分很让我头疼）"><a href="#部署-（这部分很让我头疼）" class="headerlink" title="部署 （这部分很让我头疼）"></a>部署 （这部分很让我头疼）</h3><p>先说步骤：</p>
-<p>1.git-SSH 配置：</p>
-<pre><code>- 查看你的git user.email: &apos;git config user.email&apos;
-- 假如得到的email是 xx@gamil.com, 生成这个email对应的密匙: &apos;ssh-keygen -t rsa -C &quot;xx@gmail.com&quot;&apos;
-- 接下来会让你enter file to save the key，enter passphrase, enter passphrase again, 可以不需要设置这些秘密啥的，所以每一个问题出现，都按enter, 即连续3个回车。
-- 然后会得到两个文件 &apos;id_rsa&apos; 和 &apos;id_tsa.pub&apos;
-- 复制刚刚生成的密匙(其中xx/xx是你密匙生成的位置，在上一步骤中会显示)： &apos;clip &lt; xx/xx/id_rsa.pub&apos;
-- 在准备步骤中新建的那个库下，打开设置-添加公匙，将刚刚复制的内容粘贴到上面，至此，配置完成。
-- 检查是否真的完成：输入&apos;ssh -T xx@gmail.com&apos;，然后选择 &apos;yes&apos;, 接着看到 Hi XX, You&apos;ve successfully authenticated 等等，就表明已经设置成功了
-</code></pre><p>2._config.yml 文件deploy的更改：<br>    应该是在最下面，有个deploy，在下面写上你的库的ssh地址等如下：</p>
-<pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@git.coding.net:XX/blog.git</span><br><span class="line">  branch: master</span><br><span class="line">  message: update my blog.</span><br></pre></td></tr></table></figure>
-</code></pre><p>3.部署：<br>先下载deployer: ‘npm install hexo-deployer-git –save’<br>然后执行：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
-<p>然后就可以看你的网页有没有变化了。</p>
-<p>由于我是打算直接在我的个人网站下直接建一个子网页，所以一开始一直想的是deploy到我之前的那个库里面，我以为是直接添加到那个git repo 里面就好，没想到一deploy之后，发现之前的内容全没有了，然后才意识到应该是force push上去的，没有pull等过程，所以直接啥都没有了，没办法我又只好force push 我之前的网站内容上去，才将原网页复原。由于我不知道怎么可以只deploy到一个子folder里面去，所以我又新建了一个库叫blog，也就是文章开头写的那样。然后将这个库的地址作为deploy的git 地址，才可以。我发现coding上可以直接设置子静态页面，所以我也直接就将这个网页的地址链接到我原个人网站上，算是间接完成吧。</p>
-<p>同时这过程中遇到一些问题，列出来纪念一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Error: Host key verification failed.</span><br><span class="line">fatal: Could not read from remote repository.</span><br><span class="line">Please make sure you have the correct access rights and the repository exists.</span><br></pre></td></tr></table></figure></p>
-<p>需设置SSH密匙来进行。且注意需删除之前生成的 git 那个文件夹。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂文</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">碎碎念</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/09/25/My-First-Post/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/09/24/hello-world/">Markdown Template</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/09/24/hello-world/" class="archive-article-date">
-  	<time datetime="2018-09-24T11:37:10.728Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#About-lists"><span class="toc-number">1.</span> <span class="toc-text">About lists</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Unordered-lists"><span class="toc-number">1.1.</span> <span class="toc-text">Unordered lists</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ordered-lists"><span class="toc-number">1.2.</span> <span class="toc-text">Ordered lists</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#About-citation"><span class="toc-number">2.</span> <span class="toc-text">About citation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#About-font-formatting"><span class="toc-number">3.</span> <span class="toc-text">About font formatting</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#This-is-a-italic-sentence"><span class="toc-number">3.1.</span> <span class="toc-text">This is a italic sentence.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#This-is-a-bold-sentence"><span class="toc-number">3.2.</span> <span class="toc-text">This is a bold sentence.</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Links-and-figures"><span class="toc-number">4.</span> <span class="toc-text">Links and figures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Here-is-a-link-link"><span class="toc-number">4.1.</span> <span class="toc-text">Here is a link: link</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Here-is-a-figure"><span class="toc-number">4.2.</span> <span class="toc-text">Here is a figure: </span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Insert-a-table"><span class="toc-number">5.</span> <span class="toc-text">Insert a table</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Insert-a-to-do-list"><span class="toc-number">6.</span> <span class="toc-text">Insert a to-do list</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Add-code"><span class="toc-number">7.</span> <span class="toc-text">Add code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Add-math"><span class="toc-number">8.</span> <span class="toc-text">Add math</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#About-lists"><span class="toc-text">About lists</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Unordered-lists"><span class="toc-text">Unordered lists</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ordered-lists"><span class="toc-text">Ordered lists</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#About-citation"><span class="toc-text">About citation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#About-font-formatting"><span class="toc-text">About font formatting</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#This-is-a-italic-sentence"><span class="toc-text">This is a italic sentence.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#This-is-a-bold-sentence"><span class="toc-text">This is a bold sentence.</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Links-and-figures"><span class="toc-text">Links and figures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Here-is-a-link-link"><span class="toc-text">Here is a link: link</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Here-is-a-figure"><span class="toc-text">Here is a figure: </span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Insert-a-table"><span class="toc-text">Insert a table</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Insert-a-to-do-list"><span class="toc-text">Insert a to-do list</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Add-code"><span class="toc-text">Add code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Add-math"><span class="toc-text">Add math</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>This is just a markdown template for me to take a reference when I write blogs.</p>
-<h2 id="About-lists"><a href="#About-lists" class="headerlink" title="About lists"></a>About lists</h2><h3 id="Unordered-lists"><a href="#Unordered-lists" class="headerlink" title="Unordered lists"></a>Unordered lists</h3><ul>
-<li>list 1<ul>
-<li>list 1.1</li>
-<li>list 1.2</li>
-<li>list 1.3</li>
-</ul>
-</li>
-<li>list 2</li>
-<li>list 3</li>
-</ul>
-<h3 id="Ordered-lists"><a href="#Ordered-lists" class="headerlink" title="Ordered lists"></a>Ordered lists</h3><ol>
-<li>list 1<ol>
-<li>list 1.1</li>
-<li>list 1.2</li>
-</ol>
-</li>
-<li>list 2</li>
-<li>list 3</li>
-</ol>
-<h2 id="About-citation"><a href="#About-citation" class="headerlink" title="About citation"></a>About citation</h2><blockquote>
-<p>This is a citation from others</p>
-</blockquote>
-<h2 id="About-font-formatting"><a href="#About-font-formatting" class="headerlink" title="About font formatting"></a>About font formatting</h2><h3 id="This-is-a-italic-sentence"><a href="#This-is-a-italic-sentence" class="headerlink" title="This is a italic sentence."></a>This is a <em>italic</em> sentence.</h3><h3 id="This-is-a-bold-sentence"><a href="#This-is-a-bold-sentence" class="headerlink" title="This is a bold sentence."></a>This is a <strong>bold</strong> sentence.</h3><p>And be careful that there is no space between the text and the symbol.</p>
-<h2 id="Links-and-figures"><a href="#Links-and-figures" class="headerlink" title="Links and figures"></a>Links and figures</h2><h3 id="Here-is-a-link-link"><a href="#Here-is-a-link-link" class="headerlink" title="Here is a link: link"></a>Here is a link: <a href="https://hexo.io" target="_blank" rel="noopener">link</a></h3><h3 id="Here-is-a-figure"><a href="#Here-is-a-figure" class="headerlink" title="Here is a figure: "></a>Here is a figure: <img src="https://hexo.io" alt="figure link"></h3><p>The following is a dividing line</p>
-<hr>
-<h2 id="Insert-a-table"><a href="#Insert-a-table" class="headerlink" title="Insert a table"></a>Insert a table</h2><table>
-<thead>
-<tr>
-<th>header 1</th>
-<th>header 2</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>(1,1)</td>
-<td>(1,2)</td>
-</tr>
-<tr>
-<td>(2,1)</td>
-<td>(2,2)</td>
-</tr>
-</tbody>
-</table>
-<h2 id="Insert-a-to-do-list"><a href="#Insert-a-to-do-list" class="headerlink" title="Insert a to-do list"></a>Insert a to-do list</h2><ul>
-<li style="list-style: none"><input type="checkbox"> To do 1<ul>
-<li style="list-style: none"><input type="checkbox"> To do 1.1</li>
-<li style="list-style: none"><input type="checkbox"> To do 1.2</li>
-</ul>
-</li>
-<li style="list-style: none"><input type="checkbox"> To do 2</li>
-<li style="list-style: none"><input type="checkbox" checked> Finished 1</li>
-<li style="list-style: none"><input type="checkbox" checked> Finshed 2</li>
-</ul>
-<p>Be careful that the clicked one should be small x inside.</p>
-<h2 id="Add-code"><a href="#Add-code" class="headerlink" title="Add code"></a>Add code</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<h2 id="Add-math"><a href="#Add-math" class="headerlink" title="Add math"></a>Add math</h2><p>$$x+y=z$$</p>
-<p>$x+y=z$</p>
-<p>You need to turn the mathjax as “true” to make sure that it works.</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/09/24/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/blog/page/3/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><span class="page-number current">4</span>
+      <a class="extend prev" rel="prev" href="/blog/page/3/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/blog/page/5/">5</a><a class="extend next" rel="next" href="/blog/page/5/">Next &raquo;</a>
     </nav>
   
 
@@ -1565,7 +1605,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共36.8k字
+              本站总共43.8k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -1680,7 +1720,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂文</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1692,11 +1736,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂文</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1704,11 +1744,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
+                <a href="javascript:void(0)" class="js-tag color4">Deep learning</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1716,15 +1756,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1732,15 +1764,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Tools</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
+                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Deep learning</a>
+                <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
               </li>
             
             <div class="clearfix"></div>

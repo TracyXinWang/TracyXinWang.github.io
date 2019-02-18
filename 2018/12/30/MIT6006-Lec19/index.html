@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Xin Wang&#39;s Blog">
 <meta property="og:description" content="Dynamic Programming (DP) Powerful algorithmic design technique Large class of seemingly exponential problems have a polynomial solution (“only”) via DP Particularly for optimization problems (min / ma">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-31T05:55:43.000Z">
+<meta property="og:updated_time" content="2019-01-11T01:46:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT6006 Lec19 DP I &amp; II">
 <meta name="twitter:description" content="Dynamic Programming (DP) Powerful algorithmic design technique Large class of seemingly exponential problems have a polynomial solution (“only”) via DP Particularly for optimization problems (min / ma">
@@ -269,7 +269,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Programming-DP"><span class="toc-number">1.</span> <span class="toc-text">Dynamic Programming (DP)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fibonacci-Numbers"><span class="toc-number">1.1.</span> <span class="toc-text">Fibonacci Numbers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shortest-Paths"><span class="toc-number">1.2.</span> <span class="toc-text">Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Guessing"><span class="toc-number">2.</span> <span class="toc-text">Guessing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-number">3.</span> <span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Easy-Steps-to-Dynamic-Programming"><span class="toc-number">3.1.</span> <span class="toc-text">5 Easy Steps to Dynamic Programming</span></a></li></ol></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Programming-DP"><span class="toc-number">1.</span> <span class="toc-text">Dynamic Programming (DP)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fibonacci-Numbers"><span class="toc-number">1.1.</span> <span class="toc-text">Fibonacci Numbers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shortest-Paths"><span class="toc-number">1.2.</span> <span class="toc-text">Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Guessing"><span class="toc-number">2.</span> <span class="toc-text">Guessing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-number">3.</span> <span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Easy-Steps-to-Dynamic-Programming"><span class="toc-number">3.1.</span> <span class="toc-text">5 Easy Steps to Dynamic Programming</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Examples"><span class="toc-number">4.</span> <span class="toc-text">Examples</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Text-Justification"><span class="toc-number">4.1.</span> <span class="toc-text">Text Justification</span></a></li></ol></li></ol>
             </div>
            -->
         <!--  
@@ -278,7 +278,7 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Programming-DP"><span class="toc-text">Dynamic Programming (DP)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fibonacci-Numbers"><span class="toc-text">Fibonacci Numbers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shortest-Paths"><span class="toc-text">Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Guessing"><span class="toc-text">Guessing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Easy-Steps-to-Dynamic-Programming"><span class="toc-text">5 Easy Steps to Dynamic Programming</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Programming-DP"><span class="toc-text">Dynamic Programming (DP)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fibonacci-Numbers"><span class="toc-text">Fibonacci Numbers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shortest-Paths"><span class="toc-text">Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Guessing"><span class="toc-text">Guessing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Easy-Steps-to-Dynamic-Programming"><span class="toc-text">5 Easy Steps to Dynamic Programming</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Examples"><span class="toc-text">Examples</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Text-Justification"><span class="toc-text">Text Justification</span></a></li></ol></li></ol>
         </div>
     </div>
  -->
@@ -289,6 +289,7 @@ var _hmt = _hmt || [];
 <li>DP $\approx$ “controlled brute force”</li>
 <li>DP $\approx$ recursion + re-use</li>
 </ul>
+<p><br></p>
 <blockquote>
 <p>Dynamic Programming is mainly an optimization over plain recursion. Wherever we see a recursive solution that has repeated calls for same inputs, we can optimize it using Dynamic Programming. The idea is to simply store the results of subproblems, so that we do not have to re-comupute them when needed later. This simple optimization reduces time complexities from exponential to polynomial. For example, if we write simple recursive solution for Fibonacci Numbers, we get exponential time complexity and if we optimize it by storing solutions of subproblems, time complexity reduces to linear.</p>
 </blockquote>
@@ -368,6 +369,23 @@ var _hmt = _hmt || [];
 <li>OR by combining subproblem solutions ⇒ extra time</li>
 </ul>
 </li>
+</ol>
+<h3 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h3><h4 id="Text-Justification"><a href="#Text-Justification" class="headerlink" title="Text Justification"></a>Text Justification</h4><p>Content:<br>Split text into good lines</p>
+<ul>
+<li>obvious(MS Word) algorithm: put as many words that fit on first line, repeat</li>
+<li>but this can make very bad lines<br>Redefine the problem:</li>
+<li>Define badness(i,j) for line of words: [i,j]<ul>
+<li>e.g. if $\inf$ total length &gt; page width, else (page width - total length)^3</li>
+</ul>
+</li>
+<li>goal: split words into lines to min $\sum$ badness</li>
+</ul>
+<ol>
+<li><strong>subproblem</strong> = min. badness for suffix words[i :]<br>⇒ number of subproblems = Θ(n) where n = number of words</li>
+<li><strong>guessing</strong> = where to end first line, say i:j<br>⇒ number of choices = $n − i = O(n)$</li>
+<li><strong>recurrence</strong>:<br>• DP[i] = min(badness (i,j) + DP[j] for j in range (i+1,n+1))<br>• DP[n] = 0<br>⇒ time per subproblem = Θ(n)</li>
+<li><strong>order</strong>: for i=n,n-1,…,1,0<br>total time = $Θ(n^2)$</li>
+<li>solution = DP[0]</li>
 </ol>
 <p><br></p>
 <p>Reference:<br><a href="https://www.geeksforgeeks.org/dynamic-programming/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/dynamic-programming/</a></p>
@@ -527,7 +545,7 @@ var _hmt = _hmt || [];
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Programming-DP"><span class="toc-number">1.</span> <span class="toc-text">Dynamic Programming (DP)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fibonacci-Numbers"><span class="toc-number">1.1.</span> <span class="toc-text">Fibonacci Numbers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shortest-Paths"><span class="toc-number">1.2.</span> <span class="toc-text">Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Guessing"><span class="toc-number">2.</span> <span class="toc-text">Guessing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-number">3.</span> <span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Easy-Steps-to-Dynamic-Programming"><span class="toc-number">3.1.</span> <span class="toc-text">5 Easy Steps to Dynamic Programming</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Programming-DP"><span class="toc-number">1.</span> <span class="toc-text">Dynamic Programming (DP)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fibonacci-Numbers"><span class="toc-number">1.1.</span> <span class="toc-text">Fibonacci Numbers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shortest-Paths"><span class="toc-number">1.2.</span> <span class="toc-text">Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Guessing"><span class="toc-number">2.</span> <span class="toc-text">Guessing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-number">3.</span> <span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Easy-Steps-to-Dynamic-Programming"><span class="toc-number">3.1.</span> <span class="toc-text">5 Easy Steps to Dynamic Programming</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Examples"><span class="toc-number">4.</span> <span class="toc-text">Examples</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Text-Justification"><span class="toc-number">4.1.</span> <span class="toc-text">Text Justification</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -573,7 +591,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共36.8k字
+              本站总共43.8k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -688,7 +706,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂文</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -700,11 +722,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂文</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -712,11 +730,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
+                <a href="javascript:void(0)" class="js-tag color4">Deep learning</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -724,15 +742,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -740,15 +750,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Tools</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
+                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Deep learning</a>
+                <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
               </li>
             
             <div class="clearfix"></div>
