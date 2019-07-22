@@ -247,20 +247,20 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-slurm-exit-code" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-HMM-MAR" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/13/slurm-exit-code/">Slurm General Command and Exit Code</a>
+      <a class="article-title" href="/blog/2019/03/11/HMM-MAR/">Hidden Markov Model - Multivariate Autoregressive model</a>
     </h1>
   
 
         
-        <a href="/blog/2018/11/13/slurm-exit-code/" class="archive-article-date">
-  	<time datetime="2018-11-12T21:09:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-13</time>
+        <a href="/blog/2019/03/11/HMM-MAR/" class="archive-article-date">
+  	<time datetime="2019-03-11T01:24:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-11</time>
 </a>
         
       </header>
@@ -270,7 +270,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#General-command"><span class="toc-number">1.</span> <span class="toc-text">General command</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exit-code"><span class="toc-number">2.</span> <span class="toc-text">Exit code</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Job-Termination-Signals"><span class="toc-number">2.1.</span> <span class="toc-text">Job Termination Signals</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Job-Exit-Status"><span class="toc-number">2.2.</span> <span class="toc-text">Job Exit Status</span></a></li></ol></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Moedel-description"><span class="toc-number">1.</span> <span class="toc-text">Moedel description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MAR-parametrisation"><span class="toc-number">2.</span> <span class="toc-text">MAR parametrisation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Model-selection"><span class="toc-number">3.</span> <span class="toc-text">Model selection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spectral-description-of-the-states"><span class="toc-number">4.</span> <span class="toc-text">Spectral description of the states</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analysis-of-results"><span class="toc-number">5.</span> <span class="toc-text">Analysis of results</span></a></li></ol>
             </div>
            -->
         <!--  
@@ -279,284 +279,86 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#General-command"><span class="toc-text">General command</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exit-code"><span class="toc-text">Exit code</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Job-Termination-Signals"><span class="toc-text">Job Termination Signals</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Job-Exit-Status"><span class="toc-text">Job Exit Status</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Moedel-description"><span class="toc-text">Moedel description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MAR-parametrisation"><span class="toc-text">MAR parametrisation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Model-selection"><span class="toc-text">Model selection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spectral-description-of-the-states"><span class="toc-text">Spectral description of the states</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analysis-of-results"><span class="toc-text">Analysis of results</span></a></li></ol>
         </div>
     </div>
  -->
-        <h3 id="General-command"><a href="#General-command" class="headerlink" title="General command"></a>General command</h3><p><strong>submit a job</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sbatch myscript.sh</span><br><span class="line">sbatch --<span class="built_in">test</span>-only myscript.sh  <span class="comment"># test a job and find out when your job is estimated to run</span></span><br></pre></td></tr></table></figure></p>
-<p><strong>Information of jobs for a user</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">squeue -u &lt;username&gt;    <span class="comment"># List all current jobs for a user</span></span><br><span class="line">squeue -u &lt;username&gt; -t RUNNING <span class="comment"># List all running jobs for a user</span></span><br><span class="line">squeue -u &lt;username&gt; -t PENDING <span class="comment"># List all pending jobs for a user</span></span><br><span class="line">scontrol show jobid -dd &lt;jobid&gt; <span class="comment"># List detailed information for a job (useful for troubleshooting)</span></span><br><span class="line">sstat --format=AveCPU,AvePages,AveRSS,AveVMSize,JobID -j &lt;jobid&gt; --allsteps <span class="comment"># List status info for a currently running job</span></span><br></pre></td></tr></table></figure></p>
-<p><strong>Controlling jobs</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">scancel &lt;jobid&gt;   <span class="comment"># cancel one job</span></span><br><span class="line">scancel -u &lt;username&gt; <span class="comment"># cancel all the jobs for a user</span></span><br><span class="line">scancel -t PENDING -u &lt;username&gt; <span class="comment"># cancel all pending jobs for a user</span></span><br><span class="line">scontrol hold &lt;jobid&gt; <span class="comment"># pause a particular job</span></span><br><span class="line">scontrol requeue &lt;jobid&gt;    <span class="comment"># requeue (cancel and rerun) a particular job </span></span><br><span class="line">scancel &lt;jobid&gt;_&lt;index&gt; <span class="comment"># To cancel an indexed job in a job array</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="Exit-code"><a href="#Exit-code" class="headerlink" title="Exit code"></a>Exit code</h3><p>开始使用HPC时遇到很多问题，特别是用slurm deploy job的时候，如果在slurm文件中设置将开始，结束，失败的信息发送给自己邮箱时，它会针对每一种情况给一个code，这个code即表示一种状态。下面记录一些常见的 exit code 表明的意思。</p>
-<p>The exit code from a batch job is a standard Unix termination signal.<br>Typically, exit code 0 means successful completion.<br>Codes 1-127 are generated from the job calling exit() with a non-zero value to indicate an error.<br>Exit codes 129-255 represent jobs terminated by Unix signals.<br>Each signal has a corresponding value which is indicated in the job exit code</p>
-<h4 id="Job-Termination-Signals"><a href="#Job-Termination-Signals" class="headerlink" title="Job Termination Signals"></a>Job Termination Signals</h4><table>
-<thead>
-<tr>
-<th>Signal Name</th>
-<th>Signal Number</th>
-<th>Exit Type</th>
-<th>Reason</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SIGHUP</td>
-<td>1</td>
-<td>Term</td>
-<td>Hangup detected on controlling terminal or death of controlling process</td>
-</tr>
-<tr>
-<td>SIGINT</td>
-<td>2</td>
-<td>Term</td>
-<td>Interrupt from keyboard</td>
-</tr>
-<tr>
-<td>SIGQUIT</td>
-<td>3</td>
-<td>Core</td>
-<td>Quit from keyboard</td>
-</tr>
-<tr>
-<td>SIGILL</td>
-<td>4</td>
-<td>Core</td>
-<td>Illegal Instruction</td>
-</tr>
-<tr>
-<td>SIGABRT</td>
-<td>6</td>
-<td>Core</td>
-<td>Abort signal from abort(3)</td>
-</tr>
-<tr>
-<td>SIGFPE</td>
-<td>8</td>
-<td>Core</td>
-<td>Floating point exception</td>
-</tr>
-<tr>
-<td>SIGKILL</td>
-<td>9</td>
-<td>Term</td>
-<td>Kill signal</td>
-</tr>
-<tr>
-<td>SIGSEGV</td>
-<td>11</td>
-<td>Core</td>
-<td>Invalid memory reference</td>
-</tr>
-<tr>
-<td>SIGPIPE</td>
-<td>13</td>
-<td>Term</td>
-<td>Broken pipe: write to pipe with no readers</td>
-</tr>
-<tr>
-<td>SIGALRM</td>
-<td>14</td>
-<td>Term</td>
-<td>Timer signal from alarm(2)</td>
-</tr>
-<tr>
-<td>SIGTERM</td>
-<td>15</td>
-<td>Term</td>
-<td>Termination signal</td>
-</tr>
-</tbody>
-</table>
-<h4 id="Job-Exit-Status"><a href="#Job-Exit-Status" class="headerlink" title="Job Exit Status"></a>Job Exit Status</h4><table>
-<thead>
-<tr>
-<th>Exit Code</th>
-<th>Reason</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>9</td>
-<td>Ran out of CPU time.</td>
-</tr>
-<tr>
-<td>64</td>
-<td>The job ended nicely for but your job was running out of CPU time. The solution is to submit the job to a queue with more resources (bigger CPU time limit).</td>
-</tr>
-<tr>
-<td>125</td>
-<td>An ErrMsg(severe) was reached in your job.</td>
-</tr>
-<tr>
-<td>127</td>
-<td>Something wrong with the machine?</td>
-</tr>
-<tr>
-<td>130</td>
-<td>The job ran out of CPU or swap time. If swap time is the culprit, check for memory leaks.</td>
-</tr>
-<tr>
-<td>131</td>
-<td>The job ran out of CPU or swap time. If swap time is the culprit, check for memory leaks.</td>
-</tr>
-<tr>
-<td>134</td>
-<td>The job is killed with an abort signal, and you probably got core dumped. Often this is caused either by an assert() or an ErrMsg(fatal) being hit in your job. There may be a run-time bug in your code. Use a debugger like gdb or Totalview to find out what’s wrong.</td>
-</tr>
-<tr>
-<td>137</td>
-<td>The job was killed because it exceeded the time limit.</td>
-</tr>
-<tr>
-<td>139</td>
-<td>Segmentation violation. Usually indicates a pointer error.</td>
-</tr>
-<tr>
-<td>140</td>
-<td>The job exceeded the “wall clock” time limit (as opposed to the CPU time limit).</td>
-</tr>
-</tbody>
-</table>
-<p>Reference:<br><a href="https://www.rc.fas.harvard.edu/resources/documentation/convenient-slurm-commands/" target="_blank" rel="noopener">https://www.rc.fas.harvard.edu/resources/documentation/convenient-slurm-commands/</a><br><a href="https://sites.google.com/a/case.edu/hpc-upgraded-cluster/cluster-faq/running-jobs/exit-code-status" target="_blank" rel="noopener">https://sites.google.com/a/case.edu/hpc-upgraded-cluster/cluster-faq/running-jobs/exit-code-status</a><br><a href="https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference-list-of-run-time-error-messages" target="_blank" rel="noopener">https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference-list-of-run-time-error-messages</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Tools</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/13/slurm-exit-code/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MIT6006-Lec05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/07/MIT6006-Lec05/">MIT6006 Lec05 Binary search trees, BST sort</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/11/07/MIT6006-Lec05/" class="archive-article-date">
-  	<time datetime="2018-11-06T22:28:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Preliminary-things"><span class="toc-number">1.</span> <span class="toc-text">Preliminary things</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Difference-between-array-and-list"><span class="toc-number">1.1.</span> <span class="toc-text">Difference between array and list</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Runway-Reservation-System-problem"><span class="toc-number">2.</span> <span class="toc-text">Runway Reservation System problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Binary-Search-Trees-BST"><span class="toc-number">3.</span> <span class="toc-text">Binary Search Trees (BST)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Augmenting-the-BST-Structure"><span class="toc-number">3.1.</span> <span class="toc-text">Augmenting the BST Structure</span></a></li></ol></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Preliminary-things"><span class="toc-text">Preliminary things</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Difference-between-array-and-list"><span class="toc-text">Difference between array and list</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Runway-Reservation-System-problem"><span class="toc-text">Runway Reservation System problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Binary-Search-Trees-BST"><span class="toc-text">Binary Search Trees (BST)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Augmenting-the-BST-Structure"><span class="toc-text">Augmenting the BST Structure</span></a></li></ol></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="Preliminary-things"><a href="#Preliminary-things" class="headerlink" title="Preliminary things"></a>Preliminary things</h3><h4 id="Difference-between-array-and-list"><a href="#Difference-between-array-and-list" class="headerlink" title="Difference between array and list"></a>Difference between array and list</h4><p><strong>Array</strong></p>
+        <h3 id="Moedel-description"><a href="#Moedel-description" class="headerlink" title="Moedel description"></a>Moedel description</h3><p>The HMM-MAR has two key ingredients: </p>
 <ul>
-<li>每个元素都有一个index, 通过index来操作该元素的所有动作。</li>
-<li>Array 的大小是一开始就确定的，储存的个数不能超过这个最大限制。然而在实际当中，这个upper limit很少会被达到，但是分出去了就分出去了，不能拿来做别的事情，所以会造成内存的浪费</li>
-<li>插入一个新元素会比较 expensive, 因为新元素之后的所有元素都需要移动。同理删除。</li>
-<li>Array allow both direct and sequential access to element</li>
+<li>the Hidden Markov Model (HMM): <ul>
+<li>An HMM describes a time series as a sequence of states, where each state has its own model of the observed data (i.e., the observation model) and the probability of being at a given state at each time point depends on the states assignment in the previous time point.</li>
+<li>The transition probabilities (how likely is to be in state j if we were in state i just before) are also estimated by the model.</li>
 </ul>
-<p><strong>List</strong></p>
-<ul>
-<li>是有个有序的集合，由指针(链表)来确定位置的，根据不同的implementation, 可分为 linked list 和 dynamic array</li>
-<li>每个元素(node), 包含数据同时还有指向下一个元素的指针</li>
-<li>大小是动态的，可随时变的</li>
-<li>插入和删除操作花费较少</li>
-<li>lists allow only sequential access. Therefore, cannot do binary search with linked lists.</li>
-<li>Extra memory space for a pointer is required with each element of the list.</li>
+</li>
+<li>and the Multivariate Autoregressive model (MAR):<ul>
+<li>the observation model corresponds to a MAR model</li>
+<li>characterises the behaviour of time series by linear historical interactions between the observed time series from different brain regions. </li>
+<li>In different words, a MAR model aims to predict the multichannel signal value at each time point as a linear combination of signal values at previous time points. </li>
+<li>MARs are able to characterise the <u>frequency structure of the data</u>, and by making the model multivariate, are able to capture <u>interactions (e.g., coherence) between multiple brain regions</u>. </li>
+<li>Therefore, each state is related to a different set of multi-region autoregression coefficients describing the neural oscillations.</li>
+<li>When the order of the MAR model is set to zero, the states are modelled using Gaussian distributions, in which case the segmentation will be based on instantaneous activation and connectivity.</li>
 </ul>
-<p>A binary tree is made of nodes, where each node contains a “left” reference, a “right” reference, and a data element. </p>
-<h3 id="Runway-Reservation-System-problem"><a href="#Runway-Reservation-System-problem" class="headerlink" title="Runway Reservation System problem"></a>Runway Reservation System problem</h3><ul>
-<li>Airport with single (very busy) runway</li>
-<li>Have “reservations” for future landings</li>
-<li>When plane lands, it is removed from set of pending events</li>
-<li>Reserve req specify “requested landing time” t</li>
-<li>Add t to the set if no other landings are scheduled within k minutes either way. Assume that k can vary.</li>
-<li>Algorithm: Keep R as a sorted list<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">init: R = [ ]</span><br><span class="line">req(t): if t &lt; now: return &quot;error&quot;</span><br><span class="line">for i in range (len(R)):</span><br><span class="line">    if abs(t-R[i]) &lt; k: return &quot;error&quot;</span><br><span class="line">R.append(t)</span><br><span class="line">R = sorted(R)</span><br><span class="line">land: t = R[0]</span><br><span class="line">if (t != now) return error</span><br><span class="line">R = R[1: ]          (drop R[0] from R)</span><br></pre></td></tr></table></figure>
+</li>
+<li>use variational Bayes inference</li>
+</ul>
+<h3 id="MAR-parametrisation"><a href="#MAR-parametrisation" class="headerlink" title="MAR parametrisation"></a>MAR parametrisation</h3><ul>
+<li>order parameter P: defines how far we go back in time to predict each time point.</li>
+<li>When the number of regions is high, it is easy that for the MAR to overfit the data. <ul>
+<li>That is, a relatively simple MAR model can explain a lot of variance, which will induce the HMM-MAR inference process to <u>drop most of the states of the model</u> by letting a few (or even one) dominant states to control the entire time series, thus hindering the discovery of quasi-stationary connectivity networks. </li>
+</ul>
+</li>
+<li>To solve this:<ul>
+<li>To use a low order, for example 3, and, if needed, increase that value and see how the segmentation changes.</li>
+<li>To work on a low-dimensional version of the data using PCA (see below).</li>
+<li>To avoid using the cross-channel terms, such that each state is characterised by their spectra but not the cross-spectra</li>
+</ul>
 </li>
 </ul>
-<p>If using sorted list:<br>Appending and sorting takes $Θ(nlg n)$ time. However, it is possible to insert new time/plane rather than append and sort but insertion takes $Θ(n)$ time. A k minute check can be done in O(1) once the insertion point is found.</p>
-<p>If using Sorted array:<br>It is possible to do binary search to find place to insert in $O(lg n)$ time. Using binary search, we find the smallest i such that R[i] ≥ t, i.e., the next larger element. We then compare R[i] and R[i − 1] against t. Actual insertion however requires shifting elements which requires Θ(n) time.</p>
-<p>If using Unsorted list/array:<br>k minute check takes O(n) time.</p>
-<p>If using Min-Heap:<br>It is possible to insert in $O(lg n)$ time. However, the k minute check will require $O(n)$ time since we need to compare both sides of the heap.</p>
-<p>If using Dictionary or Python Set:<br>Insertion is $O(1)$ time. k minute check takes $Ω(n)$ time</p>
-<h3 id="Binary-Search-Trees-BST"><a href="#Binary-Search-Trees-BST" class="headerlink" title="Binary Search Trees (BST)"></a>Binary Search Trees (BST)</h3><p><strong>Properties</strong>:</p>
-<ul>
-<li>Each node x in the binary tree has a key $key(x)$.</li>
-<li>Nodes other than the root have a parent p(x). </li>
-<li>Nodes may have a left child left(x) and/or a right child right(x). These are pointers unlike in a heap</li>
-<li>For any node x, for all nodes y in the left subtree of x, $key(y) ≤ key(x)$. For all nodes y in the right subtree of x $key(y) ≥ key(x)$.</li>
+<h3 id="Model-selection"><a href="#Model-selection" class="headerlink" title="Model selection"></a>Model selection</h3><ul>
+<li>In order to determine the number of HMM states, K, a possible strategy is to fix the maximum number, and then the Bayesian inference process can discard some of them if there is insufficient evidence to support their presence in the data. </li>
+<li>The free energy, a quantity that approximates the model evidence, can also be used to choose K. </li>
 </ul>
-<p><strong>Operations</strong>:</p>
-<ul>
-<li>insert(val): Follow left and right pointers till you find the position (or see the value)</li>
-<li>find(val): Follow left and right pointers until you find it or hit NIL</li>
-<li>findmin(): Key is to just go left till you cannot go left anymore.</li>
+<h3 id="Spectral-description-of-the-states"><a href="#Spectral-description-of-the-states" class="headerlink" title="Spectral description of the states"></a>Spectral description of the states</h3><ul>
+<li>MAR corresponds with the frequency domain</li>
+<li>Hence the state segmentation is driven by the spectral content of each separate channel and the spectral relations between channels. </li>
+<li>Once the HMM-MAR model is trained and we have the state time courses, we can estimate the spectral content of the model, including the following measures:<ul>
+<li>Power spectral density (PSD)</li>
+<li>Coherence</li>
+<li>Partial directed coherence (PDC)</li>
+<li>Phase</li>
 </ul>
-<p><strong>Complexity</strong>:<br>All operations are $O(h)$ where h is height of the BST.</p>
-<h4 id="Augmenting-the-BST-Structure"><a href="#Augmenting-the-BST-Structure" class="headerlink" title="Augmenting the BST Structure"></a>Augmenting the BST Structure</h4><p>When a data structure doesn’t support some of the operations that we need. Then we can often augment the data strucutre by adding a data member or two and an additional operation or two.</p>
-<p>Rank(t): give the number of planes are scheduled to land at times ≤ t<br>Solution: by adding a subtree size memeber into the structure, like another key to the node</p>
+</li>
+<li>The estimation of these quantities can be done by one of these two methods:<ul>
+<li>A parametric estimation, using the MAR coefficients.</li>
+<li>A nonparametric estimation, using a novel statewise version of the multitaper. This would be the way to do it for example if the states were specified to be Gaussian distributions (i.e. MAR order equal to zero).</li>
+</ul>
+</li>
+<li>In the parametric case<ul>
+<li>we can use the MAR coefficients as returned by the model. </li>
+<li>These coefficients correspond to a maximum a posteriori estimation (which means that they have been regularised by the prior), and, as described above, can have an incomplete parametrisation. </li>
+<li>For the sake of spectral estimation, we prefer to re-estimate the MAR coefficients using maximum likelihood, as is standard in the signal processing literature, and use a complete parametrisation, i.e. using lags (t-1,t-2,…,t-P).</li>
+</ul>
+</li>
+<li>In the non-parametric case:<ul>
+<li>take advantage of the inferred HMM state time courses as temporal windows for estimating the state-specific spectral properties using a weighted version of the multitaper. PDC has not a closed solution in the non-parametric case, so that we need to use the so-called Wilson factorisation</li>
+</ul>
+</li>
+</ul>
+<h3 id="Analysis-of-results"><a href="#Analysis-of-results" class="headerlink" title="Analysis of results"></a>Analysis of results</h3><ul>
+<li>The <strong>mean pattern of activity</strong> of each state. The function getMean(hmm,k) outputs the mean of the Gaussian distribution, assuming that the option zeromean was set to 0. Note that this is mostly useful for the Gaussian distribution, but not that much for the MAR model.</li>
+<li>The <strong>functional connectivity</strong> of each state. The function getFuncConn(hmm,k) outputs the covariance and correlation matrices of state k, when the states are distributed Gaussian (order=0). In the case of a MAR state model, these refer to the covariance matrix of the residual.</li>
+<li>The <strong>transition probabilities</strong>. The function getTransProbs(hmm) returns the transition probabilies from any state to any other state, without considering the persistence probabilities (i.e. the probability to remain in the same state). The transition probability matrix including the <strong>persistence probabilities</strong> is contained in hmm.P.</li>
+<li>The <strong>transition probabilities for a subset of the subjects</strong>. The function getMaskedTransProbMats returns the transition probabilities (including persistencies) for subsets of the data as specified in the parameter Masks. This is useful for example if we wish to find differences in the state transitions between groups.</li>
+<li>The state time <strong>fractional occupancies</strong>, using getFractionalOccupancy(Gamma,T,dim). This can refer to either (i) how much time the HMM spends on each state at each time point on average (across trials), or (ii) how much time each subject/trial/session spends in each state (i.e. the average state probability across time, per session or subject). The former, useful for task, is computed when dim=1; the latter, useful to investigate differences in occupancies between subjects, is computed when dim=2.</li>
+<li>The state <strong>switching rates</strong>. The function getSwitchingRate provides a measure of the state switching rate for each session/subject, and can be understood as a measure of stability per subject.</li>
+<li>The state <strong>life times</strong>. The function getStateLifeTimes returns, per subject/session/trial, a vector of life times per state, containing the number of time points per visit. This reflects the temporal stability of the states.</li>
+<li>The state <strong>interval times</strong>. The function getStateIntervalTimes returns, per subject/session/trial, a vector of interval times per state, containing the number of time points between visits. The interval times, the life times, the fractional occupancies and the switching rates are sometimes referred to collectively as the “chronnectome”.</li>
+<li><strong>maximum fractional occupancy</strong>, used to measure whether the HMM is effectively capturing the dynamics on the data. The function getMaxFractionalOccupancy finds the maximum fractional occupancy for each subject/trial. This is a useful statistic to diagnose whether the HMM solution is “mixing well” or states are assigned to describe entire subjects (in which case the HMM is doing a poor job in finding the data dynamics).</li>
+<li>The <strong>onset time</strong> of the states for each session. The function getStateOnsets provides a vector per session and state of when specifically the state becomes active. That can be used to relate to task information.</li>
+<li>The <strong>evoked state probability</strong> relative to a stimulus. The function evokedStateProbability() can be used to examine how the stimulus modulates the state probabilities.</li>
+<li>The <strong>similarity between two HMM runs</strong>. There are multiple ways to measure the similarity between HMM runs (on the same or comparable data). One of them is to measure the statistical dependence between the state time courses between the two runs. This is done with the function getGammaSimilarity(gamma1,gamma2), which measures the overlapping between the state probabilities after optimally reordering the states.</li>
+</ul>
+<p>Reference:<br><a href="https://github.com/OHBA-analysis/HMM-MAR/wiki/User-Guide" target="_blank" rel="noopener">https://github.com/OHBA-analysis/HMM-MAR/wiki/User-Guide</a></p>
 
       
 
@@ -570,7 +372,7 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -584,7 +386,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/07/MIT6006-Lec05/">展开全文 >></a>
+          <a class="article-more-a" href="/blog/2019/03/11/HMM-MAR/">展开全文 >></a>
         </p>
       
 
@@ -614,20 +416,20 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-MIT6006-Lec04" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-WienerProcess" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/06/MIT6006-Lec04/">MIT6006 Lec04 Priority queue and Heap</a>
+      <a class="article-title" href="/blog/2019/03/01/WienerProcess/">Wiener Process</a>
     </h1>
   
 
         
-        <a href="/blog/2018/11/06/MIT6006-Lec04/" class="archive-article-date">
-  	<time datetime="2018-11-06T02:48:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-06</time>
+        <a href="/blog/2019/03/01/WienerProcess/" class="archive-article-date">
+  	<time datetime="2019-03-01T01:03:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-01</time>
 </a>
         
       </header>
@@ -637,7 +439,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Priority-Queues"><span class="toc-number">1.</span> <span class="toc-text">Priority Queues</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap"><span class="toc-number">2.</span> <span class="toc-text">Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap-sort"><span class="toc-number">3.</span> <span class="toc-text">Heap sort</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Wiener-process"><span class="toc-number">1.</span> <span class="toc-text">Wiener process</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stochastic-differential-equation-SDE"><span class="toc-number">2.</span> <span class="toc-text">Stochastic differential equation (SDE)</span></a></li></ol>
             </div>
            -->
         <!--  
@@ -646,81 +448,35 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Priority-Queues"><span class="toc-text">Priority Queues</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap"><span class="toc-text">Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heap-sort"><span class="toc-text">Heap sort</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Wiener-process"><span class="toc-text">Wiener process</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stochastic-differential-equation-SDE"><span class="toc-text">Stochastic differential equation (SDE)</span></a></li></ol>
         </div>
     </div>
  -->
-        <p><br></p>
-<h3 id="Priority-Queues"><a href="#Priority-Queues" class="headerlink" title="Priority Queues"></a>Priority Queues</h3><ul>
-<li>Defination: A data structure implementing a set S of elements, each associated with a <strong>key</strong>.</li>
-<li>Every element has its own key. And the key represents the priority of that element. Keys are not necessarily unique.</li>
-<li>It supports the following operations:<ul>
-<li><code>insert(S,x)</code>: insert element x into set S</li>
-<li><code>max(S)</code>: return element of S with largest key</li>
-<li><code>extract_max(S)</code>: return element of S with largest key and remove it from S</li>
-<li><code>increase_key(S,x,k)</code>: increase the value of element x’ s key to new value k (assumed to be as large as current value)</li>
-</ul>
-</li>
-</ul>
-<h3 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h3><ul>
-<li>Heap is an implementation of a priority queue</li>
-<li>is also an <strong>array</strong> visualized as a nearly complete <em>binary tree</em></li>
-<li>Heaps can be convert to max heap or min heap when sorting them.</li>
-<li><strong>Max heap</strong>: the key of a node is ≥ than the keys of its children. (analogously as min heap)</li>
-<li>Heap as a tree:<ul>
-<li>Root of the tree: the first element (i=1) in the array</li>
-<li>parent(i)=i/2: returns index of node’s parent</li>
-<li>left(i)=2i: returns index of node’s left child</li>
-<li>right(i)=2i+1: returns index of node’s right child</li>
-<li>The height of a binary heap is $O(lg n)$</li>
-</ul>
-</li>
-<li>Heap operations:<ul>
-<li><code>build_max_heap</code>: produce a max-heap from an unordered array</li>
-<li><code>max_heapify</code>: correct a single violation of the heap property in a subtree at its root</li>
-<li><code>insert</code>, <code>extract_max</code>, <code>heapsort</code></li>
-</ul>
-</li>
-</ul>
-<p><strong>Max_heapify</strong>: </p>
+        <h3 id="Wiener-process"><a href="#Wiener-process" class="headerlink" title="Wiener process"></a>Wiener process</h3><p>The Wiener process</p>
 <ul>
-<li>the assumption is that the trees rooted at left(i) and right(i) are max-heaps. </li>
-<li>If element A[i] violates the max-heap property, correct violation by “trickling” element A[i] down the tree, making the subtree rooted at index i a max-heap.</li>
-<li>Pseudocode:  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">l = left(i)</span><br><span class="line">r = right(i)</span><br><span class="line"><span class="keyword">if</span> (l &lt;= heap-size(A) and A[l] &gt; A[i])</span><br><span class="line">    <span class="keyword">then</span> largest = l <span class="keyword">else</span> largest = i</span><br><span class="line"><span class="keyword">if</span> (r &lt;= heap-size(A) and A[r] &gt; A[largest])</span><br><span class="line">    <span class="keyword">then</span> largest = r</span><br><span class="line"><span class="keyword">if</span> largest != i</span><br><span class="line">    <span class="keyword">then</span> exchange A[i] and A[largest]</span><br><span class="line">Max_Heapify(A, largest)</span><br></pre></td></tr></table></figure>
-</li>
+<li>also called Brownian motion, is a kind of <strong>Markov stochastic process</strong>.</li>
+<li><strong>Stochastic process</strong>: <ul>
+<li>whose value changes over time in an uncertain way</li>
+<li>we only know the distribution of the possible values of the process at any time point. - In contrast to the stochastic process, a deterministic process is with an exact value at any time point.</li>
 </ul>
-<p><strong>Build_Max_Heap</strong>:</p>
+</li>
+<li><strong>Markov process</strong>: the likelihood of the state at any future time point depends only on<br>its present state but not on any past states</li>
+</ul>
+<p>The properties of the Wiener process ${Z(t)}$ for $t ≥ 0$:</p>
 <ul>
-<li>Converts A[1…n] to a max heap</li>
-<li><p>Build_Max_Heap(A):</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i=n/2 downto 1</span><br><span class="line"><span class="keyword">do</span> Max_Heapify(A, i)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>The reason to start at n/2 is that element A[n/2+1 … n] are all leaves. There is no need to build max_heap for leaves which has only one element (its own).</p>
-</li>
-<li>Time costs: $O(nlog n)$ via simple analysis</li>
-<li>Observe however that Max_Heapify takes $O(1)$ for time for nodes that are one level above the leaves(叶子层的上一层，即倒数第二层)，$O(l)$ for the nodes that are $l$ levels above the leaves. There are n/4 nodes in level 1(即 倒数第二层), n/8 in level 2 (再往上的的一层) and so on till in $lg n$ level remains one root node.</li>
-<li>Therefore, the total amount of work in the for loop is (括号里面的是那一层的Node个数):<br>$$\frac n4(1c) + \frac n8 (2c) + \frac n{16} (3c) + … + 1(lgn c)$$</li>
-<li>set $\frac n4=2^k$简化上式可得：$c 2^k (\frac1{2^0}+\frac2{2^1}+\frac3{2^2}+ … + \frac{(k+1)}{2^k})$, 括号里面上界是个常数</li>
-<li>Therefore, Build_max_heap is $O(n)$</li>
+<li>(Normal increments) $Z(t) − Z(s) ∼ N(0,t − s)$.</li>
+<li>(Independence of increments) $Z(t) − Z(s)$ and $Z(u)$ are independent, for $u ≤ s &lt; t$.</li>
+<li>(Continuity of the path) $Z(t)$ is a continuous function of t.</li>
+<li>$W(0) = 0$.</li>
+<li>$E(W(t)) = 0, E(W^2(t)) = t$ for each time $t ≥ 0$.</li>
 </ul>
-<h3 id="Heap-sort"><a href="#Heap-sort" class="headerlink" title="Heap sort"></a>Heap sort</h3><ul>
-<li>Sort strategy:<ol>
-<li>Build Max Heap from unordered array;</li>
-<li>Find maximum element A[1];</li>
-<li>Swap elements A[n] and A[1]: now max element is at the end of the array!</li>
-<li>Discard node n from heap (by decrementing heap-size variable)</li>
-<li>New root may violate max heap property, but its children are max heaps. Run max_heapify to fix this.</li>
-<li>Go to Step 2 unless heap is empty</li>
-</ol>
-</li>
-<li>Running time:<ul>
-<li>after n iterations the Heap is empty</li>
-<li>every iteration involves a swap and a max_heapify operation; hence it takes O(log n) time</li>
-<li>Overall $O(nlog n)$</li>
+<h3 id="Stochastic-differential-equation-SDE"><a href="#Stochastic-differential-equation-SDE" class="headerlink" title="Stochastic differential equation (SDE)"></a>Stochastic differential equation (SDE)</h3><ul>
+<li>is a differential equation in which one or more of the terms is a stochastic process, resulting in <u>a solution which is also a stochastic process</u>.</li>
+<li>SDEs contain a variable which represents random white noise calculated as the derivative of Brownian motion or the Wiener process.</li>
+<li>A typical SDE: $$dX = a(t, X) dt + b(t, X) dW_t$$</li>
+<li>The solution to SDE could be: Euler-Maruyama Method, Milstein Method, Runge-Kutta Method and Taylor Method</li>
 </ul>
-</li>
-<li>A nice demo here: <a href="https://www.geeksforgeeks.org/heap-sort/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/heap-sort/</a></li>
-</ul>
+<p>Reference:<br><a href="http://math.gmu.edu/~tsauer/pre/sde.pdf" target="_blank" rel="noopener">http://math.gmu.edu/~tsauer/pre/sde.pdf</a><br><a href="http://ft-sipil.unila.ac.id/dbooks/AN%20INTRODUCTION%20TO%20STOCHASTIC%20DIFFERENTIAL%20EQUATIONS%20VERSION%201.2.pdf" target="_blank" rel="noopener">http://ft-sipil.unila.ac.id/dbooks/AN%20INTRODUCTION%20TO%20STOCHASTIC%20DIFFERENTIAL%20EQUATIONS%20VERSION%201.2.pdf</a></p>
 
       
 
@@ -733,157 +489,12 @@ var _hmt = _hmt || [];
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
         		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/06/MIT6006-Lec04/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-notes-matlab" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/06/notes-matlab/">MATLAB 常用语法记录</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/11/06/notes-matlab/" class="archive-article-date">
-  	<time datetime="2018-11-06T01:12:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Matrix-处理"><span class="toc-number">1.</span> <span class="toc-text">Matrix 处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#画图"><span class="toc-number">1.1.</span> <span class="toc-text">画图</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Read-and-write-file"><span class="toc-number">2.</span> <span class="toc-text">Read and write file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Others"><span class="toc-number">3.</span> <span class="toc-text">Others</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Matrix-处理"><span class="toc-text">Matrix 处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#画图"><span class="toc-text">画图</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Read-and-write-file"><span class="toc-text">Read and write file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Others"><span class="toc-text">Others</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="Matrix-处理"><a href="#Matrix-处理" class="headerlink" title="Matrix 处理"></a>Matrix 处理</h3><ul>
-<li><p>将所有非零的元素变为1，为零的元素保持为0，使用 <code>~~</code>, 可用于二值化</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A=~~A;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Get indices of elements in upper triangle</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nNodes = size(adj,1);  % get the number of nodes in a matrix</span><br><span class="line">upperInds = find(triu(ones(nNodes),1));</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Sort the node strength and plot matrix by sorting results</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">stg = strengths_und(A)&apos;;</span><br><span class="line">[srtVals srtInds] = sort(stg);</span><br><span class="line">imagesc(log10(A(srtInds, srtInds)));</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Set infinite values to 0:</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A(isinf(A))=0;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Compute Euclidean distance and convert to matrix<br>  ···<br>  D = pdist(X)； % calculate the distance between pairs in X<br>  M = squareform(D) % convert to the symmetry matrix<br>  ···</p>
-</li>
-</ul>
-<h4 id="画图"><a href="#画图" class="headerlink" title="画图"></a>画图</h4><ul>
-<li><p>设置图像背景，位置：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hf=figure; hf.Position=[100,350,600,300]; hf.Color=&apos;w&apos;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置坐标轴用 <code>gca</code></p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ax = gca; % current axes</span><br><span class="line">ax.FontSize = 12;</span><br><span class="line">ax.XTick = [0 0.1000 0.2000 0.3000 0.4000 0.5000 0.6000 0.7000 0.8000 0.9000 1];</span><br><span class="line">ax.XTickLabel = [0.02 0.02];</span><br><span class="line">ax.XLim = [-2 2];</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>去掉坐标轴，按像素实际大小画图</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">axis off; axis equal;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Scatter plot matrix: diagonal are replaced with histogram plots of the data in the corresponding column of X. Off-diagonal parts are scatter plots of the columns of X against other columns of X. </p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X = randn(50,3); </span><br><span class="line">plotmatrix(X)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="Read-and-write-file"><a href="#Read-and-write-file" class="headerlink" title="Read and write file"></a>Read and write file</h3><ul>
-<li><p>Read nii file</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[hdr,data]=read(filename)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Write to a txt file </p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dlmwrite(&apos;coords.txt&apos;,coords,&apos;delimiter&apos;,&apos; &apos;);</span><br><span class="line">dlmwrite(&apos;matrix.txt&apos;,A,&apos;delimiter&apos;,&apos; &apos;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Combine data into a table with column headers</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">att = array2table([ci stg degree clust], &apos;VariableNames&apos;, &#123;&apos;module&apos;,&apos;strength&apos;,&apos;degree&apos;,&apos;clustering&apos;&#125;);</span><br><span class="line">writetable(att, &apos;attributes.txt&apos;,&apos;delimiter&apos;,&apos; &apos;);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h3><ul>
-<li><p>在命令行窗口输出</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fprintf(&apos;Subject: %0.3f\n&apos;,some_value);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Get the running time of code</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tic</span><br><span class="line">code here</span><br><span class="line">toc</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>diff</code> function: to calculate the incremental change between each pair of values in an array.</p>
-</li>
-<li><code>linspace</code> function: creates a vector of n equally spaced elements between any two values, x1 and x2. <code>x = linspace(x1,x2,n)</code></li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Stochastic</a>
         		</li>
       		
 		</ul>
@@ -893,7 +504,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/06/notes-matlab/">展开全文 >></a>
+          <a class="article-more-a" href="/blog/2019/03/01/WienerProcess/">展开全文 >></a>
         </p>
       
 
@@ -923,124 +534,20 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-MIT6006-Lec03" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-EM" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/05/MIT6006-Lec03/">MIT6006 Lec03 插入排序，归并排序</a>
+      <a class="article-title" href="/blog/2019/02/23/EM/">EM, MAP</a>
     </h1>
   
 
         
-        <a href="/blog/2018/11/05/MIT6006-Lec03/" class="archive-article-date">
-  	<time datetime="2018-11-05T12:37:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#插入排序-Insertion-sort"><span class="toc-number">1.</span> <span class="toc-text">插入排序 (Insertion sort)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Binary-Insertion-sort"><span class="toc-number">1.1.</span> <span class="toc-text">Binary Insertion sort</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#归并排序-Merge-Sort"><span class="toc-number">2.</span> <span class="toc-text">归并排序 (Merge Sort)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solving-Recurrences"><span class="toc-number">3.</span> <span class="toc-text">Solving Recurrences</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#插入排序-Insertion-sort"><span class="toc-text">插入排序 (Insertion sort)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Binary-Insertion-sort"><span class="toc-text">Binary Insertion sort</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#归并排序-Merge-Sort"><span class="toc-text">归并排序 (Merge Sort)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solving-Recurrences"><span class="toc-text">Solving Recurrences</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>排序总的问题就是：<br>输入一个序列 <code>A[1···n]</code><br>要求输求它的递增排序之后的排列。</p>
-<h3 id="插入排序-Insertion-sort"><a href="#插入排序-Insertion-sort" class="headerlink" title="插入排序 (Insertion sort)"></a>插入排序 (Insertion sort)</h3><p><strong>Pseudocode</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> j = 2:n</span><br><span class="line">    insert key A[j] into the already sorted sub array A[1 ... j-1] by pairwise key-swaps down to its right position.</span><br></pre></td></tr></table></figure></p>
-<p><strong>Complexity</strong>: $\theta(n^2)$<br>because at the worst case, it needs $\theta(n^2)$ compares and $\theta(n^2)$ swaps.</p>
-<h4 id="Binary-Insertion-sort"><a href="#Binary-Insertion-sort" class="headerlink" title="Binary Insertion sort"></a>Binary Insertion sort</h4><p>注意到在一般的插入排序中，我们会得到一个已经排好序的子序列，那么这时其实就可以用二分查找法来替代之前的逐个compare，这样能减少compare的次数。<br><strong>Pseudocode</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> j = 2:n</span><br><span class="line">    insert key A[j] into the already sorted sub array A[1 ... j-1]</span><br><span class="line">    Use binary search to find the right position</span><br></pre></td></tr></table></figure></p>
-<p>二分查找法花费 $\theta(log n)$ 时间，插入之后移动元素花费 $\theta(n)$ 时间。<br><strong>Complexity</strong>:<br>$\theta(nlog n)$ comparisons, $\theta(n^2)$ swaps</p>
-<h3 id="归并排序-Merge-Sort"><a href="#归并排序-Merge-Sort" class="headerlink" title="归并排序 (Merge Sort)"></a>归并排序 (Merge Sort)</h3><p>采用的是 divide and conquer 的思想。<br><strong>Pseudocode</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">If n = 1, <span class="keyword">done</span> (nothing to sort)</span><br><span class="line">Otherwise, recursively sort A[1 ... n/2] and A[n/2+1 ... n]</span><br><span class="line"><span class="string">"Merge"</span> the two sorted sub-arrays</span><br></pre></td></tr></table></figure></p>
-<p><strong>Complexity</strong>:<br>$\theta(n)$ to merge a total of n elements(linear time)<br>$T(n) = 2T(n/2) + \theta(n)$<br>After plotting the recursion tree, we can find that there are <code>1+lgn</code> layers, and <code>n</code> leaves in the tree. And for each layer, it totally costs <code>cn</code> time. Therefore, complexity is  $\theta(nlg n)$<br>可以看到，在这个树里面，每一层的complexity都是均等的<br><img src="/blog/images/MIT03_01.jpg" width="80%" height="60%"></p>
-<h3 id="Solving-Recurrences"><a href="#Solving-Recurrences" class="headerlink" title="Solving Recurrences"></a>Solving Recurrences</h3><p>对于不同的recurrence tree来说，每一层不同的cost决定了它的complexity主要集中在哪里。<br>如上面的归并排序是每一层都占相等的复杂度。<br>下面是两个例子：<br><strong>叶子部分的计算占主要复杂度</strong>:</p>
-<p><img src="/blog/images/MIT03_02.jpg" width="80%" height="60%"></p>
-<p><strong>根部分的计算占主要复杂度</strong>:</p>
-<p><img src="/blog/images/MIT03_03.jpg" width="80%" height="60%"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/05/MIT6006-Lec03/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-life-in-Melbourne01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/04/life-in-Melbourne01/">猫本交流杂记（一）</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/11/04/life-in-Melbourne01/" class="archive-article-date">
-  	<time datetime="2018-11-03T22:20:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-04</time>
+        <a href="/blog/2019/02/23/EM/" class="archive-article-date">
+  	<time datetime="2019-02-23T07:49:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-23</time>
 </a>
         
       </header>
@@ -1054,13 +561,254 @@ var _hmt = _hmt || [];
             </div>
            -->
         <!--   -->
-        <p>算下来来墨尔本接近半个月了，从10月16号落地到现在，对这边整个center和研究也有些感悟和感慨，就随手记一点吧。</p>
-<p>今天主要想来说说这边搞研究和国内乃至香港搞研究的一个比较相反的现象。</p>
-<p>有天晚上弄得比较晚（其实也就7点多，但办公室基本没人了…），我们三个中国人（两个PhD学生一个PostDoc）说一起出去吃，然后正好我们老板(澳洲土著)也在，他就说他也一起。这在国内应该是比较少见的，一般来说教授是很少跟自己的学生一起吃饭的，一起吃饭的情况大都是整个实验室聚餐这种。然后我们就一起出去吃了，在一个中国馆子里，期间老板一直负责给我们倒茶水… 看来他已经习惯了中国的饭桌文化。。。</p>
-<p>饭间大家讨论到国内各个阶层都追求学位这个现象，说不管怎么样，大家都想努力地去拿本科甚至研究生的学位，因为这在某种程度上代表着一种地位，也意味着将来出来工资的高收入。土著老板就很不解，他说现实社会实际上是哪怕没有读过书的人，也能赚大钱，做生意会做得很好，为什么还要去拿学位，赚钱不就是这个目的吗，那达到这个目的的方式并不一定要读书啊，你可以说 “Hey look, I have a new car. I don’t care if I have that degree”。这就反应了中外国家思维和心态上的不同，实际上也是社会发展程度的一种映射。</p>
-<p>在澳洲，不管你做什么，你都能挣很多钱，很多体力或者技工的活儿，挣得不比一个教授的工资少，反而真的是一些白领阶层，才是挣得最少的。对大多数人来说，还没有到“兼济天下”这种情怀，那么其实挣钱就是他们的最终目的，只要能挣钱就行，还读什么书呢，不读书都比你读那么多年的书还挣得多，何必呢。所以在澳洲，那些读研究生的，甚至读PhD的，真的是对科研的热爱才会去做的，因为或许他们有更好的选择去挣大钱，但他们还是想搞搞研究，因为这样他们才觉得真的快乐。所以这也是为什么他们能做出很好的成果的原因吧，毕竟是因为热爱，是真的想去探索。</p>
-<p>但在国内和香港不一样，读PhD的目的是为了挣钱，是为了将来有更好的生活，这是社会和人口决定了的，根本还没有精力去追求更高层次的热爱，因为你需要去考虑生活甚至生存。这也是为什么很多PhD读得很痛苦(包括我自己)，读到一半不读了，或者读着读着跑去学cs了。如果每天考虑的是我什么时候才能毕业，做哪个方向更赚钱，那你又怎么有时间去考虑如何把科研做到极致这种事情呢？</p>
-<p>还是有点遗憾吧。少了真正对某个事情的激情和热情，人生会少了很多乐趣的。</p>
+        <ul>
+<li>Probabilistic models, such as hidden Markov models or Bayesian networks, are commonly used to model biological data. </li>
+<li>But models are models, which means we need to first choose the model type, and then estimate the parameters based on the observations.</li>
+<li>The expectation maximization algorithm is a natural generalization of maximum likelihood estimation to the incomplete data case. </li>
+<li>other numerical optimization techniques, such as gradient descent or Newton-Raphson, could be used instead of expectation maximization; in practice, however, expectation maximization has the advantage of being simple, robust and easy to implement.</li>
+</ul>
+<p>The expectation maximization algorithm enables parameter estimation in probabilistic models with incomplete data.</p>
+<p>Reference:<br><a href="http://ai.stanford.edu/~chuongdo/papers/em_tutorial.pdf" target="_blank" rel="noopener">http://ai.stanford.edu/~chuongdo/papers/em_tutorial.pdf</a><br><a href="https://math.stackexchange.com/questions/25111/how-does-expectation-maximization-work" target="_blank" rel="noopener">https://math.stackexchange.com/questions/25111/how-does-expectation-maximization-work</a><br><a href="https://stats.stackexchange.com/questions/235070/relation-between-map-em-and-max-likelihood" target="_blank" rel="noopener">https://stats.stackexchange.com/questions/235070/relation-between-map-em-and-max-likelihood</a><br><a href="https://www.cs.utah.edu/~piyush/teaching/EM_algorithm.pdf" target="_blank" rel="noopener">https://www.cs.utah.edu/~piyush/teaching/EM_algorithm.pdf</a><br><a href="https://people.eecs.berkeley.edu/~pabbeel/cs287-fa13/slides/Likelihood_EM_HMM_Kalman.pdf" target="_blank" rel="noopener">https://people.eecs.berkeley.edu/~pabbeel/cs287-fa13/slides/Likelihood_EM_HMM_Kalman.pdf</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/02/23/EM/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-SolDerivative" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/02/19/SolDerivative/">Numerical differentiation - ways to find derivative</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/02/19/SolDerivative/" class="archive-article-date">
+  	<time datetime="2019-02-19T01:22:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Finite-difference-formulas-Newton’s-difference-quotient"><span class="toc-number">1.</span> <span class="toc-text">Finite difference formulas (Newton’s difference quotient)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Complex-step-approximation"><span class="toc-number">2.</span> <span class="toc-text">Complex-step approximation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Differential-quadrature"><span class="toc-number">3.</span> <span class="toc-text">Differential quadrature</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Finite-difference-formulas-Newton’s-difference-quotient"><span class="toc-text">Finite difference formulas (Newton’s difference quotient)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Complex-step-approximation"><span class="toc-text">Complex-step approximation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Differential-quadrature"><span class="toc-text">Differential quadrature</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <p><br></p>
+<blockquote>
+<p>In numerical analysis, numerical differentiation describes algorithms for estimating the derivative of a mathematical function using values of the function and perhaps other knowledge about the function.</p>
+</blockquote>
+<p>There are mainly two ways to calculate the derivative of a function. (And useful when finding Jacobian matrix)</p>
+<h3 id="Finite-difference-formulas-Newton’s-difference-quotient"><a href="#Finite-difference-formulas-Newton’s-difference-quotient" class="headerlink" title="Finite difference formulas (Newton’s difference quotient)"></a>Finite difference formulas (Newton’s difference quotient)</h3><p>This way is the same as what we learn in high school course. That is to compute the slope of a nearby secant line with a tiny tiny increament h:$$\dfrac {f(x+h)-f(x)}{h}$$<br>And in implementation, we just need to make sure that the h is very very small.</p>
+<p>The above formula is also called the Newton’s forward approximation when $h &gt; 0$. Since it uses the point that are forward to the current point. If $h&lt;0$, then it is called Newton’s backward approximation.<br>If we don’t use the current point and chooce one tiny step both forward and backward to calculate the derivative: $\dfrac {f(x+h)-f(x-h)}{2h}$, then it is called central approximation. And as the error item in this way is proportional to $h^2$, for small values of h, the approximation is more accurate than one-sided(forward/backward) estimation.</p>
+<h3 id="Complex-step-approximation"><a href="#Complex-step-approximation" class="headerlink" title="Complex-step approximation"></a>Complex-step approximation</h3><p>The classical finite difference approximations for numerical differentiation are ill-conditioned. However, if f is a holomorphic function, real-valued on the real line, which can be evaluated at points in the complex plane near x then there are stable methods. The first derivative can be calculated by the complex-step derivative formula as follows: $$f’(x) = \frac{Im(f(x+ih))}{h}$$<br>where $i$ is the imaginary unit, h is the small step size.</p>
+<p>The derivation can be as follows:</p>
+<ul>
+<li>Let $f(x)$ be a function, let $x_0$ be a point on the real axis, and let $h$ be a real parameter. </li>
+<li>Expand $f(x)$ in a Taylor series off the real axis: $$f(x_0+ih) = f(x_0) = ihf’(x_0) - h^2f’’(x_0)/2! - ih^3F^{(3)}/3! + \cdots$$</li>
+<li>Take the imaginary part of both sides and divide by h: $$f’(x_0) = \frac {Im(f(x_0+ih))}{h} + O(h^2)$$</li>
+<li>Therefore, the above gives an approximation to the value of the derivative, $f′(x_0)$, and that is accurate to order $O(h^2)$.</li>
+</ul>
+<p>$h = 1.0E-20$ usually works very well in nearly all cases, and results in derivatives no less accurate than the original algorithm.</p>
+<p>Note that the above formula is only valid for calculating a first-order derivative.</p>
+<h3 id="Differential-quadrature"><a href="#Differential-quadrature" class="headerlink" title="Differential quadrature"></a>Differential quadrature</h3><blockquote>
+<p>Differential quadrature is the approximation of derivatives by using weighted sums of function values. The name is in analogy with quadrature meaning Numerical integration where weighted sums are used in methods such as Simpson’s method or the Trapezium rule. There are various methods for determining the weight coefficients. Differential quadrature is used to solve partial differential equations.</p>
+</blockquote>
+<p><br></p>
+<p>Reference:<br><a href="https://wiki2.org/en/Numerical_differentiation" target="_blank" rel="noopener">https://wiki2.org/en/Numerical_differentiation</a><br><a href="https://blogs.mathworks.com/cleve/2013/10/14/complex-step-differentiation/" target="_blank" rel="noopener">https://blogs.mathworks.com/cleve/2013/10/14/complex-step-differentiation/</a><br><a href="http://mdolab.engin.umich.edu/content/guide-complex-step-derivative-approximation-0" target="_blank" rel="noopener">http://mdolab.engin.umich.edu/content/guide-complex-step-derivative-approximation-0</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/02/19/SolDerivative/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-UnifyAI" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/02/16/UnifyAI/">读《浅谈人工智能》有感</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/02/16/UnifyAI/" class="archive-article-date">
+  	<time datetime="2019-02-16T06:51:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              
+            </div>
+           -->
+        <!--   -->
+        <p>之前看一个师兄写的文章里面，提到推荐做AI的人看下朱松纯教授写的那篇《人工智能的现状、任务、构架和统一》。我虽然不做纯AI，但我一直在想找一个人脑与AI的结合点，非常希望能建立起自己的一个认知框架。隔了大半年了，终于有时间找来读一读。下面大概介绍一下朱教授的观点和我自己的思考。</p>
+<p>朱教授把人工智能分为六大板块：</p>
+<ul>
+<li>计算机视觉： 包括模式识别，图像处理</li>
+<li>自然语言理解与交流： 包括语音识别，对话</li>
+<li>认知与推理： 包括物理和社会常识</li>
+<li>机器人学： 机械，控制，设计，运动规划和任务规划等</li>
+<li>博弈与伦理： multi-agent 的交互，对抗与合作等</li>
+<li>机器学习： 各种统计的建模，分析工具</li>
+</ul>
+<p>在我读PhD的初期，其实是有机会做真的图像处理，做deep learning那一套东西的，可我大致研究了一下，我觉得太火了，不管是本来就是这个领域的，还是其他领域的，都在朝这个方向转，都在发相关的paper。这让我当时就想起了一个词，大跃进。虽然我理解得也不深刻，但我觉得其实还远不到人们想的那样，DL可以实现真正的人工智能。我当时想，别人都在做的，那我不做，既然有这样一个机会让我搞一下真的人脑，那我就来看看，到底真的人脑是什么样子的？然后一直搞到现在，我发现这个坑是真的多，神经科学这个领域从我开始踏入，到现在，一直没有什么质的进展。但是AI的大潮，已经从CV，转到NLP了。上个月参加谷歌组织的机器学习冬令营，我发现做视觉的相对来说少一些，但是做NLP的，一大把。这是一个很有趣的现象，因为CV那块，像朱教授说的那样，刷榜刷得差不多了，在图像识别本身来说，已经没有什么可以进步的了，除非和其他的领域结合。于是人们又自然而然转到NLP上面去。下一个浪潮是哪里呢？我猜是机器人学，因为前两者都要结合啊，需要一个载体或者说agent来帮助表明这东西有多牛逼啊。而且机器人本身，也是需要加上前两者，才能实现智能这一特性的。可是这还是缺思考，缺认知这一块，所以认知和推理，我觉得是下下个浪潮，也是我现在想研究的方向。</p>
+<p>这其实有点像一个统一的过程，分而治之，再合成一个完整的学科。从朱教授的介绍来讲，人工智能发展的60年有两个阶段：</p>
+<ol>
+<li>前30年以数理逻辑的表达和推理为主： 这一期的领军人物懂很多认知科学的东西，有很强的全局观念，但是没有落地，所以不了了之。</li>
+<li>后30年以概率统计的建模、学习和计算为主： 几大学科独立发展，基于概率建模和随机计算，AI再度繁荣</li>
+</ol>
+<p>后30年的代表人物中，朱教授有提到Judea Pearl这个人，11年的图灵奖获得者。巧的是我当时也追过这个人的paper，因为他的因果模型，我觉得是很有希望用在大脑建模过程当中的，找来他的那本著作看，无奈数学推导对我太难，而后放弃，但这个理论，还依然在我的to do list里面。</p>
+<p>那这几大学科怎么统一到AI上面呢？框架是什么？<br>教授给出的方向是：小数据，大任务范式</p>
+<p>他认为智能系统的根源可以追溯到两个基本前提条件：</p>
+<ol>
+<li>物理环境客观的现实与因果链条：这个我理解的是input, 也就是所见所观所得，这些是外部条件来的</li>
+<li>智能物种与生俱来的任务与价值链条：这个我理解的是 inner sense。也就是所思所做，即文章提到的价值观和决策函数。<br>这有点像一个控制里面的系统，有自己内部的构造和决策，加上外界的input，然后推导出output. 而其实我们想达到的AI，也就是一个智能系统罢了。</li>
+</ol>
+<p>但是这个系统不是一层不变的，就像我们的人脑，每时每刻的状态其实都是不一样的。那为什么会变呢，也就是为什么会有学习这个过程呢？</p>
+<ol>
+<li>外来的数据：外部世界通过各种感知信号，传递到人脑，塑造模型。这些数据来源于观察和实践。观察的数据用于学习各种统计模型，即相关性。实践的数据用于学习因果模型，即将行为和结果联系在一起。</li>
+<li>内在的任务：即由内在的价值函数驱动行为，以达到某种目的。</li>
+</ol>
+<p>这个学习的缘由其实和上面的前提条件很像，都是一个是input的东西，一个是inner的东西。不同的在于，前面那个是初始状态，是静止的，后面那个是学习的过程，是动态的，且一直都在变的。</p>
+<p>那怎么根据这些前提条件和驱动因子实现小数据，大任务范式这个统一框架呢？朱教授提到了暗物质，这个暗物质不是物理学中的那个暗物质。我理解的是，它其实代表了一种 common sense 的建立和因果的推理。你看到的，不仅仅是你看到的，还有那些物体背后的联系和因果关系。而这些，就是那些在暗处的东西，那些能促使小数据完成大任务的因子。那这需要什么学科的知识呢？答案是认知，mind。这就涉及到心理学和神经科学相关的东西了。</p>
+<p>在介绍到认知的时候，朱教授引入了博弈伦理。其中提到了两大类的学习方法，我觉得是很有必要单独拿出来看看的，因为这两个学习的方法，其实也是我们真的学习的过程：</p>
+<ol>
+<li><strong>归纳学习(Inductive learning)</strong>: 通过观察大量数据样本来学习，这些样本就是对某个时期、某个地域、某个人群达成的准平衡态的观察。归纳学习的结果就是一个时空因果的概率模型。</li>
+<li><strong>演绎学习(Deductive learning)</strong>: 这个东西文献中很少，也就是从价值函数（还有物理因果）出发，直接推导出这些准平衡态。<br>这就像我们人类早期的学习，都是归纳学习来的，通过观察别人，学习别人，来逐步形成自己的人生观价值观世界观。而后成长到一定年纪的时候，就是演绎学习了，没有见过的东西，通过分析和推理，依然可以得出正确的结论。<br>只可惜我们很多人，一辈子都没有到演绎学习的阶段，从来只是从别人那里听来读来，并没有形成自己的一套方法论。</li>
+</ol>
+<p>我还想提的一点是，归纳学习有点像现在的强化学习，用很少的样本，就是不断去尝试啊，然后得出结果，有一套因果推导在里面。这也是为什么我很关注强化学习的另一个原因。</p>
+<p>之后朱教授讲到学习的极限，停机问题，说实话我对这个方向不是很了解，就不过多分析了。</p>
+<p>最后文章的总结题目是：智能科学-牛顿与达尔文理论体系的统一。提到物理学的责任是寻找支配自然各种现象的统一的力。而智能科学的研究对象是什么呢？是把物理学排除在外的生物意志给拿进来，研究一个物理与生物混合的复杂系统。这里朱教授提到了力的概念，提到了人与人之间，人与物，物与物之间，那些联系其实可用看成一种力，因为这些力是可以真实用数学表达式表达出来的，而且在物理学上是已经很统一很规范了的。那我们要做的其实就是把生物这块的东西，跟物理结合起来。</p>
+<p>在我以前最开始思考AI与人脑的结合的时候，并没有从物理这个方向去想，一是完全没有意识，二是觉得没有什么联系。对物理的理解并不深，所以我对这个观点的看法不加评论。但是有没有一种大统一，是可以独立于物理啊这些理论，在智能的内部（包括人工智能和真人智能），有一个统一的理论，来解释所有的因果和相关呢？我觉得是有的，这也是我一直想找到的一个统一的理论来链接AI和human brain.</p>
+<p>整篇文章让我特别感动的是介绍到David Mumford的时候，说他念念不忘人工智能，从头开始学统计概率，直奔关键体系，而不是拿着锤子找钉子。这恰恰是我目前想追求的，但现实里我却智能拿着锤子找钉子，如果条件允许，我想我还是会钻到统计概率那边，再去学习的，因为我目前的知识体系，还缺少这一块，而这一块又是我认为很重要的。当然，再学个物理也是极好的。</p>
+<p>All in all, 现在的Artificial intelligence 只能算是 engineering，而不是一门真正的science，等真正有人站出来统一这个学科了，或许才能真正称之为 Science of Intelligence。 我希望自己能在有生之年，能够成为这个science of intelligence 建立的推动者。</p>
 
       
 
@@ -1088,7 +836,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/04/life-in-Melbourne01/">展开全文 >></a>
+          <a class="article-more-a" href="/blog/2019/02/16/UnifyAI/">展开全文 >></a>
         </p>
       
 
@@ -1118,20 +866,20 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-NodeJS-learning01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Nonlinear" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/04/NodeJS-learning01/">Notes - NodeJS 学习（一）</a>
+      <a class="article-title" href="/blog/2019/02/08/Nonlinear/">Gauss-Newton method to solve Nonlinear Least Square Problem</a>
     </h1>
   
 
         
-        <a href="/blog/2018/11/04/NodeJS-learning01/" class="archive-article-date">
-  	<time datetime="2018-11-03T22:16:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-04</time>
+        <a href="/blog/2019/02/08/Nonlinear/" class="archive-article-date">
+  	<time datetime="2019-02-08T06:28:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-08</time>
 </a>
         
       </header>
@@ -1141,7 +889,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#NodeJS-Basics"><span class="toc-number">1.</span> <span class="toc-text">NodeJS Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-NodeJS"><span class="toc-number">1.1.</span> <span class="toc-text">What is NodeJS?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装及运行"><span class="toc-number">1.2.</span> <span class="toc-text">安装及运行</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装"><span class="toc-number">1.2.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行"><span class="toc-number">1.2.2.</span> <span class="toc-text">运行</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块"><span class="toc-number">1.3.</span> <span class="toc-text">模块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码的组织和部署"><span class="toc-number">2.</span> <span class="toc-text">代码的组织和部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模块路径的解析"><span class="toc-number">2.1.</span> <span class="toc-text">模块路径的解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#包-Package"><span class="toc-number">2.2.</span> <span class="toc-text">包(Package)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工程目录"><span class="toc-number">2.3.</span> <span class="toc-text">工程目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于NPM"><span class="toc-number">2.4.</span> <span class="toc-text">关于NPM</span></a></li></ol></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#先验知识"><span class="toc-number">1.</span> <span class="toc-text">先验知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gauss-Newton-method"><span class="toc-number">2.</span> <span class="toc-text">Gauss-Newton method</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Pros-amd-Cons"><span class="toc-number">2.1.</span> <span class="toc-text">Pros amd Cons</span></a></li></ol></li></ol>
             </div>
            -->
         <!--  
@@ -1150,63 +898,610 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#NodeJS-Basics"><span class="toc-text">NodeJS Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-NodeJS"><span class="toc-text">What is NodeJS?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装及运行"><span class="toc-text">安装及运行</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行"><span class="toc-text">运行</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块"><span class="toc-text">模块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码的组织和部署"><span class="toc-text">代码的组织和部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模块路径的解析"><span class="toc-text">模块路径的解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#包-Package"><span class="toc-text">包(Package)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工程目录"><span class="toc-text">工程目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于NPM"><span class="toc-text">关于NPM</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#先验知识"><span class="toc-text">先验知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gauss-Newton-method"><span class="toc-text">Gauss-Newton method</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Pros-amd-Cons"><span class="toc-text">Pros amd Cons</span></a></li></ol></li></ol>
         </div>
     </div>
  -->
-        <p>The following are just some notes when I learn NodeJS. Most of the contents are taken from others. The references have been listed in the end.<br>The reason I want to learn it is just because that I need to write codes for my websites…</p>
+        <p><br></p>
+<h3 id="先验知识"><a href="#先验知识" class="headerlink" title="先验知识"></a>先验知识</h3><ul>
+<li><strong>Jacobian</strong>:<ul>
+<li>is the matrix of all first-order partial derivatives of a <strong>vector-valued</strong> function.</li>
+<li>that is to say, the function $f(x)$ maps $R^n \to R^m$</li>
+<li>the Jacobian of $f(x)$ is </li>
+<li>$$\mathbf {J} = {\begin{bmatrix}{\frac {\partial \mathbf {f} }{\partial x_{1}}} &amp; \cdots &amp; {\frac {\partial \mathbf {f} }{\partial x_{n}}} \end{bmatrix}} = {\begin{bmatrix} {\dfrac {\partial f_{1}}{\partial x_{1}}} &amp; \cdots &amp; {\frac {\partial f_{1}}{\partial x_{n}}} \\ \vdots &amp; \ddots &amp; \vdots \\ {\dfrac {\partial f_{m}}{\partial x_{1}}} &amp; \cdots  &amp; {\dfrac {\partial f_{m}}{\partial x_{n}}}\end{bmatrix}}$$</li>
+</ul>
+</li>
+<li><strong>Hessian</strong>:<ul>
+<li>a square matrix of second-order partial derivatives of a <strong>scalar-valued</strong> function, or scalar field.</li>
+<li>that is to say, the function $f(x)$ maps $R^n \to R$</li>
+<li>the Hessian of $f(x)$ is </li>
+<li>$$\mathbf {H} ={\begin{bmatrix}{\dfrac {\partial ^{2}f}{\partial x_{1}^{2}}}&amp;{\dfrac {\partial ^{2}f}{\partial x_{1}\,\partial x_{2}}} &amp; \cdots &amp; {\dfrac {\partial ^{2}f}{\partial x_{1}\,\partial x_{n}}} \\ {\dfrac {\partial ^{2}f}{\partial x_{2}\,\partial x_{1}}}&amp;{\dfrac {\partial ^{2}f}{\partial x_{2}^{2}}}&amp;\cdots &amp;{\dfrac {\partial ^{2}f}{\partial x_{2}\,\partial x_{n}}}\\ \vdots &amp;\vdots &amp;\ddots &amp;\vdots \\ {\dfrac {\partial ^{2}f}{\partial x_{n}\,\partial x_{1}}}&amp;{\dfrac {\partial ^{2}f}{\partial x_{n}\,\partial x_{2}}}&amp;\cdots &amp;{\dfrac {\partial ^{2}f}{\partial x_{n}^{2}}}\end{bmatrix}} $$</li>
+</ul>
+</li>
+<li>Newton’s method in optimization<ul>
+<li>generally, Newton’s method is an iterative method to find the roots of a differentiable function: $f(x)=0$</li>
+<li>在优化当中，找极值时，我们一般会用过求导的方式来找该函数导数为零的点，因为这个点就意味着极值。</li>
+<li>所以Newton’s method在优化运用中，is to find the root of th ederivative of function f: $f’(x)=0$</li>
+<li>In one-dimensional problem, we hope to find the min or max to satisfy: $f’(x^*)=0$</li>
+<li>将f(x)泰勒展开：$$f(x) = f(x_n+\Delta x) \approx f(x_n) + f’(x_n)\Delta x + \frac12 f’’(x_n)\Delta x^2$$</li>
+<li>我们希望在n次迭代后，能找到那个 $x^*$, 此时这个点满足 $f’(x)$, 即：$$f’(x)=0 \to f’(x_n+\Delta x) = 0$$ $$\frac {\partial f(x_n+\Delta x)}{\partial \Delta x} = 0$$ $$\frac {\partial (f(x_n)+f’(x_n)\Delta x + \frac 12 f’’(x_n)\Delta x^2)}{\partial \Delta x} = 0$$ $$f’(x_n) + \frac 12 f’’(x_n)\Delta x^2 =0 $$ $$\therefore \Delta x = - \frac {f’(x_n)}{f’’(x_n)}$$</li>
+<li>所以在Newton’s method中, 寻找极值的方向就是$\Delta x = - \frac {f’(x_n)}{f’’(x_n)}$</li>
+<li>在高阶当中，$\Delta x = - [Hf(x_n)]^{-1} \Delta {f(x_n)}$</li>
+</ul>
+</li>
+</ul>
+<h3 id="Gauss-Newton-method"><a href="#Gauss-Newton-method" class="headerlink" title="Gauss-Newton method"></a>Gauss-Newton method</h3><ul>
+<li>the problem is as follows:$$min_{x\in R^n} f(x) = \frac 12 \sum_{i=1}^m r_i(x)^2$$<ul>
+<li>where $m \ge n$</li>
+<li>n is thge number of parameters</li>
+<li>m is the number of observations</li>
+<li>r(x) is the vector of residuals $r(x) = {\begin{bmatrix} r_1(x) \\ r_2(x) \\ \vdots \\ r_m(x) \end{bmatrix}}$</li>
+</ul>
+</li>
+<li>Note that there could be 3 spaces when considering such probelm:<ul>
+<li>the parameter space</li>
+<li>the observation space</li>
+<li>the model space </li>
+</ul>
+</li>
+<li>the gradient of f(x) is: $$\Delta f(x) = \Delta r(x) r(x) = J(x)^Tr(x)$$<ul>
+<li>where $J(x) = \Delta r(x)^T$, the Jacobian of r(x). (Note only r(x) can have Jacobian but not f(x))</li>
+<li>推导过程直接对原式求导即可</li>
+</ul>
+</li>
+<li>the Hessian of f(x) is: $$\Delta^2 f(x) = \Delta r(x) \Delta r(x)^T + \sum_{i=1}^m r_i(x) \Delta^2 r_i(x)$$ $$= J(x)^TJ(x) + Q(x)$$\</li>
+<li>In optimization, we hope that the residual can approximate 0, if so, $r(x)=0$, and $Q(x) = 0$</li>
+<li><strong>A method that uses the approximation Q(x)=0 is called Gauss-Newton method</strong></li>
+<li>If the search direction using Newton equation: $$\Delta^2 f(x) p^N = - \Delta f(x)$$<ul>
+<li>代入以上的hessian式子： $$(J^T(x)J(x) + Q(x))P^N = - \Delta f(x)$$</li>
+<li>if Q(x) 接近0，$$J^T(x)J(x)P^{GN} = - \Delta f(x) = -J(x)^Tr(x)$$</li>
+<li>if J(x) is full rank, we can have a unique solution; but if not, the problem gets under-deterined ot over-determined.</li>
+</ul>
+</li>
+</ul>
+<h4 id="Pros-amd-Cons"><a href="#Pros-amd-Cons" class="headerlink" title="Pros amd Cons"></a>Pros amd Cons</h4><ul>
+<li>If $r(x^∗) = 0$, then the approximation $Q(x) ≈ 0$ is good and the Gauss-Newton method will behave like the Newton method close to the solution, i.e. converge quadratically if $J(x^∗)$ has full rank. </li>
+<li>The advantage over the Newton method is that we do not need to calculate the second-order derivatives $∇^2 r_i(x)$.</li>
+<li>However, if any residual component $r_i(x^∗)$ and/or the corresponding curvature $∇^2 r_i(x)$ is large, the approximation $Q(x) ≈ 0$ will be poor, and the Gauss-Newton method will converge slower than the Newton method.</li>
+<li>For such problems, the Gauss-Newton method may not even be locally convergent, i.e. without a global strategy such as the line search, it wouldn’t converge no matter how close to the solution we start.</li>
+</ul>
+<p><br></p>
+<p>Reference:<br><a href="https://www8.cs.umu.se/kurser/5DA001/HT07/lectures/lsq-handouts.pdf" target="_blank" rel="noopener">https://www8.cs.umu.se/kurser/5DA001/HT07/lectures/lsq-handouts.pdf</a><br><a href="http://fourier.eng.hmc.edu/e176/lectures/NM/" target="_blank" rel="noopener">http://fourier.eng.hmc.edu/e176/lectures/NM/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/02/08/Nonlinear/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Linux" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/01/15/Linux/">Command line II</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/01/15/Linux/" class="archive-article-date">
+  	<time datetime="2019-01-15T11:55:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#And-for-reading-use"><span class="toc-number">1.</span> <span class="toc-text">And for reading use</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#And-for-reading-use"><span class="toc-text">And for reading use</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># create a 线程</span></span><br><span class="line">screen -S name</span><br><span class="line"></span><br><span class="line"><span class="comment"># detach the screen</span></span><br><span class="line">ctrl+a+d</span><br><span class="line"></span><br><span class="line"><span class="comment"># recover the screen</span></span><br><span class="line">screen -r </span><br><span class="line"></span><br><span class="line"><span class="comment"># see the list of the screen </span></span><br><span class="line">screen -ls</span><br><span class="line"></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
+<p>f = open(“mini_classes.txt”,”r”)</p>
+<h1 id="And-for-reading-use"><a href="#And-for-reading-use" class="headerlink" title="And for reading use"></a>And for reading use</h1><p>classes = f.readlines()<br>f.close()<br>classes = [c.replace(‘\n’,’’).replace(‘ ‘,’_’) for c in classes]</p>
+<p>ctl+shift+\: terminate python run</p>
+<p>zip -r data.zip data/</p>
+<p>Reference:<br><a href="https://www.tecmint.com/screen-command-examples-to-manage-linux-terminals/" target="_blank" rel="noopener">https://www.tecmint.com/screen-command-examples-to-manage-linux-terminals/</a><br><a href="https://linuxize.com/post/how-to-use-linux-screen/" target="_blank" rel="noopener">https://linuxize.com/post/how-to-use-linux-screen/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/01/15/Linux/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-MIT6006-Lec21" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/01/11/MIT6006-Lec21/">MIT6006 Lec21 DP III &amp; IV</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/01/11/MIT6006-Lec21/" class="archive-article-date">
+  	<time datetime="2019-01-11T04:47:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Parenthesization"><span class="toc-number">1.</span> <span class="toc-text">Parenthesization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Edit-Distance"><span class="toc-number">2.</span> <span class="toc-text">Edit Distance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Snapsack"><span class="toc-number">3.</span> <span class="toc-text">Snapsack</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Parenthesization"><span class="toc-text">Parenthesization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Edit-Distance"><span class="toc-text">Edit Distance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Snapsack"><span class="toc-text">Snapsack</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="Parenthesization"><a href="#Parenthesization" class="headerlink" title="Parenthesization"></a>Parenthesization</h3><p>Optimal evaluation of associative expression $A[0] · A[1] · · · A[n−1]$ — e.g., multiplying rectangular matrices</p>
+<ol start="2">
+<li>Guessing = outermost multiplication ${…(k-1)}{…(k)}$<ul>
+<li>choices = O(n)</li>
+</ul>
+</li>
+<li>subproblem = cost of substring A[i:j]<ul>
+<li>subproblem = $\Theta (n^2)$</li>
+</ul>
+</li>
+<li>recurrence:<ul>
+<li>DP[i,j] = min(DP[i,k]+DP[k,j]+cost of multiplying (A[i]…A[k-1]) b (A[k]…A[j-1]) for k in range(i+1,j))</li>
+<li>DP[i,i+1] = 0: cost per subproblem = O(j-i) = O(n)</li>
+</ul>
+</li>
+<li>topological order: increasing substring size. Total time = $O(n^3)$</li>
+<li>original problem = DP[0,n]</li>
+</ol>
+<h3 id="Edit-Distance"><a href="#Edit-Distance" class="headerlink" title="Edit Distance"></a>Edit Distance</h3><h3 id="Snapsack"><a href="#Snapsack" class="headerlink" title="Snapsack"></a>Snapsack</h3><p>### </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/01/11/MIT6006-Lec21/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Matlab-DL2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/01/07/Matlab-DL2/">Deep learning in Matlab II</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/01/07/Matlab-DL2/" class="archive-article-date">
+  	<time datetime="2019-01-07T07:40:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#neural-network-theory"><span class="toc-number">1.</span> <span class="toc-text">neural network theory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Interpreting-Network-Behavior"><span class="toc-number">1.1.</span> <span class="toc-text">Interpreting Network Behavior</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-Networks"><span class="toc-number">1.2.</span> <span class="toc-text">Create Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Train-Networks"><span class="toc-number">1.3.</span> <span class="toc-text">Train Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Improve-Performance"><span class="toc-number">1.4.</span> <span class="toc-text">Improve Performance</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sequence-classification-and-regression"><span class="toc-number">2.</span> <span class="toc-text">sequence classification and regression.</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Perform-Regression"><span class="toc-number">2.1.</span> <span class="toc-text">Perform Regression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Detect-Objects-in-images"><span class="toc-number">2.2.</span> <span class="toc-text">Detect Objects in images</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Sequence-Data-with-Recurrent-Networks"><span class="toc-number">2.3.</span> <span class="toc-text">Classify Sequence Data with Recurrent Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Categorical-Sequences"><span class="toc-number">2.4.</span> <span class="toc-text">Classify Categorical Sequences</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-Sequences-of-Output"><span class="toc-number">2.5.</span> <span class="toc-text">Generate Sequences of Output</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#neural-network-theory"><span class="toc-text">neural network theory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Interpreting-Network-Behavior"><span class="toc-text">Interpreting Network Behavior</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-Networks"><span class="toc-text">Create Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Train-Networks"><span class="toc-text">Train Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Improve-Performance"><span class="toc-text">Improve Performance</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sequence-classification-and-regression"><span class="toc-text">sequence classification and regression.</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Perform-Regression"><span class="toc-text">Perform Regression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Detect-Objects-in-images"><span class="toc-text">Detect Objects in images</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Sequence-Data-with-Recurrent-Networks"><span class="toc-text">Classify Sequence Data with Recurrent Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Categorical-Sequences"><span class="toc-text">Classify Categorical Sequences</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-Sequences-of-Output"><span class="toc-text">Generate Sequences of Output</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <h2 id="neural-network-theory"><a href="#neural-network-theory" class="headerlink" title="neural network theory"></a>neural network theory</h2><h3 id="Interpreting-Network-Behavior"><a href="#Interpreting-Network-Behavior" class="headerlink" title="Interpreting Network Behavior"></a>Interpreting Network Behavior</h3><p><strong>Extracting and Visualizing Activations</strong>:</p>
+<ul>
+<li>use the <code>activations</code> function to extract features from an input image: <ul>
+<li>it accepts three inputs: the network, the input image, and the layer to extract features from.</li>
+<li><code>features = activations(net,img,layerName)</code></li>
+</ul>
+</li>
+<li>Each convolution layer consists of many 2-D arrays called channels. </li>
+<li>Most CNNs learn to detect features like color and edges in the first convolution layer. In deeper layers, the network learns more complicated features.</li>
+<li>use the function <code>mat2gray</code> to normalize the activations</li>
+<li>use <code>montage</code> to show the images side by side</li>
+</ul>
+<p><strong>Representing Signal Data as Images</strong></p>
+<ul>
+<li>CNN use the images as input, which means every 2-D array can be input to CNN. Therefore, we can represent the signals in to 2-D array for use of CNN</li>
+<li>There are two ways to convert 1-D signal to images: use <code>spectrogram</code> or a continuous wavelet transform using <code>cwt</code>. </li>
+</ul>
+<p><strong>Feature Extraction for Machine Learning</strong>:</p>
+<ul>
+<li>It is difficult to perform deep learning on a computer without a GPU because of the long training time. </li>
+<li>An alternative is to use pretrained networks for feature extraction. Then you can use traditional machine learning methods to classify these features. </li>
+<li>CNNs learn to extract useful features while learning how to classify image data. As you’ve seen, <u>the early layers read an input image and extract features. Then, fully connected layers use these features to classify the image.</u></li>
+<li>With deep learning, you can use the <code>activations</code> function to extract features. These features can be used as the predictor variables for machine learning.</li>
+<li>We can set the <code>OutputAs</code> option to store the features from activation as rows for the machine learning model: <code>testFeatures = activations(net,testImgs,&#39;fc7&#39;,&#39;OutputAs&#39;,&#39;rows&#39;)</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># extract the features from a pretrained net</span></span><br><span class="line">trainingFeatures = activations(net,trainImgs,<span class="string">'fc7'</span>,<span class="string">'OutputAs'</span>,<span class="string">'rows'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment"># train the maching leanring classifier e.g. naive bayes</span></span><br><span class="line">classifier = fitcnb(trainingFeatures,trainImgs.Labels)</span><br><span class="line"></span><br><span class="line"><span class="comment">#W extract the features for test data and use the trained classifer above to predict</span></span><br><span class="line">testFeatures = activations(net,testImgs,<span class="string">'fc7'</span>,<span class="string">'OutputAs'</span>,<span class="string">'rows'</span>);</span><br><span class="line">predictedLabels = predict(classifier,testFeatures)</span><br><span class="line"></span><br><span class="line"><span class="comment"># compute accuracy and plot the confusion matrix</span></span><br><span class="line">accuracy = nnz(predictedLabels==testImgs.Labels)/numel(predictedLabels)</span><br><span class="line">confusionchart(testImgs.Labels, predictedLabels)</span><br></pre></td></tr></table></figure>
+<h3 id="Create-Networks"><a href="#Create-Networks" class="headerlink" title="Create Networks"></a>Create Networks</h3><p>Many pretrained networks need the input to be 3-D data and some restriction for the size of the images. If the data you want to train doesn’t satisfy these requirment (like the have more than 3 dimensions), we then need to build our own model.</p>
+<p><strong>Create Network Architectures</strong></p>
+<ul>
+<li>The first layer of any convolutional neural network is an image input layer. Function <code>imageInputLayer(inputSize)</code> can do this. The input size is a three-element vector corresponding to the height, width, and number of channels of that image: <code>inLayer = imageInputLayer([28 28 3])</code></li>
+<li>Convolution layers learn features in the input image by applying different filters to the image. To create a convolution layer, you need to specify the filter size and the number of filters: <code>convolution2dLayer([h w],n)</code>, <code>convLayer = convolution2dLayer([5 5],20)</code></li>
+<li><strong>Convolution layers</strong> are generally followed by rectified linear unit (ReLU) and max pooling layers.</li>
+<li>A <strong>ReLU</strong> layer sets all negative values to zero: <code>reluLayer()</code>. The function does not require any inputs.</li>
+<li><strong>Max pooling layers</strong> perform down-sampling by “pooling” rectangular regions together and computing the maximum of each region. Use the pool size as input: <code>maxPooling2dLayer([h w])</code></li>
+<li>The last three layers of a convolutional neural network are<ul>
+<li><strong>fullyConnectedLayer</strong>: it requires the output size as input. This is the number of classes that the network can predict.</li>
+<li><strong>softmaxLayer</strong>: does not require any inputs.</li>
+<li><strong>classificationLayer</strong>: does not require any inputs.</li>
+</ul>
+</li>
+<li>To train a network, we need an array of your entire network architecture. The last step is to stack all the layers you have created into a single array.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># To create an architecture that can be used to classify 28-by-28 color images into two classes.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create input layer that expects RGB images sized 28-by-28.</span></span><br><span class="line">inLayer = imageInputLayer([28 28 3])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create convolution layer with 20 filters sized 5-by-5.</span></span><br><span class="line">convLayer = convolution2dLayer([5 5],20)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create middle layers with a ReLU layer and a max pooling layer with a pool size of 2-by-2. </span></span><br><span class="line">midLayers = [reluLayer(); maxPooling2dLayer([2 2])]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create output layers with a fully connected layer for two classes and a softmax layer and a classification layer.</span></span><br><span class="line">outLayers = [fullyConnectedLayer(2); softmaxLayer(); classificationLayer()]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Combine layers</span></span><br><span class="line">layers = [inLayer; convLayer; midLayers; outLayers]</span><br><span class="line"></span><br><span class="line"><span class="comment"># set the training options and train</span></span><br><span class="line">options = trainingOptions(<span class="string">'sgdm'</span>,<span class="string">'MaxEpochs'</span>,5,<span class="string">'InitialLearnRate'</span>,0.0001)</span><br><span class="line">net = trainNetwork(XTrain,YTrain,layers,options);</span><br><span class="line"></span><br><span class="line"><span class="comment"># Prediction</span></span><br><span class="line">testpreds = classify(net,XTest)</span><br></pre></td></tr></table></figure>
+<p><strong>Understanding Neural Networks</strong></p>
+<ul>
+<li>Each layer in the network performs some operation on its inputs and outputs a new value.</li>
+<li>The first layer is an image input layer. This layer defines the input size of the network and normalizes the input images. By default, an image input layer subtracts the mean image of the training data set. This centers the images around zero.</li>
+<li>2-D convolution layers apply sliding filters to the input image. Convolution layers are a key part of the CNN architecture. They rely on the spatial structure of the input image.</li>
+<li>Convolution layers are usually followed by a nonlinear activation layer such as a rectified linear unit (ReLU). A ReLU layer performs a threshold operation to each element of the input. Any value less than zero is set to zero.</li>
+<li>A maximum pooling layer performs down-sampling by dividing the input into rectangular pooling regions and computing the maximum of each region. Pooling reduces the network complexity and creates a more general network.</li>
+<li>Features passing through the network are stored in a collection of matrices until they reach the fully connected layer. At the fully connected layer, the input is “flattened” (which means to tansform the matrix to a vector) so that it can be mapped to the output classes. This layer is a classical neural network.</li>
+<li>The output size for this layer is the number of classes for your classification problem. For example, if you were classifying cats and dogs, the output size would be two.</li>
+<li>The softmax layer converts the values for each output class into normalized scores using a normalized exponential function. You can interpret each value as the probability that the input image belongs to each class.</li>
+<li>The softmax layer converts the values for each output class into normalized scores using a normalized exponential function. You can interpret each value as the probability that the input image belongs to each class.</li>
+<li>The classification output layer returns the name of the most likely class.</li>
+</ul>
+<p><strong>Convolutional Layers</strong></p>
+<ul>
+<li>Convolution layers in CNNs perform convolution using learned filters. </li>
+<li>A matrix called a kernel is used to filter the image. </li>
+<li>We can use kernel with the <code>conv2</code> function to apply a filter to an image: <code>filteredim = conv2(kernel,im)</code></li>
+<li>Using empty brackets as the second input in <code>imshow</code> will scale the display based on the minimum and maximum values present in the image: <code>imshow(im,[])</code></li>
+<li>Or you can also use the <code>imfilter</code> function to apply the same kernels to the entire RGB image, which means the 3-D data. <code>conv2</code> can only apply to a 2-D image.</li>
+</ul>
+<p><strong>Summary</strong><br><a href="https://au.mathworks.com/help/deeplearning/ug/list-of-deep-learning-layers.html" target="_blank" rel="noopener">List of layer functions</a></p>
+<h3 id="Train-Networks"><a href="#Train-Networks" class="headerlink" title="Train Networks"></a>Train Networks</h3><p><strong>Understand the network training</strong>:</p>
+<ul>
+<li>Mini-Batch</li>
+<li>Learning rate</li>
+<li>Learning algorithm</li>
+</ul>
+<p><strong>Monitor Training Progress</strong></p>
+<ul>
+<li>can use the <code>Plots</code> option to monitor network training: <code>options = trainingOptions(&#39;sgdm&#39;,&#39;MaxEpochs&#39;,2,&#39;InitialLearnRate&#39;,0.0001,&#39;Plots&#39;,&#39;training-progress&#39;);</code></li>
+</ul>
+<p><strong>Validation</strong></p>
+<ul>
+<li>About different dataset:<ul>
+<li>Training data: used during training to update weights.</li>
+<li>Validation data: used during training to evaluate performance.</li>
+<li>Testing data: used after training to evaluate performance.</li>
+</ul>
+</li>
+<li>Validation data is useful to detect if your network is overfitting. Even if the training loss is decreasing, if the validation loss is increasing, you should stop training because the network is learning details about the training data that aren’t relevant to new images. </li>
+<li>There are three training options related to validation. <ul>
+<li><code>ValidationData</code>: Validation data and labels.</li>
+<li><code>ValidationFrequency</code>: Number of iterations between each evaluation of the validation data.</li>
+<li><code>ValidationPatience</code>: The number of validations to check before stopping training. Fluctuations in the loss from one iteration to another are normal, so you generally don’t want to stop training as soon as the validation loss increases. Instead, perform several validations. If the loss has not reached a new minimum in that time, then stop the training.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Improve-Performance"><a href="#Improve-Performance" class="headerlink" title="Improve Performance"></a>Improve Performance</h3><p>After testing on the test dataset, if the accuracy is not adequate. We need to improve the network. Any of the inputs to trainNetwork can be modified to train a different network that may perform better.</p>
+<ul>
+<li>From <strong>training algorithm options</strong>: Modifying the training options is generally the first place to begin improving a network. </li>
+<li><strong>Training Data</strong>: If no enough training data, the network may not generalize to new data. If you cannot get more training data, augmentation is a good alternative.</li>
+<li><strong>Architecture</strong>: If you are performing transfer learning, you often do not need to modify the network architecture to train an effective network. One alternative is to try using a pretrained network with a directed acyclic architecture like GoogLeNet or ResNet-50.</li>
+</ul>
+<p><strong>Training Options</strong>:</p>
+<ul>
+<li>Decrease learning rate: If there is a large spike in loss, or loss values are no longer being plotted, your initial learning rate is probably too high. Decrease the learning rate by a power of ten until your loss decreases.</li>
+<li>When you train a network, there is always a trade-off between accuracy and training time.</li>
+<li>The following chart shows some general guidelines when training a convolutional neural network.<br><img src="/blogs/images/DLmatlab_01.jpg" width="50%" height="80%"></li>
+</ul>
+<p><strong>Augmented Datastores</strong>:</p>
+<ul>
+<li>The <code>imageDataAugmenter</code> function can be used to choose your augmentation. Possible augmentations include transformations like reflection, translation, and scaling.</li>
+<li>Generally, you should choose an augmentation that is relevant to your data set: <code>imageDataAugmenter(&#39;RandRotation&#39;,[min max])</code></li>
+<li>When you create an augmented image datastore, you need to specify the output image size, the source of the files, and the augmenter using <code>augmentedImageDatastore</code>: <code>augmentedImageDatastore(size,ds,&#39;DataAugmentation&#39;,augmenter)</code></li>
+<li>You can read data from an augmented datastore with the <code>read</code> function. Instead of returning one image, <code>read</code> will return a batch of data. Each returned image has a different random augmentation: <code>data = read(augImds)</code></li>
+<li>The variable containing the augmented images is named <code>input</code>: <code>im = data.input{n}</code></li>
+</ul>
+<p><strong>Directed Acyclic Graphs</strong>:</p>
+<ul>
+<li>All the networks we have used or created are represented in MATLAB as a column vector of layers. This is called a <strong>series architecture</strong>. </li>
+<li>An alternate way to organize layers in a network is called a <strong>directed acyclic graph</strong> (DAG). DAGs have a more complex architecture where layers can have inputs from, or outputs to, multiple layers.</li>
+<li>A DAG architecture is defined with layers and connections between these layers. In MATLAB, these are represented in separate network properties. Some pretrained networks – e.g., GoogLeNet, ResNet-50, and SqueezeNet – are DAG networks. </li>
+<li>Transfer learn from a DAG:<ul>
+<li>To modify the architecture of DAG network, we first need to get a graph of its layers. A layer graph contains both the layers and connections of a DAG: <code>lgraph = layerGraph(net)</code></li>
+<li>view the architecture by using the layer graph as input to the plot function: <code>plot(lgraph)</code></li>
+<li>Connections between layers in a DAG are defined by each layer’s name. When creating a new layer for a DAG network, you should name it by setting the ‘Name’ option: <code>newly = fullyConnectedLayer(n,&#39;Name&#39;,&#39;layerName&#39;)</code></li>
+<li>replace a layer using the <code>replaceLayer</code> function. The three inputs are the layer graph, the name of the layer to replace, and the variable containing the new layer: <code>newgraph = replaceLayer(graph,&#39;oldLayerName&#39;,newly)</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="sequence-classification-and-regression"><a href="#sequence-classification-and-regression" class="headerlink" title="sequence classification and regression."></a>sequence classification and regression.</h2><h3 id="Perform-Regression"><a href="#Perform-Regression" class="headerlink" title="Perform Regression"></a>Perform Regression</h3><p><strong>Transfer learning for regression</strong></p>
+<ul>
+<li>Use Alexnet to perform transfer learning</li>
+<li>We need to delete the last three layers before replacing them with the correct layers because they are for classification. Now is a regression problem: <code>layers(end-n+1:end) = []</code></li>
+<li>For regression problems, the last two layers must be a fully connected layer and a regression layer. The corresponding functions are <code>fullyConnectedLayer(outputSize)</code> and <code>regressionLayer()</code>. Regression networks do not need a softmax layer.</li>
+<li>When a regression network is trained, <strong>root-mean-square error (RMSE)</strong> is calculated instead of accuracy. </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># build and train a netwotk</span></span><br><span class="line">net = alexnet;</span><br><span class="line">ly = net.Layers;</span><br><span class="line">ly(end-2:end) = [];</span><br><span class="line">newlayers = [fullyConnectedLayer(1);regressionLayer()];</span><br><span class="line">ly = [ly;newlayers];</span><br><span class="line"></span><br><span class="line"><span class="comment"># evaluate regression network</span></span><br><span class="line">pred = predict(mynet,testImage);</span><br><span class="line">err = trueValue - pred;</span><br><span class="line"><span class="comment"># RMSE</span></span><br><span class="line">rmse = sqrt(sum(err.^2));</span><br></pre></td></tr></table></figure>
+<h3 id="Detect-Objects-in-images"><a href="#Detect-Objects-in-images" class="headerlink" title="Detect Objects in images"></a>Detect Objects in images</h3><ul>
+<li>use <code>insertObjectAnnotation</code> to add the bounding box to a image: <code>alteredImg = insertObjectAnnotation(image,&#39;rectangle&#39;,boxposition,label)</code></li>
+</ul>
+<p><strong>Regions with Convolutional Neural Networks (R-CNN)</strong></p>
+<ul>
+<li>R-CNN workflow:<ul>
+<li>Find regions likely to contain objects</li>
+<li>Extract and resize each region to CNN input size</li>
+<li>Use CNN to predict class of each region</li>
+</ul>
+</li>
+<li>Training and Using an R-CNN: <ul>
+<li>There are three different types of object detectors in MATLAB: R-CNN, Fast R-CNN, and Faster R-CNN. The corresponding functions are <code>trainRCNNObjectDetector</code>, <code>trainFastRCNNObjectDetector</code>, and <code>trainFasterRCNNObjectDetector</code>. </li>
+<li>These networks differ between training time and detection time. For example, a R-CNN can be trained quickly, but the time to detect a new image is slower than a Faster R-CNN network. You should choose between these networks depending on your application. </li>
+<li>All of these functions have the same inputs and outputs: data, network, options</li>
+<li>data is the ground truth stored as a table. The first variable is a directory and filename for each image. The remaining variables are labels and the corresponding bounding boxes.</li>
+<li>use <code>detect</code> function to detect new images: <code>[bboxes,scores,labels] = detect(detector,image)</code></li>
+</ul>
+</li>
+<li>Evaluating an Object Detector:<ul>
+<li><strong>Precision</strong>: function <code>evaluateDetectionPrecision</code> calculates a precision metric using an overlap threshold between the predicted and true bounding boxes. Precision is a ratio of true positive instances to all positive instances of objects in the detector.</li>
+<li><strong>Miss rate</strong>:  we also need to consider the case when the detector fails to find an object. This is called the miss rate. You can calculate a miss rate metric using <code>evaluateDetectionMissRate</code>.</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># train a RCNN</span></span><br><span class="line">net = alexnet;</span><br><span class="line">options = trainingOptions(<span class="string">'sgdm'</span>,<span class="string">'InitialLearnRate'</span>,0.0001,<span class="string">'MaxEpochs'</span>,2);</span><br><span class="line">rcnn = trainRCNNObjectDetector(petGroundTruth,net,options);</span><br><span class="line"></span><br><span class="line"><span class="comment"># test on a image</span></span><br><span class="line">[dbox,dscore,dlabel] = detect(rcnn,dogim)</span><br><span class="line">detectedDogs = insertObjectAnnotation(dogim,<span class="string">'rectangle'</span>,dbox,cellstr(dlabel))</span><br><span class="line">imshow(detectedDogs)</span><br></pre></td></tr></table></figure>
+<h3 id="Classify-Sequence-Data-with-Recurrent-Networks"><a href="#Classify-Sequence-Data-with-Recurrent-Networks" class="headerlink" title="Classify Sequence Data with Recurrent Networks"></a>Classify Sequence Data with Recurrent Networks</h3><p><strong>Long Short-term memory network (LSTM)</strong></p>
+<ul>
+<li>Sequence classification</li>
+<li>Bidirectional LSTMs</li>
+</ul>
+<p><strong>Structuring Sequence Data</strong></p>
+<ul>
+<li>Training an LSTM requires the data to be stored in a particular format: <ul>
+<li>The input data is a cell array with one column.</li>
+<li>Each element in the cell array is one sample, or sequence. This sample is a numeric matrix.</li>
+<li>The columns in each sample are the time steps. Every sample can have a different number of time steps.<br>-The rows correspond to the feature dimension of the sample. This could be signal data from different sensors, or different letters in a vocabulary. All samples must have the same number of rows.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Sequence Classification</strong>：</p>
+<ul>
+<li>Create LSTM architecture<ul>
+<li>The network begins with an input layer, follows with a BiLSTM layer, and ends with the same output layers as a CNN.</li>
+<li>The first layer of an LSTM is a sequence input layer: <code>sequenceInputLayer(inputSize)</code>. The input to this function is the number of features, or the number of rows in a sample.</li>
+<li>Next is a bidirectional LSTM layer. You should set the number of nodes and the output mode when creating this layer: <code>bilstmLayer(numNodes,&#39;OutputMode&#39;,&#39;last&#39;)</code></li>
+<li>The last three layers in the LSTM are the same layers as a CNN for classification: fullyConnectedLayer, softmaxLayer and classificationLayer</li>
+</ul>
+</li>
+<li>Train an LSTM</li>
+<li>Use LSTM to classify sequences<ul>
+<li>The classify function can be used with an LSTM: <code>predictedLabel = classify(net,testdata)</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">inLayer = sequenceInputLayer(1)</span><br><span class="line">lstm = bilstmLayer(100,<span class="string">'OutputMode'</span>,<span class="string">'last'</span>)</span><br><span class="line">outLayers = [fullyConnectedLayer(3); softmaxLayer(); classificationLayer()]</span><br><span class="line"><span class="comment"># combine all layers</span></span><br><span class="line">layers = [inLayer; lstm; outLayers]</span><br><span class="line"></span><br><span class="line"><span class="comment"># train the network</span></span><br><span class="line">options = trainingOptions(<span class="string">'adam'</span>, ...</span><br><span class="line"><span class="string">'MaxEpochs'</span>,250, ...</span><br><span class="line"><span class="string">'InitialLearnRate'</span>,0.005, ...</span><br><span class="line"><span class="string">'GradientThreshold'</span>,1, ...</span><br><span class="line"><span class="string">'Shuffle'</span>,<span class="string">'every-epoch'</span>, ...</span><br><span class="line"><span class="string">'Plots'</span>,<span class="string">'training-progress'</span>, ...</span><br><span class="line"><span class="string">'LearnRateDropPeriod'</span>,200,...</span><br><span class="line"><span class="string">'LearnRateSchedule'</span>,<span class="string">'piecewise'</span>);</span><br><span class="line"></span><br><span class="line">net = trainNetwork(Xtrain,Ytrain,layers,options);</span><br><span class="line"></span><br><span class="line">testPred = classify(net,XTest)</span><br><span class="line">confusionchart(YTest,testPred)</span><br></pre></td></tr></table></figure>
+<p><strong>Improving LSTM Performance</strong></p>
+<ul>
+<li>Sequences can be normalized using a variety of methods. </li>
+<li>Sequence length and padding is specific to LSTMs. </li>
+<li>Sequence length: <ul>
+<li>Sequences can contain any number of time steps. This is convenient, but you should be cautious if your sequences have different lengths. </li>
+<li>During training, the sequences in each mini-batch are padded with a number, usually zero, to equalize the lengths. A network cannot distinguish between values created for padding and values that are part of the sequence. </li>
+<li>You should minimize the amount of padding by <strong>sorting your data</strong> by sequence length and carefully choosing the mini-batch size. </li>
+<li>You can also use the ‘shortest’ option to trim longer sequences to the same length as the shortest sequence. This option has no padding, but can remove important data from your sequences.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Classify-Categorical-Sequences"><a href="#Classify-Categorical-Sequences" class="headerlink" title="Classify Categorical Sequences"></a>Classify Categorical Sequences</h3><ul>
+<li>Training an LSTM requires the sequences to be numeric. If your sequences are categorical, how can you train a deep network? </li>
+<li>Categorical sequences could be a sequence of the weather, DNA, or music notes. </li>
+<li>One option is to assign a number to each category. However, this results in imposing a false numerical structure on the observations. For example, if you assign the numbers 1 through 4 to four categories in a predictor, it implies that the distance between the categories 1 and 4 is longer than the distance between the categories 3 and 4. </li>
+<li>Instead of assigning a number to each category, create dummy predictors for the categories. Each dummy predictor can have only two values – 0 or 1. For any given observation, only one of the dummy predictors can have the value equal to 1. You can create a matrix of dummy variables using the function dummyvar: <code>d = dummyvar(c)</code></li>
+<li>You can train a network on text data by creating dummy predictors from a categorical representation of your text. The rows of the dummy predictor matrix correspond to each letter in the vocabulary.</li>
+<li><strong>Classify Text Data</strong>:  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># suppose we have some sequences of text: tDickens, etc</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># convert to lowercases</span></span><br><span class="line">tDickens = lower(tDickens)</span><br><span class="line"><span class="comment"># create the vocabulary that contains all the types (with lowercase)</span></span><br><span class="line">vocab = uint8(<span class="string">' !"&amp;'</span><span class="string">'()*,-.0123456789:;?_abcdefghijklmnopqrstuvwxyz'</span>);</span><br><span class="line"><span class="comment"># dummy the variables</span></span><br><span class="line">m = dummyvar(categorical(uint8(tDickens),vocab)<span class="string">')'</span>; <span class="comment"># remember to transpose</span></span><br><span class="line"><span class="comment"># classify using a trained network</span></span><br><span class="line">[author,score] = classify(net,mDickens)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Generate-Sequences-of-Output"><a href="#Generate-Sequences-of-Output" class="headerlink" title="Generate Sequences of Output"></a>Generate Sequences of Output</h3><ul>
+<li>Sequence-to-Sequence Classification:<ul>
+<li>Rather than classifying a recording as a single label, sometimes we also need to classify a sequence with multiple labels, e.g. multiple instruments in one recording. </li>
+<li>In this case,the ‘OutputMode’ property need to be set to ‘sequence’</li>
+</ul>
+</li>
+<li>Sequence Forecasting<ul>
+<li>Long short-term memory networks can be used to forecast future time steps of a sequence. Forecasting is often performed with time series data.</li>
+<li>The data used with the network is the sequence you want to forecast. You will use a subset of the sequence to train, and the rest to test.</li>
+<li>The input data is the training sequence, except the last value. The response is the sequence shifted by one time step.</li>
+<li>To predict with this network, use function <em>predictAndUpdateState</em> with the training data as input. This function predicts and updates the state of the network so it will remember this sequence during its next prediction.</li>
+<li>The output is a prediction for the next value in the sequence. You can evaluate the network by comparing the actual and predicted value.</li>
+<li>The training data for a text-generating network is a sequence of text where <u>each label is the next letter in the sequence. The input data should be everything except the last letter in the sequence.</u></li>
+</ul>
+</li>
+</ul>
 <hr>
-<h2 id="NodeJS-Basics"><a href="#NodeJS-Basics" class="headerlink" title="NodeJS Basics"></a>NodeJS Basics</h2><h3 id="What-is-NodeJS"><a href="#What-is-NodeJS" class="headerlink" title="What is NodeJS?"></a>What is NodeJS?</h3><p>在了解NodeJS之前，先要了解JS，JS就是JavaScript, 是一种脚本语言(scripting language)，它运行在浏览器中。那什么是脚本语言呢? 脚本语言其实也是一种编程语言(programming language). 传统的编程语言是会有这几个步骤的：编写-编译-链接-运行(edit-compile-link-run)。脚本语言与一般的编程语言的区别在于，他们没有编译(compilation)这个过程，而是通过一种解释的形式来运行。通常来讲，编译型的语言会运行得比解释型语言快，因为他们先转化为及其语言，并且编译器只会读和分析一次代码，最后汇总所有的errors出来。但解释型语言则会在每次遇到一个错误的时候都停下来，而非汇总。<br>扯远了，那JS是一个脚本语言的话，就需要一个<strong>解析器</strong>才能运行，对于写在HTML页面里的JS，浏览器充当了解析器的角色。而对于需要独立运行的JS，NodeJS就是一个解析器。<br>任何操作系统下安装NodeJS本质上做的事情都是把NodeJS执行程序复制到一个目录，然后保证这个目录在系统PATH环境变量下，以便终端下可以使用node命令。</p>
-<h3 id="安装及运行"><a href="#安装及运行" class="headerlink" title="安装及运行"></a>安装及运行</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>在Windows下，在<a href="https://nodejs.org/en/" target="_blank" rel="noopener">官网</a>上下载好后，直接运行.msi安装文件即可</p>
-<h4 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h4><ul>
-<li>在终端运行：Windows下，cmd进入终端，输入 <code>node</code> 就可以进入交互模式了，及之后的运行环境都是在NodeJS下，想退出的话输入 <code>.exit</code></li>
-<li>运行JS文件：当要运行大段代码时，在终端编写代码不是很方便，这时就可以先写一个JS文件(以.js结尾储存)，然后再运行这个文件，假如JS文件名为”hello.js”, 在命令行输入 <code>node hello.js</code> 就可以运行这个脚本程序了。</li>
-</ul>
-<h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><ul>
-<li>在编写大型程序时，一般都会将程序模块化，及分成一个一个的子程序。这些子程序在js中就是一个一个的不同的js文件，每个文件就是一个模块，文件路径就是模块名。</li>
-<li>在编写每个模块时，都有<code>require</code>、<code>exports</code>、<code>module</code> 三个预先定义好的变量可供使用。</li>
-<li><strong>require</strong><ul>
-<li>用于在当前模块中加载和使用别的模块，传入一个模块名，返回一个模块导出对象。</li>
-<li>模块名可使用相对路径（以./开头），或者是绝对路径（以/或C:之类的盘符开头）。</li>
-<li>另外，模块名中的.js扩展名可以省略</li>
-<li>e.g. <code>var foo1 = require(&#39;./foo&#39;);</code>, <code>var foo2 = require(&#39;./foo.js&#39;);</code>, <code>var foo3 = require(&#39;/home/user/foo&#39;);</code>, <code>var foo4 = require(&#39;/home/user/foo.js&#39;);</code> 都是指导入同一个模块</li>
-</ul>
-</li>
-<li><strong>exports</strong><ul>
-<li>是当前模块的导出对象，用于导出模块公有方法和属性。</li>
-<li>别的模块通过require函数使用当前模块时得到的就是当前模块的exports对象。</li>
-</ul>
-</li>
-<li><strong>module</strong><ul>
-<li>通过<code>module</code>对象可以访问到当前模块的一些相关信息，但最多的用途是替换当前模块的导出对象。</li>
-</ul>
-</li>
-<li><strong>模块初始化</strong>: 一个模块中的JS代码仅在模块第一次被使用时执行一次，并在执行过程中初始化模块的导出对象。之后，缓存起来的导出对象被重复利用。简单点，所有模块都只初始化一次。</li>
-<li><strong>主模块</strong>：<ul>
-<li>即 负责调度组成整个程序的其它模块完成工作。</li>
-<li>通过命令行参数传递给NodeJS以启动程序的模块被称为主模块。</li>
-</ul>
-</li>
-</ul>
-<h2 id="代码的组织和部署"><a href="#代码的组织和部署" class="headerlink" title="代码的组织和部署"></a>代码的组织和部署</h2><h3 id="模块路径的解析"><a href="#模块路径的解析" class="headerlink" title="模块路径的解析"></a>模块路径的解析</h3><p>我们在写程序时会用到 <code>require</code> 来告诉程序需要用到哪些模块，让你程序就会去找这些模块，找这些模块的过程就叫做路径解析。那怎么去找呢，分两种情况：</p>
+<p>Some resources:</p>
 <ul>
-<li>如果是内置模块，即自带的那种，就不做路径解析</li>
-<li>node_module目录：这是NodeJS定义的一个专门用来存放模块的目录，在加载某个非内置模块时，NodeJS就会去找 <code>node_module</code>这个文件夹。其实在用Hexo创建静态网页时，你就会发现在你创建的hexo项目下就有个<code>node_modules</code> 文件夹。</li>
-<li>NODE_PATH环境变量：NodeJS允许通过<code>NODE_PATH</code>环境变量来指定额外的模块搜索路径。<h3 id="包-Package"><a href="#包-Package" class="headerlink" title="包(Package)"></a>包(Package)</h3>JS模块的基本单位是单个JS文件，但复杂些的模块往往由多个子模块组成。为了便于管理和使用，我们可以把由多个子模块组成的大模块称做包，并把所有子模块放在同一个目录里。<br>在组成一个包的所有子模块中，需要有一个入口模块，入口模块的导出对象被作为包的导出对象。</li>
-<li>在其它模块里使用包的时候，需要加载包的入口模块。可以直接使用require加上入口模块名称的路径来加载。但是这样不简洁，要让包使用起来更像是单个模块的话，就将模块的文件名设为<code>index.js</code>，这样即使在require路径上不出现index这个名称，程序也会知道这个<code>index.js</code>就是入口模块。</li>
-<li>使用<code>package.json</code> 可以自定义入口模块的文件名和存放位置，即：在包目录下包含一个<code>package.json</code> 文件，并在其中指定入口模块的路径:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"name"</span>: modulename</span><br><span class="line">    <span class="string">"main"</span>: <span class="string">"./lib/main.js"</span> <span class="comment"># 这里就指定入口模块的路径</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li>Mathwork blogs for deep learning <a href="https://blogs.mathworks.com/deep-learning/" target="_blank" rel="noopener">https://blogs.mathworks.com/deep-learning/</a></li>
+<li>Deep learning toolbox: <a href="https://au.mathworks.com/help/deeplearning/index.html" target="_blank" rel="noopener">https://au.mathworks.com/help/deeplearning/index.html</a></li>
 </ul>
-<h3 id="工程目录"><a href="#工程目录" class="headerlink" title="工程目录"></a>工程目录</h3><p>标准如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- /home/user/workspace/node-echo/   <span class="comment"># 工程目录</span></span><br><span class="line">    - bin/                          <span class="comment"># 存放命令行相关代码</span></span><br><span class="line">        node-echo</span><br><span class="line">    + doc/                          <span class="comment"># 存放文档</span></span><br><span class="line">    - lib/                          <span class="comment"># 存放API相关代码</span></span><br><span class="line">        echo.js</span><br><span class="line">    - node_modules/                 <span class="comment"># 存放三方包</span></span><br><span class="line">        + argv/</span><br><span class="line">    + tests/                        <span class="comment"># 存放测试用例</span></span><br><span class="line">    package.json                    <span class="comment"># 元数据文件</span></span><br><span class="line">    README.md                       <span class="comment"># 说明文件</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="关于NPM"><a href="#关于NPM" class="headerlink" title="关于NPM"></a>关于NPM</h3><p>NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：</p>
-<ul>
-<li>允许用户从NPM服务器下载别人编写的三方包到本地使用。</li>
-<li>允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。</li>
-<li>允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。</li>
-</ul>
-<p><a href="http://nqdeng.github.io/7-days-nodejs/#2.5" target="_blank" rel="noopener">七天学会NodeJS</a>上在NPM这个讲解上很详细，推荐看一看。</p>
-<p><br></p>
-<p>Reference:<br><a href="http://nqdeng.github.io/7-days-nodejs/" target="_blank" rel="noopener">http://nqdeng.github.io/7-days-nodejs/</a><br><a href="https://www.geeksforgeeks.org/whats-the-difference-between-scripting-and-programming-languages/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/whats-the-difference-between-scripting-and-programming-languages/</a></p>
 
       
 
@@ -1220,11 +1515,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Deep learning</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">NodeJS</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
         		</li>
       		
 		</ul>
@@ -1234,7 +1529,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/04/NodeJS-learning01/">展开全文 >></a>
+          <a class="article-more-a" href="/blog/2019/01/07/Matlab-DL2/">展开全文 >></a>
         </p>
       
 
@@ -1264,20 +1559,20 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-MIT6006-Lec02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Matlab-DL1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/03/MIT6006-Lec02/">MIT6006 Lec02 Models of Computation</a>
+      <a class="article-title" href="/blog/2019/01/04/Matlab-DL1/">Deep learning in Matlab I</a>
     </h1>
   
 
         
-        <a href="/blog/2018/11/03/MIT6006-Lec02/" class="archive-article-date">
-  	<time datetime="2018-11-02T23:45:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-03</time>
+        <a href="/blog/2019/01/04/Matlab-DL1/" class="archive-article-date">
+  	<time datetime="2019-01-04T08:07:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
 </a>
         
       </header>
@@ -1287,7 +1582,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-model-of-computation"><span class="toc-number">1.</span> <span class="toc-text">What is model of computation?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Random-Access-Machine-RAM"><span class="toc-number">2.</span> <span class="toc-text">Random Access Machine (RAM)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pointer-machine"><span class="toc-number">3.</span> <span class="toc-text">Pointer machine</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-model"><span class="toc-number">4.</span> <span class="toc-text">Python model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Document-Distance-Problem-—-compute-d-D1-D2"><span class="toc-number">5.</span> <span class="toc-text">Document Distance Problem — compute d(D1, D2)</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-pretrained-network"><span class="toc-number">1.</span> <span class="toc-text">Use pretrained network</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Managing-Collections-of-Data"><span class="toc-number">2.</span> <span class="toc-text">Managing Collections of Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Performing-Transfer-Learning"><span class="toc-number">3.</span> <span class="toc-text">Performing Transfer Learning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-number">4.</span> <span class="toc-text">Summary</span></a></li></ol>
             </div>
            -->
         <!--  
@@ -1296,61 +1591,260 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-model-of-computation"><span class="toc-text">What is model of computation?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Random-Access-Machine-RAM"><span class="toc-text">Random Access Machine (RAM)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pointer-machine"><span class="toc-text">Pointer machine</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-model"><span class="toc-text">Python model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Document-Distance-Problem-—-compute-d-D1-D2"><span class="toc-text">Document Distance Problem — compute d(D1, D2)</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-pretrained-network"><span class="toc-text">Use pretrained network</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Managing-Collections-of-Data"><span class="toc-text">Managing Collections of Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Performing-Transfer-Learning"><span class="toc-text">Performing Transfer Learning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-text">Summary</span></a></li></ol>
         </div>
     </div>
  -->
-        <h3 id="What-is-model-of-computation"><a href="#What-is-model-of-computation" class="headerlink" title="What is model of computation?"></a>What is model of computation?</h3><p>Model of computation specifies</p>
-<ul>
-<li>what <strong>operations</strong> an algorithm is allowed</li>
-<li><strong>cost</strong> (time, space, . . . ) of each operation</li>
-<li>cost of algorithm = sum of operation costs</li>
+        <h3 id="Use-pretrained-network"><a href="#Use-pretrained-network" class="headerlink" title="Use pretrained network"></a>Use pretrained network</h3><ul>
+<li>use <code>imread</code> function to import images: <code>I = imread(&#39;filename.png&#39;);</code></li>
+<li><code>imshow</code> to display an image:  <code>imshow(I)</code></li>
 </ul>
-<p>The followings are two kinds of models of computation.</p>
-<h3 id="Random-Access-Machine-RAM"><a href="#Random-Access-Machine-RAM" class="headerlink" title="Random Access Machine (RAM)"></a>Random Access Machine (RAM)</h3><ul>
-<li>It is modeled by a big array. </li>
-<li>For each word, it registers $\theta(1)$</li>
-<li>In $\theta(1)$ time, it can<ul>
-<li>load word</li>
-<li>compute (+,-,*,/,&amp;,|,^) on registers</li>
-<li>store register $r_j$ into memory</li>
+<p><strong>Make prediction</strong></p>
+<ul>
+<li>use <code>alexnet</code> function to create a copy of the predefined deep network “AlexNet” in the MATLAB workspace: <code>net = alexnet</code></li>
+<li>use <code>classify</code> function to make a prediction on an image: <code>pred = classify(net,img)</code></li>
+</ul>
+<p><strong>CNN Architecture</strong></p>
+<ul>
+<li>use <code>Layers</code> property to inspect the layers of the network: <code>ly = net.Layers</code></li>
+<li>The <code>Layers</code> variable is an array of network layers. use array indexing to inspect an individual layer: <code>layer3 = ly(3)</code></li>
+<li>Each layer of the network has properties relevant to that type of layer. An important property for an input layer is <strong>InputSize</strong>, which is the size (dimensions) of images the network expects as input: <code>insz = inlayer.InputSize</code></li>
+<li>AlexNet requires an input image of size 227-by-227-by-3, meaning a color image 227 pixels high and 227 pixels wide.</li>
+<li>The <code>Classes</code> property of an output layer gives the names of the categories the network is trained to predict: <code>categorynames = outlayer.Classes</code></li>
+</ul>
+<p><strong>Investigating Predictions</strong></p>
+<ul>
+<li><code>classify</code> function gives the class to which the network assigns the <em>highest</em> score. </li>
+<li>We can obtain the predicted scores for all the classes by requesting a second output from classify: <code>[pred,scrs] = classify(net,img)</code></li>
+<li>need to set threshold for the final prediction propability to have a better view of the prediction. e.g. set the threshold of one standard deviation above the median score: <code>thresh = median(scores) + std(scores);</code></li>
+</ul>
+<h3 id="Managing-Collections-of-Data"><a href="#Managing-Collections-of-Data" class="headerlink" title="Managing Collections of Data"></a>Managing Collections of Data</h3><p><strong>Image Datastore</strong></p>
+<ul>
+<li>use the <code>imageDatastore</code> function to create a datastore in MATLAB for later use of image classification: <code>ds = imageDatastore(&#39;foo*.png&#39;)</code></li>
+<li>use the <code>read</code>, <code>readimage</code>, and <code>readall</code> functions to read images:<ul>
+<li><code>read</code> imports images one at a time, in order; </li>
+<li><code>readimage</code> imports a single specific image: <code>I = readimage(ds,n)</code></li>
+<li><code>readall</code> imports all the images into a single cell array (with each image in a separate cell).</li>
 </ul>
 </li>
-<li>What is a word: <ul>
-<li>assume basic objects (e.g. int) fit in word</li>
+<li>can use an image datastore in place of an individual image in CNN functions such as classify: <code>preds = classify(net,ds)</code>. The result will be an array of predicted classes, one for each image in the datastore.</li>
+</ul>
+<p><strong>Prepare Images</strong></p>
+<ul>
+<li>can use the <code>InputSize</code> property of input layer to see what is the expected image size: <code>expectedSize = inlayer.InputSize</code></li>
+<li>use <code>imresize</code> function to resize an image to match the expected input size: <code>imgresz = imresize(img,[numrows numcols]);</code></li>
+</ul>
+<p><strong>Preprocessing Images in a Datastore</strong></p>
+<ul>
+<li>to perform the same preprocessing steps on the entire data set, which is more efficient </li>
+<li>use <code>augmentedImageDatastore</code> function to perform basic preprocessing: <code>auds = augmentedImageDatastore([r c],imds)</code>, r, c are the expected image size</li>
+<li>use <code>montage</code> function to display the images in the datastore: <code>montage(imds)</code></li>
+<li>use ‘ColorPreprocessing’ option to convert these images to a 3-D array: <code>auds = augmentedImageDatastore([n m],imds,&#39;ColorPreprocessing&#39;,&#39;gray2rgb&#39;)</code><ul>
+<li>This will replicate the grayscale image three times to create a 3-D array.</li>
 </ul>
 </li>
-<li>It is realistic and powerful → implement abstractions</li>
 </ul>
-<h3 id="Pointer-machine"><a href="#Pointer-machine" class="headerlink" title="Pointer machine"></a>Pointer machine</h3><ul>
-<li>can dynamically allocated objects</li>
-<li>object has $O(1)$ fields</li>
-<li>field = word (e.g., int) or pointer to object/null (a.k.a. reference)</li>
-<li>weaker than RAM</li>
-</ul>
-<h3 id="Python-model"><a href="#Python-model" class="headerlink" title="Python model"></a>Python model</h3><p>Python lets you use either mode of thinking, e.g.</p>
+<p><strong>Create Datasore Uisng Subfolders</strong></p>
 <ul>
-<li>“list” is acutually an array in RAM:<br>  &emsp; &nbsp; L[i] = L[j] + 5: this operation only costs $\theta(1)$ time (constant time)</li>
-<li>object with $O(1)$ attributes (including references) is like a pointer machine<br>  &emsp; &nbsp; $x=x.next$ costs $\theta(1)$ time</li>
+<li>use the <code>IncludeSubfolders</code> option to look for images within subfolders of the given folder: <code>ds = imageDatastore(&#39;folder&#39;,&#39;IncludeSubfolders&#39;,true)</code></li>
 </ul>
-<p>The following are some operations and their costs in Python. To determine their cost, imagine implementation in terms of the above two models(RAM or Pointer). </p>
-<ol>
-<li><strong>list</strong><br> (a) L.append(x): $\theta(1)$ time.  (It uses table doubling)<br> (b) L = L1+L2 ≡<br> &emsp; L = []: cost $\theta(1)$ time to build a list<br> &emsp; for x in L1: L.append(x) costs $\theta(1)$. Totally in L1 is $\theta(|L1|)$<br> &emsp; for x in L2: L.append(x) costs $\theta(1)$. Totally in L2 is $\theta(|L2|)$<br> Therefore, L = L1+L2 costs $\theta(1+|L1|+|L2|)$ time<br> (c) L1.extend(L2) ≡<br>  &emsp; for x in L2: L1.append(x) costs θ(1). Totally $\theta(|L2|)$<br>  &emsp; ≡ L1+ = L2<br> Therefore, costs θ(1 + |L2|) time<br> (d) L2 = L1[i : j] ≡<br>   &emsp; L2 = []: θ(1)<br>   &emsp; for k in range(i, j): L2.append(L1[i]) costs θ(1)<br>  Therefore, costs $θ(j − i + 1) = O(|L|)$<br> (e) len(L):  $θ(1)$ time - since list stores its length in a field<br> (f) L.sort(): $θ(|L|log |L|)$ - via comparison sort </li>
-<li><strong>tuple, str</strong>: similar</li>
-<li><strong>dict</strong>: via hashing, costs $θ(1)$ time</li>
-<li><strong>set</strong>: similar (think of as dict without vals)</li>
-<li><strong>heapq</strong>: heappush &amp; heappop - via heaps → $θ(log(n))$ time</li>
-<li><strong>long</strong>: via Karatsuba algorithm<br> &emsp; x + y → O(|x| + |y|) time where |y| reflects # words<br> &emsp; x ∗ y → O((|x| + |y|)log(3)) ≈ O((|x| + |y|)1.58) time</li>
-</ol>
-<h3 id="Document-Distance-Problem-—-compute-d-D1-D2"><a href="#Document-Distance-Problem-—-compute-d-D1-D2" class="headerlink" title="Document Distance Problem — compute d(D1, D2)"></a>Document Distance Problem — compute d(D1, D2)</h3><p>The problem is acutually to find similarity in documents, and have application in detecting duplicates, plagiarism, and also in web search (D2 = query).<br>In this problem, we define word as the sequence of alphanumeric characters, and document as a sequence of words (ignore space, punctuation).</p>
-<p>The idea is to define distance in terms of <strong>shared words</strong>. Think of document D as a vector:<br>If three axis are defined as three words: the, dog, cat<br>Then vector v1 could be “the cat”, vector v2 could be “the dog”, vector v3 could be “cat dog”</p>
-<p>After looking them as vectors, then we can apply mathematical methods to calculate the distance between these vectors like angle </p>
-<p>The algorithm can be formed as follows:</p>
-<ol>
-<li>split each document into words</li>
-<li>count word frequencies (document vectors)</li>
-<li>compute dot product (&amp; divide)</li>
-</ol>
+<h3 id="Performing-Transfer-Learning"><a href="#Performing-Transfer-Learning" class="headerlink" title="Performing Transfer Learning"></a>Performing Transfer Learning</h3><p><strong>The benefits of transfer learning</strong></p>
+<ul>
+<li>It is extremely easy to get started using a pretrained network like AlexNet. But you have no flexibility in the way the network operates, and the network probably won’t solve the exact problem you are trying to solve.</li>
+<li>You can build and train a network yourself, starting with just the network architecture and random weights. But achieving reasonable results requires a lot of effort: (1) knowledge and experience with network architecture, (2) a huge amount of training data, and (3) a lot of computer time.</li>
+<li>Transfer learning is an efficient solution for many problems. Training requires some data and computer time, but much less than training from scratch, and the result is a network suited to your specific problem.</li>
+</ul>
+<p><strong>Components of transfer learning</strong></p>
+<ul>
+<li>Network layers of the pretrained network, which serves as the starting point</li>
+<li>Training data</li>
+<li>Algorithms options: batch size, max iteration, learning rate</li>
+</ul>
+<p><strong>Prepare Training Data</strong></p>
+<ul>
+<li>Importing labels:<ul>
+<li>The labels needed for training can be stored in the <code>Labels</code> property of the image datastore. By default, the <code>Labels</code> property is empty.</li>
+<li>We can have the datastore automatically determine the labels from the folder names by specifying the <code>LabelSource</code> option: <code>ds = imageDatastore(folder,&#39;IncludeSubfolders&#39;,true,&#39;LabelSource&#39;,&#39;foldernames&#39;)</code></li>
+</ul>
+</li>
+<li>Split the data:<ul>
+<li>use the <code>splitEachLabel</code> function to divide the images in a datastore into two separate datastores: <code>[ds1,ds2] = splitEachLabel(imds,p)</code>, p is the proportion of images with each label from <code>imds</code> that should be contained in <code>ds1</code>.</li>
+<li>By default, <code>splitEachLabel</code> keeps the files in order. We can randomly shuffle the files by adding the optional <code>randomized</code> flag: <code>[ds1,ds2] = splitEachLabel(imds,p,&#39;randomized&#39;)</code></li>
+<li>To avoid the unbalanced classes in training dataset, we can also specify an exact number of files to take from each label to assign to ds1: <code>[ds1,ds2] = splitEachLabel(imds,n)</code>.</li>
+<li>This ensures that every label in <code>ds1</code> has <code>n</code> images, even if the categories do not all contain the same number of images.</li>
+<li>We can also split your data into three sets: training, validation during training, and testing. This can be made by specifying multiple values of p or n as inputs, and ask for the appropriate number of datastores as outputs.</li>
+</ul>
+</li>
+<li>Augmented traning data:<ul>
+<li>use <code>augmentedImageDatastore</code> function to add the variaty to the images</li>
+<li>use <code>imageDataAugmenter</code> function to set the tranformation to the images: rotation, reflection, translation, shear, scaling</li>
+</ul>
+</li>
+</ul>
+<p><strong>Modify Network Layers</strong></p>
+<ul>
+<li>Normally transfer learnig only need to change the last few layers, which means they apply the same feature extraction but output different classes</li>
+<li>To modify a preexisting network, you create a new layer. Then index into the layer array that represents the network and overwrite the chosen layer with the newly created layer: <code>fc= fullyConnectedLayer(12); layers(23) = fc;</code></li>
+<li>The <code>fullyConnectedLayer</code> function creates a new fully connected layer, with a given number of neurons: <code>fclayer = fullyConnectedLayer(n)</code></li>
+<li>Also the output layer still uses the previous labels in the pretrained network. We need to replace the output layer with a new, blank output layer.</li>
+<li>use the <code>classificationLayer</code> function to create a new output layer for an image classification network: <code>cl = classificationLayer</code></li>
+</ul>
+<p><strong>Set Training Options</strong></p>
+<ul>
+<li>use the <code>trainingOptions</code> function to see the available options for the training algorithm: <code>opts = trainingOptions(&#39;sgdm&#39;)</code>. This creates a variable <code>opts</code> that contains the default options for the training algorithm, “stochastic gradient descent with momentum”.</li>
+<li>when performing transfer learning, you will typically want to start with the <code>InitialLearnRate</code> set to a smaller value than the default of 0.01: <code>opts = trainingOptions(&#39;sgdm&#39;,&#39;InitialLearnRate&#39;,0.001)</code></li>
+</ul>
+<p><strong>Train the Network</strong></p>
+<ul>
+<li>“Mini-batch”<ul>
+<li>At each iteration, a subset of the training images, known as a <strong>mini-batch</strong>, is used to update the weights. Each iteration uses a different mini-batch. Once the whole training set has been used, that’s known as an <strong>epoch</strong>.</li>
+<li>The maximum number of epochs (<code>MaxEpochs</code>) and the size of the mini-batches (<code>MiniBatchSize</code>) are parameters you can set in the training algorithm options.</li>
+<li>Note that the loss and accuracy reported during training are for the mini-batch being used in the current iteration.</li>
+<li>By default, the images are shuffled once prior to being divided into mini-batches. You can control this behavior with the <code>Shuffle</code> option.</li>
+</ul>
+</li>
+<li>Using GPUs<ul>
+<li>If have an appropriate GPU and Parallel Computing Toolbox installed, the trainNetwork function will automatically perform the training on the GPU – no special coding required.</li>
+<li>If not, the training will be done on your computer’s CPU instead.</li>
+</ul>
+</li>
+<li>Transfer Learning Example Script:</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Get training images</span></span><br><span class="line">flower_ds = imageDatastore(<span class="string">'Flowers'</span>,<span class="string">'IncludeSubfolders'</span>,<span class="literal">true</span>,<span class="string">'LabelSource'</span>,<span class="string">'foldernames'</span>);</span><br><span class="line">[trainImgs,testImgs] = splitEachLabel(flower_ds,0.6);</span><br><span class="line">numClasses = numel(categories(flower_ds.Labels));</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Create a network by modifying AlexNet</span></span><br><span class="line">net = alexnet;</span><br><span class="line">layers = net.Layers;</span><br><span class="line">layers(end-2) = fullyConnectedLayer(numClasses);</span><br><span class="line">layers(end) = classificationLayer;</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Set training algorithm options</span></span><br><span class="line">options = trainingOptions(<span class="string">'sgdm'</span>,<span class="string">'InitialLearnRate'</span>, 0.001);</span><br><span class="line"></span><br><span class="line"><span class="comment"># Perform training</span></span><br><span class="line"><span class="comment"># The variable flowernet contains the network obtained by performing transfer learning on AlexNet with the flower species data. </span></span><br><span class="line"><span class="comment"># The variable info is a structure containing information on the training.</span></span><br><span class="line">[flowernet,info] = trainNetwork(trainImgs, layers, options);   </span><br><span class="line"></span><br><span class="line"><span class="comment"># Use trained network to classify test images</span></span><br><span class="line">testpreds = classify(flowernet,testImgs);</span><br></pre></td></tr></table></figure>
+<p><strong>Evaluate Performance</strong></p>
+<ul>
+<li>The fields <code>TrainingLoss</code> and <code>TrainingAccuracy</code> in <code>info</code> variable above contain a record of the performance of the network on the training data at each iteration.</li>
+<li>Determine how many of the test images the network correctly classified by comparing the predicted classification with the known classification. The known classifications are stored in the <code>Labels</code> property of the datastore: <code>flwrActual = testImgs.Labels; numCorrect = nnz(flwrPreds == flwrActual)</code></li>
+<li>Investigate Performance by class:<ul>
+<li>The <code>confusionchart</code> function calculates and displays the confusion matrix for the predicted classifications: <code>confusionchart(knownclass,predictedclass)</code></li>
+<li>The (j,k) element of the confusion matrix is a count of how many images from class j the network predicted to be in class k. Hence, diagonal elements represent correct classifications; off-diagonal elements represent misclassifications.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p><strong>Create a model</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>alexnet</code></td>
+<td>Load pretrained network “AlexNet”</td>
+</tr>
+<tr>
+<td><a href="https://au.mathworks.com/solutions/deep-learning/models.html" target="_blank" rel="noopener">supported networks</a></td>
+<td>a list of available pretrained networks</td>
+</tr>
+<tr>
+<td><code>fullyConnectedLayer</code></td>
+<td>Create new fully connected network layer</td>
+</tr>
+<tr>
+<td><code>classificationLayer</code></td>
+<td>Create new output layer for a classification network</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Get training images</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>imageDatastore</code></td>
+<td>Create datastore reference to image files</td>
+</tr>
+<tr>
+<td><code>augmentedImageDatastore</code></td>
+<td>Preprocess a collection of image files</td>
+</tr>
+<tr>
+<td><code>splitEachLabel</code></td>
+<td>Divide datastore into multiple datastores</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Set training algorithm options</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>trainingOptions</code></td>
+<td>Create variable containing training algorithm options</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Perform training</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>trainNetwork</code></td>
+<td>Perform training</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Use trained network to perform classifications</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>classify</code></td>
+<td>Obtain trained network’s classifications of input images</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Evaluate trained network</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nnz</code></td>
+<td>Count non-zero elements in an array</td>
+</tr>
+<tr>
+<td><code>confusionchart</code></td>
+<td>Calculate confusion matrix</td>
+</tr>
+<tr>
+<td><code>heatmap</code></td>
+<td>Visualize confusion matrix as a heatmap</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>Some resources:</p>
+<ul>
+<li>Mathwork blogs for deep learning <a href="https://blogs.mathworks.com/deep-learning/" target="_blank" rel="noopener">https://blogs.mathworks.com/deep-learning/</a></li>
+<li>Deep learning toolbox: <a href="https://au.mathworks.com/help/deeplearning/index.html" target="_blank" rel="noopener">https://au.mathworks.com/help/deeplearning/index.html</a></li>
+</ul>
 
       
 
@@ -1364,11 +1858,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Deep learning</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
         		</li>
       		
 		</ul>
@@ -1378,212 +1872,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/03/MIT6006-Lec02/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-problem-hexo-deploy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/10/30/problem-hexo-deploy/">Hexo deploy 出现问题</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/10/30/problem-hexo-deploy/" class="archive-article-date">
-  	<time datetime="2018-10-30T02:54:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              
-            </div>
-           -->
-        <!--   -->
-        <p>也不知道怎么回事办公室的电脑突然重启了，可能是更新吧，但是更新完了回来发现hexo generate 和 deploy 并不能使用了<br>最开始报的错是 <code>Node 不是内部或外部命令</code>，一看是 node.js 的环境变量没有配置，很奇怪，之前明明是OK的，然后我就在环境变量里面配置了一下node，步骤如下：</p>
-<ul>
-<li>右键<code>我的电脑-属性-高级系统设置</code></li>
-<li>找到下面有个<code>环境变量</code>的选择框，点进去</li>
-<li>此时出来的对话框中有上下两个部分，上面的部分属于<code>用户变量</code>，找到里面有一行是 <code>path</code>，点击<code>编辑</code></li>
-<li>新建一个变量，把node.js所在的路径拷进去就行了，我的是 <code>D:\Program Files\nodejs</code></li>
-</ul>
-<p>然后 <code>hexo generate</code> 就可以了，deploy的时候发现出现以下问题：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">FATAL Something<span class="string">'s wrong. Maybe you can find the solution here: http://hexo.io/docs/troubleshooting.html</span></span><br><span class="line"><span class="string">Error: spawn git ENOENT</span></span><br><span class="line"><span class="string">at notFoundError (C:\Users\XXX\hexo\node_modules\cross-spawn\lib\enoent.js:11:11)</span></span><br><span class="line"><span class="string">at verifyENOENT (C:\Users\XXX\hexo\node_modules\cross-spawn\lib\enoent.js:46:16)</span></span><br><span class="line"><span class="string">at ChildProcess.cp.emit (C:\Users\XXX\hexo\node_modules\cross-spawn\lib\enoent.js:33:19)</span></span><br><span class="line"><span class="string">at Process.ChildProcess._handle.onexit (internal/child_process.js:198:12)</span></span><br></pre></td></tr></table></figure></p>
-<p>那个XXX是hexo所在文件的路径，这里就不放出来了。<br>解决这个的问题最直接的办法就是直接在hexo的当前文件夹下，运行 <code>git bash</code> 然后在bash 处运行 <code>hexo deploy</code>…</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/10/30/problem-hexo-deploy/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-simulated-annealing" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/10/29/simulated-annealing/">Algorithm - 模拟退火 Simulated Annealing</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/10/29/simulated-annealing/" class="archive-article-date">
-  	<time datetime="2018-10-29T01:01:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Acceptance-Function"><span class="toc-number">1.</span> <span class="toc-text">Acceptance Function:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pseudo-Code"><span class="toc-number">2.</span> <span class="toc-text">Pseudo Code</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Acceptance-Function"><span class="toc-text">Acceptance Function:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pseudo-Code"><span class="toc-text">Pseudo Code</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>模拟退火（SA）是拿来找给定函数的近似全局最优的。一般当搜索空间是离散的时，经常使用它。模拟退火算法最初是受到金属加工时退火过程的启发来的。在真正的金属冶炼过程中，通过给金属降温，金属的形态就会固定。而在模拟退火中，我们会设置 “温度” 这个变量，来模拟这个过程。 初始时，将其设置为高，然后在算法运行时让它慢慢“冷却”。当这个变量“温度”很高时，算法会更允许接受比当前解更差的解(即高温时，金属可以改变的力度和形状可以更大)。这能够让算法不局限在之前发现的任何local optimum上。随着温度的降低，接受更差解的机会就越小，因此允许算法逐渐集中在搜索空间的一个区域，来找到近最优解。这个渐进的“冷却”过程能够让模拟退火算法在处理包含大量局部最优解的大问题时非常有效地找到接近的最优解。</p>
-<h3 id="Acceptance-Function"><a href="#Acceptance-Function" class="headerlink" title="Acceptance Function:"></a>Acceptance Function:</h3><p>决定一个solution是否被接受的步骤如下：</p>
-<ol>
-<li>看下一个解是否优于当前解，如果是，则无条件接受</li>
-<li>如果不是，根据以下几个方面考虑要不要接受：<ul>
-<li>下一个解有多差？</li>
-<li>当前系统的 “温度” 有多高？<br>数学表达式如下：<br>$$exp(\frac{solutionEnergy - neighborEnergy}{Temperature})$$<br>即：系统能量变得越小，温度越高，越会接受这个解。是否接受解根据一个随机的概率来的</li>
-</ul>
-</li>
-</ol>
-<p>算法描述如下：</p>
-<ol>
-<li>设置温度变量初始值，随机初始化一个解</li>
-<li>循环直到停止条件达到：一般为系统足够”冷却” 或 最优的解已经找到<ul>
-<li>通过较小地改变当前解来确定下一个解</li>
-<li>决定是否跳去下一个解（用上面的Acception function）</li>
-</ul>
-</li>
-<li>降低温度，继续循环</li>
-</ol>
-<h3 id="Pseudo-Code"><a href="#Pseudo-Code" class="headerlink" title="Pseudo Code"></a>Pseudo Code</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int temperature = m;</span><br><span class="line">create a collection of best solutions found</span><br><span class="line"><span class="keyword">while</span> (temperature meets the condition)&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (accept(curr_sol, next_sol, temperature)) curr_sol = next_sol;</span><br><span class="line">    <span class="keyword">if</span> (curr_sol &lt; best) best = add curr_sol to best collection;</span><br><span class="line">    temperature *= (1-coolingRate) </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">accept(curr_sol, next_sol, temperature)&#123;</span><br><span class="line">    <span class="keyword">if</span> (next_sol &lt; curr_sol) <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="built_in">return</span> exp((curr_sol-next_col)/temperature) &gt; rand() <span class="comment"># 以一个随机的概率接受</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><br></p>
-<p>Reference:<br><a href="http://www.theprojectspot.com/tutorial-post/simulated-annealing-algorithm-for-beginners/6" target="_blank" rel="noopener">http://www.theprojectspot.com/tutorial-post/simulated-annealing-algorithm-for-beginners/6</a><br><a href="http://mathworld.wolfram.com/SimulatedAnnealing.html" target="_blank" rel="noopener">http://mathworld.wolfram.com/SimulatedAnnealing.html</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/10/29/simulated-annealing/">展开全文 >></a>
+          <a class="article-more-a" href="/blog/2019/01/04/Matlab-DL1/">展开全文 >></a>
         </p>
       
 
@@ -1615,7 +1904,7 @@ var _hmt = _hmt || [];
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/blog/page/2/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/blog/page/4/">4</a><a class="page-number" href="/blog/page/5/">5</a><a class="extend next" rel="next" href="/blog/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/blog/page/2/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/blog/page/4/">4</a><a class="page-number" href="/blog/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/7/">7</a><a class="extend next" rel="next" href="/blog/page/4/">Next &raquo;</a>
     </nav>
   
 
@@ -1644,7 +1933,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共43.8k字
+              本站总共69.7k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -1751,11 +2040,27 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Brain</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">MRI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1767,19 +2072,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Brain</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">MRI</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1795,14 +2088,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
@@ -1811,11 +2096,39 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Samba</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Self-driving</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Stochastic</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
               </li>
              
               <li class="article-tag-list-item">

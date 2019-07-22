@@ -17,7 +17,7 @@
 <meta property="og:description" content="neural network theoryInterpreting Network BehaviorExtracting and Visualizing Activations:  use the activations function to extract features from an input image:  it accepts three inputs: the network,">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://tracyxinwang.site/blogs/images/DLmatlab_01.jpg">
-<meta property="og:updated_time" content="2019-01-10T04:46:05.000Z">
+<meta property="og:updated_time" content="2019-04-09T05:14:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Deep learning in Matlab II">
 <meta name="twitter:description" content="neural network theoryInterpreting Network BehaviorExtracting and Visualizing Activations:  use the activations function to extract features from an input image:  it accepts three inputs: the network,">
@@ -271,7 +271,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#neural-network-theory"><span class="toc-number">1.</span> <span class="toc-text">neural network theory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Interpreting-Network-Behavior"><span class="toc-number">1.1.</span> <span class="toc-text">Interpreting Network Behavior</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-Networks"><span class="toc-number">1.2.</span> <span class="toc-text">Create Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Train-Networks"><span class="toc-number">1.3.</span> <span class="toc-text">Train Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Improve-Performance"><span class="toc-number">1.4.</span> <span class="toc-text">Improve Performance</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sequence-classification-and-regression"><span class="toc-number">2.</span> <span class="toc-text">sequence classification and regression.</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Perform-Regression"><span class="toc-number">2.1.</span> <span class="toc-text">Perform Regression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Detect-Objects-in-images"><span class="toc-number">2.2.</span> <span class="toc-text">Detect Objects in images</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Sequence-Data-with-Recurrent-Networks"><span class="toc-number">2.3.</span> <span class="toc-text">Classify Sequence Data with Recurrent Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Categorical-Sequences"><span class="toc-number">2.4.</span> <span class="toc-text">Classify Categorical Sequences</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-Sequences-of-Output"><span class="toc-number">2.5.</span> <span class="toc-text">Generate Sequences of Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-number">2.6.</span> <span class="toc-text">Summary</span></a></li></ol></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#neural-network-theory"><span class="toc-number">1.</span> <span class="toc-text">neural network theory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Interpreting-Network-Behavior"><span class="toc-number">1.1.</span> <span class="toc-text">Interpreting Network Behavior</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-Networks"><span class="toc-number">1.2.</span> <span class="toc-text">Create Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Train-Networks"><span class="toc-number">1.3.</span> <span class="toc-text">Train Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Improve-Performance"><span class="toc-number">1.4.</span> <span class="toc-text">Improve Performance</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sequence-classification-and-regression"><span class="toc-number">2.</span> <span class="toc-text">sequence classification and regression.</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Perform-Regression"><span class="toc-number">2.1.</span> <span class="toc-text">Perform Regression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Detect-Objects-in-images"><span class="toc-number">2.2.</span> <span class="toc-text">Detect Objects in images</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Sequence-Data-with-Recurrent-Networks"><span class="toc-number">2.3.</span> <span class="toc-text">Classify Sequence Data with Recurrent Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Categorical-Sequences"><span class="toc-number">2.4.</span> <span class="toc-text">Classify Categorical Sequences</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-Sequences-of-Output"><span class="toc-number">2.5.</span> <span class="toc-text">Generate Sequences of Output</span></a></li></ol></li></ol>
             </div>
            -->
         <!--  
@@ -280,7 +280,7 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#neural-network-theory"><span class="toc-text">neural network theory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Interpreting-Network-Behavior"><span class="toc-text">Interpreting Network Behavior</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-Networks"><span class="toc-text">Create Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Train-Networks"><span class="toc-text">Train Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Improve-Performance"><span class="toc-text">Improve Performance</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sequence-classification-and-regression"><span class="toc-text">sequence classification and regression.</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Perform-Regression"><span class="toc-text">Perform Regression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Detect-Objects-in-images"><span class="toc-text">Detect Objects in images</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Sequence-Data-with-Recurrent-Networks"><span class="toc-text">Classify Sequence Data with Recurrent Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Categorical-Sequences"><span class="toc-text">Classify Categorical Sequences</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-Sequences-of-Output"><span class="toc-text">Generate Sequences of Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-text">Summary</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#neural-network-theory"><span class="toc-text">neural network theory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Interpreting-Network-Behavior"><span class="toc-text">Interpreting Network Behavior</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-Networks"><span class="toc-text">Create Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Train-Networks"><span class="toc-text">Train Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Improve-Performance"><span class="toc-text">Improve Performance</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sequence-classification-and-regression"><span class="toc-text">sequence classification and regression.</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Perform-Regression"><span class="toc-text">Perform Regression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Detect-Objects-in-images"><span class="toc-text">Detect Objects in images</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Sequence-Data-with-Recurrent-Networks"><span class="toc-text">Classify Sequence Data with Recurrent Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Categorical-Sequences"><span class="toc-text">Classify Categorical Sequences</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-Sequences-of-Output"><span class="toc-text">Generate Sequences of Output</span></a></li></ol></li></ol>
         </div>
     </div>
  -->
@@ -490,125 +490,25 @@ var _hmt = _hmt || [];
 <li>One option is to assign a number to each category. However, this results in imposing a false numerical structure on the observations. For example, if you assign the numbers 1 through 4 to four categories in a predictor, it implies that the distance between the categories 1 and 4 is longer than the distance between the categories 3 and 4. </li>
 <li>Instead of assigning a number to each category, create dummy predictors for the categories. Each dummy predictor can have only two values – 0 or 1. For any given observation, only one of the dummy predictors can have the value equal to 1. You can create a matrix of dummy variables using the function dummyvar: <code>d = dummyvar(c)</code></li>
 <li>You can train a network on text data by creating dummy predictors from a categorical representation of your text. The rows of the dummy predictor matrix correspond to each letter in the vocabulary.</li>
+<li><strong>Classify Text Data</strong>:  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># suppose we have some sequences of text: tDickens, etc</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># convert to lowercases</span></span><br><span class="line">tDickens = lower(tDickens)</span><br><span class="line"><span class="comment"># create the vocabulary that contains all the types (with lowercase)</span></span><br><span class="line">vocab = uint8(<span class="string">' !"&amp;'</span><span class="string">'()*,-.0123456789:;?_abcdefghijklmnopqrstuvwxyz'</span>);</span><br><span class="line"><span class="comment"># dummy the variables</span></span><br><span class="line">m = dummyvar(categorical(uint8(tDickens),vocab)<span class="string">')'</span>; <span class="comment"># remember to transpose</span></span><br><span class="line"><span class="comment"># classify using a trained network</span></span><br><span class="line">[author,score] = classify(net,mDickens)</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<h3 id="Generate-Sequences-of-Output"><a href="#Generate-Sequences-of-Output" class="headerlink" title="Generate Sequences of Output"></a>Generate Sequences of Output</h3><h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p><strong>Create a model</strong></p>
-<table>
-<thead>
-<tr>
-<th>Function</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>alexnet</code></td>
-<td>Load pretrained network “AlexNet”</td>
-</tr>
-<tr>
-<td><a href="https://au.mathworks.com/solutions/deep-learning/models.html" target="_blank" rel="noopener">supported networks</a></td>
-<td>a list of available pretrained networks</td>
-</tr>
-<tr>
-<td><code>fullyConnectedLayer</code></td>
-<td>Create new fully connected network layer</td>
-</tr>
-<tr>
-<td><code>classificationLayer</code></td>
-<td>Create new output layer for a classification network</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Get training images</strong></p>
-<table>
-<thead>
-<tr>
-<th>Function</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>imageDatastore</code></td>
-<td>Create datastore reference to image files</td>
-</tr>
-<tr>
-<td><code>augmentedImageDatastore</code></td>
-<td>Preprocess a collection of image files</td>
-</tr>
-<tr>
-<td><code>splitEachLabel</code></td>
-<td>Divide datastore into multiple datastores</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Set training algorithm options</strong></p>
-<table>
-<thead>
-<tr>
-<th>Function</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>trainingOptions</code></td>
-<td>Create variable containing training algorithm options</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Perform training</strong></p>
-<table>
-<thead>
-<tr>
-<th>Function</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>trainNetwork</code></td>
-<td>Perform training</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Use trained network to perform classifications</strong></p>
-<table>
-<thead>
-<tr>
-<th>Function</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>classify</code></td>
-<td>Obtain trained network’s classifications of input images</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Evaluate trained network</strong></p>
-<table>
-<thead>
-<tr>
-<th>Function</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>nnz</code></td>
-<td>Count non-zero elements in an array</td>
-</tr>
-<tr>
-<td><code>confusionchart</code></td>
-<td>Calculate confusion matrix</td>
-</tr>
-<tr>
-<td><code>heatmap</code></td>
-<td>Visualize confusion matrix as a heatmap</td>
-</tr>
-</tbody>
-</table>
+<h3 id="Generate-Sequences-of-Output"><a href="#Generate-Sequences-of-Output" class="headerlink" title="Generate Sequences of Output"></a>Generate Sequences of Output</h3><ul>
+<li>Sequence-to-Sequence Classification:<ul>
+<li>Rather than classifying a recording as a single label, sometimes we also need to classify a sequence with multiple labels, e.g. multiple instruments in one recording. </li>
+<li>In this case,the ‘OutputMode’ property need to be set to ‘sequence’</li>
+</ul>
+</li>
+<li>Sequence Forecasting<ul>
+<li>Long short-term memory networks can be used to forecast future time steps of a sequence. Forecasting is often performed with time series data.</li>
+<li>The data used with the network is the sequence you want to forecast. You will use a subset of the sequence to train, and the rest to test.</li>
+<li>The input data is the training sequence, except the last value. The response is the sequence shifted by one time step.</li>
+<li>To predict with this network, use function <em>predictAndUpdateState</em> with the training data as input. This function predicts and updates the state of the network so it will remember this sequence during its next prediction.</li>
+<li>The output is a prediction for the next value in the sequence. You can evaluate the network by comparing the actual and predicted value.</li>
+<li>The training data for a text-generating network is a sequence of text where <u>each label is the next letter in the sequence. The input data should be everything except the last letter in the sequence.</u></li>
+</ul>
+</li>
+</ul>
 <hr>
 <p>Some resources:</p>
 <ul>
@@ -733,11 +633,11 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/blog/2019/02/08/Nonlinear/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/blog/2019/01/11/MIT6006-Lec21/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          Gauss-Newton method to solve Nonlinear Least Square Problem
+          MIT6006 Lec21 DP III &amp; IV
         
       </div>
     </a>
@@ -771,7 +671,7 @@ var _hmt = _hmt || [];
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#neural-network-theory"><span class="toc-number">1.</span> <span class="toc-text">neural network theory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Interpreting-Network-Behavior"><span class="toc-number">1.1.</span> <span class="toc-text">Interpreting Network Behavior</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-Networks"><span class="toc-number">1.2.</span> <span class="toc-text">Create Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Train-Networks"><span class="toc-number">1.3.</span> <span class="toc-text">Train Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Improve-Performance"><span class="toc-number">1.4.</span> <span class="toc-text">Improve Performance</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sequence-classification-and-regression"><span class="toc-number">2.</span> <span class="toc-text">sequence classification and regression.</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Perform-Regression"><span class="toc-number">2.1.</span> <span class="toc-text">Perform Regression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Detect-Objects-in-images"><span class="toc-number">2.2.</span> <span class="toc-text">Detect Objects in images</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Sequence-Data-with-Recurrent-Networks"><span class="toc-number">2.3.</span> <span class="toc-text">Classify Sequence Data with Recurrent Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Categorical-Sequences"><span class="toc-number">2.4.</span> <span class="toc-text">Classify Categorical Sequences</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-Sequences-of-Output"><span class="toc-number">2.5.</span> <span class="toc-text">Generate Sequences of Output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-number">2.6.</span> <span class="toc-text">Summary</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#neural-network-theory"><span class="toc-number">1.</span> <span class="toc-text">neural network theory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Interpreting-Network-Behavior"><span class="toc-number">1.1.</span> <span class="toc-text">Interpreting Network Behavior</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-Networks"><span class="toc-number">1.2.</span> <span class="toc-text">Create Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Train-Networks"><span class="toc-number">1.3.</span> <span class="toc-text">Train Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Improve-Performance"><span class="toc-number">1.4.</span> <span class="toc-text">Improve Performance</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sequence-classification-and-regression"><span class="toc-number">2.</span> <span class="toc-text">sequence classification and regression.</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Perform-Regression"><span class="toc-number">2.1.</span> <span class="toc-text">Perform Regression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Detect-Objects-in-images"><span class="toc-number">2.2.</span> <span class="toc-text">Detect Objects in images</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Sequence-Data-with-Recurrent-Networks"><span class="toc-number">2.3.</span> <span class="toc-text">Classify Sequence Data with Recurrent Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Classify-Categorical-Sequences"><span class="toc-number">2.4.</span> <span class="toc-text">Classify Categorical Sequences</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-Sequences-of-Output"><span class="toc-number">2.5.</span> <span class="toc-text">Generate Sequences of Output</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -817,7 +717,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共43.8k字
+              本站总共69.7k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -924,11 +824,27 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Brain</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">MRI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -940,19 +856,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Brain</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">MRI</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -968,14 +872,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
@@ -984,11 +880,39 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Samba</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Self-driving</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Stochastic</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
               </li>
              
               <li class="article-tag-list-item">

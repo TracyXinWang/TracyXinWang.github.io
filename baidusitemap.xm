@@ -1,23 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/07/21/coursera_self_driving05/</loc>
+    <lastmod>2019-07-22T08:46:45.092Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/07/22/coursera_self_driving04/</loc>
+    <lastmod>2019-07-22T08:45:51.883Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/06/07/python13/</loc>
+    <lastmod>2019-07-22T08:41:12.656Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/06/03/python11/</loc>
+    <lastmod>2019-07-22T08:32:45.034Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/06/05/python12/</loc>
+    <lastmod>2019-07-22T03:35:40.017Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/05/31/python10/</loc>
+    <lastmod>2019-07-22T03:35:05.071Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/05/29/python09/</loc>
+    <lastmod>2019-07-22T03:34:51.040Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/05/27/python08/</loc>
+    <lastmod>2019-07-22T03:34:37.520Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/05/24/python07/</loc>
+    <lastmod>2019-07-22T03:33:27.163Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/05/22/python05/</loc>
+    <lastmod>2019-07-22T03:31:29.567Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/05/22/python06/</loc>
+    <lastmod>2019-07-22T03:31:15.219Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/05/22/python03/</loc>
+    <lastmod>2019-07-22T03:22:32.521Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/05/22/python04/</loc>
+    <lastmod>2019-07-22T03:21:39.313Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/04/11/Net_Reduction/</loc>
+    <lastmod>2019-07-21T12:43:06.070Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/07/20/coursera_self_driving02/</loc>
+    <lastmod>2019-07-21T12:34:01.994Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/07/21/matlab_self_driving/</loc>
+    <lastmod>2019-07-21T09:52:49.000Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/07/21/coursera_self_driving03/</loc>
+    <lastmod>2019-07-21T08:28:46.000Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/07/20/coursera_self_driving01/</loc>
+    <lastmod>2019-07-20T09:41:18.000Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/05/14/Huawei_note/</loc>
+    <lastmod>2019-05-16T11:55:25.424Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/04/20/life-in-Melbourne02/</loc>
+    <lastmod>2019-04-20T06:33:14.000Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/01/07/Matlab-DL2/</loc>
+    <lastmod>2019-04-09T05:14:32.000Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/03/11/HMM-MAR/</loc>
+    <lastmod>2019-03-11T03:09:38.000Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/03/01/WienerProcess/</loc>
+    <lastmod>2019-02-28T23:00:44.000Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/02/23/EM/</loc>
+    <lastmod>2019-02-24T23:16:16.000Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/01/11/MIT6006-Lec21/</loc>
+    <lastmod>2019-02-23T04:47:56.000Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/01/15/Linux/</loc>
+    <lastmod>2019-02-23T04:46:54.000Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2019/02/19/SolDerivative/</loc>
+    <lastmod>2019-02-18T22:22:30.000Z</lastmod>
+  </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2019/02/08/Nonlinear/</loc>
     <lastmod>2019-02-18T06:26:12.837Z</lastmod>
   </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2019/02/16/UnifyAI/</loc>
     <lastmod>2019-02-18T06:08:38.567Z</lastmod>
   </url>  <url>
-    <loc>http://tracyxinwang.site/blog/blog/2018/01/15/Linux/</loc>
-    <lastmod>2019-01-16T12:24:18.000Z</lastmod>
-  </url>  <url>
-    <loc>http://tracyxinwang.site/blog/blog/2018/01/11/MIT6006-Lec21/</loc>
-    <lastmod>2019-01-11T01:59:15.000Z</lastmod>
-  </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2018/12/30/MIT6006-Lec19/</loc>
     <lastmod>2019-01-11T01:46:27.000Z</lastmod>
-  </url>  <url>
-    <loc>http://tracyxinwang.site/blog/blog/2019/01/07/Matlab-DL2/</loc>
-    <lastmod>2019-01-10T04:46:05.000Z</lastmod>
   </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2019/01/04/Matlab-DL1/</loc>
     <lastmod>2019-01-07T03:07:25.000Z</lastmod>
