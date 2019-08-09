@@ -17,7 +17,7 @@
 <meta property="og:description" content="From Coursera, Introduction to Self-Driving Cars by University of Torontohttps://www.coursera.org/specializations/self-driving-cars?action=enroll Creating a good vehicle model is essential for model-b">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://tracyxinwang.site/blog/images/self_driving07.png">
-<meta property="og:updated_time" content="2019-07-22T08:45:51.883Z">
+<meta property="og:updated_time" content="2019-07-23T14:35:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Coursera Self-Driving 04 Vehicle Dynamic Modeling">
 <meta name="twitter:description" content="From Coursera, Introduction to Self-Driving Cars by University of Torontohttps://www.coursera.org/specializations/self-driving-cars?action=enroll Creating a good vehicle model is essential for model-b">
@@ -356,7 +356,42 @@ var _hmt = _hmt || [];
 <li>discrete time model: $$ x_{k+1} = x_k + [(\frac{rw_{1,k}+rw_{2,k}}{2})cos \theta_k] \delta t$$ $$ y_{k+1} = y_k + [(\frac{rw_{1,k}+rw_{2,k}}{2})sin \theta_k] \delta t$$ $$ \theta_{k+1} = \theta_k + (\frac{rw_{1,k}-rw_{2,k}}{2l}) \delta t$$</li>
 </ul>
 <p>source: <a href="https://www.coursera.org/lecture/intro-self-driving-cars/lesson-1-kinematic-modeling-in-2d-pScZH" target="_blank" rel="noopener">https://www.coursera.org/lecture/intro-self-driving-cars/lesson-1-kinematic-modeling-in-2d-pScZH</a></p>
-<h3 id="The-Kinematic-Bicycle-Model"><a href="#The-Kinematic-Bicycle-Model" class="headerlink" title="The Kinematic Bicycle Model"></a>The Kinematic Bicycle Model</h3><h2 id="Dynamic-Modeling-in-2D"><a href="#Dynamic-Modeling-in-2D" class="headerlink" title="Dynamic Modeling in 2D"></a>Dynamic Modeling in 2D</h2><h3 id="Longitudinal-Vehicle-Modeling"><a href="#Longitudinal-Vehicle-Modeling" class="headerlink" title="Longitudinal Vehicle Modeling"></a>Longitudinal Vehicle Modeling</h3><h3 id="Lateral-Dynamics-of-Bicycle-Model"><a href="#Lateral-Dynamics-of-Bicycle-Model" class="headerlink" title="Lateral Dynamics of Bicycle Model"></a>Lateral Dynamics of Bicycle Model</h3><h3 id="Vehicle-Actuation"><a href="#Vehicle-Actuation" class="headerlink" title="Vehicle Actuation"></a>Vehicle Actuation</h3><h3 id="Tire-Slip-and-Modeling"><a href="#Tire-Slip-and-Modeling" class="headerlink" title="Tire Slip and Modeling"></a>Tire Slip and Modeling</h3><p>·Basics of kinematic and coordinates<br>·Kinematic model development of a bicycle<br>·Basics of dynamic modeling<br>·Vehicle longitudinal dynamics and modeling<br>·Vehicle lateral dynamics and modeling<br>·Vehicle actuation system<br>·Tire slips and modeling</p>
+<h3 id="The-Kinematic-Bicycle-Model"><a href="#The-Kinematic-Bicycle-Model" class="headerlink" title="The Kinematic Bicycle Model"></a>The Kinematic Bicycle Model</h3><ul>
+<li>2Dbicycle model(simplified car model)</li>
+<li>Front wheel steering</li>
+</ul>
+<p>Rear Wheel Reference Point:</p>
+<ul>
+<li>Apply Instantaneous Center of Rotation（ICR）: $$\dot \theta = \omega = \frac VR$$</li>
+<li>Similar triangles: $$tan \delta = \frac LR$$</li>
+<li>Rotation rate equation: $$\dot \theta = \omega = \frac vR = \frac{v tan \delta}{L}$$</li>
+</ul>
+<p>Rear Axle Bicycle Model</p>
+<ul>
+<li>If the desired point is at the center of the rear axle: $$\dot x_r = v cos \theta$$ $$\dot y_r = v sin \theta$$ $$\dot \theta = \frac {v tan \delta}{L}$$</li>
+<li>If the desired point is at the center of the front axle: $$\dot x_f = v cos (\theta + \delta)$$ $$\dot y_f = v sin (\theta+\delta)$$ $$\dot \theta = \frac {v sin \delta}{L}$$</li>
+<li>If the desired point is at the center of the gravity(cg): $$\dot x_c = v cos (\theta + \beta)$$ $$\dot y_c = v sin (\theta+\beta)$$ $$\dot \theta = \frac {v cos \beta tan \delta}{L}$$ $$\beta = tan^{-1} (\frac {l_r tan \delta}{L})$$</li>
+</ul>
+<p><strong>State-space Representation</strong></p>
+<ul>
+<li>Modify CG kinematic bicycle model to use steering rate input <ul>
+<li>state: $[x, y, \theta, \delta]^T$ </li>
+<li>inputs: $[v,\phi]^T$ ($\phi$ is the modified input, the rate of the change of steering angle)<br>$$\dot x_c = v cos(\theta + \beta)$$<br>$$\dot y_c = v sin(\theta + \beta)$$<br>$$\dot \theta = \frac {v cos \beta tan \delta}{L}$$ $$\dot \delta = \phi$$</li>
+</ul>
+</li>
+</ul>
+<h2 id="Dynamic-Modeling-in-2D"><a href="#Dynamic-Modeling-in-2D" class="headerlink" title="Dynamic Modeling in 2D"></a>Dynamic Modeling in 2D</h2><p>mainly on Newton’s second law</p>
+<h3 id="Longitudinal-Vehicle-Modeling"><a href="#Longitudinal-Vehicle-Modeling" class="headerlink" title="Longitudinal Vehicle Modeling"></a>Longitudinal Vehicle Modeling</h3><ul>
+<li>Dynamic force balance on a vehicle</li>
+<li>Powertrain component models</li>
+<li><p>Connect models to create a full longitudinal motior model</p>
+</li>
+<li><p>Total resistance load: $$F_{load} = F_{aero} + R_x + mga$$</p>
+</li>
+<li>The aerodynamic force can depend on air density, frontal area,on the speed of the vehicle: $$F_{aero} = 1/2C_a \rho A\dot x^2 = c_a \dot x^2$$</li>
+<li>The rolling resistance can depend on the tire normal force,tire pressures and vehicle speed: $$R_x = N(\hat c_{r,0}+\hat c_{r,1}|\dot x| + \hat c_{r,2}\dot x^2) \approx c_{r,1}|\dot x|$$</li>
+</ul>
+<h3 id="Lateral-Dynamics-of-Bicycle-Model"><a href="#Lateral-Dynamics-of-Bicycle-Model" class="headerlink" title="Lateral Dynamics of Bicycle Model"></a>Lateral Dynamics of Bicycle Model</h3><h3 id="Vehicle-Actuation"><a href="#Vehicle-Actuation" class="headerlink" title="Vehicle Actuation"></a>Vehicle Actuation</h3><h3 id="Tire-Slip-and-Modeling"><a href="#Tire-Slip-and-Modeling" class="headerlink" title="Tire Slip and Modeling"></a>Tire Slip and Modeling</h3><p>·Basics of kinematic and coordinates<br>·Kinematic model development of a bicycle<br>·Basics of dynamic modeling<br>·Vehicle longitudinal dynamics and modeling<br>·Vehicle lateral dynamics and modeling<br>·Vehicle actuation system<br>·Tire slips and modeling</p>
 
       
 
@@ -475,6 +510,15 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
+    <a href="/blog/2019/07/23/coursera_state_est01/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Coursera State Estimation and Localization for Self-Driving Cars 01
+        
+      </div>
+    </a>
+  
   
     <a href="/blog/2019/07/21/matlab_self_driving/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">MATLAB 自动驾驶相关</div>
@@ -550,7 +594,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共69.7k字
+              本站总共83.6k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -657,6 +701,14 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Coding</a>
               </li>
              
@@ -665,19 +717,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Brain</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Learning</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">MRI</a>
+                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color1">Brain</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">MRI</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -686,10 +738,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -705,11 +753,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+                <a href="javascript:void(0)" class="js-tag color3">Network</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -721,7 +765,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Network</a>
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -737,7 +781,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">learning</a>
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -745,7 +793,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+                <a href="javascript:void(0)" class="js-tag color4">learning</a>
               </li>
              
               <li class="article-tag-list-item">
