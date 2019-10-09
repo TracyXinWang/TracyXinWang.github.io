@@ -247,6 +247,944 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-NodeJS-learning01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/11/04/NodeJS-learning01/">Notes - NodeJS 学习（一）</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/11/04/NodeJS-learning01/" class="archive-article-date">
+  	<time datetime="2018-11-03T22:16:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#NodeJS-Basics"><span class="toc-number">1.</span> <span class="toc-text">NodeJS Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-NodeJS"><span class="toc-number">1.1.</span> <span class="toc-text">What is NodeJS?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装及运行"><span class="toc-number">1.2.</span> <span class="toc-text">安装及运行</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装"><span class="toc-number">1.2.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行"><span class="toc-number">1.2.2.</span> <span class="toc-text">运行</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块"><span class="toc-number">1.3.</span> <span class="toc-text">模块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码的组织和部署"><span class="toc-number">2.</span> <span class="toc-text">代码的组织和部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模块路径的解析"><span class="toc-number">2.1.</span> <span class="toc-text">模块路径的解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#包-Package"><span class="toc-number">2.2.</span> <span class="toc-text">包(Package)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工程目录"><span class="toc-number">2.3.</span> <span class="toc-text">工程目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于NPM"><span class="toc-number">2.4.</span> <span class="toc-text">关于NPM</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#NodeJS-Basics"><span class="toc-text">NodeJS Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-NodeJS"><span class="toc-text">What is NodeJS?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装及运行"><span class="toc-text">安装及运行</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行"><span class="toc-text">运行</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块"><span class="toc-text">模块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码的组织和部署"><span class="toc-text">代码的组织和部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模块路径的解析"><span class="toc-text">模块路径的解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#包-Package"><span class="toc-text">包(Package)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工程目录"><span class="toc-text">工程目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于NPM"><span class="toc-text">关于NPM</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <p>The following are just some notes when I learn NodeJS. Most of the contents are taken from others. The references have been listed in the end.<br>The reason I want to learn it is just because that I need to write codes for my websites…</p>
+<hr>
+<h2 id="NodeJS-Basics"><a href="#NodeJS-Basics" class="headerlink" title="NodeJS Basics"></a>NodeJS Basics</h2><h3 id="What-is-NodeJS"><a href="#What-is-NodeJS" class="headerlink" title="What is NodeJS?"></a>What is NodeJS?</h3><p>在了解NodeJS之前，先要了解JS，JS就是JavaScript, 是一种脚本语言(scripting language)，它运行在浏览器中。那什么是脚本语言呢? 脚本语言其实也是一种编程语言(programming language). 传统的编程语言是会有这几个步骤的：编写-编译-链接-运行(edit-compile-link-run)。脚本语言与一般的编程语言的区别在于，他们没有编译(compilation)这个过程，而是通过一种解释的形式来运行。通常来讲，编译型的语言会运行得比解释型语言快，因为他们先转化为及其语言，并且编译器只会读和分析一次代码，最后汇总所有的errors出来。但解释型语言则会在每次遇到一个错误的时候都停下来，而非汇总。<br>扯远了，那JS是一个脚本语言的话，就需要一个<strong>解析器</strong>才能运行，对于写在HTML页面里的JS，浏览器充当了解析器的角色。而对于需要独立运行的JS，NodeJS就是一个解析器。<br>任何操作系统下安装NodeJS本质上做的事情都是把NodeJS执行程序复制到一个目录，然后保证这个目录在系统PATH环境变量下，以便终端下可以使用node命令。</p>
+<h3 id="安装及运行"><a href="#安装及运行" class="headerlink" title="安装及运行"></a>安装及运行</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>在Windows下，在<a href="https://nodejs.org/en/" target="_blank" rel="noopener">官网</a>上下载好后，直接运行.msi安装文件即可</p>
+<h4 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h4><ul>
+<li>在终端运行：Windows下，cmd进入终端，输入 <code>node</code> 就可以进入交互模式了，及之后的运行环境都是在NodeJS下，想退出的话输入 <code>.exit</code></li>
+<li>运行JS文件：当要运行大段代码时，在终端编写代码不是很方便，这时就可以先写一个JS文件(以.js结尾储存)，然后再运行这个文件，假如JS文件名为”hello.js”, 在命令行输入 <code>node hello.js</code> 就可以运行这个脚本程序了。</li>
+</ul>
+<h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><ul>
+<li>在编写大型程序时，一般都会将程序模块化，及分成一个一个的子程序。这些子程序在js中就是一个一个的不同的js文件，每个文件就是一个模块，文件路径就是模块名。</li>
+<li>在编写每个模块时，都有<code>require</code>、<code>exports</code>、<code>module</code> 三个预先定义好的变量可供使用。</li>
+<li><strong>require</strong><ul>
+<li>用于在当前模块中加载和使用别的模块，传入一个模块名，返回一个模块导出对象。</li>
+<li>模块名可使用相对路径（以./开头），或者是绝对路径（以/或C:之类的盘符开头）。</li>
+<li>另外，模块名中的.js扩展名可以省略</li>
+<li>e.g. <code>var foo1 = require(&#39;./foo&#39;);</code>, <code>var foo2 = require(&#39;./foo.js&#39;);</code>, <code>var foo3 = require(&#39;/home/user/foo&#39;);</code>, <code>var foo4 = require(&#39;/home/user/foo.js&#39;);</code> 都是指导入同一个模块</li>
+</ul>
+</li>
+<li><strong>exports</strong><ul>
+<li>是当前模块的导出对象，用于导出模块公有方法和属性。</li>
+<li>别的模块通过require函数使用当前模块时得到的就是当前模块的exports对象。</li>
+</ul>
+</li>
+<li><strong>module</strong><ul>
+<li>通过<code>module</code>对象可以访问到当前模块的一些相关信息，但最多的用途是替换当前模块的导出对象。</li>
+</ul>
+</li>
+<li><strong>模块初始化</strong>: 一个模块中的JS代码仅在模块第一次被使用时执行一次，并在执行过程中初始化模块的导出对象。之后，缓存起来的导出对象被重复利用。简单点，所有模块都只初始化一次。</li>
+<li><strong>主模块</strong>：<ul>
+<li>即 负责调度组成整个程序的其它模块完成工作。</li>
+<li>通过命令行参数传递给NodeJS以启动程序的模块被称为主模块。</li>
+</ul>
+</li>
+</ul>
+<h2 id="代码的组织和部署"><a href="#代码的组织和部署" class="headerlink" title="代码的组织和部署"></a>代码的组织和部署</h2><h3 id="模块路径的解析"><a href="#模块路径的解析" class="headerlink" title="模块路径的解析"></a>模块路径的解析</h3><p>我们在写程序时会用到 <code>require</code> 来告诉程序需要用到哪些模块，让你程序就会去找这些模块，找这些模块的过程就叫做路径解析。那怎么去找呢，分两种情况：</p>
+<ul>
+<li>如果是内置模块，即自带的那种，就不做路径解析</li>
+<li>node_module目录：这是NodeJS定义的一个专门用来存放模块的目录，在加载某个非内置模块时，NodeJS就会去找 <code>node_module</code>这个文件夹。其实在用Hexo创建静态网页时，你就会发现在你创建的hexo项目下就有个<code>node_modules</code> 文件夹。</li>
+<li>NODE_PATH环境变量：NodeJS允许通过<code>NODE_PATH</code>环境变量来指定额外的模块搜索路径。<h3 id="包-Package"><a href="#包-Package" class="headerlink" title="包(Package)"></a>包(Package)</h3>JS模块的基本单位是单个JS文件，但复杂些的模块往往由多个子模块组成。为了便于管理和使用，我们可以把由多个子模块组成的大模块称做包，并把所有子模块放在同一个目录里。<br>在组成一个包的所有子模块中，需要有一个入口模块，入口模块的导出对象被作为包的导出对象。</li>
+<li>在其它模块里使用包的时候，需要加载包的入口模块。可以直接使用require加上入口模块名称的路径来加载。但是这样不简洁，要让包使用起来更像是单个模块的话，就将模块的文件名设为<code>index.js</code>，这样即使在require路径上不出现index这个名称，程序也会知道这个<code>index.js</code>就是入口模块。</li>
+<li>使用<code>package.json</code> 可以自定义入口模块的文件名和存放位置，即：在包目录下包含一个<code>package.json</code> 文件，并在其中指定入口模块的路径:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"name"</span>: modulename</span><br><span class="line">    <span class="string">"main"</span>: <span class="string">"./lib/main.js"</span> <span class="comment"># 这里就指定入口模块的路径</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="工程目录"><a href="#工程目录" class="headerlink" title="工程目录"></a>工程目录</h3><p>标准如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- /home/user/workspace/node-echo/   <span class="comment"># 工程目录</span></span><br><span class="line">    - bin/                          <span class="comment"># 存放命令行相关代码</span></span><br><span class="line">        node-echo</span><br><span class="line">    + doc/                          <span class="comment"># 存放文档</span></span><br><span class="line">    - lib/                          <span class="comment"># 存放API相关代码</span></span><br><span class="line">        echo.js</span><br><span class="line">    - node_modules/                 <span class="comment"># 存放三方包</span></span><br><span class="line">        + argv/</span><br><span class="line">    + tests/                        <span class="comment"># 存放测试用例</span></span><br><span class="line">    package.json                    <span class="comment"># 元数据文件</span></span><br><span class="line">    README.md                       <span class="comment"># 说明文件</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="关于NPM"><a href="#关于NPM" class="headerlink" title="关于NPM"></a>关于NPM</h3><p>NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：</p>
+<ul>
+<li>允许用户从NPM服务器下载别人编写的三方包到本地使用。</li>
+<li>允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。</li>
+<li>允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。</li>
+</ul>
+<p><a href="http://nqdeng.github.io/7-days-nodejs/#2.5" target="_blank" rel="noopener">七天学会NodeJS</a>上在NPM这个讲解上很详细，推荐看一看。</p>
+<p><br></p>
+<p>Reference:<br><a href="http://nqdeng.github.io/7-days-nodejs/" target="_blank" rel="noopener">http://nqdeng.github.io/7-days-nodejs/</a><br><a href="https://www.geeksforgeeks.org/whats-the-difference-between-scripting-and-programming-languages/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/whats-the-difference-between-scripting-and-programming-languages/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">NodeJS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/11/04/NodeJS-learning01/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-MIT6006-Lec02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/11/03/MIT6006-Lec02/">MIT6006 Lec02 Models of Computation</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/11/03/MIT6006-Lec02/" class="archive-article-date">
+  	<time datetime="2018-11-02T23:45:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-model-of-computation"><span class="toc-number">1.</span> <span class="toc-text">What is model of computation?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Random-Access-Machine-RAM"><span class="toc-number">2.</span> <span class="toc-text">Random Access Machine (RAM)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pointer-machine"><span class="toc-number">3.</span> <span class="toc-text">Pointer machine</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-model"><span class="toc-number">4.</span> <span class="toc-text">Python model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Document-Distance-Problem-—-compute-d-D1-D2"><span class="toc-number">5.</span> <span class="toc-text">Document Distance Problem — compute d(D1, D2)</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-model-of-computation"><span class="toc-text">What is model of computation?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Random-Access-Machine-RAM"><span class="toc-text">Random Access Machine (RAM)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pointer-machine"><span class="toc-text">Pointer machine</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-model"><span class="toc-text">Python model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Document-Distance-Problem-—-compute-d-D1-D2"><span class="toc-text">Document Distance Problem — compute d(D1, D2)</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="What-is-model-of-computation"><a href="#What-is-model-of-computation" class="headerlink" title="What is model of computation?"></a>What is model of computation?</h3><p>Model of computation specifies</p>
+<ul>
+<li>what <strong>operations</strong> an algorithm is allowed</li>
+<li><strong>cost</strong> (time, space, . . . ) of each operation</li>
+<li>cost of algorithm = sum of operation costs</li>
+</ul>
+<p>The followings are two kinds of models of computation.</p>
+<h3 id="Random-Access-Machine-RAM"><a href="#Random-Access-Machine-RAM" class="headerlink" title="Random Access Machine (RAM)"></a>Random Access Machine (RAM)</h3><ul>
+<li>It is modeled by a big array. </li>
+<li>For each word, it registers $\theta(1)$</li>
+<li>In $\theta(1)$ time, it can<ul>
+<li>load word</li>
+<li>compute (+,-,*,/,&amp;,|,^) on registers</li>
+<li>store register $r_j$ into memory</li>
+</ul>
+</li>
+<li>What is a word: <ul>
+<li>assume basic objects (e.g. int) fit in word</li>
+</ul>
+</li>
+<li>It is realistic and powerful → implement abstractions</li>
+</ul>
+<h3 id="Pointer-machine"><a href="#Pointer-machine" class="headerlink" title="Pointer machine"></a>Pointer machine</h3><ul>
+<li>can dynamically allocated objects</li>
+<li>object has $O(1)$ fields</li>
+<li>field = word (e.g., int) or pointer to object/null (a.k.a. reference)</li>
+<li>weaker than RAM</li>
+</ul>
+<h3 id="Python-model"><a href="#Python-model" class="headerlink" title="Python model"></a>Python model</h3><p>Python lets you use either mode of thinking, e.g.</p>
+<ul>
+<li>“list” is acutually an array in RAM:<br>  &emsp; &nbsp; L[i] = L[j] + 5: this operation only costs $\theta(1)$ time (constant time)</li>
+<li>object with $O(1)$ attributes (including references) is like a pointer machine<br>  &emsp; &nbsp; $x=x.next$ costs $\theta(1)$ time</li>
+</ul>
+<p>The following are some operations and their costs in Python. To determine their cost, imagine implementation in terms of the above two models(RAM or Pointer). </p>
+<ol>
+<li><strong>list</strong><br> (a) L.append(x): $\theta(1)$ time.  (It uses table doubling)<br> (b) L = L1+L2 ≡<br> &emsp; L = []: cost $\theta(1)$ time to build a list<br> &emsp; for x in L1: L.append(x) costs $\theta(1)$. Totally in L1 is $\theta(|L1|)$<br> &emsp; for x in L2: L.append(x) costs $\theta(1)$. Totally in L2 is $\theta(|L2|)$<br> Therefore, L = L1+L2 costs $\theta(1+|L1|+|L2|)$ time<br> (c) L1.extend(L2) ≡<br>  &emsp; for x in L2: L1.append(x) costs θ(1). Totally $\theta(|L2|)$<br>  &emsp; ≡ L1+ = L2<br> Therefore, costs θ(1 + |L2|) time<br> (d) L2 = L1[i : j] ≡<br>   &emsp; L2 = []: θ(1)<br>   &emsp; for k in range(i, j): L2.append(L1[i]) costs θ(1)<br>  Therefore, costs $θ(j − i + 1) = O(|L|)$<br> (e) len(L):  $θ(1)$ time - since list stores its length in a field<br> (f) L.sort(): $θ(|L|log |L|)$ - via comparison sort </li>
+<li><strong>tuple, str</strong>: similar</li>
+<li><strong>dict</strong>: via hashing, costs $θ(1)$ time</li>
+<li><strong>set</strong>: similar (think of as dict without vals)</li>
+<li><strong>heapq</strong>: heappush &amp; heappop - via heaps → $θ(log(n))$ time</li>
+<li><strong>long</strong>: via Karatsuba algorithm<br> &emsp; x + y → O(|x| + |y|) time where |y| reflects # words<br> &emsp; x ∗ y → O((|x| + |y|)log(3)) ≈ O((|x| + |y|)1.58) time</li>
+</ol>
+<h3 id="Document-Distance-Problem-—-compute-d-D1-D2"><a href="#Document-Distance-Problem-—-compute-d-D1-D2" class="headerlink" title="Document Distance Problem — compute d(D1, D2)"></a>Document Distance Problem — compute d(D1, D2)</h3><p>The problem is acutually to find similarity in documents, and have application in detecting duplicates, plagiarism, and also in web search (D2 = query).<br>In this problem, we define word as the sequence of alphanumeric characters, and document as a sequence of words (ignore space, punctuation).</p>
+<p>The idea is to define distance in terms of <strong>shared words</strong>. Think of document D as a vector:<br>If three axis are defined as three words: the, dog, cat<br>Then vector v1 could be “the cat”, vector v2 could be “the dog”, vector v3 could be “cat dog”</p>
+<p>After looking them as vectors, then we can apply mathematical methods to calculate the distance between these vectors like angle </p>
+<p>The algorithm can be formed as follows:</p>
+<ol>
+<li>split each document into words</li>
+<li>count word frequencies (document vectors)</li>
+<li>compute dot product (&amp; divide)</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/11/03/MIT6006-Lec02/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-problem-hexo-deploy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/10/30/problem-hexo-deploy/">Hexo deploy 出现问题</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/10/30/problem-hexo-deploy/" class="archive-article-date">
+  	<time datetime="2018-10-30T02:54:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              
+            </div>
+           -->
+        <!--   -->
+        <p>也不知道怎么回事办公室的电脑突然重启了，可能是更新吧，但是更新完了回来发现hexo generate 和 deploy 并不能使用了<br>最开始报的错是 <code>Node 不是内部或外部命令</code>，一看是 node.js 的环境变量没有配置，很奇怪，之前明明是OK的，然后我就在环境变量里面配置了一下node，步骤如下：</p>
+<ul>
+<li>右键<code>我的电脑-属性-高级系统设置</code></li>
+<li>找到下面有个<code>环境变量</code>的选择框，点进去</li>
+<li>此时出来的对话框中有上下两个部分，上面的部分属于<code>用户变量</code>，找到里面有一行是 <code>path</code>，点击<code>编辑</code></li>
+<li>新建一个变量，把node.js所在的路径拷进去就行了，我的是 <code>D:\Program Files\nodejs</code></li>
+</ul>
+<p>然后 <code>hexo generate</code> 就可以了，deploy的时候发现出现以下问题：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">FATAL Something<span class="string">'s wrong. Maybe you can find the solution here: http://hexo.io/docs/troubleshooting.html</span></span><br><span class="line"><span class="string">Error: spawn git ENOENT</span></span><br><span class="line"><span class="string">at notFoundError (C:\Users\XXX\hexo\node_modules\cross-spawn\lib\enoent.js:11:11)</span></span><br><span class="line"><span class="string">at verifyENOENT (C:\Users\XXX\hexo\node_modules\cross-spawn\lib\enoent.js:46:16)</span></span><br><span class="line"><span class="string">at ChildProcess.cp.emit (C:\Users\XXX\hexo\node_modules\cross-spawn\lib\enoent.js:33:19)</span></span><br><span class="line"><span class="string">at Process.ChildProcess._handle.onexit (internal/child_process.js:198:12)</span></span><br></pre></td></tr></table></figure></p>
+<p>那个XXX是hexo所在文件的路径，这里就不放出来了。<br>解决这个的问题最直接的办法就是直接在hexo的当前文件夹下，运行 <code>git bash</code> 然后在bash 处运行 <code>hexo deploy</code>…</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/10/30/problem-hexo-deploy/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-simulated-annealing" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/10/29/simulated-annealing/">Algorithm - 模拟退火 Simulated Annealing</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/10/29/simulated-annealing/" class="archive-article-date">
+  	<time datetime="2018-10-29T01:01:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Acceptance-Function"><span class="toc-number">1.</span> <span class="toc-text">Acceptance Function:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pseudo-Code"><span class="toc-number">2.</span> <span class="toc-text">Pseudo Code</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Acceptance-Function"><span class="toc-text">Acceptance Function:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pseudo-Code"><span class="toc-text">Pseudo Code</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <p>模拟退火（SA）是拿来找给定函数的近似全局最优的。一般当搜索空间是离散的时，经常使用它。模拟退火算法最初是受到金属加工时退火过程的启发来的。在真正的金属冶炼过程中，通过给金属降温，金属的形态就会固定。而在模拟退火中，我们会设置 “温度” 这个变量，来模拟这个过程。 初始时，将其设置为高，然后在算法运行时让它慢慢“冷却”。当这个变量“温度”很高时，算法会更允许接受比当前解更差的解(即高温时，金属可以改变的力度和形状可以更大)。这能够让算法不局限在之前发现的任何local optimum上。随着温度的降低，接受更差解的机会就越小，因此允许算法逐渐集中在搜索空间的一个区域，来找到近最优解。这个渐进的“冷却”过程能够让模拟退火算法在处理包含大量局部最优解的大问题时非常有效地找到接近的最优解。</p>
+<h3 id="Acceptance-Function"><a href="#Acceptance-Function" class="headerlink" title="Acceptance Function:"></a>Acceptance Function:</h3><p>决定一个solution是否被接受的步骤如下：</p>
+<ol>
+<li>看下一个解是否优于当前解，如果是，则无条件接受</li>
+<li>如果不是，根据以下几个方面考虑要不要接受：<ul>
+<li>下一个解有多差？</li>
+<li>当前系统的 “温度” 有多高？<br>数学表达式如下：<br>$$exp(\frac{solutionEnergy - neighborEnergy}{Temperature})$$<br>即：系统能量变得越小，温度越高，越会接受这个解。是否接受解根据一个随机的概率来的</li>
+</ul>
+</li>
+</ol>
+<p>算法描述如下：</p>
+<ol>
+<li>设置温度变量初始值，随机初始化一个解</li>
+<li>循环直到停止条件达到：一般为系统足够”冷却” 或 最优的解已经找到<ul>
+<li>通过较小地改变当前解来确定下一个解</li>
+<li>决定是否跳去下一个解（用上面的Acception function）</li>
+</ul>
+</li>
+<li>降低温度，继续循环</li>
+</ol>
+<h3 id="Pseudo-Code"><a href="#Pseudo-Code" class="headerlink" title="Pseudo Code"></a>Pseudo Code</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int temperature = m;</span><br><span class="line">create a collection of best solutions found</span><br><span class="line"><span class="keyword">while</span> (temperature meets the condition)&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (accept(curr_sol, next_sol, temperature)) curr_sol = next_sol;</span><br><span class="line">    <span class="keyword">if</span> (curr_sol &lt; best) best = add curr_sol to best collection;</span><br><span class="line">    temperature *= (1-coolingRate) </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">accept(curr_sol, next_sol, temperature)&#123;</span><br><span class="line">    <span class="keyword">if</span> (next_sol &lt; curr_sol) <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="built_in">return</span> exp((curr_sol-next_col)/temperature) &gt; rand() <span class="comment"># 以一个随机的概率接受</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<p>Reference:<br><a href="http://www.theprojectspot.com/tutorial-post/simulated-annealing-algorithm-for-beginners/6" target="_blank" rel="noopener">http://www.theprojectspot.com/tutorial-post/simulated-annealing-algorithm-for-beginners/6</a><br><a href="http://mathworld.wolfram.com/SimulatedAnnealing.html" target="_blank" rel="noopener">http://mathworld.wolfram.com/SimulatedAnnealing.html</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/10/29/simulated-annealing/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-DTI-basics" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/10/23/DTI-basics/">DTI Basics</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/10/23/DTI-basics/" class="archive-article-date">
+  	<time datetime="2018-10-22T23:01:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Processing-Data-with-FSL’s-FDT-Diffusion"><span class="toc-number">1.</span> <span class="toc-text">Processing Data with FSL’s FDT Diffusion</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Processing-Data-with-FSL’s-FDT-Diffusion"><span class="toc-text">Processing Data with FSL’s FDT Diffusion</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <p>You will also need to acquire a reference image with no diffusion information to calculate the ADC value (divide diffusion scan by reference scan). You can vary the amount of diffusion weighting (level of sensitivity to diffusion). The amount of diffusion weighting is measured by the b-value. If the b-value equals 0, there is no diffusion weighting (reference scan). If the diffusion value is very high, you can get greater resolution, but also more noise. The standard b-value for adults is 1000. In children, you typically use 600. If looking outside the brain, typically around 500.</p>
+<p>converted to NIfTI format and includes the b-values and gradient idrections: .bval and .bvec</p>
+<p> mean B0 image is not sensitive to diffusion direction.<br>in diffusion image, the brightness varies dramatically in the white matter depending on the alignment of the fibers. More diffusion yields a darker pixel because you lose signal as the water molecule can go anywhere. Higher ADC values mean it can go very far without interruption, and it takes the signal with it. This is not necessarily related to anisotropy. </p>
+<p>Eddy current correction of DTI data is analogous to motion correction of fMRI data.</p>
+<h3 id="Processing-Data-with-FSL’s-FDT-Diffusion"><a href="#Processing-Data-with-FSL’s-FDT-Diffusion" class="headerlink" title="Processing Data with FSL’s FDT Diffusion"></a>Processing Data with FSL’s FDT Diffusion</h3><p>The reference volume is typically 0 (this is the volume with a b-value of 0, dcm2nii should automatically ensure that the initial volume is the volume with zero b-value, but you should ensure this is correct with your data which you can do by viewing the volumes with MRIcron).</p>
+<p>The basic processing pipeline has the following elements:<br>Convert data from scanner to scalar image<br>Run distortion correction<br>EPI distortion correction with fieldmap/TOPUP<br>Eddy current correction<br>Brain extraction<br>Tensor fitting<br>Produce scalars (FA, MD, AD, RD, RGB)</p>
+<p>Advanced processing:<br>Normalization<br>Scalar normalization, or<br>Tensor normalization<br>Fiber tracking<br>Deterministic, or<br>Probabilistic<br>Whole brain analysis<br>Voxel-based analysis, or<br>Track-based analysis</p>
+<p>步骤：FA -&gt; Tensors -&gt; Fiber tracking -&gt; white matter delineation</p>
+<p><a href="http://www.cabiatl.com/Resources/Course/tutorial/html/dti.html" target="_blank" rel="noopener">http://www.cabiatl.com/Resources/Course/tutorial/html/dti.html</a><br><a href="http://brainimaging.waisman.wisc.edu/~tromp/DTI_101.pdf" target="_blank" rel="noopener">http://brainimaging.waisman.wisc.edu/~tromp/DTI_101.pdf</a><br><a href="http://www.diffusion-imaging.com/2015/10/dti-tutorial-1-from-scanner-to-tensor.html" target="_blank" rel="noopener">http://www.diffusion-imaging.com/2015/10/dti-tutorial-1-from-scanner-to-tensor.html</a><br><a href="https://mrtrix.readthedocs.io/en/latest/quantitative_structural_connectivity/ismrm_hcp_tutorial.html" target="_blank" rel="noopener">https://mrtrix.readthedocs.io/en/latest/quantitative_structural_connectivity/ismrm_hcp_tutorial.html</a><br><a href="http://dbic.dartmouth.edu/wiki/index.php/Diffusion_Tensor_Imaging_Analysis" target="_blank" rel="noopener">http://dbic.dartmouth.edu/wiki/index.php/Diffusion_Tensor_Imaging_Analysis</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">MRI</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/10/23/DTI-basics/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-panda-use" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/10/19/panda-use/">Panda软件使用笔记</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/10/19/panda-use/" class="archive-article-date">
+  	<time datetime="2018-10-18T23:01:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#开始使用之前"><span class="toc-number">1.</span> <span class="toc-text">开始使用之前</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件格式准备"><span class="toc-number">2.</span> <span class="toc-text">文件格式准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Full-pipeline"><span class="toc-number">3.</span> <span class="toc-text">Full pipeline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tracking-amp-Network-parameters"><span class="toc-number">4.</span> <span class="toc-text">Tracking &amp; Network parameters</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#开始使用之前"><span class="toc-text">开始使用之前</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件格式准备"><span class="toc-text">文件格式准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Full-pipeline"><span class="toc-text">Full pipeline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tracking-amp-Network-parameters"><span class="toc-text">Tracking &amp; Network parameters</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="开始使用之前"><a href="#开始使用之前" class="headerlink" title="开始使用之前"></a>开始使用之前</h3><ul>
+<li>将Panda的文件夹安装在MATLAB的路径当中</li>
+<li>MATLAB必须从 terminal 处打开，不能用shortcut的图标打开</li>
+</ul>
+<h3 id="文件格式准备"><a href="#文件格式准备" class="headerlink" title="文件格式准备"></a>文件格式准备</h3><ul>
+<li>subject name folder - DTI folder - DTI files 这种格式</li>
+<li>DTI files 应该有三个文件：B value file(bval), b vector file(bvec), nii file</li>
+<li>用 MRIcron 可以直接将 Dicom 的原始文件 convert 过去</li>
+</ul>
+<h3 id="Full-pipeline"><a href="#Full-pipeline" class="headerlink" title="Full pipeline"></a>Full pipeline</h3><ul>
+<li>Pipeline mode: 如果只是一台电脑的话就选 batch; Max_Queued 是根据电脑的核数来的，会自动识别，所以不用改</li>
+<li>Diffusion parameters: <ul>
+<li>Resampling resolution:  作者推荐使用 $2×2×2mm^3$， 较高的resolution 会耗费处理时间</li>
+<li>删除raw NII file 以节约空间</li>
+<li>f(skull reovel): 去除DTI image中的brain tissue, 选用default值 0.25</li>
+<li>cropping gap(mm): 就是图像外面的空白大小，选用默认值 3mm</li>
+<li>Orientation patch: </li>
+<li>剩下全是默认</li>
+</ul>
+</li>
+</ul>
+<h3 id="Tracking-amp-Network-parameters"><a href="#Tracking-amp-Network-parameters" class="headerlink" title="Tracking &amp; Network parameters"></a>Tracking &amp; Network parameters</h3><ul>
+<li>Deterministic fiber tracking: <ul>
+<li>Propagation algorithm: FACT</li>
+<li>Angle threshold: 45</li>
+<li>FA_threshold: 0.2~1</li>
+</ul>
+</li>
+<li><p>Network node definition</p>
+<ul>
+<li>选择 parcellated native space: 这里我们使用 Freesurfer generate 出来的atlas.</li>
+<li>需注意这个atlas需要是跟DTI data coregister 之后的，不然会fail掉，因为两个图像不match, 所以需要先生成DTI的file，再拿这个file去跟atlas做 coregistration.</li>
+<li>生成DTI file: 此时 ‘Network Node Definition’ 及以下都不选择，运行到上面的fiber traking就能生成想要的文件，生成的文件是<code>trackvis</code> folder 下的<code>dti_fa_color.nii.gz</code></li>
+<li>Coregistraion: 找到Freesurfer 生成的文件，用AFNI的suma function之后，会有一个 SUMA 的文件夹，该文件夹下面应该有一个 <code>aparc+aseg_REN_all.nii.gz</code>和<code>aparc.a2009s+aseg_REN_all.nii.gz</code>的文件，这两个文件就是我们要coregister的，可以任选一个，分别代表不同的T1 segmentation的atlas. 将 <code>dti_fa_color.nii.gz</code> 复制到该 SUMA 文件夹下</li>
+<li><p>Coregistration 的代码如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">3dcalc -a dti_fa_color.nii.gz -expr <span class="string">'a'</span> -prefix dti_fa_color</span><br><span class="line">align_epi_anat.py -anat aparc+aseg_REN_all.nii.gz -epi dti_fa_color+orig -epi_base 0 -anat_has_skull no -epi_strip 3dAutomask -volreg off -tshift off -big_move</span><br><span class="line">3dAllineate -1Dmatrix_apply aparc+aseg_REN_all_al_mat.aff12.1D -input aparc+aseg_REN_all.nii.gz -prefix aparc+aseg_REN_all_reg -NN -final NN</span><br><span class="line">3dcalc -a aparc+aseg_REN_all_reg+orig -expr <span class="string">'a'</span> -short -prefix aparc+aseg_REN_all_short</span><br><span class="line">3dfractionize -template dti_fa_color+orig -input aparc+aseg_REN_all_short+orig -clip 0.2 -preserve -prefix aparc+aseg_REN_all_coreg</span><br><span class="line">3dAFNItoNIFTI -prefix aparc+aseg_REN_all_coreg aparc+aseg_REN_all_coreg+orig</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>得到的 <code>aparc+aseg_REN_all_coreg</code> 就是要放在 <code>parcellated native space</code> 处的文件。选择好之后再运行一遍就OK。</p>
+</li>
+</ul>
+</li>
+<li>Network construction: 用 deterministic</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Tools</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/10/19/panda-use/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-problem-matlab-gcc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/10/18/problem-matlab-gcc/">Problem solve - `GLIBCXX_3.4.21&#39; not found</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/10/18/problem-matlab-gcc/" class="archive-article-date">
+  	<time datetime="2018-10-18T04:11:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              
+            </div>
+           -->
+        <!--   -->
+        <p>在才开始使用Panda的过程中遇到了一个问题，这个问题之前遇到过，后来解决了也没再管过，没想到过了接近半年之后还会再使用Panda，搞了半天才找到解决办法，觉得还是真的要记录下来每个问题及当时的解决方法，保不准下一次又遇到了。。。</p>
+<p>问题如下：<br>运行之后直接出现error:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/<span class="built_in">local</span>/MATLAB/R2016b/sys/os/glnxa64/libstdc++.so.6: version `GLIBCXX_3.4.21<span class="string">' not found (required by /usr/share/fsl/5.0/bin/fslchfiletype_exe</span></span><br></pre></td></tr></table></figure></p>
+<p>首先 not found 有两种情况：</p>
+<ol>
+<li>这个 GLIBCXX_3.4.21 本来就不存在</li>
+<li>这个 GLIBCXX_3.4.21 存在，但是matlab找不到，没有链接过去</li>
+</ol>
+<p>在terminal处先通过以下代码看这个到底有没有：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strings /usr/lib/libstdc++.so.6 | grep GLIBCXX</span><br></pre></td></tr></table></figure></p>
+<p>下面会出来一串相关的存在的 GLIBCXX. 找下有没有MATLAB说的那个 `GLIBCXX_3.4.21’。</p>
+<p>如果存在的话，那就说明是matlab 链接的问题，只需要在terminal处用以下方式打开matlab就行了：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LD_PRELOAD=<span class="string">"/usr/lib/x86_64-linux-gnu/libstdc++.so.6"</span> matlab</span><br></pre></td></tr></table></figure></p>
+<p>如果不存在的话，执行以下代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libstdc++6</span><br><span class="line">sudo add-apt-repository ppa:ubuntu-toolchain-r/<span class="built_in">test</span> </span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get dist-upgrade</span><br></pre></td></tr></table></figure></p>
+<p><br><br>Reference:<br><a href="https://askubuntu.com/questions/719028/version-glibcxx-3-4-21-not-found" target="_blank" rel="noopener">https://askubuntu.com/questions/719028/version-glibcxx-3-4-21-not-found</a><br><a href="https://stackoverflow.com/questions/44773296/libstdc-so-6-version-glibcxx-3-4-20-not-found" target="_blank" rel="noopener">https://stackoverflow.com/questions/44773296/libstdc-so-6-version-glibcxx-3-4-20-not-found</a><br><a href="https://askubuntu.com/questions/575505/glibcxx-3-4-20-not-found-how-to-fix-this-error" target="_blank" rel="noopener">https://askubuntu.com/questions/575505/glibcxx-3-4-20-not-found-how-to-fix-this-error</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Matlab</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/10/18/problem-matlab-gcc/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-GRF-BMI-thoughts" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/10/11/GRF-BMI-thoughts/">写GRF，答辩BMI的一些心得</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/10/11/GRF-BMI-thoughts/" class="archive-article-date">
+  	<time datetime="2018-10-11T07:24:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              
+            </div>
+           -->
+        <!--   -->
+        <p>到今天(2018.10.11)为止，帮老板写 GRF proposal 和 Brain Mind Institute(BMI) 申 funding 的答辩就基本告一段落了，被 criticize 了很多吧。这里记录一下这个过程的一些心得，这些是我觉得不只是写proposal，对开始做一件事情时，整个人的逻辑和思考方式都是有帮助的：</p>
+<p><strong>GRF</strong>:</p>
+<ul>
+<li>每次只 <strong>highlight 一个最多两个新颖的点</strong>：有些时候可能自己想法很多，觉得这样不错，那样也不错，都是非常前卫cutting-edge那种感觉，然后很兴奋，想把他们都加进去。但是有几点你要考虑：<ol>
+<li>Reviewer 不完全是你这个方向的，他可能并不能理解你那些前卫的想法，你要考虑这个剧本的观众是谁，他们能不能完全 get 到你的 point, 如果不能，那你这个剧本再怎么梦幻都是失败的，因为你首先需要观众的认可。一个人嗨没用，你要让一群人都嗨起来。</li>
+<li>加入多个新鲜的元素意味着，危险。这个危险有两个方面，一是apply到人上面的东西，涉及到伦理人情实验时长subject的心情等等客观因素，作为一个investigator, 首先要保证的就是安全无害，当多个元素加入时，这种风险就会增大，这是必须要注意的， 人是第一要素。第二个方面是实验失败的风险，多个元素会使对照变得显得相当困难，连初中生都知道在设计生物实验时一定要有对照组，你怎么就忘了呢？没有对照，一切结果都是不能让人信服的。</li>
+</ol>
+</li>
+<li><strong>描述细节</strong>：在写的过程中，很容易写得很宽泛，特别是 abstract 和 introduction 部分, 全程不说你要具体怎么做，只是说明你要去optimize, 要去 maximize 一个东西， 最后结果可以多叼多叼。别人看完了还是不知道你到底要怎么去optimize, maxmize, 你倒是给点操作步骤啊。所以这里我的总结是，少用形容词，少点假大空，最好的句式是：<strong>列出要用到哪些东西，表明用什么方法，之后怎么去改变，会有什么样的结果</strong>。</li>
+<li><strong>写下的每一个数字，要有来源和依据</strong>：比如样本你要多少个，那这个数字是怎么来的，从文献呢还是经验呢，这个要列出来，No magic number。另一类数字就是你的一些 preliminary study 的结果，这些数字，你要知道它的物理意义，单位，还要用最通俗的语言解释给别人听，它的变化意味着什么。</li>
+<li>关于<strong>题目的选取</strong>：google search 一下别人是怎么起名字的，这个我觉得对 non-native speaker 是很有用的。比如你起的这个到底是不是常用的，要是search 一下发现别人根本没人用这个词，或者这个词search出去导向的是别的研究方向，那就尴尬了，别人会觉得你不是内行人。</li>
+<li>在文中适当表明一下这个技术有多新，多前沿，可以考虑指出世界上第一次做这个方向，采用这个方法等等是在哪个年份。。。比如2016, 2017，那就显得高端前沿了。</li>
+<li>每一个稍微专业的词，都一定要解释清楚，保证你要传达的信息能够被准确理解</li>
+<li>小到Reference中的journal斜体，缩写，作者名字，都是应该注意的。</li>
+</ul>
+<p><br></p>
+<p><strong>BMI 答辩</strong>：</p>
+<ul>
+<li><strong>对你画出的每一个图，图里面的每一个字负责</strong>：前后一致，文字与图内容一致，并且保证你放上去的图，你都能完全解释给卖菜的大妈听懂。</li>
+<li>PPT 少一点字啊喂：我承认没有花时间去准备，但这并不能成为你降低自己表达能力要求的借口。</li>
+<li><strong>关注你的听众</strong>：他们的background是什么，他们懂你的术语吗？不懂就一定要提前想到，然后过程中解释保证他们能听懂，还是那句话，交流就表示要有信息输出，而这个信息一定要能被准确传达和理解</li>
+<li>关于回答问题：如果回答完一次后发现对方仍然在问相同或相似的问题，可能不是你的回答有问题，而是你们在某些内容上的认知不一样，这个时候就需要回到你觉得他在问什么上，你觉得的和他觉得的，可能并不是一个东西。考虑：他为什么这样问，这样问的前提是基于什么来的（或者简单点，这个问题的词汇构成是什么，你的哪一部分解释会指向这些词汇），是不是之前哪里让他对整个事情（问题中的一些词汇）有点误解？</li>
+</ul>
+<p><br></p>
+<p>大概就这样了，愿世界少点 proposal。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂文</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">碎碎念</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/10/11/GRF-BMI-thoughts/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-NeuralMass2008PlosComp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -572,11 +1510,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
         		</li>
       		
 		</ul>
@@ -616,818 +1554,9 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-thinking-system" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/10/03/thinking-system/">思维模型总结</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/10/03/thinking-system/" class="archive-article-date">
-  	<time datetime="2018-10-03T13:09:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#二阶模型"><span class="toc-number">1.</span> <span class="toc-text">二阶模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#整体思维"><span class="toc-number">2.</span> <span class="toc-text">整体思维</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#系统思维"><span class="toc-number">3.</span> <span class="toc-text">系统思维</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#二阶模型"><span class="toc-text">二阶模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#整体思维"><span class="toc-text">整体思维</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#系统思维"><span class="toc-text">系统思维</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p><em>大部分内容来源于L先生说，此处是一些个人总结。</em></p>
-<p>思维模型(Mental model): 每个人认知世界、思考问题的基本模式和习惯</p>
-<p>Keywords: <strong>本质，规律，原则</strong></p>
-<p>本质：一个事物在变化的过程中，或者穷尽各种可能性的前提下，所维持不变的那一部分。</p>
-<p>For example:<br>公司的本质是整合资源。无论什么行业、什么领域，只要资源存在错配和空缺，公司就得以存在；而一旦资源能高效运作、对接起来，公司就没必要存在。<br>汽车的本质是出行。在这个过程中，保证便捷、安全、高效，才是汽车最核心的存在理由。其他一切，都只是建筑在这个本质上面的浅层需求罢了。</p>
-<h3 id="二阶模型"><a href="#二阶模型" class="headerlink" title="二阶模型"></a>二阶模型</h3><ul>
-<li>如果这样做，短时间内会得到什么样的结果 （一阶）</li>
-<li>如果得到了这个结果，在较长时间后，会产生哪些新的可能性和结果？（二阶）</li>
-</ul>
-<p>本质上是个可能性分析的问题，有必要时可跟概率进行联系。</p>
-<h3 id="整体思维"><a href="#整体思维" class="headerlink" title="整体思维"></a>整体思维</h3><p>整体思维基于两个假设：</p>
-<ul>
-<li>一切事物在底层上都是相互联系的</li>
-<li>整体能够提供比个体本身更多的信息<br><br></li>
-</ul>
-<p>关于整体思维的训练方式：</p>
-<ul>
-<li>它的背景和场景是什么</li>
-<li>它为什么出现</li>
-<li>它的出现带来了什么，导致了什么？</li>
-</ul>
-<p>其实这个思维方式可以理解成 3W 问题，即：Where, Why, What. 对于要研究的对象，建立联系图，挖掘底层的东西，并与自己的所知道的系统进行联系。</p>
-<h3 id="系统思维"><a href="#系统思维" class="headerlink" title="系统思维"></a>系统思维</h3><p>系统就是「元素」和「结构」的组合。把一定的元素，通过不同的结构、方式组合起来，使它们具备整体性，这就构成了一个「系统」。</p>
-<p>基于的假设：系统就是一个<em>转换</em> (transformation)的过程。<br>即，系统的存在，一定是因为它达成了一种「转换」：能将某些不够好的、无序的状态，转变成更优的、有序的状态。</p>
-<p>从工程上来讲，a system has input and output. 如果以系统思维来思考问题的话，其实就是理解什么是input, system中的transfer function 指代的是什么，以及output 可以有哪些情况。</p>
-<p>系统思维在生活中的应用：公司可以看作系统，城市可以看做系统，一个餐饮店，一个班级，一个公众号，都可以看做一个完备的、小小的系统。</p>
-<hr>
-<p>关于寻求本质的一些思维模型：</p>
-<p><strong>输入 - 输出模型(IO模型)</strong><br>问： 一个行为、过程和系统，它的初始形态是什么？它的最终形态又是什么？<br>去关注：一样事物，它变化之前是什么，变化之后又是什么？</p>
-<blockquote>
-<p>不要去关注产品，而是要去关注：消费者想通过这个产品，达到一种什么样的状态？我们有没有什么方法帮助他们达到这个状态？这就是创新的要义。</p>
-</blockquote>
-<p><br></p>
-<p><strong>供给 - 需求模型(SD模型)</strong><br>问：它们为什么可以连接起来？彼此的供给和需求是什么？</p>
-<ul>
-<li>我有什么？</li>
-<li>谁需要这些东西？</li>
-<li>我如何能把已有的东西，转变为别人需要的东西？<br><br></li>
-</ul>
-<p><strong>动力 - 阻力模型(PO模型)</strong><br>很多问题的本质，其实都是动力和阻力的博弈。动力超过阻力，改变就会发生，行为就会成立，反之，就会停滞。<br>问：推动一件事情的动力是什么？如果它发生了，阻力又是什么？<br><br></p>
-<p><strong>改变 - 不变模型(CS模型)</strong><br>对于生活中的现象和事实，问：经历了这些复杂的过程，它改变的是什么？不变的又是什么？<br>这些不变的东西，很可能就是它所赖以持存、构成其本质的部分。</p>
-<p>当你接触到一个陌生领域时，多搜集一些相关的材料去观察：在这些材料里面，有没有哪几个关键词、哪几个概念，是一直都存在，没有改变过的？如果有，它们往往就是这个领域的关键节点。试着去把它们「连接」起来，就可以找到的是这个领域的本质。</p>
-<p><br></p>
-<p>Reference：<br>L先生说，36氪</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">思考</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">思维模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/10/03/thinking-system/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-PinDuoDuo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/09/30/PinDuoDuo/">关于拼多多上市的思考</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/09/30/PinDuoDuo/" class="archive-article-date">
-  	<time datetime="2018-09-30T01:18:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#几个有趣的，还值得思考的现象："><span class="toc-number">1.</span> <span class="toc-text">几个有趣的，还值得思考的现象：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一些其他引申的思考"><span class="toc-number">2.</span> <span class="toc-text">一些其他引申的思考</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#几个有趣的，还值得思考的现象："><span class="toc-text">几个有趣的，还值得思考的现象：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一些其他引申的思考"><span class="toc-text">一些其他引申的思考</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>拼多多上市了。其实之前一直没有听说过这个拼多多，唯一的一次是因为我的妈妈发过来一条链接， 说要买个东西。 我当时想这是什么鬼，说你要买就在淘宝上买好了，为什么要在这个拼多多上买？ 她说大家一起拼可以很便宜，然后说周围的人都在上面买。我就很好奇，下载了这个软件，看上面到底有些什么。 然后发现价格确实挺低的，之后也没再管过，觉得这只是小APP在地方城市的小打小闹。直到那天看到它上市的新闻，瞬间惊呆了，我就在想到底它是凭什么上市的。 同时它的市值一度超过了网易，那网易这么容易被超过，又是为什么呢？ 当然这又是另外一个话题了，留着我以后去探究探究网易。这里我主要想来思考一下拼多多到底靠的是什么上市。 </p>
-<p>先来说说网上整体的评价：一部分人不看好，觉得它太low了，卖得都是假货，迟早要垮。另一部分人觉得，它至少让生活在中国最底层的人学会了网购这件事情，多了一样选择性，而这部分人的体量是很大的，也不能忽视他们的消费能力。</p>
-<p>先不说看好还是不看好吧，什么事情都有两面性，你也不能以一种标准去捧或者杀一个企业和它的前景。我就说说我看到的东西和思考的东西，再从这里面来找出他凭借的是什么上市的吧。</p>
-<p><strong>观点一</strong>：PDD渗透的是五环外的中国，平行世界中的另外80%的人群，主打的也是三四五线的城市。<br><strong>思考</strong>：虽说主打的是三四五线城市，但是根据最后的比例分级图来看，一二线其实和淘宝的流量是差不多的。当然这可能是显得有点奇怪的，因为按照一般的思路来说，大家会觉得一二线的市民是不会去上面买东西的。所以首先这个一二线的划分标准，我觉得是需要注意一下的，一二线城市，包不包含周边附属区县？然后还有另外一个要注意的是，其实哪怕就是一二线城市本身，他们所容纳的三线以下人群也绝对是占大数的。所以一二线城市的三线以下人群买的东西，是会寄到一二线城市的，那这个肯定是算在一二线的消费组成里面的。所以这个是需要注意的。<br><img src="/blog/images/pdd_1.png" width="50%" height="50%"><br>那么其实我是更倾向用平行世界的80%的人群消费来描述，而不是按一二三线这种城市来划分。我没有比较过到底一二线城市的外来务工人口与本地人口的比例，也没有比较过一二线城市与三四线城市的人口比例(当然用数据说话是再好不过了)，但是有一点可以肯定，非土著一二线的人口肯定是大得多的。捡便宜是中国老一辈的习惯，就是喜欢买便宜的，而对于新一代的，如果在没有被提高认知之前，他们也会是这种思维模式，所以不管年龄层次，在便宜这一点上，就能带来大的网络流量了。</p>
-<p><strong>观点二</strong>：假货，山寨<br><strong>思考</strong>：这个确实是，当我的妈妈说起这个软件的时候，我的第一反应就是骗人的，没好货。当时看的一些观点当中，有个人说的我觉得特别好，他说PDD解决的是低收入人群有与没有的事情，还没有到解决商品好与差的地步。这个我觉得是说的很中肯的，我们不能拿我们的认知去跟最底层的人们比较，就像很多谦虚的知识分子经常说，你不能拿你有的东西，觉得别人也是理所当然的有一样。的确假货，欺骗消费者这些东西，我们是该摒弃的，如果是作为一家还算是有良心的企业的话，到之后肯定会解决这个事情的，因为这影响到声誉，而中国的生意人是最看中声誉这个东西了的，更何况还上市了。但是我们忽略了一点，企业的目的是赚钱，在能够引入大量流量下，是绝对可能做出暂时回避假货这种东西而默许其存在这种事情的。毕竟风头过了，好好转个型树立一下品牌，又是一条好汉。所以我觉得这也是资本不去把这个当作一个致命点而不看好PDD的其中一个原因。只要能赚钱，我管你怎么赚。“互联网和移动互联网万年不变的思维，是先有海量用户，然后才是分级。” PDD也不可能做教育了客户如何网购然后把这些客户白白送给淘宝京东这种傻事情的。</p>
-<p><strong>观点三</strong>：“中国接近一半的人口，还没有接入互联网；还有4.5亿人完全没有被纳入正规金融体系，超过9亿人没有贷款记录，仅有大概2亿人拥有信用卡；贫富差距巨大，穷人很多很多。”<br><strong>思考</strong>：中国的贫富差距是很大，同时贫富的人口比例差距也是很大的，但是我们要把这个事情往金融体系，信用卡这上面套，我觉得还有很长的路要走。而且不是说中国就一定要往这条路上走，我个人觉得在中国信用卡这种玩法在下层人口上是很难玩得起来的，中国肯定会有一种新的玩法出现，能够囊括各阶层的人群。花呗算是一种，但还没有完全跳出信用卡的维度。而且还有一点就是传统的乡土人情，老一辈的思想就是不要借钱，不能负债，负债和借钱是一件很不光荣的事情，这涉及到思想文化的根基，传统的教育和文化让人们觉得这是一件很“没面子”的事情，而不是觉得这本来就是一种金融方式，没有对与错。说到这里，我还是觉得现阶段大众的金融经济知识都是很欠缺的，包括我自己。</p>
-<h4 id="几个有趣的，还值得思考的现象："><a href="#几个有趣的，还值得思考的现象：" class="headerlink" title="几个有趣的，还值得思考的现象："></a>几个有趣的，还值得思考的现象：</h4><ol>
-<li><p>拼多多在上海和纽约两地同时敲钟，但拼多多创始人黄峥没有去纽约敲钟。没有敲钟就算了，毕竟还有好多大企业的老总都没有去敲钟，但是连纽约都不去就有点厉害了。毕竟现在上市套现的套路太多了。。。不管装没装，这个创始人表现得还是比较淡定的，一定程度上说明他的眼界根本不在此，他觉得其实就是个小事。我在想到底是什么赋予一个创始人这样的心境，直到我看到他顺风顺水的简历，见过的大佬和他自身的实力，我觉得这是必然的，我也隐约觉得PDD说不定还真的能做出一点颠覆性的东西。而且黄峥的手上竟然有拼多多 50.7%的股权，不得不说很厉害。。。这说明他其实是对PDD的未来已经有想法的人，毕竟通过谷歌早就实现财富自由了，剩下的追求就是人生的事业了。</p>
-</li>
-<li><p>PDD把社交分享玩法玩得很溜，共同的特点都是门槛低、传播广。<br>陆奇加入PDD也是让人吃了一惊，属于独立董事，按官方说法是他目前不存在负责点什么的问题。不过黄峥有提到说考虑分布式人工智能的系统，即 做个模拟社交网络：”假设你的手机里有一个小秘书，在做购买决策时你的小秘书能够代替你去问你朋友的小秘书，这个手机的智能网络一定程度上模拟了人跟其他社会成员的交互。模拟这个网络有两个好处。第一，能够避免传统人工智能的偏好牢笼，不会因为你看了一张美女图，就一直给你推荐美女图。我们的分布式AI要做的是，如果你的人工智能里面有朋友连接，其实你的朋友就扮演了一个不停往里面输入有效信息的角色。第二，我们试图模拟群体的传播，比如把一件衣服、某一个特殊设计扔到一个群里，我们可以看它会以多快的速度传播、有多大的量，由此去预测一件衣服会不会变成流行款、多大程度上成为流行款，是1000件、2000件，还是5000件、1万件的流行？如果我们能精确地预测出这个数字，就可以让上游厂商提前安排产销，服装库存的问题就能够得到很大的缓解。” 以上的话出自黄峥，这个场景是挺有意思的，黄峥本身是做计算机的，他当然知道整个技术的关键点，如果能与PDD拿到的数据结合的话，那在社交这个上面的玩法，就可以多得多了，毕竟现在微信建立起来的社交，已经让人看到这个方向的留存度高，面积大了。</p>
-</li>
-<li><p>腾讯是拼多多第二大股东，持股比例高达 18.5%。<br>关于大公司(BAT)的站队还是躲不掉哈哈哈，腾讯的流量接口肯定是帮了拼多多很多的。目前看来基本是朝AT两方站队了，校招宣讲的时候也有注意到这两方旗下的部署基本涵盖整个互联网界了。这是一个很有意思的事情，我一直在想到底互联网公司还能活多久，虽然新一代互联网公司也在飞奔，但是还是没能完全离得了大公司，加上AI类公司的崛起且还没落地，也迫使互联网公司all in AI. 那这样下去的话，传统互联网公司部署足够远见的话，是不是还是可以延续很长一段命呢？但是有句话说的好，“君以此兴，必以此亡”。</p>
-</li>
-<li><p>网易也投了拼多多的。。<br><img src="/blog/images/pdd_2.png" width="50%" height="50%"><br>之前有新闻说网易严选会与PDD合作，看到这个投资历史，也不难解释了，毕竟丁磊也投了PDD，而且当年还是丁磊向段永平引荐的黄峥。</p>
-</li>
-</ol>
-<h4 id="一些其他引申的思考"><a href="#一些其他引申的思考" class="headerlink" title="一些其他引申的思考"></a>一些其他引申的思考</h4><ol>
-<li><p>电子设备的普及及重要程度：<br>电脑-手机-？<br>下一个是什么呢？我个人更倾向手表和眼镜这类可穿戴的设备</p>
-</li>
-<li><p>互联网时代，大家都这样说<br>BAT-TMD-MMP<br>BAT大家都知道，TMD头条美团滴滴，MMP是美团小米和拼多多<br>小米是很有意思的，其实到现在为止我都对小米印象不好，可能就是源于那个时候红米的饥饿营销。但是人是会变的，企业也是，我们不能拿一层不变的眼光去看待一个企业。小米目前的生态链与3C行业的结合，我觉得也是值得去深入研究的，这个先挖一个坑在这以后找时间填吧。</p>
-</li>
-</ol>
-<p>Reference:<br><a href="http://www.qdaily.com/articles/55654.html" target="_blank" rel="noopener">http://www.qdaily.com/articles/55654.html</a><br><a href="https://www.huxiu.com/article/253176.html" target="_blank" rel="noopener">https://www.huxiu.com/article/253176.html</a><br><a href="https://www.zhihu.com/question/287038344" target="_blank" rel="noopener">https://www.zhihu.com/question/287038344</a><br><a href="https://xueqiu.com/6942182748/111174319" target="_blank" rel="noopener">https://xueqiu.com/6942182748/111174319</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂文</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">碎碎念</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">思考</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/09/30/PinDuoDuo/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-SMB-Samba" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/09/27/SMB-Samba/">Ubuntu与Windows共享资源</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/09/27/SMB-Samba/" class="archive-article-date">
-  	<time datetime="2018-09-27T03:01:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#以下在-Linux-上操作"><span class="toc-number">1.</span> <span class="toc-text">以下在 Linux 上操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装samba："><span class="toc-number">1.1.</span> <span class="toc-text">安装samba：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建共享文件夹"><span class="toc-number">1.2.</span> <span class="toc-text">创建共享文件夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改samba配置文件"><span class="toc-number">1.3.</span> <span class="toc-text">修改samba配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置samba用户名"><span class="toc-number">1.4.</span> <span class="toc-text">设置samba用户名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动samba服务器并测试"><span class="toc-number">1.5.</span> <span class="toc-text">启动samba服务器并测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加入开机启动"><span class="toc-number">1.6.</span> <span class="toc-text">加入开机启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看Ubuntu的-IP"><span class="toc-number">1.7.</span> <span class="toc-text">查看Ubuntu的 IP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#以下在Windows上操作"><span class="toc-number">2.</span> <span class="toc-text">以下在Windows上操作</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#以下在-Linux-上操作"><span class="toc-text">以下在 Linux 上操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装samba："><span class="toc-text">安装samba：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建共享文件夹"><span class="toc-text">创建共享文件夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改samba配置文件"><span class="toc-text">修改samba配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置samba用户名"><span class="toc-text">设置samba用户名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动samba服务器并测试"><span class="toc-text">启动samba服务器并测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加入开机启动"><span class="toc-text">加入开机启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看Ubuntu的-IP"><span class="toc-text">查看Ubuntu的 IP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#以下在Windows上操作"><span class="toc-text">以下在Windows上操作</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>事情又是这样的，想与实验室一台公用的Linux server和自己的windows的共享资源，毕竟数据拿硬盘拷来拷去太麻烦了。Linux 下有Samba软件可以提供与Windows共享，所以打算用这个来搞一下。</p>
-<h2 id="以下在-Linux-上操作"><a href="#以下在-Linux-上操作" class="headerlink" title="以下在 Linux 上操作"></a>以下在 Linux 上操作</h2><h3 id="安装samba："><a href="#安装samba：" class="headerlink" title="安装samba："></a>安装samba：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install samba</span><br></pre></td></tr></table></figure>
-<h3 id="创建共享文件夹"><a href="#创建共享文件夹" class="headerlink" title="创建共享文件夹"></a>创建共享文件夹</h3><p>在home路径下创建一个你想共享的文件夹，名字自定，e.g. <code>DataShare</code>, 然后修改文件夹权限确保共享：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod 777 /home/DataShare</span><br></pre></td></tr></table></figure></p>
-<p>777表示将全部权限都放出来。</p>
-<h3 id="修改samba配置文件"><a href="#修改samba配置文件" class="headerlink" title="修改samba配置文件"></a>修改samba配置文件</h3><p>为防止更改失败，先备份一下原文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /etc/smaba/smb.conf /etc/samba/smb.conf.orig</span><br></pre></td></tr></table></figure></p>
-<p>接下来修改配置文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/samba/smb.conf</span><br></pre></td></tr></table></figure></p>
-<p>在文件最下面加上一下内容：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[share]</span><br><span class="line">path = /home/Datashare</span><br><span class="line">writable = yes</span><br><span class="line">avaliable = yes</span><br><span class="line">browseable = yes</span><br></pre></td></tr></table></figure></p>
-<p>解释一下上面的内容，[share]指这个共享文件夹的别名，之后在window接入下会直接使用这个别名，用之前的名字实测并不可以。</p>
-<h3 id="设置samba用户名"><a href="#设置samba用户名" class="headerlink" title="设置samba用户名"></a>设置samba用户名</h3><p>注意在设置之前，这个用户名一定是本身就已经是 linux 下的一个user, 不然会创建失败，所以最好先在linux下添加一个user:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo adduser shareuser</span><br></pre></td></tr></table></figure></p>
-<p>然后会让你输入密码，记住这个密码，因为在之后设置samba用户时也需要同样的密码。<br>然后设置samba的登录密码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo touch /etc/samba/smbpasswd</span><br><span class="line">sudo smbpasswd -a shareuser</span><br></pre></td></tr></table></figure></p>
-<p><code>touch</code>是指保存账户信息，<code>shareuser</code> 就是你要添加的用户名，之后会让你输入密码，这个密码就是之前创建user的那个密码。</p>
-<h3 id="启动samba服务器并测试"><a href="#启动samba服务器并测试" class="headerlink" title="启动samba服务器并测试"></a>启动samba服务器并测试</h3><p>启动：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/samba restart</span><br></pre></td></tr></table></figure></p>
-<p>测试：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">testparm</span><br></pre></td></tr></table></figure></p>
-<h3 id="加入开机启动"><a href="#加入开机启动" class="headerlink" title="加入开机启动"></a>加入开机启动</h3><p>这部分我没有加，先留在这里备用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> smb.service</span><br><span class="line">systemctl <span class="built_in">enable</span> nmb.service</span><br><span class="line">systemctl start smb.service</span><br><span class="line">systemctl start nmb.service</span><br></pre></td></tr></table></figure></p>
-<h3 id="查看Ubuntu的-IP"><a href="#查看Ubuntu的-IP" class="headerlink" title="查看Ubuntu的 IP"></a>查看Ubuntu的 IP</h3><p>是为了在windows上访问的时候添加使用：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure></p>
-<p>出来一串的东西，找到ip记下来就好了。</p>
-<h2 id="以下在Windows上操作"><a href="#以下在Windows上操作" class="headerlink" title="以下在Windows上操作"></a>以下在Windows上操作</h2><p>打开<code>我的电脑</code>，左边导航栏下面有个 <code>网络</code>, 右键选择 <code>映射网络驱动</code>，然后会让你输入samba服务器的地址和文件夹：</p>
-<ul>
-<li>驱动器选择默认的 z 就好</li>
-<li>文件夹： <code>\\192.168.3.78\share</code>, 其中前面的ip就是你的linux的ip, 后面的<code>share</code>就是你创建共享文件夹的别名，同时注意斜杠不要打反了。。。</li>
-<li>勾选 <code>使用其他凭据连接</code>,没有选的话可能会以默认的用户名登入，这样机会导致失败。因为当前的用户是你linux下的用户，名称并不匹配</li>
-</ul>
-<p>点击完成之后会要求输入网络凭据，用户名和密码就是你之前在linux下新添加的那个用户名和密码。点击确定之后就会连接，不出意外的话在此电脑下的网络位置里面，就能看到一个叫 <code>share</code>的z盘了。在里面拖放文件，就会发现可以自由共享了。简直不能再Nice！</p>
-<!-- 下在局域网中可以通过 [SMB(Server Message Block)](https://wiki2.org/en/Server_Message_Block) 协议传输文件, 是微软当初提出来的，后来又称 CIFS（Common Internet File System）。-->
-<p>Reference:<br><a href="https://www.cnblogs.com/gzdaijie/p/5194033.html" target="_blank" rel="noopener">https://www.cnblogs.com/gzdaijie/p/5194033.html</a><br><a href="https://ywnz.com/linuxjc/2636.html" target="_blank" rel="noopener">https://ywnz.com/linuxjc/2636.html</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Samba</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/09/27/SMB-Samba/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-OrangePi1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/09/27/OrangePi1/">Playing with Orange Pi - Setting up the system</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/09/27/OrangePi1/" class="archive-article-date">
-  	<time datetime="2018-09-27T00:04:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备清单"><span class="toc-number">1.</span> <span class="toc-text">准备清单</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将操作系统写入TF卡"><span class="toc-number"></span> <span class="toc-text">将操作系统写入TF卡</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#操作系统的下载"><span class="toc-number">1.</span> <span class="toc-text">操作系统的下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作系统写入"><span class="toc-number">2.</span> <span class="toc-text">操作系统写入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动-Orange-Pi-并配置"><span class="toc-number"></span> <span class="toc-text">启动 Orange Pi 并配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#硬件连接"><span class="toc-number">1.</span> <span class="toc-text">硬件连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更改密码"><span class="toc-number">2.</span> <span class="toc-text">更改密码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置-SSH-登录"><span class="toc-number"></span> <span class="toc-text">设置 SSH 登录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看IP-并设置为固定IP"><span class="toc-number">1.</span> <span class="toc-text">查看IP 并设置为固定IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置SSH"><span class="toc-number">2.</span> <span class="toc-text">设置SSH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程登录"><span class="toc-number">3.</span> <span class="toc-text">远程登录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关闭-Orange-Pi"><span class="toc-number"></span> <span class="toc-text">关闭 Orange Pi</span></a>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备清单"><span class="toc-text">准备清单</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将操作系统写入TF卡"><span class="toc-text">将操作系统写入TF卡</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#操作系统的下载"><span class="toc-text">操作系统的下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作系统写入"><span class="toc-text">操作系统写入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动-Orange-Pi-并配置"><span class="toc-text">启动 Orange Pi 并配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#硬件连接"><span class="toc-text">硬件连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更改密码"><span class="toc-text">更改密码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置-SSH-登录"><span class="toc-text">设置 SSH 登录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看IP-并设置为固定IP"><span class="toc-text">查看IP 并设置为固定IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置SSH"><span class="toc-text">设置SSH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程登录"><span class="toc-text">远程登录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关闭-Orange-Pi"><span class="toc-text">关闭 Orange Pi</span></a>
-        </div>
-    </div>
- -->
-        <p>起因是这样的，想建一个本地的服务器，通过内网穿透的方法，让我在外边的时候也能接入到我实验室的电脑，下载资料或者拷数据。弼哥告诉我用树莓派或者其他的一些派就能做到，于是买了最便宜的<a href="http://www.orangepi.cn/" target="_blank" rel="noopener">香橙派</a>，原因嘛，emm…自然是我喜欢吃橙子多过喜欢吃莓，并不是因为香橙派便宜（呵呵哒）。。。</p>
-<p>本篇文章主要记录拿到香橙派之后的初始配置。</p>
-<h3 id="准备清单"><a href="#准备清单" class="headerlink" title="准备清单"></a>准备清单</h3><ul>
-<li>Orange Pi PC 2: 来自淘宝</li>
-<li>带HDMI的显示器: 用于初始设置时候看</li>
-<li>带USB接口的键盘：开机需要用户名密码OK?</li>
-<li>网线</li>
-<li>圆孔那种电源线：我能说我买的这块板子不支持 Micro-USB 吗。。</li>
-<li>TF卡及读卡器</li>
-</ul>
-<h2 id="将操作系统写入TF卡"><a href="#将操作系统写入TF卡" class="headerlink" title="将操作系统写入TF卡"></a>将操作系统写入TF卡</h2><p>新到的派是没有操作系统的，既然作为一个小主机，那必然是需要操作系统来支持的。整个过程大致是这样的，操作系统的镜像将会被拷入TF卡，然后将TF卡插入派里面，启动派就OK了。</p>
-<h3 id="操作系统的下载"><a href="#操作系统的下载" class="headerlink" title="操作系统的下载"></a>操作系统的下载</h3><p>操作系统是通过 <a href="https://www.openmediavault.org/" target="_blank" rel="noopener">openmediavault</a> 镜像下载的, 以下简称OMV。</p>
-<blockquote>
-<p>OMV 是个开源的基于Debian Linux的下一代网络附加存储(network attached storage (NAS))解决方案。(来自官网)<br>可用于家庭环境或小型的办公环境等场景。</p>
-</blockquote>
-<p>也就是说，我们可以直接下载这个OMV，它已经集成了Linux系统，并且还包含其他拓展，方便后续的使用。</p>
-<p>进入官网后，点击下载，因为我们是会讲它写入TF卡中，所以这里我们下载ISO镜像，<a href="https://sourceforge.net/projects/openmediavault/files/" target="_blank" rel="noopener">点进去</a>之后会发现有很多可适用的文件，点击第一个 “OMV 4.x for Single Board Computers”, <a href="https://sourceforge.net/projects/openmediavault/files/OMV%204.x%20for%20Single%20Board%20Computers/" target="_blank" rel="noopener">进去</a>之后会发现竟然有Orange Pi对应的安装包！找到那个 <code>OMV_4_Orange_Pi_PC_2.img.xz</code> 下载下来就好了。至此，操作系统下载部分完成。</p>
-<h3 id="操作系统写入"><a href="#操作系统写入" class="headerlink" title="操作系统写入"></a>操作系统写入</h3><p>下载完之后，就是要将该操作系统写入到TF卡中了。写入软件用的是 <a href="https://etcher.io/" target="_blank" rel="noopener">Etcher</a>, 没有什么特别的原因，就是简单，只有三步，多余的统统不要。。。 下载Etcher的安装包并安装好之后，打开该软件</p>
-<ul>
-<li>第一步是 <code>Select image</code>, 就选择刚刚下载的那个OMV的镜像</li>
-<li>第二步是 <code>Select drive</code>, 默认为你的TF卡已经插入电脑并且能看到，选择你的TF卡对应的盘，注意不要选错了。。选到自己电脑本身的盘的话就GG了。。。</li>
-<li>第三步就是 <code>Flash!</code>, 然后你就静等它写入并最后看到完成就好了。然后退出TF卡，放到Orange Pi对应的口中去。</li>
-</ul>
-<p>这个过程中要注意的是，因为这个TF卡在被写入过程中是会被软件反复插拔的， windows 就会弹出一些提醒，不用管那些提醒，都叉掉。<br>至此操作系统写入部分完成。</p>
-<h2 id="启动-Orange-Pi-并配置"><a href="#启动-Orange-Pi-并配置" class="headerlink" title="启动 Orange Pi 并配置"></a>启动 Orange Pi 并配置</h2><h3 id="硬件连接"><a href="#硬件连接" class="headerlink" title="硬件连接"></a>硬件连接</h3><p>如下图：<br><img src="/blog/images/pi_1.jpg" width="50%" height="50%"></p>
-<ul>
-<li>电源是那个圆孔的</li>
-<li>HDMI接你的显示器</li>
-<li>USB那个接的键盘</li>
-</ul>
-<h3 id="更改密码"><a href="#更改密码" class="headerlink" title="更改密码"></a>更改密码</h3><p>接入显示器之后就看到出现一串关于OMV的一些东西，最下面是这个:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">orangepipc2 login:</span><br></pre></td></tr></table></figure></p>
-<p>这个即是要你输入用户名，初始用户名是 <code>root</code>，输入之后出现这个：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Password:</span><br></pre></td></tr></table></figure></p>
-<p>那就是要你输入密码了，初始密码为 <code>openmediavault</code>. 注意Linux系统下输入密码是不会显示的，自我感觉输完之后按回车就行了。然后会要求你更改初始密码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(current) UNIX password:</span><br><span class="line">Enter new UNIX password:</span><br><span class="line">Retype new UNIX password:</span><br></pre></td></tr></table></figure></p>
-<p>以此输入就可以了。接下来你就会看到一个大大的 <code>OrangePiPC2</code> 的字样。。接着一些Welcome和系统的基本配置信息，如内存，CPU等等<br>最下面是Linux的命令行界面了：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roo@orangepipc2:~<span class="comment"># _</span></span><br></pre></td></tr></table></figure></p>
-<p>这就表示你可以完全操作这个系统了</p>
-<h2 id="设置-SSH-登录"><a href="#设置-SSH-登录" class="headerlink" title="设置 SSH 登录"></a>设置 SSH 登录</h2><p>因为我们现在是接入显示器来看这个操作界面的，但是为了这么个小PC专门搞个显示器是有点不太合适的。Linux系统的一大好处就是可以通过SSH远程登录操作，所以这里记录设置SSH设置。</p>
-<h3 id="查看IP-并设置为固定IP"><a href="#查看IP-并设置为固定IP" class="headerlink" title="查看IP 并设置为固定IP"></a>查看IP 并设置为固定IP</h3><p>首先请插上网线。。。要远程登录，就需要主机的IP地址，插好网线后，输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip a</span><br></pre></td></tr></table></figure></p>
-<p>然后就能看到出来下面这种：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1: lo XXX</span><br><span class="line">2: eth0: XXX</span><br><span class="line">    link/ether XXX</span><br><span class="line">    inet 192.168.3.78/24 brd XXX</span><br><span class="line">    inet6 XXX</span><br></pre></td></tr></table></figure></p>
-<p>XXX 是省略的内容。。。那个<code>eth0</code>下面的<code>inet</code>后面的就是派的ip地址了。由于这个IP是动态的，加入哪天这个IP变了，那我们就SSH不上了，所以最好是设置一个静态的IP，步骤如下：<br>输入：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/network/interfaces</span><br></pre></td></tr></table></figure></p>
-<p>然后就会打开一个文件，找到如下字行并修改：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">iface eth0 inet static</span><br><span class="line">address 193.168.3.222</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.3.1</span><br></pre></td></tr></table></figure></p>
-<p>即改为static 的，同时改下面的地址为你想要的网址，子网掩码，网关都设置为跟你目前所在的局域网对应<strong>一致</strong>就行了。<br>更改好之后，按住 <code>ctrl+x</code> 就能退出编辑页面了，然后会提示你是否保存，输入<code>Y</code>再回车就好了。一定不要把文件名改了！直接回车！<br>更改网络之后需要重启主机才能生效，输入 <code>reboot</code> 就好了</p>
-<h3 id="设置SSH"><a href="#设置SSH" class="headerlink" title="设置SSH"></a>设置SSH</h3><p>正常情况下，linux是不会让远程登录的，所以需要更改配置。输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure></p>
-<p>找到下面有个 <code>PermitRootLogin</code>, 更改为<code>yes</code>，表明你可以以root身份进入系统，当然这样做是很冒险的，最好的办法是新建一个账户，通过那个账户来远程登录，但是目前基础版的话我就这样设置了。改完之后 <code>ctrl+x</code> 并保存就好了，然后重启ssh 服务：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service ssh restart</span><br></pre></td></tr></table></figure></p>
-<h3 id="远程登录"><a href="#远程登录" class="headerlink" title="远程登录"></a>远程登录</h3><p>设置完ssh就该来试试远程登录的效果了！在我Windows下，我用的是 <a href="https://mobaxterm.mobatek.net/" target="_blank" rel="noopener">MobaXterm</a> 软件来登录的，当然传统的<code>WinSCP</code>, <code>Putty</code> 都是可以的。<br>打开MobaXterm软件，点击<code>New session</code>, <code>Remote host</code>输入派的IP:192.168.3.222, 勾选<code>Specify name</code> 并写上 <code>root</code>, <code>Port</code>口保持22不变。然后就可以接入了，需要你输入密码，之后就能远程控制了！</p>
-<p>需要主要的是，如果遇到 <code>Access denied</code> 情况，那就可能是SSH那里没有更改对，或者密码跟用户名不对应。<br>前面说了，最安全的方法是新建一个账户，用这个账户登，这样的话，这里的name就应该是那个账户名，密码也应该是那个密码。</p>
-<h2 id="关闭-Orange-Pi"><a href="#关闭-Orange-Pi" class="headerlink" title="关闭 Orange Pi"></a>关闭 Orange Pi</h2><p>在shell 里面直接输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo shutdown -h now</span><br></pre></td></tr></table></figure></p>
-<p>Reference:<br><a href="http://www.orangepi.cn/quickstartcn/startcn_2e17631567a387efd2a3d252fa79.html" target="_blank" rel="noopener">Orange Pi website</a><br><a href="https://www.instructables.com/id/Orange-Pi-Plus-2-Armbian/" target="_blank" rel="noopener">https://www.instructables.com/id/Orange-Pi-Plus-2-Armbian/</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">OrangePi</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/09/27/OrangePi1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-My-First-Post" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/09/25/My-First-Post/">My First Post - 献给Hexo</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/09/25/My-First-Post/" class="archive-article-date">
-  	<time datetime="2018-09-25T00:23:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作及环境"><span class="toc-number">1.</span> <span class="toc-text">准备工作及环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装及配置"><span class="toc-number">2.</span> <span class="toc-text">安装及配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装前提"><span class="toc-number">2.1.</span> <span class="toc-text">安装前提</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装-Hexo"><span class="toc-number">2.2.</span> <span class="toc-text">安装 Hexo:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置"><span class="toc-number">2.3.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#主题-theme-的确定"><span class="toc-number">2.4.</span> <span class="toc-text">主题(theme)的确定</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开写你的第一篇博客"><span class="toc-number">3.</span> <span class="toc-text">开写你的第一篇博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在本地查看并生成静态网页"><span class="toc-number">4.</span> <span class="toc-text">在本地查看并生成静态网页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#部署-（这部分很让我头疼）"><span class="toc-number">5.</span> <span class="toc-text">部署 （这部分很让我头疼）</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作及环境"><span class="toc-text">准备工作及环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装及配置"><span class="toc-text">安装及配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装前提"><span class="toc-text">安装前提</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装-Hexo"><span class="toc-text">安装 Hexo:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#主题-theme-的确定"><span class="toc-text">主题(theme)的确定</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开写你的第一篇博客"><span class="toc-text">开写你的第一篇博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在本地查看并生成静态网页"><span class="toc-text">在本地查看并生成静态网页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#部署-（这部分很让我头疼）"><span class="toc-text">部署 （这部分很让我头疼）</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>在网上查找资料的时候偶然看到有人提到用Hexo来写博客，界面非常简洁，而且支持 markdown 解析，瞬间打算在我<a href="http://tracyxinwang.site/">个人的学术网站</a>上加入这个blog页面。之前写博客都是在现成的博客网站上写的，比如 网易的 和 <a href="https://blog.csdn.net/u013036695" target="_blank" rel="noopener">CSDN</a> 这种还算比较大型的技术博客，无奈广告实在是太多了，后来转战 google 的 blog，但是它的编辑页面实在是难用，就放弃了。所以现在打算试试这个 Hexo。</p>
-<p>Hexo 用官方的来说就是一个快速，简洁且高效的博客框架。我用了大概不到一天的时间，就从安装到部署搞定了，虽然过程很崎岖，掉了很多坑。。。但是总体还是觉得挺不错的，所以接下来我会大致叙述一下整个过程，希望能够让看到的朋友少掉坑。</p>
-<p>先附上<a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>网址，也有<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">中文</a>的。个人觉得基本上按照网页上的指导，前面的步骤基本都是没问题的。由于我是一开始就打算在我个人网页中加入这个博客页面作为一个子页面，所以我是在 coding.net 而非 git 上面建库。另外操作系统是win10.</p>
-<h3 id="准备工作及环境"><a href="#准备工作及环境" class="headerlink" title="准备工作及环境"></a>准备工作及环境</h3><ol>
-<li>在 coding 上新建一个项目库，命名 “blog”，同时设置 <a href="https://coding.net/pages/" target="_blank" rel="noopener">Pages服务</a></li>
-<li>在电脑上一个你觉得不错的位置新建一个文件夹，命名随意，这个名字没太大关系，我命名为”Hexo_blog”, 这文件夹是用来放所有跟你这个博客相关的东西的。</li>
-</ol>
-<h3 id="安装及配置"><a href="#安装及配置" class="headerlink" title="安装及配置"></a>安装及配置</h3><h4 id="安装前提"><a href="#安装前提" class="headerlink" title="安装前提"></a>安装前提</h4><p>须有 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a> 和 <a href="https://git-scm.com/" target="_blank" rel="noopener">Git</a></p>
-<ul>
-<li>Node.js 安装：在官网下载好你电脑对应的版本之后，点安装包进行安装，在接近最后一步是，选择 “Add to PATH” 选项进行安装</li>
-<li>git 安装：略</li>
-</ul>
-<h4 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo:"></a>安装 Hexo:</h4><p>使用 npm 安装 Hexo:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure></p>
-<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><ol>
-<li><p>新建框架<br> 去到你刚刚创建的那个要放所有Hexo东西的文件夹下，执行以下命令：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
-<p> 这个命令就是告诉hexo这里要建一个框架，然后它就会生成整个框架所需要的材料。<br> 新建完成后，可以看见有很多的文件夹，具体每个文件夹啥作用请看<a href="https://hexo.io/zh-cn/docs/setup" target="_blank" rel="noopener">官网</a>。这里面有一个叫 _config.yml 的东西，非常重要，是你整个博客配置的基础。</p>
-</li>
-<li><p>基本配置(只列出可能有坑的地方)：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">language: zh-Hans</span><br><span class="line">url: http://yoursite.com/blog</span><br><span class="line">root: /blog/</span><br></pre></td></tr></table></figure>
-<p> 前面说了我是打算我个人网站子页面下加入这个blog，所以那个url, 对我来说是后面加上这个子目录名字，然后root那个地方也需要改成，如果你本身是一个网页来的(比如git的页面)，那就不用设置这个root了。其他的配置具体可参见<a href="https://hexo.io/zh-cn/docs/configuration" target="_blank" rel="noopener">网页</a>。最后关于主题(theme)和部署(deploy)的，接下来讲。</p>
-</li>
-</ol>
-<h4 id="主题-theme-的确定"><a href="#主题-theme-的确定" class="headerlink" title="主题(theme)的确定"></a>主题(theme)的确定</h4><p>主题顾名思义就是你的博客的风格，Hexo有很多模板可供选择，要使用哪个模板，就需要将该主题拷贝到themes文件夹下，然后在_config.yml 更改主题的名字。我用的是 <a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="noopener">yilia</a> 的主题，下面以此为例写步骤：</p>
-<ul>
-<li><p>进入你放创建的hexo文件夹(e.g. Hexo_blog)下, 使用如下命令安装：</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/litten/hexo-theme-yilia.git themes/yilia</span><br></pre></td></tr></table></figure>
-<p>  这需要你先找到该主题的github，也可以直接下载然后解压到你的themes文件夹下</p>
-</li>
-<li>进入Hexo_blog 下面那个 _config.yml， 修改 ‘themes: yilia’</li>
-<li>进入Hexo_blog/themes/yilia, 里面也有一个 _config.yml, 在上面更改你想命名的主页的menu和其他的基本个人设置</li>
-</ul>
-<h3 id="开写你的第一篇博客"><a href="#开写你的第一篇博客" class="headerlink" title="开写你的第一篇博客"></a>开写你的第一篇博客</h3><p>这个很简单，直接执行：<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new  my-first-post</span><br></pre></td></tr></table></figure></p>
-<p>那个 my-first-post 是你的文章题目。所有的文章都会被放在 /source/posts 文件夹下。在这个文件夹下你可以看到一个 my-first-post.md 的文件。打开这个文件然后就在下面用markdown的语法就写好了。</p>
-<h3 id="在本地查看并生成静态网页"><a href="#在本地查看并生成静态网页" class="headerlink" title="在本地查看并生成静态网页"></a>在本地查看并生成静态网页</h3><ol>
-<li><p>由于有文件的改动，所以需要先生成静态文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>生成之后可以hexo server来查看新建的文章或者网站：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>然后就能看到说在 <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> 下可以打开。如果一切都没问题，那么就可以部署到真的网页上面了。</p>
-<h3 id="部署-（这部分很让我头疼）"><a href="#部署-（这部分很让我头疼）" class="headerlink" title="部署 （这部分很让我头疼）"></a>部署 （这部分很让我头疼）</h3><p>先说步骤：</p>
-<p>1.git-SSH 配置：</p>
-<pre><code>- 查看你的git user.email: &apos;git config user.email&apos;
-- 假如得到的email是 xx@gamil.com, 生成这个email对应的密匙: &apos;ssh-keygen -t rsa -C &quot;xx@gmail.com&quot;&apos;
-- 接下来会让你enter file to save the key，enter passphrase, enter passphrase again, 可以不需要设置这些秘密啥的，所以每一个问题出现，都按enter, 即连续3个回车。
-- 然后会得到两个文件 &apos;id_rsa&apos; 和 &apos;id_tsa.pub&apos;
-- 复制刚刚生成的密匙(其中xx/xx是你密匙生成的位置，在上一步骤中会显示)： &apos;clip &lt; xx/xx/id_rsa.pub&apos;
-- 在准备步骤中新建的那个库下，打开设置-添加公匙，将刚刚复制的内容粘贴到上面，至此，配置完成。
-- 检查是否真的完成：输入&apos;ssh -T xx@gmail.com&apos;，然后选择 &apos;yes&apos;, 接着看到 Hi XX, You&apos;ve successfully authenticated 等等，就表明已经设置成功了
-</code></pre><p>2._config.yml 文件deploy的更改：<br>    应该是在最下面，有个deploy，在下面写上你的库的ssh地址等如下：</p>
-<pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@git.coding.net:XX/blog.git</span><br><span class="line">  branch: master</span><br><span class="line">  message: update my blog.</span><br></pre></td></tr></table></figure>
-</code></pre><p>3.部署：<br>先下载deployer: ‘npm install hexo-deployer-git –save’<br>然后执行：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
-<p>然后就可以看你的网页有没有变化了。</p>
-<p>由于我是打算直接在我的个人网站下直接建一个子网页，所以一开始一直想的是deploy到我之前的那个库里面，我以为是直接添加到那个git repo 里面就好，没想到一deploy之后，发现之前的内容全没有了，然后才意识到应该是force push上去的，没有pull等过程，所以直接啥都没有了，没办法我又只好force push 我之前的网站内容上去，才将原网页复原。由于我不知道怎么可以只deploy到一个子folder里面去，所以我又新建了一个库叫blog，也就是文章开头写的那样。然后将这个库的地址作为deploy的git 地址，才可以。我发现coding上可以直接设置子静态页面，所以我也直接就将这个网页的地址链接到我原个人网站上，算是间接完成吧。</p>
-<p>同时这过程中遇到一些问题，列出来纪念一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Error: Host key verification failed.</span><br><span class="line">fatal: Could not read from remote repository.</span><br><span class="line">Please make sure you have the correct access rights and the repository exists.</span><br></pre></td></tr></table></figure></p>
-<p>需设置SSH密匙来进行。且注意需删除之前生成的 git 那个文件夹。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂文</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">碎碎念</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/09/25/My-First-Post/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/09/24/hello-world/">Markdown Template</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/09/24/hello-world/" class="archive-article-date">
-  	<time datetime="2018-09-24T11:37:10.728Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#About-lists"><span class="toc-number">1.</span> <span class="toc-text">About lists</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Unordered-lists"><span class="toc-number">1.1.</span> <span class="toc-text">Unordered lists</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ordered-lists"><span class="toc-number">1.2.</span> <span class="toc-text">Ordered lists</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#About-citation"><span class="toc-number">2.</span> <span class="toc-text">About citation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#About-font-formatting"><span class="toc-number">3.</span> <span class="toc-text">About font formatting</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#This-is-a-italic-sentence"><span class="toc-number">3.1.</span> <span class="toc-text">This is a italic sentence.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#This-is-a-bold-sentence"><span class="toc-number">3.2.</span> <span class="toc-text">This is a bold sentence.</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Links-and-figures"><span class="toc-number">4.</span> <span class="toc-text">Links and figures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Here-is-a-link-link"><span class="toc-number">4.1.</span> <span class="toc-text">Here is a link: link</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Here-is-a-figure"><span class="toc-number">4.2.</span> <span class="toc-text">Here is a figure: </span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Insert-a-table"><span class="toc-number">5.</span> <span class="toc-text">Insert a table</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Insert-a-to-do-list"><span class="toc-number">6.</span> <span class="toc-text">Insert a to-do list</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Add-code"><span class="toc-number">7.</span> <span class="toc-text">Add code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Add-math"><span class="toc-number">8.</span> <span class="toc-text">Add math</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#About-lists"><span class="toc-text">About lists</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Unordered-lists"><span class="toc-text">Unordered lists</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ordered-lists"><span class="toc-text">Ordered lists</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#About-citation"><span class="toc-text">About citation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#About-font-formatting"><span class="toc-text">About font formatting</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#This-is-a-italic-sentence"><span class="toc-text">This is a italic sentence.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#This-is-a-bold-sentence"><span class="toc-text">This is a bold sentence.</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Links-and-figures"><span class="toc-text">Links and figures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Here-is-a-link-link"><span class="toc-text">Here is a link: link</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Here-is-a-figure"><span class="toc-text">Here is a figure: </span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Insert-a-table"><span class="toc-text">Insert a table</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Insert-a-to-do-list"><span class="toc-text">Insert a to-do list</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Add-code"><span class="toc-text">Add code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Add-math"><span class="toc-text">Add math</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>This is just a markdown template for me to take a reference when I write blogs.</p>
-<h2 id="About-lists"><a href="#About-lists" class="headerlink" title="About lists"></a>About lists</h2><h3 id="Unordered-lists"><a href="#Unordered-lists" class="headerlink" title="Unordered lists"></a>Unordered lists</h3><ul>
-<li>list 1<ul>
-<li>list 1.1</li>
-<li>list 1.2</li>
-<li>list 1.3</li>
-</ul>
-</li>
-<li>list 2</li>
-<li>list 3</li>
-</ul>
-<h3 id="Ordered-lists"><a href="#Ordered-lists" class="headerlink" title="Ordered lists"></a>Ordered lists</h3><ol>
-<li>list 1<ol>
-<li>list 1.1</li>
-<li>list 1.2</li>
-</ol>
-</li>
-<li>list 2</li>
-<li>list 3</li>
-</ol>
-<h2 id="About-citation"><a href="#About-citation" class="headerlink" title="About citation"></a>About citation</h2><blockquote>
-<p>This is a citation from others</p>
-</blockquote>
-<h2 id="About-font-formatting"><a href="#About-font-formatting" class="headerlink" title="About font formatting"></a>About font formatting</h2><h3 id="This-is-a-italic-sentence"><a href="#This-is-a-italic-sentence" class="headerlink" title="This is a italic sentence."></a>This is a <em>italic</em> sentence.</h3><h3 id="This-is-a-bold-sentence"><a href="#This-is-a-bold-sentence" class="headerlink" title="This is a bold sentence."></a>This is a <strong>bold</strong> sentence.</h3><p>And be careful that there is no space between the text and the symbol.</p>
-<h2 id="Links-and-figures"><a href="#Links-and-figures" class="headerlink" title="Links and figures"></a>Links and figures</h2><h3 id="Here-is-a-link-link"><a href="#Here-is-a-link-link" class="headerlink" title="Here is a link: link"></a>Here is a link: <a href="https://hexo.io" target="_blank" rel="noopener">link</a></h3><h3 id="Here-is-a-figure"><a href="#Here-is-a-figure" class="headerlink" title="Here is a figure: "></a>Here is a figure: <img src="https://hexo.io" alt="figure link"></h3><p>The following is a dividing line</p>
-<hr>
-<h2 id="Insert-a-table"><a href="#Insert-a-table" class="headerlink" title="Insert a table"></a>Insert a table</h2><table>
-<thead>
-<tr>
-<th>header 1</th>
-<th>header 2</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>(1,1)</td>
-<td>(1,2)</td>
-</tr>
-<tr>
-<td>(2,1)</td>
-<td>(2,2)</td>
-</tr>
-</tbody>
-</table>
-<h2 id="Insert-a-to-do-list"><a href="#Insert-a-to-do-list" class="headerlink" title="Insert a to-do list"></a>Insert a to-do list</h2><ul>
-<li style="list-style: none"><input type="checkbox"> To do 1<ul>
-<li style="list-style: none"><input type="checkbox"> To do 1.1</li>
-<li style="list-style: none"><input type="checkbox"> To do 1.2</li>
-</ul>
-</li>
-<li style="list-style: none"><input type="checkbox"> To do 2</li>
-<li style="list-style: none"><input type="checkbox" checked> Finished 1</li>
-<li style="list-style: none"><input type="checkbox" checked> Finshed 2</li>
-</ul>
-<p>Be careful that the clicked one should be small x inside.</p>
-<h2 id="Add-code"><a href="#Add-code" class="headerlink" title="Add code"></a>Add code</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<h2 id="Add-math"><a href="#Add-math" class="headerlink" title="Add math"></a>Add math</h2><p>$$x+y=z$$</p>
-<p>$x+y=z$</p>
-<p>You need to turn the mathjax as “true” to make sure that it works.</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/09/24/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/blog/page/7/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/6/">6</a><a class="page-number" href="/blog/page/7/">7</a><span class="page-number current">8</span>
+      <a class="extend prev" rel="prev" href="/blog/page/7/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/6/">6</a><a class="page-number" href="/blog/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/blog/page/9/">9</a><a class="extend next" rel="next" href="/blog/page/9/">Next &raquo;</a>
     </nav>
   
 
@@ -1456,7 +1585,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共83.6k字
+              本站总共91.1k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -1563,19 +1692,19 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Coding</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1611,11 +1740,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1627,14 +1764,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Self-driving</a>
               </li>
              
@@ -1643,7 +1772,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
               </li>
              
               <li class="article-tag-list-item">
