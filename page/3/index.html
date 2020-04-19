@@ -247,20 +247,20 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-coursera_self_driving05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-coursera_self_driving04" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/07/21/coursera_self_driving05/">Coursera Self-Driving 05 Vehicle Longitudinal Control</a>
+      <a class="article-title" href="/blog/2019/07/22/coursera_self_driving04/">Coursera Self-Driving 04 Vehicle Dynamic Modeling</a>
     </h1>
   
 
         
-        <a href="/blog/2019/07/21/coursera_self_driving05/" class="archive-article-date">
-  	<time datetime="2019-07-21T06:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-21</time>
+        <a href="/blog/2019/07/22/coursera_self_driving04/" class="archive-article-date">
+  	<time datetime="2019-07-22T01:57:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-22</time>
 </a>
         
       </header>
@@ -270,7 +270,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#S"><span class="toc-number">1.</span> <span class="toc-text">S</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Kinematic-Modeling-in-2D"><span class="toc-number">1.</span> <span class="toc-text">Kinematic Modeling in 2D</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Kinematic-Bicycle-Model"><span class="toc-number">1.1.</span> <span class="toc-text">The Kinematic Bicycle Model</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dynamic-Modeling-in-2D"><span class="toc-number">2.</span> <span class="toc-text">Dynamic Modeling in 2D</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Longitudinal-Vehicle-Modeling"><span class="toc-number">2.1.</span> <span class="toc-text">Longitudinal Vehicle Modeling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lateral-Dynamics-of-Bicycle-Model"><span class="toc-number">2.2.</span> <span class="toc-text">Lateral Dynamics of Bicycle Model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vehicle-Actuation"><span class="toc-number">2.3.</span> <span class="toc-text">Vehicle Actuation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tire-Slip-and-Modeling"><span class="toc-number">2.4.</span> <span class="toc-text">Tire Slip and Modeling</span></a></li></ol></li></ol>
             </div>
            -->
         <!--  
@@ -279,13 +279,118 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#S"><span class="toc-text">S</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Kinematic-Modeling-in-2D"><span class="toc-text">Kinematic Modeling in 2D</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Kinematic-Bicycle-Model"><span class="toc-text">The Kinematic Bicycle Model</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dynamic-Modeling-in-2D"><span class="toc-text">Dynamic Modeling in 2D</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Longitudinal-Vehicle-Modeling"><span class="toc-text">Longitudinal Vehicle Modeling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lateral-Dynamics-of-Bicycle-Model"><span class="toc-text">Lateral Dynamics of Bicycle Model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vehicle-Actuation"><span class="toc-text">Vehicle Actuation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tire-Slip-and-Modeling"><span class="toc-text">Tire Slip and Modeling</span></a></li></ol></li></ol>
         </div>
     </div>
  -->
         <p>From Coursera, Introduction to Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/specializations/self-driving-cars?action=enroll" target="_blank" rel="noopener">https://www.coursera.org/specializations/self-driving-cars?action=enroll</a></p>
-<p>## </p>
-<h3 id="S"><a href="#S" class="headerlink" title="S"></a>S</h3><p>- </p>
+<p>Creating a good vehicle model is essential for model-based control development. </p>
+<p>Kinematic Vs Dynamic Modeling:</p>
+<ul>
+<li>kinematics: positions and velocities</li>
+<li>dynamics: forces and torques of a car and how they connect</li>
+<li>Kinematic modeling: at low speeds,i t is often sufficient to look only at kinematic models of vehicles<ul>
+<li>Examples: Two wheeled robot, Bicycle model</li>
+</ul>
+</li>
+<li>Dynamic modeling is more involved, but captures vehicle behavior more precisely over a wide operating range <ul>
+<li>Examples: Dynamic vehicle model</li>
+</ul>
+</li>
+</ul>
+<h2 id="Kinematic-Modeling-in-2D"><a href="#Kinematic-Modeling-in-2D" class="headerlink" title="Kinematic Modeling in 2D"></a>Kinematic Modeling in 2D</h2><p><strong>Coordinate Frames</strong></p>
+<ul>
+<li>Right handed by convention</li>
+<li>Inertial frame (global world coordinate)<ul>
+<li>Fixed reference frame, usually relative to earth</li>
+<li>we often represent this coordinate frame as East North Up, ENU, relative to a reference point nearby. </li>
+<li>Or Earth-Centered Earth Fixed, ECEF, as is used in GNSS systems.</li>
+</ul>
+</li>
+<li>Body frame<ul>
+<li>Attached to vehicle, origin at vehicle center of gravity, or center of rotation</li>
+<li>is moving and rotating with respect to the fixed inertial frame as the vehicle moves about.</li>
+</ul>
+</li>
+<li>Sensor frame <ul>
+<li>Attached to sensor, convenient for expressing sensor measurements</li>
+</ul>
+</li>
+<li>Coordinate transformation e.g.:<ul>
+<li>Location of point (P) in Body Frame(B):<br>$$P_B = C_{EB}(\theta) P_E + O_{EB}$$</li>
+<li>Location of point (P) in Inertial Frame(E):<br>$$P_E = C_{BE}(\theta) P_B + O_{BE}$$</li>
+<li>$O_{BE}$ or $O_{EB}$ is the translation term, expressed in corresponding frame</li>
+</ul>
+</li>
+</ul>
+<p><strong>2D Kinematic Modeling</strong></p>
+<ul>
+<li>An example of a ball in the sky: The kinematic constraint is nonholonomic <ul>
+<li>A constraint on rate of change of degrees of freedom </li>
+<li>Vehicle velocity always tangent to current path<br>$$\frac{dy}{dx} = tan \theta = \frac{sin \theta}{cos \theta}$$</li>
+<li>Nonholonomic constraint: $$ \dot y cos \theta - \dot x sin \theta = 0 $$</li>
+<li>Velocity components: $$\dot x = v cos \theta, \quad \dot y = v sin \theta$$</li>
+</ul>
+</li>
+</ul>
+<p><img src="/blog/images/self_driving07.png" width="50%" height="50%"></p>
+<p><strong>state-based models</strong></p>
+<ul>
+<li>A state is a set of variables often arranged in the form of a vector that fully describe the system at the current time. </li>
+</ul>
+<p><strong>Two-Wheeled Robot Kinematic Model</strong></p>
+<ul>
+<li>Assume control inputs are wheel speeds <ul>
+<li>Center: p </li>
+<li>Wheel to center: l</li>
+<li>Wheel radius:r</li>
+<li>Wheel rotation rates: w1, w2</li>
+</ul>
+</li>
+<li>Kinematic constraint $$V_i = r w_i$$</li>
+<li>Velocity is the average of the two wheel velocities $$v=\frac{v_1 + v_2}{2} = \frac {r w_1 + r w_2} {2}$$</li>
+<li>Use the instantaneous center of rotation(ICR)</li>
+<li>Equivalent triangles give the angular rate of rotation $$w = \frac{-v_2}{\rho} = \frac{-(v_2 - v_1)}{2l}$$ $$w = \frac{rw_1 - rw_2}{2l}$$</li>
+<li>continuous time model: $$\dot x = [(\frac{rw_1+rw_2}{2})cos \theta]$$ $$\dot y = [(\frac{rw_1+rw_2}{2})sin \theta]$$ $$\dot \theta = (\frac{rw_1-rw_2}{2l})$$</li>
+<li>discrete time model: $$ x_{k+1} = x_k + [(\frac{rw_{1,k}+rw_{2,k}}{2})cos \theta_k] \delta t$$ $$ y_{k+1} = y_k + [(\frac{rw_{1,k}+rw_{2,k}}{2})sin \theta_k] \delta t$$ $$ \theta_{k+1} = \theta_k + (\frac{rw_{1,k}-rw_{2,k}}{2l}) \delta t$$</li>
+</ul>
+<p>source: <a href="https://www.coursera.org/lecture/intro-self-driving-cars/lesson-1-kinematic-modeling-in-2d-pScZH" target="_blank" rel="noopener">https://www.coursera.org/lecture/intro-self-driving-cars/lesson-1-kinematic-modeling-in-2d-pScZH</a></p>
+<h3 id="The-Kinematic-Bicycle-Model"><a href="#The-Kinematic-Bicycle-Model" class="headerlink" title="The Kinematic Bicycle Model"></a>The Kinematic Bicycle Model</h3><ul>
+<li>2Dbicycle model(simplified car model)</li>
+<li>Front wheel steering</li>
+</ul>
+<p>Rear Wheel Reference Point:</p>
+<ul>
+<li>Apply Instantaneous Center of Rotation（ICR）: $$\dot \theta = \omega = \frac VR$$</li>
+<li>Similar triangles: $$tan \delta = \frac LR$$</li>
+<li>Rotation rate equation: $$\dot \theta = \omega = \frac vR = \frac{v tan \delta}{L}$$</li>
+</ul>
+<p>Rear Axle Bicycle Model</p>
+<ul>
+<li>If the desired point is at the center of the rear axle: $$\dot x_r = v cos \theta$$ $$\dot y_r = v sin \theta$$ $$\dot \theta = \frac {v tan \delta}{L}$$</li>
+<li>If the desired point is at the center of the front axle: $$\dot x_f = v cos (\theta + \delta)$$ $$\dot y_f = v sin (\theta+\delta)$$ $$\dot \theta = \frac {v sin \delta}{L}$$</li>
+<li>If the desired point is at the center of the gravity(cg): $$\dot x_c = v cos (\theta + \beta)$$ $$\dot y_c = v sin (\theta+\beta)$$ $$\dot \theta = \frac {v cos \beta tan \delta}{L}$$ $$\beta = tan^{-1} (\frac {l_r tan \delta}{L})$$</li>
+</ul>
+<p><strong>State-space Representation</strong></p>
+<ul>
+<li>Modify CG kinematic bicycle model to use steering rate input <ul>
+<li>state: $[x, y, \theta, \delta]^T$ </li>
+<li>inputs: $[v,\phi]^T$ ($\phi$ is the modified input, the rate of the change of steering angle)<br>$$\dot x_c = v cos(\theta + \beta)$$<br>$$\dot y_c = v sin(\theta + \beta)$$<br>$$\dot \theta = \frac {v cos \beta tan \delta}{L}$$ $$\dot \delta = \phi$$</li>
+</ul>
+</li>
+</ul>
+<h2 id="Dynamic-Modeling-in-2D"><a href="#Dynamic-Modeling-in-2D" class="headerlink" title="Dynamic Modeling in 2D"></a>Dynamic Modeling in 2D</h2><p>mainly on Newton’s second law</p>
+<h3 id="Longitudinal-Vehicle-Modeling"><a href="#Longitudinal-Vehicle-Modeling" class="headerlink" title="Longitudinal Vehicle Modeling"></a>Longitudinal Vehicle Modeling</h3><ul>
+<li>Dynamic force balance on a vehicle</li>
+<li>Powertrain component models</li>
+<li><p>Connect models to create a full longitudinal motior model</p>
+</li>
+<li><p>Total resistance load: $$F_{load} = F_{aero} + R_x + mga$$</p>
+</li>
+<li>The aerodynamic force can depend on air density, frontal area,on the speed of the vehicle: $$F_{aero} = 1/2C_a \rho A\dot x^2 = c_a \dot x^2$$</li>
+<li>The rolling resistance can depend on the tire normal force,tire pressures and vehicle speed: $$R_x = N(\hat c_{r,0}+\hat c_{r,1}|\dot x| + \hat c_{r,2}\dot x^2) \approx c_{r,1}|\dot x|$$</li>
+</ul>
+<h3 id="Lateral-Dynamics-of-Bicycle-Model"><a href="#Lateral-Dynamics-of-Bicycle-Model" class="headerlink" title="Lateral Dynamics of Bicycle Model"></a>Lateral Dynamics of Bicycle Model</h3><h3 id="Vehicle-Actuation"><a href="#Vehicle-Actuation" class="headerlink" title="Vehicle Actuation"></a>Vehicle Actuation</h3><h3 id="Tire-Slip-and-Modeling"><a href="#Tire-Slip-and-Modeling" class="headerlink" title="Tire Slip and Modeling"></a>Tire Slip and Modeling</h3><p>·Basics of kinematic and coordinates<br>·Kinematic model development of a bicycle<br>·Basics of dynamic modeling<br>·Vehicle longitudinal dynamics and modeling<br>·Vehicle lateral dynamics and modeling<br>·Vehicle actuation system<br>·Tire slips and modeling</p>
 
       
 
@@ -313,7 +418,296 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/07/21/coursera_self_driving05/">展开全文 >></a>
+          <a class="article-more-a" href="/blog/2019/07/22/coursera_self_driving04/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-matlab_self_driving" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/07/21/matlab_self_driving/">MATLAB 自动驾驶相关</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/07/21/matlab_self_driving/" class="archive-article-date">
+  	<time datetime="2019-07-21T09:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MATLAB-EXPO-2019-MATLAB和Simulink用于开发自动驾驶的新特性"><span class="toc-number">1.</span> <span class="toc-text">MATLAB EXPO 2019 MATLAB和Simulink用于开发自动驾驶的新特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建虚拟驾驶场景"><span class="toc-number">1.1.</span> <span class="toc-text">创建虚拟驾驶场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#传感器融合与目标跟踪"><span class="toc-number">1.2.</span> <span class="toc-text">传感器融合与目标跟踪</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#集成其他资源"><span class="toc-number">1.3.</span> <span class="toc-text">集成其他资源</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MATLAB-EXPO-2019-MATLAB和Simulink用于开发自动驾驶的新特性"><span class="toc-text">MATLAB EXPO 2019 MATLAB和Simulink用于开发自动驾驶的新特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建虚拟驾驶场景"><span class="toc-text">创建虚拟驾驶场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#传感器融合与目标跟踪"><span class="toc-text">传感器融合与目标跟踪</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#集成其他资源"><span class="toc-text">集成其他资源</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <h2 id="MATLAB-EXPO-2019-MATLAB和Simulink用于开发自动驾驶的新特性"><a href="#MATLAB-EXPO-2019-MATLAB和Simulink用于开发自动驾驶的新特性" class="headerlink" title="MATLAB EXPO 2019 MATLAB和Simulink用于开发自动驾驶的新特性"></a>MATLAB EXPO 2019 MATLAB和Simulink用于开发自动驾驶的新特性</h2><h3 id="创建虚拟驾驶场景"><a href="#创建虚拟驾驶场景" class="headerlink" title="创建虚拟驾驶场景"></a>创建虚拟驾驶场景</h3><ul>
+<li>Sensor Fusion using synthetic radar and vision data:<ul>
+<li><a href="https://www.mathworks.com/help/driving/examples/sensor-fusion-using-synthetic-radar-and-vision-data.html" target="_blank" rel="noopener">https://www.mathworks.com/help/driving/examples/sensor-fusion-using-synthetic-radar-and-vision-data.html</a></li>
+</ul>
+</li>
+<li>模拟道路和车辆 </li>
+<li>添加基于统计概率的视觉与雷达传感器</li>
+<li>测试传感器融合与目标跟踪 </li>
+<li>可视化传感器覆盖区域, 检测列表, 目标跟踪列表</li>
+</ul>
+<p>图形化的驾驶场景设计器:</p>
+<ul>
+<li>Driving Scenario Designer: <a href="https://www.mathworks.com/help/driving/ref/drivingscenariodesigner-app.html" target="_blank" rel="noopener">https://www.mathworks.com/help/driving/ref/drivingscenariodesigner-app.html</a></li>
+<li>创建道路与车道线标记 </li>
+<li>添加车辆与行驶轨迹 </li>
+<li>设置车辆尺寸与雷达截面积(RCS)</li>
+<li>提供预定义的ADAS场景 </li>
+<li>支持导入OpenDRIVE格式路网文件</li>
+</ul>
+<p>Simulink仿真驾驶场景:</p>
+<ul>
+<li>Test Open-Loop ADAS Algorithm Using Driving Scenario: <a href="https://www.mathworks.com/help/driving/ug/test-open-loop-adas-algorithm-using-driving-scenario.html" target="_blank" rel="noopener">https://www.mathworks.com/help/driving/ug/test-open-loop-adas-algorithm-using-driving-scenario.html</a><ul>
+<li>编辑驾驶场景</li>
+<li>在Simulink中读取场景</li>
+<li>添加传感器模型</li>
+<li>可视化传感器输出</li>
+<li>调节仿真速度</li>
+</ul>
+</li>
+</ul>
+<p>设计车辆的横向与纵向控制</p>
+<ul>
+<li>Lane following control with sensor fusion: <a href="https://www.mathworks.com/help/mpc/ug/lane-following-control-with-sensor-fusion-and-lane-detection.html" target="_blank" rel="noopener">https://www.mathworks.com/help/mpc/ug/lane-following-control-with-sensor-fusion-and-lane-detection.html</a><ul>
+<li>将场景集成到Simulink </li>
+<li>设计横向（车道保持）与纵向<br>（间距管理）模型预测控制器</li>
+<li>设计传感器融合 </li>
+<li>生成C/C++代码 </li>
+<li>软件在环 (SIL) 测试</li>
+</ul>
+</li>
+<li>可视化传感器检测列表与目标跟踪列表</li>
+</ul>
+<p>控制算法的自动化测试:</p>
+<ul>
+<li>Testing a Lane-Following Controller with Simulink Test: <a href="https://www.mathworks.com/help/sltest/examples/testing-a-lane-following-controller.html" target="_blank" rel="noopener">https://www.mathworks.com/help/sltest/examples/testing-a-lane-following-controller.html</a></li>
+<li>指定测试需求与被测模型</li>
+<li>指定测试通过判据</li>
+<li>测试结果绘图与报告生成</li>
+<li>自动化整个测试过程</li>
+</ul>
+<p>从录制的实车数据生成驾驶场景:</p>
+<ul>
+<li>Scenario Generation from Recorded Vehicle Data: <a href="https://www.mathworks.com/help/driving/examples/scenario-generation-from-recorded-vehicle-data.html" target="_blank" rel="noopener">https://www.mathworks.com/help/driving/examples/scenario-generation-from-recorded-vehicle-data.html</a></li>
+<li>回放录制的视频</li>
+<li>导入OpenDRIVE路网</li>
+<li>导入GPS数据（本车位置）</li>
+<li>导入传感器目标列表（其他车辆<br>位置）</li>
+</ul>
+<p>车道跟随控制器与视觉算法的集成仿真</p>
+<ul>
+<li>Lane-Following Control with Monocular Camera Perception: <a href="https://www.mathworks.com/help/mpc/ug/lane-following-control-with-monocular-camera-perception.html" target="_blank" rel="noopener">https://www.mathworks.com/help/mpc/ug/lane-following-control-with-monocular-camera-perception.html</a></li>
+<li>集成Simulink控制器模块<ul>
+<li>车道跟随</li>
+<li>间距控制</li>
+</ul>
+</li>
+<li>集成MATLAB图像算法<ul>
+<li>车道边界检测</li>
+<li>车辆检测</li>
+</ul>
+</li>
+<li>通过“虚幻”引擎合成理想视觉传感器图像</li>
+</ul>
+<h3 id="传感器融合与目标跟踪"><a href="#传感器融合与目标跟踪" class="headerlink" title="传感器融合与目标跟踪"></a>传感器融合与目标跟踪</h3><p><strong>感知</strong></p>
+<ul>
+<li>多目标跟踪器（Multi-object tracker）<ul>
+<li>GNN跟踪器（Global Nearest Neighbor tracker）</li>
+<li>JPDA跟踪器（Joint Probabilistic Data Association tracker）</li>
+<li>TOMHT跟踪器（Track-Oriented Multi-Hypothesis Tracker）</li>
+<li>PHD跟踪器（Probability Hypothesis Density tracker）</li>
+</ul>
+</li>
+<li>跟踪滤波器：<ul>
+<li>线性, 扩展, 无迹卡尔曼滤波器</li>
+<li>粒子滤波器</li>
+<li>高斯和滤波器</li>
+<li>交互式多模型（IMM）滤波器</li>
+</ul>
+</li>
+</ul>
+<p>点目标跟踪与扩展目标跟踪：</p>
+<ul>
+<li>Extended Object Tracking： <a href="https://www.mathworks.com/help/fusion/examples/extended-object-tracking.html" target="_blank" rel="noopener">https://www.mathworks.com/help/fusion/examples/extended-object-tracking.html</a><ul>
+<li>自定义的扩展目标跟踪器</li>
+<li>利用高精度传感器对单个目标生成的多个检测</li>
+<li>可获取更多目标属性：大小、形状、方向等</li>
+<li>评估跟踪性能和误差指标</li>
+<li>评估算法在桌面的执行时间</li>
+</ul>
+</li>
+<li>点目标跟踪<ul>
+<li>点目标跟踪器 multiObjectTracker</li>
+<li>传感器对单个目标生成单个检测或经过聚类后形成单个检测</li>
+<li>将目标简化为一个点进行跟踪</li>
+</ul>
+</li>
+</ul>
+<p>将激光雷达点云转换为目标列表：</p>
+<ul>
+<li>Track Vehicles Using Lidar: <a href="https://www.mathworks.com/help/vision/ug/track-vehicles-using-lidar.html" target="_blank" rel="noopener">https://www.mathworks.com/help/vision/ug/track-vehicles-using-lidar.html</a><ul>
+<li>设计3-D边框检测器</li>
+<li>设计目标跟踪器</li>
+<li>生成C/C++代码</li>
+</ul>
+</li>
+</ul>
+<p><strong>规划</strong></p>
+<p>连接HERE高精度实时地图：读取道路和限速属性:</p>
+<ul>
+<li>Use HERE HD Live Map Data to Verify Lane Configurations: <a href="https://www.mathworks.com/help/driving/examples/use-here-hd-live-map-data-to-verify-lane-configurations.html" target="_blank" rel="noopener">https://www.mathworks.com/help/driving/examples/use-here-hd-live-map-data-to-verify-lane-configurations.html</a><ul>
+<li>载入摄像机与GPS数据</li>
+<li>读取道路限速</li>
+<li>读取车道配置</li>
+<li>可视化组合数据</li>
+</ul>
+</li>
+</ul>
+<p>设计路径规划器:</p>
+<ul>
+<li>Automated Parking Valet: <a href="https://www.mathworks.com/help/driving/examples/automated-parking-valet.html" target="_blank" rel="noopener">https://www.mathworks.com/help/driving/examples/automated-parking-valet.html</a><ul>
+<li>创建环境的代价地图 </li>
+<li>膨胀代价地图用于碰撞检测 </li>
+<li>指定目标位置 </li>
+<li>使用快速搜索随机树 (RRT*)算法规划路径</li>
+</ul>
+</li>
+</ul>
+<p>设计路径规划器与车辆控制器:</p>
+<ul>
+<li>Automated Parking Valet in Simulink: <a href="https://www.mathworks.com/help/driving/examples/automated-parking-valet-in-simulink.html" target="_blank" rel="noopener">https://www.mathworks.com/help/driving/examples/automated-parking-valet-in-simulink.html</a><ul>
+<li>路径规划器（RRT*算法）</li>
+<li>车辆横向与纵向控制器（基于运动学的Stanley算法）</li>
+<li>与车辆动力学模型结合进行闭环仿真</li>
+</ul>
+</li>
+</ul>
+<p>规划与控制算法生成C/C++代码:</p>
+<ul>
+<li><a href="https://www.mathworks.com/help/driving/examples/code-generation-for-path-planning-and-vehicle-control.html" target="_blank" rel="noopener">https://www.mathworks.com/help/driving/examples/code-generation-for-path-planning-and-vehicle-control.html</a><ul>
+<li>独立的模型文件</li>
+<li>配置代码生成选项</li>
+<li>生成C/C++代码</li>
+<li>软件在环 (SIL) 测试</li>
+<li>评估代码执行时间</li>
+</ul>
+</li>
+</ul>
+<p><strong>控制</strong></p>
+<p>通过闭环仿真设计实际的ADAS功能</p>
+<ul>
+<li>Autonomous Emergency Braking with Sensor Fusion： <a href="https://www.mathworks.com/help/driving/examples/autonomous-emergency-braking-with-sensor-fusion.html" target="_blank" rel="noopener">https://www.mathworks.com/help/driving/examples/autonomous-emergency-braking-with-sensor-fusion.html</a><ul>
+<li>指定驾驶场景</li>
+<li>设计AEB逻辑</li>
+<li>设计传感器融合算法</li>
+<li>仿真完整系统</li>
+<li>生成C/C++代码</li>
+<li>软件在环 (SIL) 测试</li>
+</ul>
+</li>
+</ul>
+<p>训练用于ADAS控制的增强学习网络：</p>
+<ul>
+<li>Train DDPG Agent for Adaptive Cruise Control：<a href="https://www.mathworks.com/help/reinforcement-learning/ug/train-ddpg-agent-for-adaptive-cruise-control.html" target="_blank" rel="noopener">https://www.mathworks.com/help/reinforcement-learning/ug/train-ddpg-agent-for-adaptive-cruise-control.html</a><ul>
+<li>创建环境接口</li>
+<li>创建agent</li>
+<li>训练agent</li>
+<li>仿真训练的agent</li>
+</ul>
+</li>
+</ul>
+<h3 id="集成其他资源"><a href="#集成其他资源" class="headerlink" title="集成其他资源"></a>集成其他资源</h3><ul>
+<li>与ROS集成的三种方式：<ul>
+<li>回放通过ROS记录的数据：Work with rosbag Logfiles <a href="https://www.mathworks.com/help/robotics/examples/work-with-rosbag-logfiles.html" target="_blank" rel="noopener">https://www.mathworks.com/help/robotics/examples/work-with-rosbag-logfiles.html</a> </li>
+<li>实时连接ROS系统：Exchange Data with ROS Publishers and Subscribers <a href="https://www.mathworks.com/help/robotics/examples/exchange-data-with-ros-publishers.html" target="_blank" rel="noopener">https://www.mathworks.com/help/robotics/examples/exchange-data-with-ros-publishers.html</a></li>
+<li>生成独立的ROS节点：Generate a Standalone ROS Node from Simulink <a href="https://www.mathworks.com/help/robotics/examples/generate-a-standalone-ros-node-in-simulink.html" target="_blank" rel="noopener">https://www.mathworks.com/help/robotics/examples/generate-a-standalone-ros-node-in-simulink.html</a></li>
+</ul>
+</li>
+<li>从MATLAB调用C++, Python, OpenCV:<ul>
+<li>Import C++ Library Functionality into MATLAB: <a href="https://www.mathworks.com/help/matlab/matlab_external/what-you-need-to-import-cpp-library-functions-into-matlab.html" target="_blank" rel="noopener">https://www.mathworks.com/help/matlab/matlab_external/what-you-need-to-import-cpp-library-functions-into-matlab.html</a></li>
+<li>Call Python from MATLAB: <a href="https://www.mathworks.com/help/matlab/matlab_external/call-python-from-matlab.html" target="_blank" rel="noopener">https://www.mathworks.com/help/matlab/matlab_external/call-python-from-matlab.html</a></li>
+<li>Install and Use Computer Vision Toolbox OpenCV Interface: <a href="https://www.mathworks.com/help/vision/ug/opencv-interface.html" target="_blank" rel="noopener">https://www.mathworks.com/help/vision/ug/opencv-interface.html</a></li>
+</ul>
+</li>
+</ul>
+<p>用到的toolbox:<br>Model Predictive Control Toolbox<br>Automated Driving Toolbox<br>Embedded Coder<br>Sensor Fusion and Tracking Toolbox<br>Reinforcement Learning Toolbox</p>
+<p>Reference:<br><a href="https://www.matlabexpo.com/content/dam/mathworks/mathworks-dot-com/images/events/matlabexpo/cn/2019/whats-new-in-matlab-and-simulink-for-adas.pdf" target="_blank" rel="noopener">https://www.matlabexpo.com/content/dam/mathworks/mathworks-dot-com/images/events/matlabexpo/cn/2019/whats-new-in-matlab-and-simulink-for-adas.pdf</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/07/21/matlab_self_driving/">展开全文 >></a>
         </p>
       
 
@@ -545,6 +939,102 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/blog/2019/07/21/coursera_self_driving03/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-coursera_self_driving05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/07/21/coursera_self_driving05/">Coursera Self-Driving 05 Vehicle Longitudinal Control</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/07/21/coursera_self_driving05/" class="archive-article-date">
+  	<time datetime="2019-07-21T06:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#S"><span class="toc-number">1.</span> <span class="toc-text">S</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#S"><span class="toc-text">S</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <p>From Coursera, Introduction to Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/specializations/self-driving-cars?action=enroll" target="_blank" rel="noopener">https://www.coursera.org/specializations/self-driving-cars?action=enroll</a></p>
+<p>## </p>
+<h3 id="S"><a href="#S" class="headerlink" title="S"></a>S</h3><p>- </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/07/21/coursera_self_driving05/">展开全文 >></a>
         </p>
       
 
@@ -1732,270 +2222,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-python09" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/05/29/python09/">Python核心技术与实战09 自定义函数</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/05/29/python09/" class="archive-article-date">
-  	<time datetime="2019-05-29T13:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数基础"><span class="toc-number">1.</span> <span class="toc-text">函数基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数变量作用域"><span class="toc-number">2.</span> <span class="toc-text">函数变量作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#闭包-closure"><span class="toc-number">3.</span> <span class="toc-text">闭包 closure</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数基础"><span class="toc-text">函数基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数变量作用域"><span class="toc-text">函数变量作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#闭包-closure"><span class="toc-text">闭包 closure</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="函数基础"><a href="#函数基础" class="headerlink" title="函数基础"></a>函数基础</h3><ul>
-<li><p>定义：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def name(param1, param2, ..., paramN):</span><br><span class="line">    statements</span><br><span class="line">    return/yield value # optional</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>和其他需要编译的语言（比如C语言）不一样的是，def是可执行语句，这意味着函数直到被调用前，都是不存在的。当程序调用函数时，def语句才会创建一个新的函数对象，并赋予其名字。</p>
-</li>
-<li>调用函数时，必须保证这个函数此前已经定义过.</li>
-<li><p>但如果在某函数内部调用其他函数，函数间哪个声明在前、哪个在后就无所谓，因为def是可执行语句，函数在调用之前都不存在，我们只需保证调用时，所需的函数都已经声明定义。</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def my_func(message):</span><br><span class="line">    my_sub_func(message) # 调用 my_sub_func() 在其声明之前不影响程序执行</span><br><span class="line">    </span><br><span class="line">def my_sub_func(message):</span><br><span class="line">    print(&apos;Got a message: &#123;&#125;&apos;.format(message))</span><br><span class="line"></span><br><span class="line">my_func(&apos;hello world&apos;)</span><br><span class="line"></span><br><span class="line"># 输出</span><br><span class="line">Got a message: hello world</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>另外，Python函数的参数可以设定默认值, 如下。这样在调用函数func()时，如果参数param没有传入，则参数默认为0；而如果传入了参数param，其就会覆盖默认值。</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def func(param = 0):</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Python不用考虑输入的数据类型，而是将其交给具体的代码去判断执行，同样的一个函数（如一个相加函数），可以同时应用在整型、列表、字符串等等的操作中。编程语言中，我们把这种行为称为多态。这也是Python 和其他语言，比如Java、C等很大的一个不同点。</p>
-</li>
-<li>因此，在函数开头进行数据类型检查很重要</li>
-<li><p>函数嵌套：</p>
-<ul>
-<li><p>函数的嵌套能够保证内部函数的隐私。内部函数只能被外部函数所调用和访问，不会暴露在全局作用域，因此，如果你的函数内部有一些隐私数据（比如数据库的用户、密码等），不想暴露在外，那你就可以使用函数的的嵌套，将其封装在内部函数中，只通过外部函数来访问：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def connect_DB():</span><br><span class="line">    def get_DB_configuration():</span><br><span class="line">        ...</span><br><span class="line">        return host, username, password</span><br><span class="line">    conn = connector.connect(get_DB_configuration())</span><br><span class="line">    return conn</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>合理的使用函数嵌套，能够提高程序的运行效率:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">def factorial(input):</span><br><span class="line">    # validation check</span><br><span class="line">    if not isinstance(input, int):</span><br><span class="line">        raise Exception(&apos;input must be an integer.&apos;)</span><br><span class="line">    if input &lt; 0:</span><br><span class="line">        raise Exception(&apos;input must be greater or equal to 0&apos; )</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    def inner_factorial(input):</span><br><span class="line">        if input &lt;= 1:</span><br><span class="line">            return 1</span><br><span class="line">        return input * inner_factorial(input-1)</span><br><span class="line">    return inner_factorial(input)</span><br><span class="line"></span><br><span class="line">print(factorial(5))</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="函数变量作用域"><a href="#函数变量作用域" class="headerlink" title="函数变量作用域"></a>函数变量作用域</h3><ul>
-<li>如果变量是在函数内部定义的，就称为局部变量，只在函数内部有效。一旦函数执行完毕，局部变量就会被回收，无法访问.</li>
-<li>想要在函数内部修改全局变量的值，需要在函数内部 用关键字 global 申明。</li>
-<li>如果遇到函数内部局部变量和全局变是同名的情况，那么在函数内部，局部变量会覆盖全局变量</li>
-<li>对于嵌套函数来说，内部函数可以访问外部函数定义的变量，但是无法修改，若要修改，必须加上nonlocal这个关键字</li>
-</ul>
-<h3 id="闭包-closure"><a href="#闭包-closure" class="headerlink" title="闭包 closure"></a>闭包 closure</h3><ul>
-<li><p>闭包其实和刚刚讲的嵌套函数类似，不同的是，这里外部函数返回的是一个函数，而不是一个具体的值。返回的函数通常赋于一个变量，这个变量可以在后面被继续执行调用。</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">def nth_power(exponent):</span><br><span class="line">    def exponent_of(base):</span><br><span class="line">        return base ** exponent</span><br><span class="line">    return exponent_of # 返回值是 exponent_of 函数</span><br><span class="line"></span><br><span class="line">square = nth_power(2) # 计算一个数的平方</span><br><span class="line">cube = nth_power(3) # 计算一个数的立方 </span><br><span class="line">square</span><br><span class="line"># 输出</span><br><span class="line">&lt;function __main__.nth_power.&lt;locals&gt;.exponent(base)&gt;</span><br><span class="line"></span><br><span class="line">cube</span><br><span class="line"># 输出</span><br><span class="line">&lt;function __main__.nth_power.&lt;locals&gt;.exponent(base)&gt;</span><br><span class="line"></span><br><span class="line">print(square(2))  # 计算 2 的平方</span><br><span class="line">print(cube(2)) # 计算 2 的立方</span><br><span class="line"># 输出</span><br><span class="line">4 # 2^2</span><br><span class="line">8 # 2^3</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>这里外部函数nth_power()返回值，是函数exponent_of()，而不是一个具体的数值。需要注意的是，在执行完square=nth_power(2)和cube=nth_power(3)后，外部函数nth power()的参数exponent，仍然会被内部函数exponent of()记住。这样，之后我们调用square(2)或者cube(2)时，程序就能顺利地输出结果，而不会报错说参数exponent没有定义了。</p>
-</li>
-<li>闭包常常和装饰器（decorator）一起使用。</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/05/29/python09/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-python08" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/05/27/python08/">Python核心技术与实战08 异常处理</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/05/27/python08/" class="archive-article-date">
-  	<time datetime="2019-05-27T13:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#错误与异常"><span class="toc-number">1.</span> <span class="toc-text">错误与异常</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何处理异常"><span class="toc-number">2.</span> <span class="toc-text">如何处理异常</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#错误与异常"><span class="toc-text">错误与异常</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何处理异常"><span class="toc-text">如何处理异常</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="错误与异常"><a href="#错误与异常" class="headerlink" title="错误与异常"></a>错误与异常</h3><ul>
-<li>在程序中，如果我们不确定某段代码能否成功执行，往往这个地方就需要使用异常处理。</li>
-<li>程序中的错误至少包括两种，一种是语法错误，另一种则是异常。</li>
-<li>Python 中常见的异常类型：<ul>
-<li>NameError, TypeError, FileNotFoundError</li>
-<li>KeyError是指字典中的键找不到</li>
-</ul>
-</li>
-</ul>
-<h3 id="如何处理异常"><a href="#如何处理异常" class="headerlink" title="如何处理异常"></a>如何处理异常</h3><ul>
-<li><p>用 try 和 except 来处理异常问题</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">    s = input(&apos;please enter two numbers separated by comma: &apos;)</span><br><span class="line">    num1 = int(s.split(&apos;,&apos;)[0].strip())</span><br><span class="line">    num2 = int(s.split(&apos;,&apos;)[1].strip())</span><br><span class="line">except ValueError as err:</span><br><span class="line">    print(&apos;Value Error: &#123;&#125;&apos;.format(err))</span><br><span class="line"></span><br><span class="line">print(&apos;continue&apos;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>except block只接受与它相匹配的异常类型并执行，如果程序抛出的异常并不匹配，那么程序也会终止并退出。</p>
-</li>
-<li><p>想解决这种情况，第一种方法就是在except block中加入多种异常的类型，比如：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">    s = input(&apos;please enter two numbers separated by comma: &apos;)</span><br><span class="line">    num1 = int(s.split(&apos;,&apos;)[0].strip())</span><br><span class="line">    num2 = int(s.split(&apos;,&apos;)[1].strip())</span><br><span class="line">except (ValueError, IndexError) as err:</span><br><span class="line">    print(&apos;Error: &#123;&#125;&apos;.format(err))</span><br><span class="line">    </span><br><span class="line">print(&apos;continue&apos;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>或者这样写: except block 中只要有一个exception 类型与实际匹配即可。并在最后一个except block，声明其处理的异常类型是Exception。Exception是其他所有非系统异常的基类，能够匹配任意非系统异常，所以基本能够涵盖所有错误类型。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">    s = input(&apos;please enter two numbers separated by comma: &apos;)</span><br><span class="line">    num1 = int(s.split(&apos;,&apos;)[0].strip())</span><br><span class="line">    num2 = int(s.split(&apos;,&apos;)[1].strip())</span><br><span class="line">except ValueError as err:</span><br><span class="line">    print(&apos;Value Error: &#123;&#125;&apos;.format(err))</span><br><span class="line">except IndexError as err:</span><br><span class="line">    print(&apos;Index Error: &#123;&#125;&apos;.format(err))</span><br><span class="line">except Exception as err:</span><br><span class="line">    print(&apos;Other error: &#123;&#125;&apos;.format(err))</span><br><span class="line"></span><br><span class="line">print(&apos;continue&apos;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>也可以在except后面省略异常类型，表示与任意异常相匹配（包括系统异常等）：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">    s = input(&apos;please enter two numbers separated by comma: &apos;)</span><br><span class="line">    num1 = int(s.split(&apos;,&apos;)[0].strip())</span><br><span class="line">    num2 = int(s.split(&apos;,&apos;)[1].strip())</span><br><span class="line">except ValueError as err:</span><br><span class="line">    print(&apos;Value Error: &#123;&#125;&apos;.format(err))</span><br><span class="line">except IndexError as err:</span><br><span class="line">    print(&apos;Index Error: &#123;&#125;&apos;.format(err))</span><br><span class="line">except:</span><br><span class="line">    print(&apos;Other error&apos;)</span><br><span class="line"></span><br><span class="line">print(&apos;continue&apos;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>此外，当程序中存在多个except block时，最多只有一个except block会被执行。所以如果多个except声明的异常类型都与实际相匹配，那么只有最前面的except block会被执行，其他则被忽略。</p>
-</li>
-<li>异常处理中，还有一个很常见的用法是finally，经常和try、except放在一起来用。无论发生什么情况，finally block中的语句都会被执行，哪怕前面的try 和excep block中使用了return语句。  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">try:</span><br><span class="line">    f = open(&apos;file.txt&apos;, &apos;r&apos;)</span><br><span class="line">    .... # some data processing</span><br><span class="line">except OSError as err:</span><br><span class="line">    print(&apos;OS error: &#123;&#125;&apos;.format(err))</span><br><span class="line">except:</span><br><span class="line">    print(&apos;Unexpected error:&apos;, sys.exc_info()[0])</span><br><span class="line">finally:</span><br><span class="line">    f.close()</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/05/27/python08/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/blog/page/2/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/blog/page/4/">4</a><a class="page-number" href="/blog/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/9/">9</a><a class="extend next" rel="next" href="/blog/page/4/">Next &raquo;</a>
@@ -2012,7 +2238,7 @@ var _hmt = _hmt || [];
 			<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     	<div class="footer-left">
             <i class="fa fa-copyright"></i> 
-            2019 Tracy Xin Wang
+            2020 Tracy Xin Wang
             
             <span class="post-meta-divider">|</span>
             <span id="busuanzi_container_site_pv" style="display: inline;">
@@ -2027,7 +2253,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共91.1k字
+              本站总共94.7k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -2134,19 +2360,23 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2170,6 +2400,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">经济</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
               </li>
              
@@ -2186,19 +2420,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Network</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">思考</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2214,11 +2452,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+                <a href="javascript:void(0)" class="js-tag color3">CV</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">

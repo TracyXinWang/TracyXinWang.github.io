@@ -247,6 +247,293 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-HMM-MAR" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/03/11/HMM-MAR/">Hidden Markov Model - Multivariate Autoregressive model</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/03/11/HMM-MAR/" class="archive-article-date">
+  	<time datetime="2019-03-11T01:24:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Moedel-description"><span class="toc-number">1.</span> <span class="toc-text">Moedel description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MAR-parametrisation"><span class="toc-number">2.</span> <span class="toc-text">MAR parametrisation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Model-selection"><span class="toc-number">3.</span> <span class="toc-text">Model selection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spectral-description-of-the-states"><span class="toc-number">4.</span> <span class="toc-text">Spectral description of the states</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analysis-of-results"><span class="toc-number">5.</span> <span class="toc-text">Analysis of results</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Moedel-description"><span class="toc-text">Moedel description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MAR-parametrisation"><span class="toc-text">MAR parametrisation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Model-selection"><span class="toc-text">Model selection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spectral-description-of-the-states"><span class="toc-text">Spectral description of the states</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analysis-of-results"><span class="toc-text">Analysis of results</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="Moedel-description"><a href="#Moedel-description" class="headerlink" title="Moedel description"></a>Moedel description</h3><p>The HMM-MAR has two key ingredients: </p>
+<ul>
+<li>the Hidden Markov Model (HMM): <ul>
+<li>An HMM describes a time series as a sequence of states, where each state has its own model of the observed data (i.e., the observation model) and the probability of being at a given state at each time point depends on the states assignment in the previous time point.</li>
+<li>The transition probabilities (how likely is to be in state j if we were in state i just before) are also estimated by the model.</li>
+</ul>
+</li>
+<li>and the Multivariate Autoregressive model (MAR):<ul>
+<li>the observation model corresponds to a MAR model</li>
+<li>characterises the behaviour of time series by linear historical interactions between the observed time series from different brain regions. </li>
+<li>In different words, a MAR model aims to predict the multichannel signal value at each time point as a linear combination of signal values at previous time points. </li>
+<li>MARs are able to characterise the <u>frequency structure of the data</u>, and by making the model multivariate, are able to capture <u>interactions (e.g., coherence) between multiple brain regions</u>. </li>
+<li>Therefore, each state is related to a different set of multi-region autoregression coefficients describing the neural oscillations.</li>
+<li>When the order of the MAR model is set to zero, the states are modelled using Gaussian distributions, in which case the segmentation will be based on instantaneous activation and connectivity.</li>
+</ul>
+</li>
+<li>use variational Bayes inference</li>
+</ul>
+<h3 id="MAR-parametrisation"><a href="#MAR-parametrisation" class="headerlink" title="MAR parametrisation"></a>MAR parametrisation</h3><ul>
+<li>order parameter P: defines how far we go back in time to predict each time point.</li>
+<li>When the number of regions is high, it is easy that for the MAR to overfit the data. <ul>
+<li>That is, a relatively simple MAR model can explain a lot of variance, which will induce the HMM-MAR inference process to <u>drop most of the states of the model</u> by letting a few (or even one) dominant states to control the entire time series, thus hindering the discovery of quasi-stationary connectivity networks. </li>
+</ul>
+</li>
+<li>To solve this:<ul>
+<li>To use a low order, for example 3, and, if needed, increase that value and see how the segmentation changes.</li>
+<li>To work on a low-dimensional version of the data using PCA (see below).</li>
+<li>To avoid using the cross-channel terms, such that each state is characterised by their spectra but not the cross-spectra</li>
+</ul>
+</li>
+</ul>
+<h3 id="Model-selection"><a href="#Model-selection" class="headerlink" title="Model selection"></a>Model selection</h3><ul>
+<li>In order to determine the number of HMM states, K, a possible strategy is to fix the maximum number, and then the Bayesian inference process can discard some of them if there is insufficient evidence to support their presence in the data. </li>
+<li>The free energy, a quantity that approximates the model evidence, can also be used to choose K. </li>
+</ul>
+<h3 id="Spectral-description-of-the-states"><a href="#Spectral-description-of-the-states" class="headerlink" title="Spectral description of the states"></a>Spectral description of the states</h3><ul>
+<li>MAR corresponds with the frequency domain</li>
+<li>Hence the state segmentation is driven by the spectral content of each separate channel and the spectral relations between channels. </li>
+<li>Once the HMM-MAR model is trained and we have the state time courses, we can estimate the spectral content of the model, including the following measures:<ul>
+<li>Power spectral density (PSD)</li>
+<li>Coherence</li>
+<li>Partial directed coherence (PDC)</li>
+<li>Phase</li>
+</ul>
+</li>
+<li>The estimation of these quantities can be done by one of these two methods:<ul>
+<li>A parametric estimation, using the MAR coefficients.</li>
+<li>A nonparametric estimation, using a novel statewise version of the multitaper. This would be the way to do it for example if the states were specified to be Gaussian distributions (i.e. MAR order equal to zero).</li>
+</ul>
+</li>
+<li>In the parametric case<ul>
+<li>we can use the MAR coefficients as returned by the model. </li>
+<li>These coefficients correspond to a maximum a posteriori estimation (which means that they have been regularised by the prior), and, as described above, can have an incomplete parametrisation. </li>
+<li>For the sake of spectral estimation, we prefer to re-estimate the MAR coefficients using maximum likelihood, as is standard in the signal processing literature, and use a complete parametrisation, i.e. using lags (t-1,t-2,…,t-P).</li>
+</ul>
+</li>
+<li>In the non-parametric case:<ul>
+<li>take advantage of the inferred HMM state time courses as temporal windows for estimating the state-specific spectral properties using a weighted version of the multitaper. PDC has not a closed solution in the non-parametric case, so that we need to use the so-called Wilson factorisation</li>
+</ul>
+</li>
+</ul>
+<h3 id="Analysis-of-results"><a href="#Analysis-of-results" class="headerlink" title="Analysis of results"></a>Analysis of results</h3><ul>
+<li>The <strong>mean pattern of activity</strong> of each state. The function getMean(hmm,k) outputs the mean of the Gaussian distribution, assuming that the option zeromean was set to 0. Note that this is mostly useful for the Gaussian distribution, but not that much for the MAR model.</li>
+<li>The <strong>functional connectivity</strong> of each state. The function getFuncConn(hmm,k) outputs the covariance and correlation matrices of state k, when the states are distributed Gaussian (order=0). In the case of a MAR state model, these refer to the covariance matrix of the residual.</li>
+<li>The <strong>transition probabilities</strong>. The function getTransProbs(hmm) returns the transition probabilies from any state to any other state, without considering the persistence probabilities (i.e. the probability to remain in the same state). The transition probability matrix including the <strong>persistence probabilities</strong> is contained in hmm.P.</li>
+<li>The <strong>transition probabilities for a subset of the subjects</strong>. The function getMaskedTransProbMats returns the transition probabilities (including persistencies) for subsets of the data as specified in the parameter Masks. This is useful for example if we wish to find differences in the state transitions between groups.</li>
+<li>The state time <strong>fractional occupancies</strong>, using getFractionalOccupancy(Gamma,T,dim). This can refer to either (i) how much time the HMM spends on each state at each time point on average (across trials), or (ii) how much time each subject/trial/session spends in each state (i.e. the average state probability across time, per session or subject). The former, useful for task, is computed when dim=1; the latter, useful to investigate differences in occupancies between subjects, is computed when dim=2.</li>
+<li>The state <strong>switching rates</strong>. The function getSwitchingRate provides a measure of the state switching rate for each session/subject, and can be understood as a measure of stability per subject.</li>
+<li>The state <strong>life times</strong>. The function getStateLifeTimes returns, per subject/session/trial, a vector of life times per state, containing the number of time points per visit. This reflects the temporal stability of the states.</li>
+<li>The state <strong>interval times</strong>. The function getStateIntervalTimes returns, per subject/session/trial, a vector of interval times per state, containing the number of time points between visits. The interval times, the life times, the fractional occupancies and the switching rates are sometimes referred to collectively as the “chronnectome”.</li>
+<li><strong>maximum fractional occupancy</strong>, used to measure whether the HMM is effectively capturing the dynamics on the data. The function getMaxFractionalOccupancy finds the maximum fractional occupancy for each subject/trial. This is a useful statistic to diagnose whether the HMM solution is “mixing well” or states are assigned to describe entire subjects (in which case the HMM is doing a poor job in finding the data dynamics).</li>
+<li>The <strong>onset time</strong> of the states for each session. The function getStateOnsets provides a vector per session and state of when specifically the state becomes active. That can be used to relate to task information.</li>
+<li>The <strong>evoked state probability</strong> relative to a stimulus. The function evokedStateProbability() can be used to examine how the stimulus modulates the state probabilities.</li>
+<li>The <strong>similarity between two HMM runs</strong>. There are multiple ways to measure the similarity between HMM runs (on the same or comparable data). One of them is to measure the statistical dependence between the state time courses between the two runs. This is done with the function getGammaSimilarity(gamma1,gamma2), which measures the overlapping between the state probabilities after optimally reordering the states.</li>
+</ul>
+<p>Reference:<br><a href="https://github.com/OHBA-analysis/HMM-MAR/wiki/User-Guide" target="_blank" rel="noopener">https://github.com/OHBA-analysis/HMM-MAR/wiki/User-Guide</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/03/11/HMM-MAR/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-WienerProcess" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/03/01/WienerProcess/">Wiener Process</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/03/01/WienerProcess/" class="archive-article-date">
+  	<time datetime="2019-03-01T01:03:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Wiener-process"><span class="toc-number">1.</span> <span class="toc-text">Wiener process</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stochastic-differential-equation-SDE"><span class="toc-number">2.</span> <span class="toc-text">Stochastic differential equation (SDE)</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Wiener-process"><span class="toc-text">Wiener process</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stochastic-differential-equation-SDE"><span class="toc-text">Stochastic differential equation (SDE)</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="Wiener-process"><a href="#Wiener-process" class="headerlink" title="Wiener process"></a>Wiener process</h3><p>The Wiener process</p>
+<ul>
+<li>also called Brownian motion, is a kind of <strong>Markov stochastic process</strong>.</li>
+<li><strong>Stochastic process</strong>: <ul>
+<li>whose value changes over time in an uncertain way</li>
+<li>we only know the distribution of the possible values of the process at any time point. - In contrast to the stochastic process, a deterministic process is with an exact value at any time point.</li>
+</ul>
+</li>
+<li><strong>Markov process</strong>: the likelihood of the state at any future time point depends only on<br>its present state but not on any past states</li>
+</ul>
+<p>The properties of the Wiener process ${Z(t)}$ for $t ≥ 0$:</p>
+<ul>
+<li>(Normal increments) $Z(t) − Z(s) ∼ N(0,t − s)$.</li>
+<li>(Independence of increments) $Z(t) − Z(s)$ and $Z(u)$ are independent, for $u ≤ s &lt; t$.</li>
+<li>(Continuity of the path) $Z(t)$ is a continuous function of t.</li>
+<li>$W(0) = 0$.</li>
+<li>$E(W(t)) = 0, E(W^2(t)) = t$ for each time $t ≥ 0$.</li>
+</ul>
+<h3 id="Stochastic-differential-equation-SDE"><a href="#Stochastic-differential-equation-SDE" class="headerlink" title="Stochastic differential equation (SDE)"></a>Stochastic differential equation (SDE)</h3><ul>
+<li>is a differential equation in which one or more of the terms is a stochastic process, resulting in <u>a solution which is also a stochastic process</u>.</li>
+<li>SDEs contain a variable which represents random white noise calculated as the derivative of Brownian motion or the Wiener process.</li>
+<li>A typical SDE: $$dX = a(t, X) dt + b(t, X) dW_t$$</li>
+<li>The solution to SDE could be: Euler-Maruyama Method, Milstein Method, Runge-Kutta Method and Taylor Method</li>
+</ul>
+<p>Reference:<br><a href="http://math.gmu.edu/~tsauer/pre/sde.pdf" target="_blank" rel="noopener">http://math.gmu.edu/~tsauer/pre/sde.pdf</a><br><a href="http://ft-sipil.unila.ac.id/dbooks/AN%20INTRODUCTION%20TO%20STOCHASTIC%20DIFFERENTIAL%20EQUATIONS%20VERSION%201.2.pdf" target="_blank" rel="noopener">http://ft-sipil.unila.ac.id/dbooks/AN%20INTRODUCTION%20TO%20STOCHASTIC%20DIFFERENTIAL%20EQUATIONS%20VERSION%201.2.pdf</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Stochastic</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/03/01/WienerProcess/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-EM" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1615,317 +1902,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-MIT6006-Lec19" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/12/30/MIT6006-Lec19/">MIT6006 Lec19 DP I &amp; II</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/12/30/MIT6006-Lec19/" class="archive-article-date">
-  	<time datetime="2018-12-30T12:52:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Programming-DP"><span class="toc-number">1.</span> <span class="toc-text">Dynamic Programming (DP)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fibonacci-Numbers"><span class="toc-number">1.1.</span> <span class="toc-text">Fibonacci Numbers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shortest-Paths"><span class="toc-number">1.2.</span> <span class="toc-text">Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Guessing"><span class="toc-number">2.</span> <span class="toc-text">Guessing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-number">3.</span> <span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Easy-Steps-to-Dynamic-Programming"><span class="toc-number">3.1.</span> <span class="toc-text">5 Easy Steps to Dynamic Programming</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Examples"><span class="toc-number">4.</span> <span class="toc-text">Examples</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Text-Justification"><span class="toc-number">4.1.</span> <span class="toc-text">Text Justification</span></a></li></ol></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Programming-DP"><span class="toc-text">Dynamic Programming (DP)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fibonacci-Numbers"><span class="toc-text">Fibonacci Numbers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shortest-Paths"><span class="toc-text">Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Guessing"><span class="toc-text">Guessing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Easy-Steps-to-Dynamic-Programming"><span class="toc-text">5 Easy Steps to Dynamic Programming</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Examples"><span class="toc-text">Examples</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Text-Justification"><span class="toc-text">Text Justification</span></a></li></ol></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="Dynamic-Programming-DP"><a href="#Dynamic-Programming-DP" class="headerlink" title="Dynamic Programming (DP)"></a>Dynamic Programming (DP)</h3><ul>
-<li>Powerful algorithmic design technique</li>
-<li>Large class of seemingly exponential problems have a <u>polynomial</u> solution (“only”) via DP</li>
-<li>Particularly for optimization problems (min / max) (e.g., shortest paths)</li>
-<li>DP $\approx$ “controlled brute force”</li>
-<li>DP $\approx$ recursion + re-use</li>
-</ul>
-<p><br></p>
-<blockquote>
-<p>Dynamic Programming is mainly an optimization over plain recursion. Wherever we see a recursive solution that has repeated calls for same inputs, we can optimize it using Dynamic Programming. The idea is to simply store the results of subproblems, so that we do not have to re-comupute them when needed later. This simple optimization reduces time complexities from exponential to polynomial. For example, if we write simple recursive solution for Fibonacci Numbers, we get exponential time complexity and if we optimize it by storing solutions of subproblems, time complexity reduces to linear.</p>
-</blockquote>
-<h4 id="Fibonacci-Numbers"><a href="#Fibonacci-Numbers" class="headerlink" title="Fibonacci Numbers"></a>Fibonacci Numbers</h4><p>$$F1 = F2 = 1; \qquad F_n = F_{n−1} + F_{n−2}$$<br>Goal: compute $F_n$</p>
-<p><strong>Naive Algorithm</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fib(n):</span><br><span class="line">    if n &lt;= 2: return f=1</span><br><span class="line">    else: return f = fib(n-1) + fib(n-2)</span><br></pre></td></tr></table></figure></p>
-<p>⇒ $T(n) = T(n − 1) + T(n − 2) + O(1) ≥ Fn ≈ ϕ^n$<br>$≥ 2T(n − 2) + O(1) ≥ 2n/2$<br>EXPONENTIAL — BAD!<br>(As some items will be calculated twice, which consumes times)</p>
-<p><strong>Memoized DP Algorithm</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">memo = &#123; &#125;</span><br><span class="line">fib(n):</span><br><span class="line">    if n in memo: return memo[n]</span><br><span class="line">    else: if n ≤ 2 : f = 1</span><br><span class="line">        else: f = fib(n − 1) + fib(n − 2)</span><br><span class="line">        memo[n] = f</span><br><span class="line">        return f</span><br></pre></td></tr></table></figure></p>
-<p>Remember:<br>• ⇒ fib(k) only recurses first time called, ∀k<br>• ⇒ only n nonmemoized calls: k = n, n − 1, . . . , 1<br>• memoized calls free ($Θ(1)$ time)<br>• ⇒ $Θ(1)$ time per call (ignoring recursion)<br>POLYNOMIAL — GOOD!</p>
-<p>DP ≈ recursion + memoization</p>
-<ul>
-<li>memoize (remember) &amp; re-use solutions to subproblems that help solve problem<ul>
-<li>in Fibonacci, subproblems are F1, F2, . . . , Fn</li>
-</ul>
-</li>
-<li>⇒ time = # of subproblems x time/subproblem<ul>
-<li>Fibonacci: # of subproblems is n, and time/subproblem is Θ(1) = Θ(n) (ignore recursion!).</li>
-</ul>
-</li>
-</ul>
-<p><strong>Bottom-up DP Algorithm</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fib = &#123;&#125;</span><br><span class="line">for k in [1, 2, . . . , n]:</span><br><span class="line">    if k ≤ 2: f = 1</span><br><span class="line">    else: f = fib[k − 1] + fib[k − 2]</span><br><span class="line">    fib[k] = f</span><br><span class="line">return fib[n]</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>exactly the same computation as memoized DP (recursion “unrolled”)</li>
-<li>in general: topological sort of subproblem dependency DAG</li>
-<li>practically faster: no recursion</li>
-<li>analysis more obvious</li>
-<li>can save space: just remember last 2 fibs ⇒ Θ(1)</li>
-</ul>
-<h4 id="Shortest-Paths"><a href="#Shortest-Paths" class="headerlink" title="Shortest Paths"></a>Shortest Paths</h4><ul>
-<li>Recursive formulation:<br>$$δ(s, v) = min{δ(s, u) + w(u, v) | (u, v) ∈ E}$$</li>
-<li>Memoized DP algorithm: takes infinite time if cycles!<ul>
-<li>in some sense necessary to handle negative cycles</li>
-</ul>
-</li>
-<li>works for directed acyclic graphs in $O(V + E)$<ul>
-<li>effectively DFS/topological sort + Bellman-Ford round rolled into a single recursion<br>Subproblem dependency should be acyclic</li>
-</ul>
-</li>
-<li>more subproblems remove cyclic dependence:<br>$$δ_k(s, v) = shortest \quad s → v \quad path \quad using ≤ k \quad edges$$</li>
-<li>recurrence:<br>$δ<em>k(s, v) = min{δ</em>{k−1}(s, u) + w(u, v)|(u, v) ∈ E}$<br>$δ_0(s, v) = ∞$ for s $\ne$ v (base case)<br>$δ_k(s, s) = 0$ for any k (base case, if no negative cycles)$</li>
-<li>Goal: $δ(s, v) = δ_{|V|−1}(s, v)$ (if no negative cycles)</li>
-<li>memorize</li>
-<li>time: # of subproblems($|V|·|V|$) x time/subproblem($O(v) = 0(V^3)$)</li>
-<li>actually $Θ(indegree(v))$ for $δ_k(s, v)$</li>
-<li>⇒ time = $Θ(V\sum_{v∈V} indegree(V)) = Θ(VE)$</li>
-</ul>
-<h3 id="Guessing"><a href="#Guessing" class="headerlink" title="Guessing"></a>Guessing</h3><p>How to design recurrence:</p>
-<ul>
-<li>want shortest s → v path</li>
-<li>what is the last edge in path? dunno</li>
-<li>guess it is (u, v)</li>
-<li>then path is shortest s → u path + edge(u, v)</li>
-<li>the cost is $δ<em>{k−1}(s, u) + w(u, v)$, and $δ</em>{k−1}(s, u)$ is another subproblem</li>
-<li>to find best guess, try all (|V| choices) and use best</li>
-<li>key: small (polynomial) # possible guesses per subproblem — typically this dominates time/subproblem<br>DP ≈ recursion + memoization + guessing</li>
-</ul>
-<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><ul>
-<li>DP $\approx$ “careful brute force”</li>
-<li>DP $\approx$ guessing + recursion + memoization</li>
-<li>DP ≈ dividing into reasonable # of subproblems whose solutions relate -  acyclicly - usually via guessing parts of solution.</li>
-<li>time = # subproblems × time/subproblem<ul>
-<li>essentially an amortization</li>
-<li>count each subproblem only once; after first time, costs O(1) via memoization</li>
-</ul>
-</li>
-<li>DP ≈ shortest paths in some DAG</li>
-</ul>
-<h4 id="5-Easy-Steps-to-Dynamic-Programming"><a href="#5-Easy-Steps-to-Dynamic-Programming" class="headerlink" title="5 Easy Steps to Dynamic Programming"></a>5 Easy Steps to Dynamic Programming</h4><ol>
-<li>define subproblems           count # subproblems</li>
-<li>guess (part of solution)     count # choices</li>
-<li>relate subproblem solutions  compute time/subproblem</li>
-<li>recurse + memoize            time = time/subproblem x # subproblems<ul>
-<li>OR build DP table bottom-up</li>
-<li>check subproblems acyclic/topological order</li>
-</ul>
-</li>
-<li>solve original problem: = a subproblem<ul>
-<li>OR by combining subproblem solutions ⇒ extra time</li>
-</ul>
-</li>
-</ol>
-<h3 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h3><h4 id="Text-Justification"><a href="#Text-Justification" class="headerlink" title="Text Justification"></a>Text Justification</h4><p>Content:<br>Split text into good lines</p>
-<ul>
-<li>obvious(MS Word) algorithm: put as many words that fit on first line, repeat</li>
-<li>but this can make very bad lines<br>Redefine the problem:</li>
-<li>Define badness(i,j) for line of words: [i,j]<ul>
-<li>e.g. if $\inf$ total length &gt; page width, else (page width - total length)^3</li>
-</ul>
-</li>
-<li>goal: split words into lines to min $\sum$ badness</li>
-</ul>
-<ol>
-<li><strong>subproblem</strong> = min. badness for suffix words[i :]<br>⇒ number of subproblems = Θ(n) where n = number of words</li>
-<li><strong>guessing</strong> = where to end first line, say i:j<br>⇒ number of choices = $n − i = O(n)$</li>
-<li><strong>recurrence</strong>:<br>• DP[i] = min(badness (i,j) + DP[j] for j in range (i+1,n+1))<br>• DP[n] = 0<br>⇒ time per subproblem = Θ(n)</li>
-<li><strong>order</strong>: for i=n,n-1,…,1,0<br>total time = $Θ(n^2)$</li>
-<li>solution = DP[0]</li>
-</ol>
-<p><br></p>
-<p>Reference:<br><a href="https://www.geeksforgeeks.org/dynamic-programming/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/dynamic-programming/</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/12/30/MIT6006-Lec19/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MIT6006-Lec18" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/12/20/MIT6006-Lec18/">MIT6006 Lec18 Speeding up Dijkstra</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/12/20/MIT6006-Lec18/" class="archive-article-date">
-  	<time datetime="2018-12-20T09:50:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bi-Directional-Search"><span class="toc-number">1.</span> <span class="toc-text">Bi-Directional Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Goal-directed-search-or-A"><span class="toc-number">2.</span> <span class="toc-text">Goal directed search or A*</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bi-Directional-Search"><span class="toc-text">Bi-Directional Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Goal-directed-search-or-A"><span class="toc-text">Goal directed search or A*</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="Bi-Directional-Search"><a href="#Bi-Directional-Search" class="headerlink" title="Bi-Directional Search"></a>Bi-Directional Search</h3><ul>
-<li>Bidirectional search means to start search from both direction simutaneously.</li>
-<li>The reason to use bidirectional is that in many cases it is faster, it dramatically reduce the amount of required exploration.</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Alternate forward search from s</span><br><span class="line">          backward search from t</span><br><span class="line">          (follow edges backward)</span><br><span class="line">df(u) distances <span class="keyword">for</span> forward search</span><br><span class="line">db(u) distances <span class="keyword">for</span> backward search</span><br></pre></td></tr></table></figure>
-<p>Note:</p>
-<ul>
-<li>Algorithm terminates when some vertex w has been processed, i.e., deleted from the queue of both searches, $Q_f$ and $Q_b$</li>
-<li>Subtlety: After search terminates, find node x with minimum value of df(x) + db(x). x may not be the vertex w that caused termination as in example to the left!</li>
-<li>Find shortest path from s to x using $Π_f$ and shortest path backwards from t to x using $Π_b$. Note: x will have been deleted from either $Q_f$ or $Q_b$ or both.</li>
-</ul>
-<h3 id="Goal-directed-search-or-A"><a href="#Goal-directed-search-or-A" class="headerlink" title="Goal directed search or A*"></a>Goal directed search or A*</h3><ul>
-<li>A* Search algorithm is one of the best and popular technique used in path-finding and graph traversals.</li>
-</ul>
-<p>Modify edge weights with potential function over vertices.<br>$$\bar w(u,v) = w(u,v) - \lambda (u) + \lambda (v)$$</p>
-<p>For A* algorithm, one of the item is the real distance, another one is heuristic distance, which can be manhattan, eucliean or other distance. </p>
-<p><br></p>
-<p>Reference:<br><a href="https://www.geeksforgeeks.org/a-search-algorithm/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/a-search-algorithm/</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/12/20/MIT6006-Lec18/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/blog/page/4/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/3/">3</a><a class="page-number" href="/blog/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/blog/page/6/">6</a><a class="page-number" href="/blog/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/9/">9</a><a class="extend next" rel="next" href="/blog/page/6/">Next &raquo;</a>
@@ -1942,7 +1918,7 @@ var _hmt = _hmt || [];
 			<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     	<div class="footer-left">
             <i class="fa fa-copyright"></i> 
-            2019 Tracy Xin Wang
+            2020 Tracy Xin Wang
             
             <span class="post-meta-divider">|</span>
             <span id="busuanzi_container_site_pv" style="display: inline;">
@@ -1957,7 +1933,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共91.1k字
+              本站总共94.7k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -2064,19 +2040,23 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2100,6 +2080,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">经济</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
               </li>
              
@@ -2116,19 +2100,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Network</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">思考</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2144,11 +2132,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+                <a href="javascript:void(0)" class="js-tag color3">CV</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">

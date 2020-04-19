@@ -247,6 +247,469 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-coursera_visual_percep05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/08/08/coursera_visual_percep05/">Coursera Visual Perception for Self-Driving Cars 05</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/08/08/coursera_visual_percep05/" class="archive-article-date">
+  	<time datetime="2019-08-08T12:30:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Semantic-Segmentation"><span class="toc-number">1.</span> <span class="toc-text">Semantic Segmentation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Semantic-Segmentation-Problem"><span class="toc-number">1.1.</span> <span class="toc-text">The Semantic Segmentation Problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConvNets-for-Semantic-Segmentation"><span class="toc-number">1.2.</span> <span class="toc-text">ConvNets for Semantic Segmentation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Semantic-Segmentation-for-Road-Scene-Understanding"><span class="toc-number">1.3.</span> <span class="toc-text">Semantic Segmentation for Road Scene Understanding</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Semantic-Segmentation"><span class="toc-text">Semantic Segmentation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Semantic-Segmentation-Problem"><span class="toc-text">The Semantic Segmentation Problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConvNets-for-Semantic-Segmentation"><span class="toc-text">ConvNets for Semantic Segmentation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Semantic-Segmentation-for-Road-Scene-Understanding"><span class="toc-text">Semantic Segmentation for Road Scene Understanding</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <p>From Coursera, State Estimation and Localization for Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/learn/visual-perception-self-driving-cars" target="_blank" rel="noopener">https://www.coursera.org/learn/visual-perception-self-driving-cars</a></p>
+<h2 id="Semantic-Segmentation"><a href="#Semantic-Segmentation" class="headerlink" title="Semantic Segmentation"></a>Semantic Segmentation</h2><h3 id="The-Semantic-Segmentation-Problem"><a href="#The-Semantic-Segmentation-Problem" class="headerlink" title="The Semantic Segmentation Problem"></a>The Semantic Segmentation Problem</h3><ul>
+<li>Given an input image, we want to classify each pixel into a set of preset categories. The categories can be static road elements e.g. roads, sidewalk, traffic lights or dynamic obstacles e.g. cars, pedestrians, and cyclists or a background class that encompasses any category we do not include in our preset categories.</li>
+<li>Semantic segmentation is still through a function estimator<ul>
+<li>Given an image, we take every pixel as an input and output a vector of class scores per pixel. </li>
+<li>A pixel belongs to the class with the highest class score.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Performance of semantic segmentation</strong></p>
+<ul>
+<li>True Positive(TP): The number of correctly classified pixels belonging to classX</li>
+<li>False Positive(FP): The number of pixels that do not belong to class X in ground truth but are classified that class by the algorithm</li>
+<li>False Negative(FN): The number of pixels that do belong to class X in ground truth,but are not classified as that class by the algorithm<br>$$IOU_{class} = \frac{TP}{TP+FP+FN}$$</li>
+<li>Class lOU over all the data is calculated by computing the sum of TP, FP, FN for all images first</li>
+<li>Averaging the class IOU is usually not a very good idea!</li>
+<li>CityScapes Segmentation Dataset</li>
+</ul>
+<h3 id="ConvNets-for-Semantic-Segmentation"><a href="#ConvNets-for-Semantic-Segmentation" class="headerlink" title="ConvNets for Semantic Segmentation"></a>ConvNets for Semantic Segmentation</h3><ul>
+<li>Semantic segmentation takes a camera images input and provides a category classification for every pixel in that image as output. This problem can be modeled as a function approximation problem, and ConvNets can once again be used to approximate the required function.</li>
+<li>The ConvNet model can be chosen as the same ConvNet model we used for object detection. That is, a feature extractor followed by an output layer. We do not need anchors here as we are not trying to localize objects. </li>
+<li>In VGG architecture, <ul>
+<li>the input image is the size of MxNx3</li>
+<li>As with object detection, the resolution will be reduced by half after every pooling layer. On the other hand, the depth will increase due to the convolutional layers. </li>
+<li>The output feature map of the convolutional feature extractor will be downsampled by 16 times.</li>
+<li>We can add as many convolutional pooling blocks as needed, but that will further shrink our feature map.</li>
+</ul>
+</li>
+<li>However, output for semantic segmentation is to have a classification for every pixel in the image. How can we achieve this given a down sampled feature map that is 16 times smaller than our original input?</li>
+<li>A simple solution would be the following:<ul>
+<li>first compute the output by passing the 16 times downsampled output feature map through a softmax layer.</li>
+<li>We can then determine the class of every pixel in the subsampled output by taking the highest class score obtained by the softmax layer.</li>
+<li>The final step would be to proceed to upsample, the downsampled output back to the original image resolution. </li>
+<li>however, this naive upsampling might produce inadequate results</li>
+</ul>
+</li>
+<li>one of the most challenging problems in semantic segmentation is attaining smooth and accurate boundaries around the objects. <ul>
+<li>Smooth boundaries are hard to attain as in general boundaries in the image space are ambiguous, especially for thin objects such as pools, similar looking objects such as roads and sidewalks, and far away objects.</li>
+</ul>
+</li>
+<li>Naive upsampling also induces two additional problems:<ul>
+<li>Any object less than 16 pixels in width or height usually fully disappears in their upsampled image. This affects both thin objects such as pools and far away objects. As they are below the minimum dimensions required for the pixels to appear from the original image.</li>
+</ul>
+</li>
+<li>To remedy these problems, researchers have formulated what is commonly referred to as a feature decoder. <ul>
+<li>The feature decoder can be thought of as a mirror image of the feature extractor. </li>
+<li>Instead of using the convolution pooling paradigm to downsample the resolution, it uses upsampling layers followed by a convolutional layer to upsample the resolution of the feature map.</li>
+<li>The upsampling usually using nearest neighbor methods achieves the opposite effect to pooling, but results in an inaccurate feature map.</li>
+<li>The following convolutional layers are then used to correct the features in the upsampled feature map with learnable filter banks.</li>
+<li>This correction usually provides the required smooth boundaries as we go forward through the feature decoder.</li>
+</ul>
+</li>
+<li>Similar to the feature extractor, each upsampling convolution block is referred to as a deconvolution.<ul>
+<li>As we go through the first deconvolution block, the input feature map is upsampled to twice the input resolution. </li>
+<li>The depth is controlled by how many filters are defined for each successive convolutional layer. </li>
+<li>As we go forward through the rest of the decoder, we finally arrive at a feature map of similar resolution to the input image. </li>
+</ul>
+</li>
+<li>The output can be a linear output layer, followed by a softmax function. This layer is very similar to the classification output layer in object detection. <ul>
+<li>this layer provides a k-dimensional vector per pixel with the kth element being how confident the neural network is that the pixel belongs to the kth class.</li>
+</ul>
+</li>
+<li>Classification Loss: $L_{cls}=\frac 1{N_{total} \, \sum_i CrossEntropy(s^*_i,s_i)}$<ul>
+<li>$N_{total}$ is the total number of classified pixels in all the images of a mini-batch. Usually, a mini-batch would comprise of 8 to 16 images, and the choice of this number depends on how much memory your GPU has.</li>
+<li>$s_i$ is the output of the neural network</li>
+<li>$s^*_i$ is the ground truth classification</li>
+</ul>
+</li>
+</ul>
+<h3 id="Semantic-Segmentation-for-Road-Scene-Understanding"><a href="#Semantic-Segmentation-for-Road-Scene-Understanding" class="headerlink" title="Semantic Segmentation for Road Scene Understanding"></a>Semantic Segmentation for Road Scene Understanding</h3><p><strong>3D Drivable Surface Estimation</strong><br>Steps:</p>
+<ol>
+<li>Generate semantic segmentation output</li>
+<li>Associate 3D point coordinates with 2D image pixels</li>
+<li>Choose 3D points belonging to the Drivable Surface category</li>
+<li>Estimate 3D drivable surface model</li>
+</ol>
+<p>Plane Model: $$ax+by+z=d$$<br>Least squares formulation: $$p=[a,b,d], \; argmin_A(Ap-B)$$ $$A = [x_1 \; y_1 \; -1; x_2 \; y_2 \; -1; …; x_N \; y_N \; -1], \quad B = [-z_1; -z_2; … ; -z_N]$$<br>Solution: $p=(A^TA)^{-1}A^TB$</p>
+<ul>
+<li>Minimum number of points to estimate model: 3 non-collinear points</li>
+<li>RANSAC Algorithm:<ul>
+<li>From the data, randomly select 3 points.</li>
+<li>Compute model parameters a, b, and d using least squares estimation.</li>
+<li>Compute number of inliers, N.</li>
+<li>If N &gt; threshold, terminate and return the computed plane parameters. Else, go back to step 1.</li>
+<li>Recompute the model parameter using all the inliers in the inlier set.</li>
+</ul>
+</li>
+</ul>
+<p>Semantic Lane Estimation</p>
+<ul>
+<li>Estimate the lane, the area where the car can drive on the drivable surface</li>
+<li>Estimate what is at the boundaries of the lane:<ul>
+<li>Curb</li>
+<li>Road</li>
+<li>Car</li>
+</ul>
+</li>
+<li>Steps:<ul>
+<li>Extract segmentation mask from pixels belonging to lane separators such as lane markings or curbs.</li>
+<li>Extract edges from this segmentation mask using an edge detector.</li>
+<li>Linear Lane Model:Use the Hough transform to detect lines in the output edge map.</li>
+<li>Filter lines based on slope to remove horizontal lines.</li>
+<li>Remove any line that does not belong to the drivable space.</li>
+<li>Determine which classes occur at the boundary of the lane.</li>
+</ul>
+</li>
+<li>Materials:<ul>
+<li>Hough Transform Line Detection: <a href="https://docs.opencv.org/3.4.3/d9/dbo/tutorial_hough_lines.html" target="_blank" rel="noopener">https://docs.opencv.org/3.4.3/d9/dbo/tutorial_hough_lines.html</a></li>
+<li>Canny Edge Detection: <a href="https://docs.opencv.org/3.4.3/da/d22/tutorial_py_canny.html" target="_blank" rel="noopener">https://docs.opencv.org/3.4.3/da/d22/tutorial_py_canny.html</a></li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/08/08/coursera_visual_percep05/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-coursera_visual_percep04" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/08/08/coursera_visual_percep04/">Coursera Visual Perception for Self-Driving Cars 04</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/08/08/coursera_visual_percep04/" class="archive-article-date">
+  	<time datetime="2019-08-08T02:30:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2D-Object-Detection"><span class="toc-number">1.</span> <span class="toc-text">2D Object Detection</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Object-Detection-Problem"><span class="toc-number">1.1.</span> <span class="toc-text">The Object Detection Problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2D-Object-detection-with-Convolutional-Neural-Networks"><span class="toc-number">1.2.</span> <span class="toc-text">2D Object detection with Convolutional Neural Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Training-vs-Inference"><span class="toc-number">1.3.</span> <span class="toc-text">Training vs. Inference</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-2D-Object-Detectors-for-Self-Driving-Cars"><span class="toc-number">1.4.</span> <span class="toc-text">Using 2D Object Detectors for Self-Driving Cars</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2D-Object-Detection"><span class="toc-text">2D Object Detection</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Object-Detection-Problem"><span class="toc-text">The Object Detection Problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2D-Object-detection-with-Convolutional-Neural-Networks"><span class="toc-text">2D Object detection with Convolutional Neural Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Training-vs-Inference"><span class="toc-text">Training vs. Inference</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-2D-Object-Detectors-for-Self-Driving-Cars"><span class="toc-text">Using 2D Object Detectors for Self-Driving Cars</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <p>From Coursera, State Estimation and Localization for Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/learn/visual-perception-self-driving-cars" target="_blank" rel="noopener">https://www.coursera.org/learn/visual-perception-self-driving-cars</a></p>
+<h2 id="2D-Object-Detection"><a href="#2D-Object-Detection" class="headerlink" title="2D Object Detection"></a>2D Object Detection</h2><h3 id="The-Object-Detection-Problem"><a href="#The-Object-Detection-Problem" class="headerlink" title="The Object Detection Problem"></a>The Object Detection Problem</h3><p><strong>2D object detection task problem</strong></p>
+<ul>
+<li>Object detection can be defined as a function estimation problem</li>
+<li>Given an input image x, we want to find the function $f(x;\theta)$ that produces an output vector that includes the coordinates of the top-left of the box, and the coordinates of the lower right corner of the box, and a class score: $f(x;\theta) = [x_{min}, y_{min}, x_{max}, y_{max}, S_{class_1},…S_{class_k}]$</li>
+</ul>
+<p><strong>Evaluating performance measures</strong></p>
+<ul>
+<li>The first step of the evaluation process is to compare the detector localization output to the ground truth boxes via the Intersection-Over-Union metric (IOU).<ul>
+<li>area of intersection of predicted box with a ground truth box, divided by the area of their union</li>
+</ul>
+</li>
+<li>To account for class scores, we define true positives (TP),  False positive (FP) and False Negative (FN). <ul>
+<li>TP: Object class score &gt; score threshold, and IOU &gt; IOU threshold</li>
+<li>FP: Object class score &gt; score threshold, and IOU &lt; IOU threshold</li>
+<li>FN: Number of ground truth objects not detected by the algorithm</li>
+<li>Precision: TP/(TP+FP)</li>
+<li>Recall: TP/(TP+FN)</li>
+<li>Precision Recall Curve (PR-Curve): Use multiple object class score thresholds to compute precision and recall. Plot the values with precision on y-axis, and recall on x-axis</li>
+<li>Average Precision (AP): Area under PR-Curve for a single class. Usually approximated using 11 recall points</li>
+</ul>
+</li>
+</ul>
+<h3 id="2D-Object-detection-with-Convolutional-Neural-Networks"><a href="#2D-Object-detection-with-Convolutional-Neural-Networks" class="headerlink" title="2D Object detection with Convolutional Neural Networks"></a>2D Object detection with Convolutional Neural Networks</h3><p>The Feature Extractor</p>
+<ul>
+<li>Feature extractors are the most computationally expensive component of the 2D object detector</li>
+<li>The output of feature extractors usually has much lower width and height than those of the input image, but much greater depth</li>
+<li>Very active area of research, with new extractors proposed on regular basis</li>
+<li>Most common extractors are: VGG, ResNet, and Inception</li>
+</ul>
+<p>VGG Feature Extractor</p>
+<ul>
+<li>Alternating convolutional and pooling layers</li>
+<li>All convolutional layers are of size 3×3xK, with stride 1 and 1 zero-padding</li>
+<li>All pooling layers use the max function, and are of size 2x2, with stride 2 and no padding.</li>
+</ul>
+<p>Prior boxes/anchor boxes:</p>
+<ul>
+<li>To generate 2D bounding boxes, we usually do not start from scratch and estimate the corners of the bounding box without any prior. </li>
+<li>We assume that we do have a prior on where the boxes are in image space and how large these boxes should be. These priors are called anchor boxes and are manually defined over the whole image usually on an equally-spaced grid. </li>
+<li>During training, the network learns to take each of these anchors and tries to move it as close as possible to the ground truth bounding box in both the centroid location and box dimensions. This is termed <em>residual learning</em> and it takes advantage of the notion that it is easier to nudge an existing box a small amount to improve it rather than to search the entire image for possible object locations.</li>
+<li>Residual learning has proven to provide much better results than attempting to directly estimate bounding boxes without any prior. </li>
+</ul>
+<p>Faster R-CNN:</p>
+<ul>
+<li>For every pixel in the feature map, we associate k anchor boxes. </li>
+<li>We then perform a 3x3xD star convolution operation on that pixels neighborhood. This results in a 1x1xD star feature vector for that pixel. </li>
+<li>We use this one by 1x1xD star feature vector as the feature vector of every one of the k anchors associated with that pixel. </li>
+<li><p>We then proceed to feed the extracted feature vector to the output layers in the neural network.</p>
+</li>
+<li><p>The output layers of a 2D object detector usually comprise of a regression head and a classification head. </p>
+</li>
+<li>The regression head usually includes multiple fully-connected hidden layers with a linear output layer. The regressed output is typically a vector of residuals that need to be added to the anchor that hand to get the ground truth bounding box.</li>
+<li>Another method to update the dimension of the anchors is to regress a residual from the center of the anchor to the center of the ground truth bounding box in addition to two scale factors that correct the ground truth bounding box width and height when multiplied with an anchor’s width and height. </li>
+<li>The classification head is also comprised of multiple fully-connected hidden layers, but with a final softmax output layer. The softmax output is a vector with a single score per class. The highest score usually defines the class of the anchor at hand.</li>
+</ul>
+<h3 id="Training-vs-Inference"><a href="#Training-vs-Inference" class="headerlink" title="Training vs. Inference"></a>Training vs. Inference</h3><p><strong>Minibatch selection</strong></p>
+<ul>
+<li>Negative anchors target:<ul>
+<li>Classification:Background</li>
+<li>Regression:None</li>
+</ul>
+</li>
+<li>Positive anchors target:<ul>
+<li>Classification:Category of the ground truth bounding box</li>
+<li>Regression:Align box parameters with highest IOU ground truth bounding box</li>
+</ul>
+</li>
+<li>Problem: Majority of anchors are negatives results in neural network will label all detections as background</li>
+<li>Solution: Sample a chosen minibatch size,with 3:1 ratio of negative to positive anchors to eliminate bias towards the negative class</li>
+<li>Choose negatives with highest classification loss(online hard negative mining) to be included in the minibatch</li>
+<li>Classification loss: $L_{cls} = \frac 1{N_{total}} \sum_i crossentropy(s^*_i, s_i)$<ul>
+<li>$N_{total}$ is the size of the minibatch</li>
+<li>$s_i$ is the output of the nerual network</li>
+<li>$s^*_i$ is the anchor classification target:<ul>
+<li>Background if anchor is negative</li>
+<li>Ground truth box class if anchor is positive</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Regression Loss: $L_{reg} = \frac 1{N_{total}} \sum_i p_iL_2(b^*_i, b_i) $<ul>
+<li>$p_i$ is 0 if anchor is negative and 1 if anchor is positive</li>
+<li>$N_p$ is the number of positive anchors in the minibatch</li>
+<li>$b^*_i$ the ground truth bounding box</li>
+<li>$b_i$ is the estimated bounding box, applying the regressed residuals to the anchor box parameters</li>
+</ul>
+</li>
+</ul>
+<p><strong>Non-maximum suppression(NMS)</strong></p>
+<ul>
+<li>an extremely powerful approach to improving inference output for anchor based neuron networks. </li>
+<li>Non-max suppression takes as an input a list of predicted boundary boxed b, and each bounding blocks is comprised of the regressed coordinates in the class output score.</li>
+<li>It also needs as an input a predefined IOU threshold which we’ll call ada.</li>
+<li>Algorithm goes as follows<ul>
+<li>first sort the bounding boxes in list B according to their output score. We also initialize an empty set D to hold output bounding boxes.</li>
+<li>then proceed to iterate overall elements in the sorted box list B bar. Inside the for loop, we first determine the box B max with the highest score in the list B, which should be the first element in B bar.</li>
+<li>then remove this bounding box from the bounding box set D bar and add it to the output set D.</li>
+<li>Next, find all boxes remaining in the set B bar that have an IOU greater than ada with the box B max. These boxes significantly overlap with the current maximum box, B max. Any box that satisfies this condition gets removed from the list B bar. We keep iterating through the list B bar until is empty, and then we return the list D.</li>
+<li>D now contains a single bounding box per object.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Using-2D-Object-Detectors-for-Self-Driving-Cars"><a href="#Using-2D-Object-Detectors-for-Self-Driving-Cars" class="headerlink" title="Using 2D Object Detectors for Self-Driving Cars"></a>Using 2D Object Detectors for Self-Driving Cars</h3><p><strong>3D Object Detection</strong></p>
+<ul>
+<li>Estimating the: <ul>
+<li>Category Classification: Car, pedestrian, cyclist </li>
+<li>Position of the centroid in 3D: $[x,y,z]$</li>
+<li>Extent in 3D: $[l,w,h]$ </li>
+<li>Orientation in 3D Y: $[\phi,\psi,\theta]$</li>
+</ul>
+</li>
+<li>The most common and successful way to extend 2D object detection results in 3D is to use LiDAR point clouds.<ul>
+<li>Given a 2D bounding box in an image space and a 3D LiDAR point cloud, we can use the inverse of the camera projection matrix to project the corners of the bounding box as rays into the 3D space. </li>
+</ul>
+</li>
+<li>Advantages:<ul>
+<li>Allows exploitation of mature 2D object detectors, with high precision and recall </li>
+<li>Class already determined from 2D detection. There is no need to use LiDAR data or pass 3D information into the network to determine whether we are looking at a car or a post.</li>
+<li>Does not require prior scene knowledge,such as ground plane location</li>
+</ul>
+</li>
+<li>Disadvantages:<ul>
+<li>The performance of the 3D estimator is bounded by the performance of the 2D detector</li>
+<li>Occlusion and truncation are hard to handle from 2D only</li>
+<li>3D estimator needs to wait for 2D detector, inducing latency in our system</li>
+</ul>
+</li>
+</ul>
+<p><strong>2D object tracking</strong></p>
+<ul>
+<li>Detection: We detect the object independently ineach frame and can record its position over time</li>
+<li>Tracking: We use image measurements to estimate position of object, but also incorporate position predicted by dynamics, i.e., our expectation of object’s motion pattern</li>
+<li>Tracking Assumptions: <ul>
+<li>Camera is not moving instantly to new viewpoint </li>
+<li>Objects do not disappear and reappear in different places in the scene </li>
+<li>If the camera is moving,there is a gradual change in pose between camera and scene</li>
+</ul>
+</li>
+<li>Object Tracking: Prediction<ul>
+<li>Each object will have a predefined motion model in image space, e.g. $p_k = p_{k-1} +v_k\Delta t + N(0,\Sigma)$</li>
+</ul>
+</li>
+<li>Object Tracking: correlation<ul>
+<li>Get Measurement Bounding Boxes from 2D detector.</li>
+<li>Correlate prediction with the highest IOU measurement</li>
+</ul>
+</li>
+<li>Object Tracking: Update<ul>
+<li>The prediction and measurement are fused as part of the Kalman Filter Framework</li>
+</ul>
+</li>
+<li>For each frame, we start new track if a measurement has no correlated prediction</li>
+<li>We also terminate inconsistent tracks, if a predicted object does not correlate with a measurement for a preset number of frames</li>
+<li>The same methodology can be used to track objects in 3D!</li>
+</ul>
+<p><strong>Traffic signs and signals detection</strong></p>
+<ul>
+<li>Traffic signs and signals appear smaller in size compared to cars, two-wheelers, and pedestrians.</li>
+<li>Traffic signs are highly variable with many classes to be trained on.</li>
+<li>Traffic signals have different states that are required to be detected.</li>
+<li>In addition, traffic signals change state as the car drives</li>
+<li>2D object detectors can be used to perform traffic sign and traffic signal detection without any modifications</li>
+<li>However, multi-stage hierarchical models have been shown to outperform the standard single stage object detectors Prior Boxes</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/08/08/coursera_visual_percep04/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-coursera_visual_percep03" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -2207,496 +2670,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-coursera_self_driving04" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/07/22/coursera_self_driving04/">Coursera Self-Driving 04 Vehicle Dynamic Modeling</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/07/22/coursera_self_driving04/" class="archive-article-date">
-  	<time datetime="2019-07-22T01:57:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Kinematic-Modeling-in-2D"><span class="toc-number">1.</span> <span class="toc-text">Kinematic Modeling in 2D</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Kinematic-Bicycle-Model"><span class="toc-number">1.1.</span> <span class="toc-text">The Kinematic Bicycle Model</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dynamic-Modeling-in-2D"><span class="toc-number">2.</span> <span class="toc-text">Dynamic Modeling in 2D</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Longitudinal-Vehicle-Modeling"><span class="toc-number">2.1.</span> <span class="toc-text">Longitudinal Vehicle Modeling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lateral-Dynamics-of-Bicycle-Model"><span class="toc-number">2.2.</span> <span class="toc-text">Lateral Dynamics of Bicycle Model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vehicle-Actuation"><span class="toc-number">2.3.</span> <span class="toc-text">Vehicle Actuation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tire-Slip-and-Modeling"><span class="toc-number">2.4.</span> <span class="toc-text">Tire Slip and Modeling</span></a></li></ol></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Kinematic-Modeling-in-2D"><span class="toc-text">Kinematic Modeling in 2D</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Kinematic-Bicycle-Model"><span class="toc-text">The Kinematic Bicycle Model</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dynamic-Modeling-in-2D"><span class="toc-text">Dynamic Modeling in 2D</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Longitudinal-Vehicle-Modeling"><span class="toc-text">Longitudinal Vehicle Modeling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lateral-Dynamics-of-Bicycle-Model"><span class="toc-text">Lateral Dynamics of Bicycle Model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vehicle-Actuation"><span class="toc-text">Vehicle Actuation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tire-Slip-and-Modeling"><span class="toc-text">Tire Slip and Modeling</span></a></li></ol></li></ol>
-        </div>
-    </div>
- -->
-        <p>From Coursera, Introduction to Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/specializations/self-driving-cars?action=enroll" target="_blank" rel="noopener">https://www.coursera.org/specializations/self-driving-cars?action=enroll</a></p>
-<p>Creating a good vehicle model is essential for model-based control development. </p>
-<p>Kinematic Vs Dynamic Modeling:</p>
-<ul>
-<li>kinematics: positions and velocities</li>
-<li>dynamics: forces and torques of a car and how they connect</li>
-<li>Kinematic modeling: at low speeds,i t is often sufficient to look only at kinematic models of vehicles<ul>
-<li>Examples: Two wheeled robot, Bicycle model</li>
-</ul>
-</li>
-<li>Dynamic modeling is more involved, but captures vehicle behavior more precisely over a wide operating range <ul>
-<li>Examples: Dynamic vehicle model</li>
-</ul>
-</li>
-</ul>
-<h2 id="Kinematic-Modeling-in-2D"><a href="#Kinematic-Modeling-in-2D" class="headerlink" title="Kinematic Modeling in 2D"></a>Kinematic Modeling in 2D</h2><p><strong>Coordinate Frames</strong></p>
-<ul>
-<li>Right handed by convention</li>
-<li>Inertial frame (global world coordinate)<ul>
-<li>Fixed reference frame, usually relative to earth</li>
-<li>we often represent this coordinate frame as East North Up, ENU, relative to a reference point nearby. </li>
-<li>Or Earth-Centered Earth Fixed, ECEF, as is used in GNSS systems.</li>
-</ul>
-</li>
-<li>Body frame<ul>
-<li>Attached to vehicle, origin at vehicle center of gravity, or center of rotation</li>
-<li>is moving and rotating with respect to the fixed inertial frame as the vehicle moves about.</li>
-</ul>
-</li>
-<li>Sensor frame <ul>
-<li>Attached to sensor, convenient for expressing sensor measurements</li>
-</ul>
-</li>
-<li>Coordinate transformation e.g.:<ul>
-<li>Location of point (P) in Body Frame(B):<br>$$P_B = C_{EB}(\theta) P_E + O_{EB}$$</li>
-<li>Location of point (P) in Inertial Frame(E):<br>$$P_E = C_{BE}(\theta) P_B + O_{BE}$$</li>
-<li>$O_{BE}$ or $O_{EB}$ is the translation term, expressed in corresponding frame</li>
-</ul>
-</li>
-</ul>
-<p><strong>2D Kinematic Modeling</strong></p>
-<ul>
-<li>An example of a ball in the sky: The kinematic constraint is nonholonomic <ul>
-<li>A constraint on rate of change of degrees of freedom </li>
-<li>Vehicle velocity always tangent to current path<br>$$\frac{dy}{dx} = tan \theta = \frac{sin \theta}{cos \theta}$$</li>
-<li>Nonholonomic constraint: $$ \dot y cos \theta - \dot x sin \theta = 0 $$</li>
-<li>Velocity components: $$\dot x = v cos \theta, \quad \dot y = v sin \theta$$</li>
-</ul>
-</li>
-</ul>
-<p><img src="/blog/images/self_driving07.png" width="50%" height="50%"></p>
-<p><strong>state-based models</strong></p>
-<ul>
-<li>A state is a set of variables often arranged in the form of a vector that fully describe the system at the current time. </li>
-</ul>
-<p><strong>Two-Wheeled Robot Kinematic Model</strong></p>
-<ul>
-<li>Assume control inputs are wheel speeds <ul>
-<li>Center: p </li>
-<li>Wheel to center: l</li>
-<li>Wheel radius:r</li>
-<li>Wheel rotation rates: w1, w2</li>
-</ul>
-</li>
-<li>Kinematic constraint $$V_i = r w_i$$</li>
-<li>Velocity is the average of the two wheel velocities $$v=\frac{v_1 + v_2}{2} = \frac {r w_1 + r w_2} {2}$$</li>
-<li>Use the instantaneous center of rotation(ICR)</li>
-<li>Equivalent triangles give the angular rate of rotation $$w = \frac{-v_2}{\rho} = \frac{-(v_2 - v_1)}{2l}$$ $$w = \frac{rw_1 - rw_2}{2l}$$</li>
-<li>continuous time model: $$\dot x = [(\frac{rw_1+rw_2}{2})cos \theta]$$ $$\dot y = [(\frac{rw_1+rw_2}{2})sin \theta]$$ $$\dot \theta = (\frac{rw_1-rw_2}{2l})$$</li>
-<li>discrete time model: $$ x_{k+1} = x_k + [(\frac{rw_{1,k}+rw_{2,k}}{2})cos \theta_k] \delta t$$ $$ y_{k+1} = y_k + [(\frac{rw_{1,k}+rw_{2,k}}{2})sin \theta_k] \delta t$$ $$ \theta_{k+1} = \theta_k + (\frac{rw_{1,k}-rw_{2,k}}{2l}) \delta t$$</li>
-</ul>
-<p>source: <a href="https://www.coursera.org/lecture/intro-self-driving-cars/lesson-1-kinematic-modeling-in-2d-pScZH" target="_blank" rel="noopener">https://www.coursera.org/lecture/intro-self-driving-cars/lesson-1-kinematic-modeling-in-2d-pScZH</a></p>
-<h3 id="The-Kinematic-Bicycle-Model"><a href="#The-Kinematic-Bicycle-Model" class="headerlink" title="The Kinematic Bicycle Model"></a>The Kinematic Bicycle Model</h3><ul>
-<li>2Dbicycle model(simplified car model)</li>
-<li>Front wheel steering</li>
-</ul>
-<p>Rear Wheel Reference Point:</p>
-<ul>
-<li>Apply Instantaneous Center of Rotation（ICR）: $$\dot \theta = \omega = \frac VR$$</li>
-<li>Similar triangles: $$tan \delta = \frac LR$$</li>
-<li>Rotation rate equation: $$\dot \theta = \omega = \frac vR = \frac{v tan \delta}{L}$$</li>
-</ul>
-<p>Rear Axle Bicycle Model</p>
-<ul>
-<li>If the desired point is at the center of the rear axle: $$\dot x_r = v cos \theta$$ $$\dot y_r = v sin \theta$$ $$\dot \theta = \frac {v tan \delta}{L}$$</li>
-<li>If the desired point is at the center of the front axle: $$\dot x_f = v cos (\theta + \delta)$$ $$\dot y_f = v sin (\theta+\delta)$$ $$\dot \theta = \frac {v sin \delta}{L}$$</li>
-<li>If the desired point is at the center of the gravity(cg): $$\dot x_c = v cos (\theta + \beta)$$ $$\dot y_c = v sin (\theta+\beta)$$ $$\dot \theta = \frac {v cos \beta tan \delta}{L}$$ $$\beta = tan^{-1} (\frac {l_r tan \delta}{L})$$</li>
-</ul>
-<p><strong>State-space Representation</strong></p>
-<ul>
-<li>Modify CG kinematic bicycle model to use steering rate input <ul>
-<li>state: $[x, y, \theta, \delta]^T$ </li>
-<li>inputs: $[v,\phi]^T$ ($\phi$ is the modified input, the rate of the change of steering angle)<br>$$\dot x_c = v cos(\theta + \beta)$$<br>$$\dot y_c = v sin(\theta + \beta)$$<br>$$\dot \theta = \frac {v cos \beta tan \delta}{L}$$ $$\dot \delta = \phi$$</li>
-</ul>
-</li>
-</ul>
-<h2 id="Dynamic-Modeling-in-2D"><a href="#Dynamic-Modeling-in-2D" class="headerlink" title="Dynamic Modeling in 2D"></a>Dynamic Modeling in 2D</h2><p>mainly on Newton’s second law</p>
-<h3 id="Longitudinal-Vehicle-Modeling"><a href="#Longitudinal-Vehicle-Modeling" class="headerlink" title="Longitudinal Vehicle Modeling"></a>Longitudinal Vehicle Modeling</h3><ul>
-<li>Dynamic force balance on a vehicle</li>
-<li>Powertrain component models</li>
-<li><p>Connect models to create a full longitudinal motior model</p>
-</li>
-<li><p>Total resistance load: $$F_{load} = F_{aero} + R_x + mga$$</p>
-</li>
-<li>The aerodynamic force can depend on air density, frontal area,on the speed of the vehicle: $$F_{aero} = 1/2C_a \rho A\dot x^2 = c_a \dot x^2$$</li>
-<li>The rolling resistance can depend on the tire normal force,tire pressures and vehicle speed: $$R_x = N(\hat c_{r,0}+\hat c_{r,1}|\dot x| + \hat c_{r,2}\dot x^2) \approx c_{r,1}|\dot x|$$</li>
-</ul>
-<h3 id="Lateral-Dynamics-of-Bicycle-Model"><a href="#Lateral-Dynamics-of-Bicycle-Model" class="headerlink" title="Lateral Dynamics of Bicycle Model"></a>Lateral Dynamics of Bicycle Model</h3><h3 id="Vehicle-Actuation"><a href="#Vehicle-Actuation" class="headerlink" title="Vehicle Actuation"></a>Vehicle Actuation</h3><h3 id="Tire-Slip-and-Modeling"><a href="#Tire-Slip-and-Modeling" class="headerlink" title="Tire Slip and Modeling"></a>Tire Slip and Modeling</h3><p>·Basics of kinematic and coordinates<br>·Kinematic model development of a bicycle<br>·Basics of dynamic modeling<br>·Vehicle longitudinal dynamics and modeling<br>·Vehicle lateral dynamics and modeling<br>·Vehicle actuation system<br>·Tire slips and modeling</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/07/22/coursera_self_driving04/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-matlab_self_driving" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/07/21/matlab_self_driving/">MATLAB 自动驾驶相关</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/07/21/matlab_self_driving/" class="archive-article-date">
-  	<time datetime="2019-07-21T09:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MATLAB-EXPO-2019-MATLAB和Simulink用于开发自动驾驶的新特性"><span class="toc-number">1.</span> <span class="toc-text">MATLAB EXPO 2019 MATLAB和Simulink用于开发自动驾驶的新特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建虚拟驾驶场景"><span class="toc-number">1.1.</span> <span class="toc-text">创建虚拟驾驶场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#传感器融合与目标跟踪"><span class="toc-number">1.2.</span> <span class="toc-text">传感器融合与目标跟踪</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#集成其他资源"><span class="toc-number">1.3.</span> <span class="toc-text">集成其他资源</span></a></li></ol></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MATLAB-EXPO-2019-MATLAB和Simulink用于开发自动驾驶的新特性"><span class="toc-text">MATLAB EXPO 2019 MATLAB和Simulink用于开发自动驾驶的新特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建虚拟驾驶场景"><span class="toc-text">创建虚拟驾驶场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#传感器融合与目标跟踪"><span class="toc-text">传感器融合与目标跟踪</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#集成其他资源"><span class="toc-text">集成其他资源</span></a></li></ol></li></ol>
-        </div>
-    </div>
- -->
-        <h2 id="MATLAB-EXPO-2019-MATLAB和Simulink用于开发自动驾驶的新特性"><a href="#MATLAB-EXPO-2019-MATLAB和Simulink用于开发自动驾驶的新特性" class="headerlink" title="MATLAB EXPO 2019 MATLAB和Simulink用于开发自动驾驶的新特性"></a>MATLAB EXPO 2019 MATLAB和Simulink用于开发自动驾驶的新特性</h2><h3 id="创建虚拟驾驶场景"><a href="#创建虚拟驾驶场景" class="headerlink" title="创建虚拟驾驶场景"></a>创建虚拟驾驶场景</h3><ul>
-<li>Sensor Fusion using synthetic radar and vision data:<ul>
-<li><a href="https://www.mathworks.com/help/driving/examples/sensor-fusion-using-synthetic-radar-and-vision-data.html" target="_blank" rel="noopener">https://www.mathworks.com/help/driving/examples/sensor-fusion-using-synthetic-radar-and-vision-data.html</a></li>
-</ul>
-</li>
-<li>模拟道路和车辆 </li>
-<li>添加基于统计概率的视觉与雷达传感器</li>
-<li>测试传感器融合与目标跟踪 </li>
-<li>可视化传感器覆盖区域, 检测列表, 目标跟踪列表</li>
-</ul>
-<p>图形化的驾驶场景设计器:</p>
-<ul>
-<li>Driving Scenario Designer: <a href="https://www.mathworks.com/help/driving/ref/drivingscenariodesigner-app.html" target="_blank" rel="noopener">https://www.mathworks.com/help/driving/ref/drivingscenariodesigner-app.html</a></li>
-<li>创建道路与车道线标记 </li>
-<li>添加车辆与行驶轨迹 </li>
-<li>设置车辆尺寸与雷达截面积(RCS)</li>
-<li>提供预定义的ADAS场景 </li>
-<li>支持导入OpenDRIVE格式路网文件</li>
-</ul>
-<p>Simulink仿真驾驶场景:</p>
-<ul>
-<li>Test Open-Loop ADAS Algorithm Using Driving Scenario: <a href="https://www.mathworks.com/help/driving/ug/test-open-loop-adas-algorithm-using-driving-scenario.html" target="_blank" rel="noopener">https://www.mathworks.com/help/driving/ug/test-open-loop-adas-algorithm-using-driving-scenario.html</a><ul>
-<li>编辑驾驶场景</li>
-<li>在Simulink中读取场景</li>
-<li>添加传感器模型</li>
-<li>可视化传感器输出</li>
-<li>调节仿真速度</li>
-</ul>
-</li>
-</ul>
-<p>设计车辆的横向与纵向控制</p>
-<ul>
-<li>Lane following control with sensor fusion: <a href="https://www.mathworks.com/help/mpc/ug/lane-following-control-with-sensor-fusion-and-lane-detection.html" target="_blank" rel="noopener">https://www.mathworks.com/help/mpc/ug/lane-following-control-with-sensor-fusion-and-lane-detection.html</a><ul>
-<li>将场景集成到Simulink </li>
-<li>设计横向（车道保持）与纵向<br>（间距管理）模型预测控制器</li>
-<li>设计传感器融合 </li>
-<li>生成C/C++代码 </li>
-<li>软件在环 (SIL) 测试</li>
-</ul>
-</li>
-<li>可视化传感器检测列表与目标跟踪列表</li>
-</ul>
-<p>控制算法的自动化测试:</p>
-<ul>
-<li>Testing a Lane-Following Controller with Simulink Test: <a href="https://www.mathworks.com/help/sltest/examples/testing-a-lane-following-controller.html" target="_blank" rel="noopener">https://www.mathworks.com/help/sltest/examples/testing-a-lane-following-controller.html</a></li>
-<li>指定测试需求与被测模型</li>
-<li>指定测试通过判据</li>
-<li>测试结果绘图与报告生成</li>
-<li>自动化整个测试过程</li>
-</ul>
-<p>从录制的实车数据生成驾驶场景:</p>
-<ul>
-<li>Scenario Generation from Recorded Vehicle Data: <a href="https://www.mathworks.com/help/driving/examples/scenario-generation-from-recorded-vehicle-data.html" target="_blank" rel="noopener">https://www.mathworks.com/help/driving/examples/scenario-generation-from-recorded-vehicle-data.html</a></li>
-<li>回放录制的视频</li>
-<li>导入OpenDRIVE路网</li>
-<li>导入GPS数据（本车位置）</li>
-<li>导入传感器目标列表（其他车辆<br>位置）</li>
-</ul>
-<p>车道跟随控制器与视觉算法的集成仿真</p>
-<ul>
-<li>Lane-Following Control with Monocular Camera Perception: <a href="https://www.mathworks.com/help/mpc/ug/lane-following-control-with-monocular-camera-perception.html" target="_blank" rel="noopener">https://www.mathworks.com/help/mpc/ug/lane-following-control-with-monocular-camera-perception.html</a></li>
-<li>集成Simulink控制器模块<ul>
-<li>车道跟随</li>
-<li>间距控制</li>
-</ul>
-</li>
-<li>集成MATLAB图像算法<ul>
-<li>车道边界检测</li>
-<li>车辆检测</li>
-</ul>
-</li>
-<li>通过“虚幻”引擎合成理想视觉传感器图像</li>
-</ul>
-<h3 id="传感器融合与目标跟踪"><a href="#传感器融合与目标跟踪" class="headerlink" title="传感器融合与目标跟踪"></a>传感器融合与目标跟踪</h3><p><strong>感知</strong></p>
-<ul>
-<li>多目标跟踪器（Multi-object tracker）<ul>
-<li>GNN跟踪器（Global Nearest Neighbor tracker）</li>
-<li>JPDA跟踪器（Joint Probabilistic Data Association tracker）</li>
-<li>TOMHT跟踪器（Track-Oriented Multi-Hypothesis Tracker）</li>
-<li>PHD跟踪器（Probability Hypothesis Density tracker）</li>
-</ul>
-</li>
-<li>跟踪滤波器：<ul>
-<li>线性, 扩展, 无迹卡尔曼滤波器</li>
-<li>粒子滤波器</li>
-<li>高斯和滤波器</li>
-<li>交互式多模型（IMM）滤波器</li>
-</ul>
-</li>
-</ul>
-<p>点目标跟踪与扩展目标跟踪：</p>
-<ul>
-<li>Extended Object Tracking： <a href="https://www.mathworks.com/help/fusion/examples/extended-object-tracking.html" target="_blank" rel="noopener">https://www.mathworks.com/help/fusion/examples/extended-object-tracking.html</a><ul>
-<li>自定义的扩展目标跟踪器</li>
-<li>利用高精度传感器对单个目标生成的多个检测</li>
-<li>可获取更多目标属性：大小、形状、方向等</li>
-<li>评估跟踪性能和误差指标</li>
-<li>评估算法在桌面的执行时间</li>
-</ul>
-</li>
-<li>点目标跟踪<ul>
-<li>点目标跟踪器 multiObjectTracker</li>
-<li>传感器对单个目标生成单个检测或经过聚类后形成单个检测</li>
-<li>将目标简化为一个点进行跟踪</li>
-</ul>
-</li>
-</ul>
-<p>将激光雷达点云转换为目标列表：</p>
-<ul>
-<li>Track Vehicles Using Lidar: <a href="https://www.mathworks.com/help/vision/ug/track-vehicles-using-lidar.html" target="_blank" rel="noopener">https://www.mathworks.com/help/vision/ug/track-vehicles-using-lidar.html</a><ul>
-<li>设计3-D边框检测器</li>
-<li>设计目标跟踪器</li>
-<li>生成C/C++代码</li>
-</ul>
-</li>
-</ul>
-<p><strong>规划</strong></p>
-<p>连接HERE高精度实时地图：读取道路和限速属性:</p>
-<ul>
-<li>Use HERE HD Live Map Data to Verify Lane Configurations: <a href="https://www.mathworks.com/help/driving/examples/use-here-hd-live-map-data-to-verify-lane-configurations.html" target="_blank" rel="noopener">https://www.mathworks.com/help/driving/examples/use-here-hd-live-map-data-to-verify-lane-configurations.html</a><ul>
-<li>载入摄像机与GPS数据</li>
-<li>读取道路限速</li>
-<li>读取车道配置</li>
-<li>可视化组合数据</li>
-</ul>
-</li>
-</ul>
-<p>设计路径规划器:</p>
-<ul>
-<li>Automated Parking Valet: <a href="https://www.mathworks.com/help/driving/examples/automated-parking-valet.html" target="_blank" rel="noopener">https://www.mathworks.com/help/driving/examples/automated-parking-valet.html</a><ul>
-<li>创建环境的代价地图 </li>
-<li>膨胀代价地图用于碰撞检测 </li>
-<li>指定目标位置 </li>
-<li>使用快速搜索随机树 (RRT*)算法规划路径</li>
-</ul>
-</li>
-</ul>
-<p>设计路径规划器与车辆控制器:</p>
-<ul>
-<li>Automated Parking Valet in Simulink: <a href="https://www.mathworks.com/help/driving/examples/automated-parking-valet-in-simulink.html" target="_blank" rel="noopener">https://www.mathworks.com/help/driving/examples/automated-parking-valet-in-simulink.html</a><ul>
-<li>路径规划器（RRT*算法）</li>
-<li>车辆横向与纵向控制器（基于运动学的Stanley算法）</li>
-<li>与车辆动力学模型结合进行闭环仿真</li>
-</ul>
-</li>
-</ul>
-<p>规划与控制算法生成C/C++代码:</p>
-<ul>
-<li><a href="https://www.mathworks.com/help/driving/examples/code-generation-for-path-planning-and-vehicle-control.html" target="_blank" rel="noopener">https://www.mathworks.com/help/driving/examples/code-generation-for-path-planning-and-vehicle-control.html</a><ul>
-<li>独立的模型文件</li>
-<li>配置代码生成选项</li>
-<li>生成C/C++代码</li>
-<li>软件在环 (SIL) 测试</li>
-<li>评估代码执行时间</li>
-</ul>
-</li>
-</ul>
-<p><strong>控制</strong></p>
-<p>通过闭环仿真设计实际的ADAS功能</p>
-<ul>
-<li>Autonomous Emergency Braking with Sensor Fusion： <a href="https://www.mathworks.com/help/driving/examples/autonomous-emergency-braking-with-sensor-fusion.html" target="_blank" rel="noopener">https://www.mathworks.com/help/driving/examples/autonomous-emergency-braking-with-sensor-fusion.html</a><ul>
-<li>指定驾驶场景</li>
-<li>设计AEB逻辑</li>
-<li>设计传感器融合算法</li>
-<li>仿真完整系统</li>
-<li>生成C/C++代码</li>
-<li>软件在环 (SIL) 测试</li>
-</ul>
-</li>
-</ul>
-<p>训练用于ADAS控制的增强学习网络：</p>
-<ul>
-<li>Train DDPG Agent for Adaptive Cruise Control：<a href="https://www.mathworks.com/help/reinforcement-learning/ug/train-ddpg-agent-for-adaptive-cruise-control.html" target="_blank" rel="noopener">https://www.mathworks.com/help/reinforcement-learning/ug/train-ddpg-agent-for-adaptive-cruise-control.html</a><ul>
-<li>创建环境接口</li>
-<li>创建agent</li>
-<li>训练agent</li>
-<li>仿真训练的agent</li>
-</ul>
-</li>
-</ul>
-<h3 id="集成其他资源"><a href="#集成其他资源" class="headerlink" title="集成其他资源"></a>集成其他资源</h3><ul>
-<li>与ROS集成的三种方式：<ul>
-<li>回放通过ROS记录的数据：Work with rosbag Logfiles <a href="https://www.mathworks.com/help/robotics/examples/work-with-rosbag-logfiles.html" target="_blank" rel="noopener">https://www.mathworks.com/help/robotics/examples/work-with-rosbag-logfiles.html</a> </li>
-<li>实时连接ROS系统：Exchange Data with ROS Publishers and Subscribers <a href="https://www.mathworks.com/help/robotics/examples/exchange-data-with-ros-publishers.html" target="_blank" rel="noopener">https://www.mathworks.com/help/robotics/examples/exchange-data-with-ros-publishers.html</a></li>
-<li>生成独立的ROS节点：Generate a Standalone ROS Node from Simulink <a href="https://www.mathworks.com/help/robotics/examples/generate-a-standalone-ros-node-in-simulink.html" target="_blank" rel="noopener">https://www.mathworks.com/help/robotics/examples/generate-a-standalone-ros-node-in-simulink.html</a></li>
-</ul>
-</li>
-<li>从MATLAB调用C++, Python, OpenCV:<ul>
-<li>Import C++ Library Functionality into MATLAB: <a href="https://www.mathworks.com/help/matlab/matlab_external/what-you-need-to-import-cpp-library-functions-into-matlab.html" target="_blank" rel="noopener">https://www.mathworks.com/help/matlab/matlab_external/what-you-need-to-import-cpp-library-functions-into-matlab.html</a></li>
-<li>Call Python from MATLAB: <a href="https://www.mathworks.com/help/matlab/matlab_external/call-python-from-matlab.html" target="_blank" rel="noopener">https://www.mathworks.com/help/matlab/matlab_external/call-python-from-matlab.html</a></li>
-<li>Install and Use Computer Vision Toolbox OpenCV Interface: <a href="https://www.mathworks.com/help/vision/ug/opencv-interface.html" target="_blank" rel="noopener">https://www.mathworks.com/help/vision/ug/opencv-interface.html</a></li>
-</ul>
-</li>
-</ul>
-<p>用到的toolbox:<br>Model Predictive Control Toolbox<br>Automated Driving Toolbox<br>Embedded Coder<br>Sensor Fusion and Tracking Toolbox<br>Reinforcement Learning Toolbox</p>
-<p>Reference:<br><a href="https://www.matlabexpo.com/content/dam/mathworks/mathworks-dot-com/images/events/matlabexpo/cn/2019/whats-new-in-matlab-and-simulink-for-adas.pdf" target="_blank" rel="noopener">https://www.matlabexpo.com/content/dam/mathworks/mathworks-dot-com/images/events/matlabexpo/cn/2019/whats-new-in-matlab-and-simulink-for-adas.pdf</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/07/21/matlab_self_driving/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/blog/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><a class="page-number" href="/blog/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/9/">9</a><a class="extend next" rel="next" href="/blog/page/3/">Next &raquo;</a>
@@ -2713,7 +2686,7 @@ var _hmt = _hmt || [];
 			<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     	<div class="footer-left">
             <i class="fa fa-copyright"></i> 
-            2019 Tracy Xin Wang
+            2020 Tracy Xin Wang
             
             <span class="post-meta-divider">|</span>
             <span id="busuanzi_container_site_pv" style="display: inline;">
@@ -2728,7 +2701,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共91.1k字
+              本站总共94.7k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -2835,19 +2808,23 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2871,6 +2848,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">经济</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
               </li>
              
@@ -2887,19 +2868,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Network</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">思考</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2915,11 +2900,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+                <a href="javascript:void(0)" class="js-tag color3">CV</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">

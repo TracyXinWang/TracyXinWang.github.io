@@ -247,6 +247,270 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-python09" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/05/29/python09/">Python核心技术与实战09 自定义函数</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/05/29/python09/" class="archive-article-date">
+  	<time datetime="2019-05-29T13:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数基础"><span class="toc-number">1.</span> <span class="toc-text">函数基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数变量作用域"><span class="toc-number">2.</span> <span class="toc-text">函数变量作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#闭包-closure"><span class="toc-number">3.</span> <span class="toc-text">闭包 closure</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数基础"><span class="toc-text">函数基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数变量作用域"><span class="toc-text">函数变量作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#闭包-closure"><span class="toc-text">闭包 closure</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="函数基础"><a href="#函数基础" class="headerlink" title="函数基础"></a>函数基础</h3><ul>
+<li><p>定义：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def name(param1, param2, ..., paramN):</span><br><span class="line">    statements</span><br><span class="line">    return/yield value # optional</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>和其他需要编译的语言（比如C语言）不一样的是，def是可执行语句，这意味着函数直到被调用前，都是不存在的。当程序调用函数时，def语句才会创建一个新的函数对象，并赋予其名字。</p>
+</li>
+<li>调用函数时，必须保证这个函数此前已经定义过.</li>
+<li><p>但如果在某函数内部调用其他函数，函数间哪个声明在前、哪个在后就无所谓，因为def是可执行语句，函数在调用之前都不存在，我们只需保证调用时，所需的函数都已经声明定义。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def my_func(message):</span><br><span class="line">    my_sub_func(message) # 调用 my_sub_func() 在其声明之前不影响程序执行</span><br><span class="line">    </span><br><span class="line">def my_sub_func(message):</span><br><span class="line">    print(&apos;Got a message: &#123;&#125;&apos;.format(message))</span><br><span class="line"></span><br><span class="line">my_func(&apos;hello world&apos;)</span><br><span class="line"></span><br><span class="line"># 输出</span><br><span class="line">Got a message: hello world</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>另外，Python函数的参数可以设定默认值, 如下。这样在调用函数func()时，如果参数param没有传入，则参数默认为0；而如果传入了参数param，其就会覆盖默认值。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def func(param = 0):</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Python不用考虑输入的数据类型，而是将其交给具体的代码去判断执行，同样的一个函数（如一个相加函数），可以同时应用在整型、列表、字符串等等的操作中。编程语言中，我们把这种行为称为多态。这也是Python 和其他语言，比如Java、C等很大的一个不同点。</p>
+</li>
+<li>因此，在函数开头进行数据类型检查很重要</li>
+<li><p>函数嵌套：</p>
+<ul>
+<li><p>函数的嵌套能够保证内部函数的隐私。内部函数只能被外部函数所调用和访问，不会暴露在全局作用域，因此，如果你的函数内部有一些隐私数据（比如数据库的用户、密码等），不想暴露在外，那你就可以使用函数的的嵌套，将其封装在内部函数中，只通过外部函数来访问：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def connect_DB():</span><br><span class="line">    def get_DB_configuration():</span><br><span class="line">        ...</span><br><span class="line">        return host, username, password</span><br><span class="line">    conn = connector.connect(get_DB_configuration())</span><br><span class="line">    return conn</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>合理的使用函数嵌套，能够提高程序的运行效率:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">def factorial(input):</span><br><span class="line">    # validation check</span><br><span class="line">    if not isinstance(input, int):</span><br><span class="line">        raise Exception(&apos;input must be an integer.&apos;)</span><br><span class="line">    if input &lt; 0:</span><br><span class="line">        raise Exception(&apos;input must be greater or equal to 0&apos; )</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    def inner_factorial(input):</span><br><span class="line">        if input &lt;= 1:</span><br><span class="line">            return 1</span><br><span class="line">        return input * inner_factorial(input-1)</span><br><span class="line">    return inner_factorial(input)</span><br><span class="line"></span><br><span class="line">print(factorial(5))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="函数变量作用域"><a href="#函数变量作用域" class="headerlink" title="函数变量作用域"></a>函数变量作用域</h3><ul>
+<li>如果变量是在函数内部定义的，就称为局部变量，只在函数内部有效。一旦函数执行完毕，局部变量就会被回收，无法访问.</li>
+<li>想要在函数内部修改全局变量的值，需要在函数内部 用关键字 global 申明。</li>
+<li>如果遇到函数内部局部变量和全局变是同名的情况，那么在函数内部，局部变量会覆盖全局变量</li>
+<li>对于嵌套函数来说，内部函数可以访问外部函数定义的变量，但是无法修改，若要修改，必须加上nonlocal这个关键字</li>
+</ul>
+<h3 id="闭包-closure"><a href="#闭包-closure" class="headerlink" title="闭包 closure"></a>闭包 closure</h3><ul>
+<li><p>闭包其实和刚刚讲的嵌套函数类似，不同的是，这里外部函数返回的是一个函数，而不是一个具体的值。返回的函数通常赋于一个变量，这个变量可以在后面被继续执行调用。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">def nth_power(exponent):</span><br><span class="line">    def exponent_of(base):</span><br><span class="line">        return base ** exponent</span><br><span class="line">    return exponent_of # 返回值是 exponent_of 函数</span><br><span class="line"></span><br><span class="line">square = nth_power(2) # 计算一个数的平方</span><br><span class="line">cube = nth_power(3) # 计算一个数的立方 </span><br><span class="line">square</span><br><span class="line"># 输出</span><br><span class="line">&lt;function __main__.nth_power.&lt;locals&gt;.exponent(base)&gt;</span><br><span class="line"></span><br><span class="line">cube</span><br><span class="line"># 输出</span><br><span class="line">&lt;function __main__.nth_power.&lt;locals&gt;.exponent(base)&gt;</span><br><span class="line"></span><br><span class="line">print(square(2))  # 计算 2 的平方</span><br><span class="line">print(cube(2)) # 计算 2 的立方</span><br><span class="line"># 输出</span><br><span class="line">4 # 2^2</span><br><span class="line">8 # 2^3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这里外部函数nth_power()返回值，是函数exponent_of()，而不是一个具体的数值。需要注意的是，在执行完square=nth_power(2)和cube=nth_power(3)后，外部函数nth power()的参数exponent，仍然会被内部函数exponent of()记住。这样，之后我们调用square(2)或者cube(2)时，程序就能顺利地输出结果，而不会报错说参数exponent没有定义了。</p>
+</li>
+<li>闭包常常和装饰器（decorator）一起使用。</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/05/29/python09/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-python08" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/05/27/python08/">Python核心技术与实战08 异常处理</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/05/27/python08/" class="archive-article-date">
+  	<time datetime="2019-05-27T13:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#错误与异常"><span class="toc-number">1.</span> <span class="toc-text">错误与异常</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何处理异常"><span class="toc-number">2.</span> <span class="toc-text">如何处理异常</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#错误与异常"><span class="toc-text">错误与异常</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何处理异常"><span class="toc-text">如何处理异常</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="错误与异常"><a href="#错误与异常" class="headerlink" title="错误与异常"></a>错误与异常</h3><ul>
+<li>在程序中，如果我们不确定某段代码能否成功执行，往往这个地方就需要使用异常处理。</li>
+<li>程序中的错误至少包括两种，一种是语法错误，另一种则是异常。</li>
+<li>Python 中常见的异常类型：<ul>
+<li>NameError, TypeError, FileNotFoundError</li>
+<li>KeyError是指字典中的键找不到</li>
+</ul>
+</li>
+</ul>
+<h3 id="如何处理异常"><a href="#如何处理异常" class="headerlink" title="如何处理异常"></a>如何处理异常</h3><ul>
+<li><p>用 try 和 except 来处理异常问题</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">    s = input(&apos;please enter two numbers separated by comma: &apos;)</span><br><span class="line">    num1 = int(s.split(&apos;,&apos;)[0].strip())</span><br><span class="line">    num2 = int(s.split(&apos;,&apos;)[1].strip())</span><br><span class="line">except ValueError as err:</span><br><span class="line">    print(&apos;Value Error: &#123;&#125;&apos;.format(err))</span><br><span class="line"></span><br><span class="line">print(&apos;continue&apos;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>except block只接受与它相匹配的异常类型并执行，如果程序抛出的异常并不匹配，那么程序也会终止并退出。</p>
+</li>
+<li><p>想解决这种情况，第一种方法就是在except block中加入多种异常的类型，比如：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">    s = input(&apos;please enter two numbers separated by comma: &apos;)</span><br><span class="line">    num1 = int(s.split(&apos;,&apos;)[0].strip())</span><br><span class="line">    num2 = int(s.split(&apos;,&apos;)[1].strip())</span><br><span class="line">except (ValueError, IndexError) as err:</span><br><span class="line">    print(&apos;Error: &#123;&#125;&apos;.format(err))</span><br><span class="line">    </span><br><span class="line">print(&apos;continue&apos;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>或者这样写: except block 中只要有一个exception 类型与实际匹配即可。并在最后一个except block，声明其处理的异常类型是Exception。Exception是其他所有非系统异常的基类，能够匹配任意非系统异常，所以基本能够涵盖所有错误类型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">    s = input(&apos;please enter two numbers separated by comma: &apos;)</span><br><span class="line">    num1 = int(s.split(&apos;,&apos;)[0].strip())</span><br><span class="line">    num2 = int(s.split(&apos;,&apos;)[1].strip())</span><br><span class="line">except ValueError as err:</span><br><span class="line">    print(&apos;Value Error: &#123;&#125;&apos;.format(err))</span><br><span class="line">except IndexError as err:</span><br><span class="line">    print(&apos;Index Error: &#123;&#125;&apos;.format(err))</span><br><span class="line">except Exception as err:</span><br><span class="line">    print(&apos;Other error: &#123;&#125;&apos;.format(err))</span><br><span class="line"></span><br><span class="line">print(&apos;continue&apos;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>也可以在except后面省略异常类型，表示与任意异常相匹配（包括系统异常等）：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">    s = input(&apos;please enter two numbers separated by comma: &apos;)</span><br><span class="line">    num1 = int(s.split(&apos;,&apos;)[0].strip())</span><br><span class="line">    num2 = int(s.split(&apos;,&apos;)[1].strip())</span><br><span class="line">except ValueError as err:</span><br><span class="line">    print(&apos;Value Error: &#123;&#125;&apos;.format(err))</span><br><span class="line">except IndexError as err:</span><br><span class="line">    print(&apos;Index Error: &#123;&#125;&apos;.format(err))</span><br><span class="line">except:</span><br><span class="line">    print(&apos;Other error&apos;)</span><br><span class="line"></span><br><span class="line">print(&apos;continue&apos;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>此外，当程序中存在多个except block时，最多只有一个except block会被执行。所以如果多个except声明的异常类型都与实际相匹配，那么只有最前面的except block会被执行，其他则被忽略。</p>
+</li>
+<li>异常处理中，还有一个很常见的用法是finally，经常和try、except放在一起来用。无论发生什么情况，finally block中的语句都会被执行，哪怕前面的try 和excep block中使用了return语句。  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">try:</span><br><span class="line">    f = open(&apos;file.txt&apos;, &apos;r&apos;)</span><br><span class="line">    .... # some data processing</span><br><span class="line">except OSError as err:</span><br><span class="line">    print(&apos;OS error: &#123;&#125;&apos;.format(err))</span><br><span class="line">except:</span><br><span class="line">    print(&apos;Unexpected error:&apos;, sys.exc_info()[0])</span><br><span class="line">finally:</span><br><span class="line">    f.close()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/05/27/python08/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-python07" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -369,6 +633,158 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/blog/2019/05/24/python07/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-python05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/05/22/python05/">Python核心技术与实战05 深入浅出字符串</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/05/22/python05/" class="archive-article-date">
+  	<time datetime="2019-05-22T10:44:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-number">1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用操作"><span class="toc-number">2.</span> <span class="toc-text">常用操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串的格式化"><span class="toc-number">3.</span> <span class="toc-text">字符串的格式化</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用操作"><span class="toc-text">常用操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串的格式化"><span class="toc-text">字符串的格式化</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ul>
+<li><p>可用单引号，双引号，或者三引号：</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">'jason'</span></span><br><span class="line">city = <span class="string">'beijing'</span></span><br><span class="line">text = <span class="string">"welcome to jike shijian"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Python 的三引号字符串，则主要应用于多行字符串的情境. e.g. 函数的注释</p>
+</li>
+<li>转义字符(反斜杠开头)：<ul>
+<li>\newline: 接下一行</li>
+<li>\: \</li>
+</ul>
+</li>
+</ul>
+<h3 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h3><ul>
+<li><p>支持索引，切片和遍历等等操作</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">'Jason'</span></span><br><span class="line">name[<span class="number">0</span>]</span><br><span class="line">    <span class="string">'J'</span></span><br><span class="line">name[<span class="number">1</span>:<span class="number">3</span>]</span><br><span class="line">    <span class="string">'as'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>遍历字符串相当于遍历字符串中的每个字符</p>
+<ul>
+<li><code>for char in name</code></li>
+</ul>
+</li>
+<li><p>Python 的字符串是不可变的: 改变一个字符串内部的字符是不允许的。</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'hello'</span></span><br><span class="line">s[<span class="number">0</span>] = <span class="string">'H'</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">TypeError: <span class="string">'str'</span> object does <span class="keyword">not</span> support item assignment</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Python 中字符串的改变，通常只能通过创建新的字符串来完成</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'H'</span> + s[<span class="number">1</span>:]</span><br><span class="line">s = s.replace(<span class="string">'h'</span>, <span class="string">'H'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>字符串拼接方法：</p>
+<ul>
+<li><p>使用 ‘+=’ ：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">100000</span>):</span><br><span class="line">    s += str(n)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用内置函数 join :</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">l = []</span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">100000</span>):</span><br><span class="line">    l.append(str(n))</span><br><span class="line">l = <span class="string">' '</span>.join(l)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>字符串分割：</p>
+<ul>
+<li>split(): string.split(separator)，表示把字符串按照 separator 分割成子字符串并返回一个分割后子字符串组合的<em>列表</em><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">query_data</span><span class="params">(namespace, table)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    given namespace and table, query database to get corresponding</span></span><br><span class="line"><span class="string">    data         </span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">path = <span class="string">'hive://ads/training_table'</span></span><br><span class="line">namespace = path.split(<span class="string">'//'</span>)[<span class="number">1</span>].split(<span class="string">'/'</span>)[<span class="number">0</span>] <span class="comment"># 返回'ads'</span></span><br><span class="line">table = path.split(<span class="string">'//'</span>)[<span class="number">1</span>].split(<span class="string">'/'</span>)[<span class="number">1</span>] <span class="comment"># 返回 'training_table'</span></span><br><span class="line">data = query_data(namespace, table)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>其他函数：</p>
+<ul>
+<li>string.strip(str)，表示去掉首尾的 str 字符串</li>
+<li>string.lstrip(str)，表示去掉开头的 str 字符串</li>
+<li>string.rstrip(str)，表示去掉结尾的 str 字符串</li>
+<li>string.find(sub, start, end)，表示从 start 到 end 查找字符串中子字符串 sub 的位置</li>
+</ul>
+</li>
+</ul>
+<h3 id="字符串的格式化"><a href="#字符串的格式化" class="headerlink" title="字符串的格式化"></a>字符串的格式化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'no data available for person with id: &#123;&#125;, name: &#123;&#125;'</span>.format(id, name))</span><br><span class="line"><span class="comment"># 类似于 matlab 里面的 %d, %s</span></span><br></pre></td></tr></table></figure>
+<p>\newline</p>
+<p>极客时间版权所有: <a href="https://time.geekbang.org/column/article/95897" target="_blank" rel="noopener">https://time.geekbang.org/column/article/95897</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/05/22/python05/">展开全文 >></a>
         </p>
       
 
@@ -708,158 +1124,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/blog/2019/05/22/python04/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-python05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/05/22/python05/">Python核心技术与实战05 深入浅出字符串</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/05/22/python05/" class="archive-article-date">
-  	<time datetime="2019-05-22T10:44:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-number">1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用操作"><span class="toc-number">2.</span> <span class="toc-text">常用操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串的格式化"><span class="toc-number">3.</span> <span class="toc-text">字符串的格式化</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用操作"><span class="toc-text">常用操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串的格式化"><span class="toc-text">字符串的格式化</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ul>
-<li><p>可用单引号，双引号，或者三引号：</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">'jason'</span></span><br><span class="line">city = <span class="string">'beijing'</span></span><br><span class="line">text = <span class="string">"welcome to jike shijian"</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Python 的三引号字符串，则主要应用于多行字符串的情境. e.g. 函数的注释</p>
-</li>
-<li>转义字符(反斜杠开头)：<ul>
-<li>\newline: 接下一行</li>
-<li>\: \</li>
-</ul>
-</li>
-</ul>
-<h3 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h3><ul>
-<li><p>支持索引，切片和遍历等等操作</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">'Jason'</span></span><br><span class="line">name[<span class="number">0</span>]</span><br><span class="line">    <span class="string">'J'</span></span><br><span class="line">name[<span class="number">1</span>:<span class="number">3</span>]</span><br><span class="line">    <span class="string">'as'</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>遍历字符串相当于遍历字符串中的每个字符</p>
-<ul>
-<li><code>for char in name</code></li>
-</ul>
-</li>
-<li><p>Python 的字符串是不可变的: 改变一个字符串内部的字符是不允许的。</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'hello'</span></span><br><span class="line">s[<span class="number">0</span>] = <span class="string">'H'</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">TypeError: <span class="string">'str'</span> object does <span class="keyword">not</span> support item assignment</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Python 中字符串的改变，通常只能通过创建新的字符串来完成</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'H'</span> + s[<span class="number">1</span>:]</span><br><span class="line">s = s.replace(<span class="string">'h'</span>, <span class="string">'H'</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>字符串拼接方法：</p>
-<ul>
-<li><p>使用 ‘+=’ ：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">100000</span>):</span><br><span class="line">    s += str(n)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用内置函数 join :</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">l = []</span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">100000</span>):</span><br><span class="line">    l.append(str(n))</span><br><span class="line">l = <span class="string">' '</span>.join(l)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>字符串分割：</p>
-<ul>
-<li>split(): string.split(separator)，表示把字符串按照 separator 分割成子字符串并返回一个分割后子字符串组合的<em>列表</em><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">query_data</span><span class="params">(namespace, table)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    given namespace and table, query database to get corresponding</span></span><br><span class="line"><span class="string">    data         </span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">path = <span class="string">'hive://ads/training_table'</span></span><br><span class="line">namespace = path.split(<span class="string">'//'</span>)[<span class="number">1</span>].split(<span class="string">'/'</span>)[<span class="number">0</span>] <span class="comment"># 返回'ads'</span></span><br><span class="line">table = path.split(<span class="string">'//'</span>)[<span class="number">1</span>].split(<span class="string">'/'</span>)[<span class="number">1</span>] <span class="comment"># 返回 'training_table'</span></span><br><span class="line">data = query_data(namespace, table)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>其他函数：</p>
-<ul>
-<li>string.strip(str)，表示去掉首尾的 str 字符串</li>
-<li>string.lstrip(str)，表示去掉开头的 str 字符串</li>
-<li>string.rstrip(str)，表示去掉结尾的 str 字符串</li>
-<li>string.find(sub, start, end)，表示从 start 到 end 查找字符串中子字符串 sub 的位置</li>
-</ul>
-</li>
-</ul>
-<h3 id="字符串的格式化"><a href="#字符串的格式化" class="headerlink" title="字符串的格式化"></a>字符串的格式化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'no data available for person with id: &#123;&#125;, name: &#123;&#125;'</span>.format(id, name))</span><br><span class="line"><span class="comment"># 类似于 matlab 里面的 %d, %s</span></span><br></pre></td></tr></table></figure>
-<p>\newline</p>
-<p>极客时间版权所有: <a href="https://time.geekbang.org/column/article/95897" target="_blank" rel="noopener">https://time.geekbang.org/column/article/95897</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/05/22/python05/">展开全文 >></a>
         </p>
       
 
@@ -1542,293 +1806,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-HMM-MAR" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/03/11/HMM-MAR/">Hidden Markov Model - Multivariate Autoregressive model</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/03/11/HMM-MAR/" class="archive-article-date">
-  	<time datetime="2019-03-11T01:24:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Moedel-description"><span class="toc-number">1.</span> <span class="toc-text">Moedel description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MAR-parametrisation"><span class="toc-number">2.</span> <span class="toc-text">MAR parametrisation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Model-selection"><span class="toc-number">3.</span> <span class="toc-text">Model selection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spectral-description-of-the-states"><span class="toc-number">4.</span> <span class="toc-text">Spectral description of the states</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analysis-of-results"><span class="toc-number">5.</span> <span class="toc-text">Analysis of results</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Moedel-description"><span class="toc-text">Moedel description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MAR-parametrisation"><span class="toc-text">MAR parametrisation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Model-selection"><span class="toc-text">Model selection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spectral-description-of-the-states"><span class="toc-text">Spectral description of the states</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analysis-of-results"><span class="toc-text">Analysis of results</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="Moedel-description"><a href="#Moedel-description" class="headerlink" title="Moedel description"></a>Moedel description</h3><p>The HMM-MAR has two key ingredients: </p>
-<ul>
-<li>the Hidden Markov Model (HMM): <ul>
-<li>An HMM describes a time series as a sequence of states, where each state has its own model of the observed data (i.e., the observation model) and the probability of being at a given state at each time point depends on the states assignment in the previous time point.</li>
-<li>The transition probabilities (how likely is to be in state j if we were in state i just before) are also estimated by the model.</li>
-</ul>
-</li>
-<li>and the Multivariate Autoregressive model (MAR):<ul>
-<li>the observation model corresponds to a MAR model</li>
-<li>characterises the behaviour of time series by linear historical interactions between the observed time series from different brain regions. </li>
-<li>In different words, a MAR model aims to predict the multichannel signal value at each time point as a linear combination of signal values at previous time points. </li>
-<li>MARs are able to characterise the <u>frequency structure of the data</u>, and by making the model multivariate, are able to capture <u>interactions (e.g., coherence) between multiple brain regions</u>. </li>
-<li>Therefore, each state is related to a different set of multi-region autoregression coefficients describing the neural oscillations.</li>
-<li>When the order of the MAR model is set to zero, the states are modelled using Gaussian distributions, in which case the segmentation will be based on instantaneous activation and connectivity.</li>
-</ul>
-</li>
-<li>use variational Bayes inference</li>
-</ul>
-<h3 id="MAR-parametrisation"><a href="#MAR-parametrisation" class="headerlink" title="MAR parametrisation"></a>MAR parametrisation</h3><ul>
-<li>order parameter P: defines how far we go back in time to predict each time point.</li>
-<li>When the number of regions is high, it is easy that for the MAR to overfit the data. <ul>
-<li>That is, a relatively simple MAR model can explain a lot of variance, which will induce the HMM-MAR inference process to <u>drop most of the states of the model</u> by letting a few (or even one) dominant states to control the entire time series, thus hindering the discovery of quasi-stationary connectivity networks. </li>
-</ul>
-</li>
-<li>To solve this:<ul>
-<li>To use a low order, for example 3, and, if needed, increase that value and see how the segmentation changes.</li>
-<li>To work on a low-dimensional version of the data using PCA (see below).</li>
-<li>To avoid using the cross-channel terms, such that each state is characterised by their spectra but not the cross-spectra</li>
-</ul>
-</li>
-</ul>
-<h3 id="Model-selection"><a href="#Model-selection" class="headerlink" title="Model selection"></a>Model selection</h3><ul>
-<li>In order to determine the number of HMM states, K, a possible strategy is to fix the maximum number, and then the Bayesian inference process can discard some of them if there is insufficient evidence to support their presence in the data. </li>
-<li>The free energy, a quantity that approximates the model evidence, can also be used to choose K. </li>
-</ul>
-<h3 id="Spectral-description-of-the-states"><a href="#Spectral-description-of-the-states" class="headerlink" title="Spectral description of the states"></a>Spectral description of the states</h3><ul>
-<li>MAR corresponds with the frequency domain</li>
-<li>Hence the state segmentation is driven by the spectral content of each separate channel and the spectral relations between channels. </li>
-<li>Once the HMM-MAR model is trained and we have the state time courses, we can estimate the spectral content of the model, including the following measures:<ul>
-<li>Power spectral density (PSD)</li>
-<li>Coherence</li>
-<li>Partial directed coherence (PDC)</li>
-<li>Phase</li>
-</ul>
-</li>
-<li>The estimation of these quantities can be done by one of these two methods:<ul>
-<li>A parametric estimation, using the MAR coefficients.</li>
-<li>A nonparametric estimation, using a novel statewise version of the multitaper. This would be the way to do it for example if the states were specified to be Gaussian distributions (i.e. MAR order equal to zero).</li>
-</ul>
-</li>
-<li>In the parametric case<ul>
-<li>we can use the MAR coefficients as returned by the model. </li>
-<li>These coefficients correspond to a maximum a posteriori estimation (which means that they have been regularised by the prior), and, as described above, can have an incomplete parametrisation. </li>
-<li>For the sake of spectral estimation, we prefer to re-estimate the MAR coefficients using maximum likelihood, as is standard in the signal processing literature, and use a complete parametrisation, i.e. using lags (t-1,t-2,…,t-P).</li>
-</ul>
-</li>
-<li>In the non-parametric case:<ul>
-<li>take advantage of the inferred HMM state time courses as temporal windows for estimating the state-specific spectral properties using a weighted version of the multitaper. PDC has not a closed solution in the non-parametric case, so that we need to use the so-called Wilson factorisation</li>
-</ul>
-</li>
-</ul>
-<h3 id="Analysis-of-results"><a href="#Analysis-of-results" class="headerlink" title="Analysis of results"></a>Analysis of results</h3><ul>
-<li>The <strong>mean pattern of activity</strong> of each state. The function getMean(hmm,k) outputs the mean of the Gaussian distribution, assuming that the option zeromean was set to 0. Note that this is mostly useful for the Gaussian distribution, but not that much for the MAR model.</li>
-<li>The <strong>functional connectivity</strong> of each state. The function getFuncConn(hmm,k) outputs the covariance and correlation matrices of state k, when the states are distributed Gaussian (order=0). In the case of a MAR state model, these refer to the covariance matrix of the residual.</li>
-<li>The <strong>transition probabilities</strong>. The function getTransProbs(hmm) returns the transition probabilies from any state to any other state, without considering the persistence probabilities (i.e. the probability to remain in the same state). The transition probability matrix including the <strong>persistence probabilities</strong> is contained in hmm.P.</li>
-<li>The <strong>transition probabilities for a subset of the subjects</strong>. The function getMaskedTransProbMats returns the transition probabilities (including persistencies) for subsets of the data as specified in the parameter Masks. This is useful for example if we wish to find differences in the state transitions between groups.</li>
-<li>The state time <strong>fractional occupancies</strong>, using getFractionalOccupancy(Gamma,T,dim). This can refer to either (i) how much time the HMM spends on each state at each time point on average (across trials), or (ii) how much time each subject/trial/session spends in each state (i.e. the average state probability across time, per session or subject). The former, useful for task, is computed when dim=1; the latter, useful to investigate differences in occupancies between subjects, is computed when dim=2.</li>
-<li>The state <strong>switching rates</strong>. The function getSwitchingRate provides a measure of the state switching rate for each session/subject, and can be understood as a measure of stability per subject.</li>
-<li>The state <strong>life times</strong>. The function getStateLifeTimes returns, per subject/session/trial, a vector of life times per state, containing the number of time points per visit. This reflects the temporal stability of the states.</li>
-<li>The state <strong>interval times</strong>. The function getStateIntervalTimes returns, per subject/session/trial, a vector of interval times per state, containing the number of time points between visits. The interval times, the life times, the fractional occupancies and the switching rates are sometimes referred to collectively as the “chronnectome”.</li>
-<li><strong>maximum fractional occupancy</strong>, used to measure whether the HMM is effectively capturing the dynamics on the data. The function getMaxFractionalOccupancy finds the maximum fractional occupancy for each subject/trial. This is a useful statistic to diagnose whether the HMM solution is “mixing well” or states are assigned to describe entire subjects (in which case the HMM is doing a poor job in finding the data dynamics).</li>
-<li>The <strong>onset time</strong> of the states for each session. The function getStateOnsets provides a vector per session and state of when specifically the state becomes active. That can be used to relate to task information.</li>
-<li>The <strong>evoked state probability</strong> relative to a stimulus. The function evokedStateProbability() can be used to examine how the stimulus modulates the state probabilities.</li>
-<li>The <strong>similarity between two HMM runs</strong>. There are multiple ways to measure the similarity between HMM runs (on the same or comparable data). One of them is to measure the statistical dependence between the state time courses between the two runs. This is done with the function getGammaSimilarity(gamma1,gamma2), which measures the overlapping between the state probabilities after optimally reordering the states.</li>
-</ul>
-<p>Reference:<br><a href="https://github.com/OHBA-analysis/HMM-MAR/wiki/User-Guide" target="_blank" rel="noopener">https://github.com/OHBA-analysis/HMM-MAR/wiki/User-Guide</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/03/11/HMM-MAR/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-WienerProcess" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/03/01/WienerProcess/">Wiener Process</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/03/01/WienerProcess/" class="archive-article-date">
-  	<time datetime="2019-03-01T01:03:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Wiener-process"><span class="toc-number">1.</span> <span class="toc-text">Wiener process</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stochastic-differential-equation-SDE"><span class="toc-number">2.</span> <span class="toc-text">Stochastic differential equation (SDE)</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Wiener-process"><span class="toc-text">Wiener process</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stochastic-differential-equation-SDE"><span class="toc-text">Stochastic differential equation (SDE)</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="Wiener-process"><a href="#Wiener-process" class="headerlink" title="Wiener process"></a>Wiener process</h3><p>The Wiener process</p>
-<ul>
-<li>also called Brownian motion, is a kind of <strong>Markov stochastic process</strong>.</li>
-<li><strong>Stochastic process</strong>: <ul>
-<li>whose value changes over time in an uncertain way</li>
-<li>we only know the distribution of the possible values of the process at any time point. - In contrast to the stochastic process, a deterministic process is with an exact value at any time point.</li>
-</ul>
-</li>
-<li><strong>Markov process</strong>: the likelihood of the state at any future time point depends only on<br>its present state but not on any past states</li>
-</ul>
-<p>The properties of the Wiener process ${Z(t)}$ for $t ≥ 0$:</p>
-<ul>
-<li>(Normal increments) $Z(t) − Z(s) ∼ N(0,t − s)$.</li>
-<li>(Independence of increments) $Z(t) − Z(s)$ and $Z(u)$ are independent, for $u ≤ s &lt; t$.</li>
-<li>(Continuity of the path) $Z(t)$ is a continuous function of t.</li>
-<li>$W(0) = 0$.</li>
-<li>$E(W(t)) = 0, E(W^2(t)) = t$ for each time $t ≥ 0$.</li>
-</ul>
-<h3 id="Stochastic-differential-equation-SDE"><a href="#Stochastic-differential-equation-SDE" class="headerlink" title="Stochastic differential equation (SDE)"></a>Stochastic differential equation (SDE)</h3><ul>
-<li>is a differential equation in which one or more of the terms is a stochastic process, resulting in <u>a solution which is also a stochastic process</u>.</li>
-<li>SDEs contain a variable which represents random white noise calculated as the derivative of Brownian motion or the Wiener process.</li>
-<li>A typical SDE: $$dX = a(t, X) dt + b(t, X) dW_t$$</li>
-<li>The solution to SDE could be: Euler-Maruyama Method, Milstein Method, Runge-Kutta Method and Taylor Method</li>
-</ul>
-<p>Reference:<br><a href="http://math.gmu.edu/~tsauer/pre/sde.pdf" target="_blank" rel="noopener">http://math.gmu.edu/~tsauer/pre/sde.pdf</a><br><a href="http://ft-sipil.unila.ac.id/dbooks/AN%20INTRODUCTION%20TO%20STOCHASTIC%20DIFFERENTIAL%20EQUATIONS%20VERSION%201.2.pdf" target="_blank" rel="noopener">http://ft-sipil.unila.ac.id/dbooks/AN%20INTRODUCTION%20TO%20STOCHASTIC%20DIFFERENTIAL%20EQUATIONS%20VERSION%201.2.pdf</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Stochastic</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/03/01/WienerProcess/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/blog/page/3/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/blog/page/5/">5</a><a class="page-number" href="/blog/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/9/">9</a><a class="extend next" rel="next" href="/blog/page/5/">Next &raquo;</a>
@@ -1845,7 +1822,7 @@ var _hmt = _hmt || [];
 			<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     	<div class="footer-left">
             <i class="fa fa-copyright"></i> 
-            2019 Tracy Xin Wang
+            2020 Tracy Xin Wang
             
             <span class="post-meta-divider">|</span>
             <span id="busuanzi_container_site_pv" style="display: inline;">
@@ -1860,7 +1837,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共91.1k字
+              本站总共94.7k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -1967,19 +1944,23 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2003,6 +1984,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">经济</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
               </li>
              
@@ -2019,19 +2004,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Network</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">思考</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2047,11 +2036,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+                <a href="javascript:void(0)" class="js-tag color3">CV</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">

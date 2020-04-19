@@ -247,6 +247,317 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-MIT6006-Lec19" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/12/30/MIT6006-Lec19/">MIT6006 Lec19 DP I &amp; II</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/12/30/MIT6006-Lec19/" class="archive-article-date">
+  	<time datetime="2018-12-30T12:52:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Programming-DP"><span class="toc-number">1.</span> <span class="toc-text">Dynamic Programming (DP)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fibonacci-Numbers"><span class="toc-number">1.1.</span> <span class="toc-text">Fibonacci Numbers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shortest-Paths"><span class="toc-number">1.2.</span> <span class="toc-text">Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Guessing"><span class="toc-number">2.</span> <span class="toc-text">Guessing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-number">3.</span> <span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Easy-Steps-to-Dynamic-Programming"><span class="toc-number">3.1.</span> <span class="toc-text">5 Easy Steps to Dynamic Programming</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Examples"><span class="toc-number">4.</span> <span class="toc-text">Examples</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Text-Justification"><span class="toc-number">4.1.</span> <span class="toc-text">Text Justification</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Programming-DP"><span class="toc-text">Dynamic Programming (DP)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fibonacci-Numbers"><span class="toc-text">Fibonacci Numbers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shortest-Paths"><span class="toc-text">Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Guessing"><span class="toc-text">Guessing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-text">Summary</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Easy-Steps-to-Dynamic-Programming"><span class="toc-text">5 Easy Steps to Dynamic Programming</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Examples"><span class="toc-text">Examples</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Text-Justification"><span class="toc-text">Text Justification</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="Dynamic-Programming-DP"><a href="#Dynamic-Programming-DP" class="headerlink" title="Dynamic Programming (DP)"></a>Dynamic Programming (DP)</h3><ul>
+<li>Powerful algorithmic design technique</li>
+<li>Large class of seemingly exponential problems have a <u>polynomial</u> solution (“only”) via DP</li>
+<li>Particularly for optimization problems (min / max) (e.g., shortest paths)</li>
+<li>DP $\approx$ “controlled brute force”</li>
+<li>DP $\approx$ recursion + re-use</li>
+</ul>
+<p><br></p>
+<blockquote>
+<p>Dynamic Programming is mainly an optimization over plain recursion. Wherever we see a recursive solution that has repeated calls for same inputs, we can optimize it using Dynamic Programming. The idea is to simply store the results of subproblems, so that we do not have to re-comupute them when needed later. This simple optimization reduces time complexities from exponential to polynomial. For example, if we write simple recursive solution for Fibonacci Numbers, we get exponential time complexity and if we optimize it by storing solutions of subproblems, time complexity reduces to linear.</p>
+</blockquote>
+<h4 id="Fibonacci-Numbers"><a href="#Fibonacci-Numbers" class="headerlink" title="Fibonacci Numbers"></a>Fibonacci Numbers</h4><p>$$F1 = F2 = 1; \qquad F_n = F_{n−1} + F_{n−2}$$<br>Goal: compute $F_n$</p>
+<p><strong>Naive Algorithm</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fib(n):</span><br><span class="line">    if n &lt;= 2: return f=1</span><br><span class="line">    else: return f = fib(n-1) + fib(n-2)</span><br></pre></td></tr></table></figure></p>
+<p>⇒ $T(n) = T(n − 1) + T(n − 2) + O(1) ≥ Fn ≈ ϕ^n$<br>$≥ 2T(n − 2) + O(1) ≥ 2n/2$<br>EXPONENTIAL — BAD!<br>(As some items will be calculated twice, which consumes times)</p>
+<p><strong>Memoized DP Algorithm</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">memo = &#123; &#125;</span><br><span class="line">fib(n):</span><br><span class="line">    if n in memo: return memo[n]</span><br><span class="line">    else: if n ≤ 2 : f = 1</span><br><span class="line">        else: f = fib(n − 1) + fib(n − 2)</span><br><span class="line">        memo[n] = f</span><br><span class="line">        return f</span><br></pre></td></tr></table></figure></p>
+<p>Remember:<br>• ⇒ fib(k) only recurses first time called, ∀k<br>• ⇒ only n nonmemoized calls: k = n, n − 1, . . . , 1<br>• memoized calls free ($Θ(1)$ time)<br>• ⇒ $Θ(1)$ time per call (ignoring recursion)<br>POLYNOMIAL — GOOD!</p>
+<p>DP ≈ recursion + memoization</p>
+<ul>
+<li>memoize (remember) &amp; re-use solutions to subproblems that help solve problem<ul>
+<li>in Fibonacci, subproblems are F1, F2, . . . , Fn</li>
+</ul>
+</li>
+<li>⇒ time = # of subproblems x time/subproblem<ul>
+<li>Fibonacci: # of subproblems is n, and time/subproblem is Θ(1) = Θ(n) (ignore recursion!).</li>
+</ul>
+</li>
+</ul>
+<p><strong>Bottom-up DP Algorithm</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fib = &#123;&#125;</span><br><span class="line">for k in [1, 2, . . . , n]:</span><br><span class="line">    if k ≤ 2: f = 1</span><br><span class="line">    else: f = fib[k − 1] + fib[k − 2]</span><br><span class="line">    fib[k] = f</span><br><span class="line">return fib[n]</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>exactly the same computation as memoized DP (recursion “unrolled”)</li>
+<li>in general: topological sort of subproblem dependency DAG</li>
+<li>practically faster: no recursion</li>
+<li>analysis more obvious</li>
+<li>can save space: just remember last 2 fibs ⇒ Θ(1)</li>
+</ul>
+<h4 id="Shortest-Paths"><a href="#Shortest-Paths" class="headerlink" title="Shortest Paths"></a>Shortest Paths</h4><ul>
+<li>Recursive formulation:<br>$$δ(s, v) = min{δ(s, u) + w(u, v) | (u, v) ∈ E}$$</li>
+<li>Memoized DP algorithm: takes infinite time if cycles!<ul>
+<li>in some sense necessary to handle negative cycles</li>
+</ul>
+</li>
+<li>works for directed acyclic graphs in $O(V + E)$<ul>
+<li>effectively DFS/topological sort + Bellman-Ford round rolled into a single recursion<br>Subproblem dependency should be acyclic</li>
+</ul>
+</li>
+<li>more subproblems remove cyclic dependence:<br>$$δ_k(s, v) = shortest \quad s → v \quad path \quad using ≤ k \quad edges$$</li>
+<li>recurrence:<br>$δ<em>k(s, v) = min{δ</em>{k−1}(s, u) + w(u, v)|(u, v) ∈ E}$<br>$δ_0(s, v) = ∞$ for s $\ne$ v (base case)<br>$δ_k(s, s) = 0$ for any k (base case, if no negative cycles)$</li>
+<li>Goal: $δ(s, v) = δ_{|V|−1}(s, v)$ (if no negative cycles)</li>
+<li>memorize</li>
+<li>time: # of subproblems($|V|·|V|$) x time/subproblem($O(v) = 0(V^3)$)</li>
+<li>actually $Θ(indegree(v))$ for $δ_k(s, v)$</li>
+<li>⇒ time = $Θ(V\sum_{v∈V} indegree(V)) = Θ(VE)$</li>
+</ul>
+<h3 id="Guessing"><a href="#Guessing" class="headerlink" title="Guessing"></a>Guessing</h3><p>How to design recurrence:</p>
+<ul>
+<li>want shortest s → v path</li>
+<li>what is the last edge in path? dunno</li>
+<li>guess it is (u, v)</li>
+<li>then path is shortest s → u path + edge(u, v)</li>
+<li>the cost is $δ<em>{k−1}(s, u) + w(u, v)$, and $δ</em>{k−1}(s, u)$ is another subproblem</li>
+<li>to find best guess, try all (|V| choices) and use best</li>
+<li>key: small (polynomial) # possible guesses per subproblem — typically this dominates time/subproblem<br>DP ≈ recursion + memoization + guessing</li>
+</ul>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><ul>
+<li>DP $\approx$ “careful brute force”</li>
+<li>DP $\approx$ guessing + recursion + memoization</li>
+<li>DP ≈ dividing into reasonable # of subproblems whose solutions relate -  acyclicly - usually via guessing parts of solution.</li>
+<li>time = # subproblems × time/subproblem<ul>
+<li>essentially an amortization</li>
+<li>count each subproblem only once; after first time, costs O(1) via memoization</li>
+</ul>
+</li>
+<li>DP ≈ shortest paths in some DAG</li>
+</ul>
+<h4 id="5-Easy-Steps-to-Dynamic-Programming"><a href="#5-Easy-Steps-to-Dynamic-Programming" class="headerlink" title="5 Easy Steps to Dynamic Programming"></a>5 Easy Steps to Dynamic Programming</h4><ol>
+<li>define subproblems           count # subproblems</li>
+<li>guess (part of solution)     count # choices</li>
+<li>relate subproblem solutions  compute time/subproblem</li>
+<li>recurse + memoize            time = time/subproblem x # subproblems<ul>
+<li>OR build DP table bottom-up</li>
+<li>check subproblems acyclic/topological order</li>
+</ul>
+</li>
+<li>solve original problem: = a subproblem<ul>
+<li>OR by combining subproblem solutions ⇒ extra time</li>
+</ul>
+</li>
+</ol>
+<h3 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h3><h4 id="Text-Justification"><a href="#Text-Justification" class="headerlink" title="Text Justification"></a>Text Justification</h4><p>Content:<br>Split text into good lines</p>
+<ul>
+<li>obvious(MS Word) algorithm: put as many words that fit on first line, repeat</li>
+<li>but this can make very bad lines<br>Redefine the problem:</li>
+<li>Define badness(i,j) for line of words: [i,j]<ul>
+<li>e.g. if $\inf$ total length &gt; page width, else (page width - total length)^3</li>
+</ul>
+</li>
+<li>goal: split words into lines to min $\sum$ badness</li>
+</ul>
+<ol>
+<li><strong>subproblem</strong> = min. badness for suffix words[i :]<br>⇒ number of subproblems = Θ(n) where n = number of words</li>
+<li><strong>guessing</strong> = where to end first line, say i:j<br>⇒ number of choices = $n − i = O(n)$</li>
+<li><strong>recurrence</strong>:<br>• DP[i] = min(badness (i,j) + DP[j] for j in range (i+1,n+1))<br>• DP[n] = 0<br>⇒ time per subproblem = Θ(n)</li>
+<li><strong>order</strong>: for i=n,n-1,…,1,0<br>total time = $Θ(n^2)$</li>
+<li>solution = DP[0]</li>
+</ol>
+<p><br></p>
+<p>Reference:<br><a href="https://www.geeksforgeeks.org/dynamic-programming/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/dynamic-programming/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/12/30/MIT6006-Lec19/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-MIT6006-Lec18" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/12/20/MIT6006-Lec18/">MIT6006 Lec18 Speeding up Dijkstra</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/12/20/MIT6006-Lec18/" class="archive-article-date">
+  	<time datetime="2018-12-20T09:50:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bi-Directional-Search"><span class="toc-number">1.</span> <span class="toc-text">Bi-Directional Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Goal-directed-search-or-A"><span class="toc-number">2.</span> <span class="toc-text">Goal directed search or A*</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bi-Directional-Search"><span class="toc-text">Bi-Directional Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Goal-directed-search-or-A"><span class="toc-text">Goal directed search or A*</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="Bi-Directional-Search"><a href="#Bi-Directional-Search" class="headerlink" title="Bi-Directional Search"></a>Bi-Directional Search</h3><ul>
+<li>Bidirectional search means to start search from both direction simutaneously.</li>
+<li>The reason to use bidirectional is that in many cases it is faster, it dramatically reduce the amount of required exploration.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Alternate forward search from s</span><br><span class="line">          backward search from t</span><br><span class="line">          (follow edges backward)</span><br><span class="line">df(u) distances <span class="keyword">for</span> forward search</span><br><span class="line">db(u) distances <span class="keyword">for</span> backward search</span><br></pre></td></tr></table></figure>
+<p>Note:</p>
+<ul>
+<li>Algorithm terminates when some vertex w has been processed, i.e., deleted from the queue of both searches, $Q_f$ and $Q_b$</li>
+<li>Subtlety: After search terminates, find node x with minimum value of df(x) + db(x). x may not be the vertex w that caused termination as in example to the left!</li>
+<li>Find shortest path from s to x using $Π_f$ and shortest path backwards from t to x using $Π_b$. Note: x will have been deleted from either $Q_f$ or $Q_b$ or both.</li>
+</ul>
+<h3 id="Goal-directed-search-or-A"><a href="#Goal-directed-search-or-A" class="headerlink" title="Goal directed search or A*"></a>Goal directed search or A*</h3><ul>
+<li>A* Search algorithm is one of the best and popular technique used in path-finding and graph traversals.</li>
+</ul>
+<p>Modify edge weights with potential function over vertices.<br>$$\bar w(u,v) = w(u,v) - \lambda (u) + \lambda (v)$$</p>
+<p>For A* algorithm, one of the item is the real distance, another one is heuristic distance, which can be manhattan, eucliean or other distance. </p>
+<p><br></p>
+<p>Reference:<br><a href="https://www.geeksforgeeks.org/a-search-algorithm/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/a-search-algorithm/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/12/20/MIT6006-Lec18/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-MIT6006-Lec17" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1866,290 +2177,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-NNM" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/22/NNM/">Neural Mass Models</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/11/22/NNM/" class="archive-article-date">
-  	<time datetime="2018-11-22T08:52:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Wilson-Cowan-Model"><span class="toc-number">1.</span> <span class="toc-text">Wilson-Cowan Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Muldoon-2016-Stimulation-Based-Control-of-Dynamic-Brain-Networks"><span class="toc-number">1.1.</span> <span class="toc-text">Muldoon 2016 Stimulation-Based Control of Dynamic Brain Networks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hlinka-2012-Using-computational-models-to-relate-structural-and-functional-brain-connectivity"><span class="toc-number">1.2.</span> <span class="toc-text">Hlinka 2012 Using computational models to relate structural and functional brain connectivity</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Wong-Wang-Model"><span class="toc-number">2.</span> <span class="toc-text">Wong-Wang Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Deco-2013-Resting-State-Functional-Connectivity-Emerges-from-Structurally-and-Dynamically-Shaped-Slow-Linear-Fluctuations"><span class="toc-number">2.1.</span> <span class="toc-text">Deco 2013 Resting-State Functional Connectivity Emerges from Structurally and Dynamically Shaped Slow Linear Fluctuations</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hansen-2014-Functional-connectivity-dynamics-Modeling-the-switching-behavior-of-the-resting-state"><span class="toc-number">2.2.</span> <span class="toc-text">Hansen 2014 Functional connectivity dynamics: Modeling the switching behavior of the resting state</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Schirner-2018-Inferring-multi-scale-neural-mechanisms-with-brain-network-modelling"><span class="toc-number">2.3.</span> <span class="toc-text">Schirner 2018 Inferring multi-scale neural mechanisms with brain network modelling</span></a></li></ol></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Wilson-Cowan-Model"><span class="toc-text">Wilson-Cowan Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Muldoon-2016-Stimulation-Based-Control-of-Dynamic-Brain-Networks"><span class="toc-text">Muldoon 2016 Stimulation-Based Control of Dynamic Brain Networks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hlinka-2012-Using-computational-models-to-relate-structural-and-functional-brain-connectivity"><span class="toc-text">Hlinka 2012 Using computational models to relate structural and functional brain connectivity</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Wong-Wang-Model"><span class="toc-text">Wong-Wang Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Deco-2013-Resting-State-Functional-Connectivity-Emerges-from-Structurally-and-Dynamically-Shaped-Slow-Linear-Fluctuations"><span class="toc-text">Deco 2013 Resting-State Functional Connectivity Emerges from Structurally and Dynamically Shaped Slow Linear Fluctuations</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hansen-2014-Functional-connectivity-dynamics-Modeling-the-switching-behavior-of-the-resting-state"><span class="toc-text">Hansen 2014 Functional connectivity dynamics: Modeling the switching behavior of the resting state</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Schirner-2018-Inferring-multi-scale-neural-mechanisms-with-brain-network-modelling"><span class="toc-text">Schirner 2018 Inferring multi-scale neural mechanisms with brain network modelling</span></a></li></ol></li></ol>
-        </div>
-    </div>
- -->
-        <p>Here is a summary of neual mass models used in literatures.</p>
-<h3 id="Wilson-Cowan-Model"><a href="#Wilson-Cowan-Model" class="headerlink" title="Wilson-Cowan Model"></a>Wilson-Cowan Model</h3><h4 id="Muldoon-2016-Stimulation-Based-Control-of-Dynamic-Brain-Networks"><a href="#Muldoon-2016-Stimulation-Based-Control-of-Dynamic-Brain-Networks" class="headerlink" title="Muldoon 2016 Stimulation-Based Control of Dynamic Brain Networks"></a>Muldoon 2016 Stimulation-Based Control of Dynamic Brain Networks</h4><p><a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005076" target="_blank" rel="noopener">https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005076</a></p>
-<p>$$\tau \frac{dE_j}{dt} = -E_j(t) + (S_{e_max}-E_j(t))S_e\lgroup c_1E_j(t) - c_2I_j(t) + c_5\sum_k A_{jk}E_k(t-\tau_d^k)+P_j(t)\rgroup + \sigma w_j(t)$$<br>$$\tau \frac{dI_j}{dt} = -I_j(t) +(S_{i_max}-I_j(t))S_i(c_3E_j(t)-c_4I_j(t))+\sigma v_j(t)$$</p>
-<ul>
-<li>$E(t)/I(t)$: the firing rate of the excitatory/inhibitory population respectively</li>
-<li>$\tau$: time constant</li>
-<li>$P(t)$: an external stimulus parameter</li>
-<li>$w_j(t)$, $v_j(t)$: drawn from a standard normal distribution and act as additive noise to the system with σ = 0.00001. </li>
-<li>$A$: connectivity matrix</li>
-<li>$\tau_d$: delays between regions.(are calculated as a function of physical distance between identified brain regions, assuming a transmission velocity of 10 m/s (range $\tau_d$ = 0.8 − 14.8 ms))</li>
-<li>$S_{e/i}(x)$:  transfer function(given by the sigmoidal function)<br>$$S_{e/i}(x) = \frac{1}{1+e^{(-a_{e/i}(x-\theta_{e/i}))}} - \frac{1}{1+e^{a_{e/i}\theta_{e/i}}} $$</li>
-</ul>
-<p>Parameters used in paper:<br>$c_1 = 16, c_2 = 12, c_3 = 15, c_4 = 3, a_e = 1.3, a_i = 2, θ_e = 4, θ_i = 3.7$<br>To simulate brain activity, set $P(t) = 0$ for all regions<br>Model stimulation to single brain region, $j$, by setting $P_j(t) = 1.25$. </p>
-<h4 id="Hlinka-2012-Using-computational-models-to-relate-structural-and-functional-brain-connectivity"><a href="#Hlinka-2012-Using-computational-models-to-relate-structural-and-functional-brain-connectivity" class="headerlink" title="Hlinka 2012 Using computational models to relate structural and functional brain connectivity"></a>Hlinka 2012 Using computational models to relate structural and functional brain connectivity</h4><p><a href="https://onlinelibrary.wiley.com/doi/full/10.1111/j.1460-9568.2012.08081.x" target="_blank" rel="noopener">https://onlinelibrary.wiley.com/doi/full/10.1111/j.1460-9568.2012.08081.x</a></p>
-<p>$$\dot u_i = -u_i +f(c_1u_i - c_2v_i + P + \epsilon \sum_j w_{ij}u_j)$$<br>$$\dot v_i = -v_i + f(c_3u_i - c_4v_i + Q)$$<br>$$f(x) = \frac{1}{1+exp(-x)}$$</p>
-<ul>
-<li>$f(x)$: a population firing rate function</li>
-</ul>
-<h3 id="Wong-Wang-Model"><a href="#Wong-Wang-Model" class="headerlink" title="Wong-Wang Model"></a>Wong-Wang Model</h3><h4 id="Deco-2013-Resting-State-Functional-Connectivity-Emerges-from-Structurally-and-Dynamically-Shaped-Slow-Linear-Fluctuations"><a href="#Deco-2013-Resting-State-Functional-Connectivity-Emerges-from-Structurally-and-Dynamically-Shaped-Slow-Linear-Fluctuations" class="headerlink" title="Deco 2013 Resting-State Functional Connectivity Emerges from Structurally and Dynamically Shaped Slow Linear Fluctuations"></a>Deco 2013 Resting-State Functional Connectivity Emerges from Structurally and Dynamically Shaped Slow Linear Fluctuations</h4><p><a href="http://www.jneurosci.org/content/33/27/11239" target="_blank" rel="noopener">http://www.jneurosci.org/content/33/27/11239</a></p>
-<p>$$\frac{dS_i(t)}{dt} = -\frac{S_i}{\tau_S} +(1-S_i)\gamma H(x_i) +\sigma v_i(t) $$<br>$$H(x_i) = \frac{ax_i - b}{1-exp(-d(ax_i-b))}$$<br>$$x_i = wJ_NS_i + GJ_N\sum_j C_{ij}S_j + I_0  $$</p>
-<ul>
-<li>$H(x_i)$: population firing rate</li>
-<li>$S_i$: the average synaptic gating variable at the local cortical area i </li>
-<li>$w$: the local excitatory recurrence, = 0.9</li>
-<li>$C_{ij}$: the structural connectivity matrix expressing the neuroanatomical links between the areas i and j. </li>
-<li>$J_N$: the synaptic couplings, = 0.2609 (nA)</li>
-<li>$I_0$: the overall effective external input, = 0.3 (nA). </li>
-<li>$υ_i(t)$: uncorrelated standard Gaussian noise, and the noise amplitude at each node is $σ = 0.001 (nA)$.</li>
-</ul>
-<p>Parameters used in the paper:<br>$a = 270 (n/C), b = 108 (Hz), d = 0.154 (s), \gamma = 0.641/1000$ (the factor 1000 is for expressing everything in ms), $\tau S = 100 ms$</p>
-<h4 id="Hansen-2014-Functional-connectivity-dynamics-Modeling-the-switching-behavior-of-the-resting-state"><a href="#Hansen-2014-Functional-connectivity-dynamics-Modeling-the-switching-behavior-of-the-resting-state" class="headerlink" title="Hansen 2014 Functional connectivity dynamics: Modeling the switching behavior of the resting state"></a>Hansen 2014 Functional connectivity dynamics: Modeling the switching behavior of the resting state</h4><p><a href="https://www.sciencedirect.com/science/article/pii/S1053811914009033" target="_blank" rel="noopener">https://www.sciencedirect.com/science/article/pii/S1053811914009033</a></p>
-<p>$$\frac{dS_i}{dt} = -\frac{S_i}{\tau_S} +(1-S_i)\gamma R_i +\sigma \eta_i(t) $$<br>$$R_i = \frac{ax_i - b}{1-exp(-d(ax_i-b))}$$<br>$$x_i = wJ_NS_i + GJ_N\sum_j C_{ij}S_j + I_0  $$</p>
-<ul>
-<li>$S_i$: NMDA synaptic input currents</li>
-<li>$\tau_S$: NMDA decay time constant</li>
-<li>$R_i$: collective firing rates</li>
-<li>$\gamma$: kinetic parameter, = 0.641</li>
-<li>$x_i$: total synaptic inputs to a region</li>
-<li>$N$: an intensity scale for synaptic currents, = 0.2609 nA</li>
-<li>$w$: relative strength of recurrent connections within the region</li>
-<li>$C_{ij}$: entries of the SC matrix globally reweighted by a single scalar G adjusted as a control parameter</li>
-<li>$σ$: noise amplitude</li>
-<li>$η$: a stochastic Gaussian variable with a zero mean and unit variance.</li>
-<li>$I_0$: external input and sets the level of regional excitability. </li>
-</ul>
-<p>Parameters used in the paper:<br>$a = 270(V·nC)^{−1}, b = 108 Hz, d = 0.154, G = 2.4, σ = 0.001, w = 0.9, I_0 = 0.3 nA$</p>
-<h4 id="Schirner-2018-Inferring-multi-scale-neural-mechanisms-with-brain-network-modelling"><a href="#Schirner-2018-Inferring-multi-scale-neural-mechanisms-with-brain-network-modelling" class="headerlink" title="Schirner 2018 Inferring multi-scale neural mechanisms with brain network modelling"></a>Schirner 2018 Inferring multi-scale neural mechanisms with brain network modelling</h4><p>Deco 2014<br><a href="https://elifesciences.org/articles/28927" target="_blank" rel="noopener">https://elifesciences.org/articles/28927</a></p>
-<p>$$ I_i^{(E)} = W_EI_0 + G\sum_j C_{ij}S_j^{(E)} - J_iS_i^{(I)} + w_{BG}^{(E)}I_{BG} $$<br>$$I_i^{(I)} = W_II_0 - S_i^{(I)} +w_{BG}^{(I)}I_{BG} $$<br>$$r_i^{(E)} = \frac{a_EI_i^{(E)}-b_E}{1-exp(-d_E(a_EI_i^{(E)}-b_E))}$$<br>$$r_i^{(I)} = \frac{a_II_i^{(I)}-b_I}{1-exp(-d_I(a_II_i^{(I)}-b_I))}$$<br>$$\frac{dS_i^{(E)}(t)}{dt} = -\frac{S_i^{(E)}}{\tau_E} +(1-S_i^{(E)})\gamma_E r_i^{(E)} $$<br>$$\frac{dS_i^{(I)}(t)}{dt} = -\frac{S_i^{(I)}}{\tau_I} +\gamma_I r_i^{(I)} $$</p>
-<ul>
-<li>$r_i^{(E,I)}$: population firing rate of the excitatory (E) and inhibitory (I) population of brain area i. </li>
-<li>$S_i^{(E,I)}$: the average excitatory or inhibitory synaptic gating variables of each brain area, while their input currents are given by $I_i^{(E,I)}$</li>
-<li>$I_{BG}$: excitatory postsynaptic currents using region-wise aggregated EEG source activity that is added to the sum of input currents $I_i^{(E,I)}$.</li>
-<li>$ω_{BG}^{(E,I)}$: weight parameters, rescale the z-score normalized EEG source activity independently for excitatory and inhibitory populations. </li>
-<li>$G$: long-range coupling strength scaling factor that rescales the structural connectivity matrix $C_{ij}$ that denotes the strength of interaction for each region pair i and j. </li>
-<li>$w_+$: Local excitatory recurrence, = 1.4</li>
-<li>$C_{ij}$:    Structural connectivity matrix</li>
-<li>$γ_E, γ_I$: Kinetic parameters, =    $6.41×10^{−4}, 1.0×10^{−3}$    </li>
-<li>$a_E, b_E, d_E, τ_E, W_E$: Excitatory gating variables, = $310 (nC^{−1}), 125(Hz), 0.16(s), 100(ms), 1$    </li>
-<li>$a_I, b_I, d_I, τ_I, W_I$: Inhibitory gating variables, $615 (nC^{−1}), 177 (Hz), 0.087 (s), 10 (ms), 0.7$</li>
-<li>$J_{NMDA}$: Excitatory synaptic coupling, = 0.15 (nA)    </li>
-<li>$J_I$: Feedback inhibitory synaptic coupling, Obtained by FIC heuristic (nA)</li>
-<li>$I_0$: overall effective external input, = 0.382 (nA)</li>
-<li>$G$: global coupling scaling factor, obtained from model fitting</li>
-<li>$w^{(E)}_{BG}, w^{(I)}_{BG}$: weights for scaling EEG-derived input currents, obtained from model fitting</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Neural Dynamic Simulation</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/22/NNM/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MIT6006-Lec10" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/22/MIT6006-Lec10/">MIT6006 Lec10 Hashing III Open Addressing</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/11/22/MIT6006-Lec10/" class="archive-article-date">
-  	<time datetime="2018-11-21T23:38:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Open-addressing"><span class="toc-number">1.</span> <span class="toc-text">Open addressing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Probing-strategies"><span class="toc-number">2.</span> <span class="toc-text">Probing strategies</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Uniform-Hashing-Assumption"><span class="toc-number">3.</span> <span class="toc-text">Uniform Hashing Assumption</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Open-Addressing-vs-Chaining"><span class="toc-number">3.1.</span> <span class="toc-text">Open Addressing vs. Chaining</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cryptographic-Hashing"><span class="toc-number">4.</span> <span class="toc-text">Cryptographic Hashing</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Open-addressing"><span class="toc-text">Open addressing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Probing-strategies"><span class="toc-text">Probing strategies</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Uniform-Hashing-Assumption"><span class="toc-text">Uniform Hashing Assumption</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Open-Addressing-vs-Chaining"><span class="toc-text">Open Addressing vs. Chaining</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cryptographic-Hashing"><span class="toc-text">Cryptographic Hashing</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="Open-addressing"><a href="#Open-addressing" class="headerlink" title="Open addressing"></a>Open addressing</h3><ul>
-<li>is another approach to solve collisions</li>
-<li>no chaining; instead, all items stored in table</li>
-<li>one item per slot ⇒ $m ≥ n$</li>
-<li><strong>hash function</strong> will specify the order of slots to probe (try) for a key (for insert/search/delete), not just one slot. (since when collision occurs, you need to have further trials to find an spare slot)</li>
-<li>in math notation: to design a function $h$, with the property that for all $k ∈ U$:<ul>
-<li>the universe of keys $\times$ trial count, mapps to the slot in table<br>$$h: U \times \{0,1,…,m-1\} \to \{0,1,…,m-1\}$$</li>
-</ul>
-</li>
-<li>$\langle h(k, 0), h(k, 1), . . . , h(k, m − 1)\rangle$ is a permutation of 0, 1, …, m − 1. That means if keep trying h(k, i) for increasing i, we will eventually hit all slots of the table.</li>
-</ul>
-<p>Operations are as follows:</p>
-<ul>
-<li><strong>Insert(k,v)</strong>: Keep probing until an empty slot is found. Insert item into that slot.</li>
-<li><strong>Search(k)</strong>: As long as the slots you encounter by probing are occupied by keys = k, keep probing until you either encounter k or find an empty slot—return success or failure respectively.</li>
-<li><strong>Deleting Items</strong>: rather than setting none in the slot of the deleted item, replace it with special flag: “DeleteMe”, which <em>Insert</em> treats as None but <em>Search</em> doesn’t</li>
-</ul>
-<h3 id="Probing-strategies"><a href="#Probing-strategies" class="headerlink" title="Probing strategies"></a>Probing strategies</h3><p><strong>Linear Probing</strong><br>$h(k, i) = (h’(k) +i)\; mod\; m$ where h’(k) is ordinary hash function</p>
-<p>But have a problem: clustering—cluster: consecutive group of occupied slots as clusters become longer, it gets more likely to grow further.</p>
-<p><strong>Double Hashing</strong><br>$h(k, i) =(h_1(k) +i·h_2(k)) \; mod\; m$ where $h_1(k)$ and $h_2(k)$ are two ordinary hash functions.</p>
-<ul>
-<li>actually hit all slots (permutation) if $h_2(k)$ is relatively prime to m for all k</li>
-</ul>
-<h3 id="Uniform-Hashing-Assumption"><a href="#Uniform-Hashing-Assumption" class="headerlink" title="Uniform Hashing Assumption"></a>Uniform Hashing Assumption</h3><ul>
-<li>is not Simple Uniform Hashing Assumption</li>
-<li>Each key is equally likely to have any one of the m! permutations as its probe sequence(not really true, but double hashing can come close)</li>
-</ul>
-<h4 id="Open-Addressing-vs-Chaining"><a href="#Open-Addressing-vs-Chaining" class="headerlink" title="Open Addressing vs. Chaining"></a>Open Addressing vs. Chaining</h4><ul>
-<li>Open Addressing: better cache performance (better memory usage, no pointers needed)</li>
-<li>Chaining: less sensitive to hash functions (OA requires extra care to avoid clustering) and the load factor α (OA degrades past 70% or so and in any event cannot support values larger than 1)</li>
-</ul>
-<h3 id="Cryptographic-Hashing"><a href="#Cryptographic-Hashing" class="headerlink" title="Cryptographic Hashing"></a>Cryptographic Hashing</h3><p><br></p>
-<p>A demo of different probng tsrategies can be found <a href="https://www.cse.cuhk.edu.hk/irwin.king/_media/teaching/csc2100b/tu6.pdf" target="_blank" rel="noopener">here</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/11/22/MIT6006-Lec10/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/blog/page/5/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/4/">4</a><a class="page-number" href="/blog/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/blog/page/7/">7</a><a class="page-number" href="/blog/page/8/">8</a><a class="page-number" href="/blog/page/9/">9</a><a class="extend next" rel="next" href="/blog/page/7/">Next &raquo;</a>
@@ -2166,7 +2193,7 @@ var _hmt = _hmt || [];
 			<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     	<div class="footer-left">
             <i class="fa fa-copyright"></i> 
-            2019 Tracy Xin Wang
+            2020 Tracy Xin Wang
             
             <span class="post-meta-divider">|</span>
             <span id="busuanzi_container_site_pv" style="display: inline;">
@@ -2181,7 +2208,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共91.1k字
+              本站总共94.7k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -2288,19 +2315,23 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2324,6 +2355,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">经济</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
               </li>
              
@@ -2340,19 +2375,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Network</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">思考</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2368,11 +2407,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+                <a href="javascript:void(0)" class="js-tag color3">CV</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">

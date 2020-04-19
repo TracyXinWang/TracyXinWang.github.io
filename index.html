@@ -247,6 +247,535 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-digital_image_lds" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/04/15/digital_image_lds/">数字图像处理与分析 基础</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2020/04/15/digital_image_lds/" class="archive-article-date">
+  	<time datetime="2020-04-15T11:57:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本概念"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本运算"><span class="toc-number">2.</span> <span class="toc-text">基本运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#像素级运算"><span class="toc-number">2.1.</span> <span class="toc-text">像素级运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空域变换"><span class="toc-number">2.2.</span> <span class="toc-text">空域变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#直方图变换"><span class="toc-number">2.3.</span> <span class="toc-text">直方图变换</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本概念"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本运算"><span class="toc-text">基本运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#像素级运算"><span class="toc-text">像素级运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空域变换"><span class="toc-text">空域变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#直方图变换"><span class="toc-text">直方图变换</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>图像的表示：</p>
+<ul>
+<li>二维离散函数：$I=f(x, y)$<ul>
+<li>$x, y$ 表示图像像素的坐标</li>
+<li>函数值$f$表示在坐标$(x,y)$处像素的亮度值</li>
+</ul>
+</li>
+<li>二维矩阵：$A[m, n]$<ul>
+<li>$m, n$ 表示图象的宽和高</li>
+<li>矩阵元素$a(i,j)$表示图像在第 $i$ 行，第 $j$ 列的像素值</li>
+</ul>
+</li>
+</ul>
+<p>图像质量：</p>
+<ul>
+<li>对比度：反应图像中灰度方差的大小<ul>
+<li>对比度 = 最大灰度值/最小灰度值</li>
+</ul>
+</li>
+<li>传统客观评价方法:<ul>
+<li>通过计算恢复图像偏离原始图像的误差来衡量恢复图像的质量</li>
+<li>均方误差(MSE): $MSE = \frac1{NM} \sum^N_{i=1}\sum^M_{j=1} (f_{ij}-f’_{ij})^2$</li>
+<li>峰值信噪比(PSNR): $PSNR = 10log_{10} \frac{L^2}{MSE}$</li>
+<li>其中N、M分别是x方向、y方向图像像素点的个数， $f_{ij}$和$f’_{ij}$分别是原始图像和测试图像在$(i,j)$点上的取值， $L$是图像中灰度取值的范围，对8比特的灰度图像而言，$L=255$</li>
+</ul>
+</li>
+</ul>
+<p>图像的颜色:</p>
+<ul>
+<li>常用的颜色模型<ul>
+<li>RGB（红、绿、蓝）</li>
+<li>CMYK（青、品红、黄、黑） (Cyan, Magenta, Yellow, Black)<ul>
+<li>用于印刷、绘画等</li>
+</ul>
+</li>
+<li>HSI（色调、色饱和度、亮度） (Hue, Saturation, Intensity)<ul>
+<li>用于调整颜色分量</li>
+<li>H、S、I 可以分开处理而且相互独立</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>颜色模型之间的转换<ul>
+<li>RGB to CMY:<ul>
+<li>$C=1-R; Y=1-G; M=1-B$</li>
+</ul>
+</li>
+<li>HSI to RGB:<ul>
+<li>$0\le H\le 120^\circ$</li>
+<li>$B=I(1-S)$</li>
+<li>$R = I[1+\frac{S\cdot cosH}{cos(60^\circ -H)}]$</li>
+<li>$G=3I-(R+B)$</li>
+</ul>
+</li>
+<li>RGB to HSI:<ul>
+<li>$\theta = cos^{-1}{\frac{[(R-G)+(R-B)]/2}{\sqrt{(R-G)^2+(R-B)(G-B)}}}$</li>
+<li>$H = \left\lbrace \begin{matrix} \theta &amp; B \le G \\ 360-\theta &amp; B&gt;G \end{matrix} \right.$</li>
+<li>$S=1-\frac{3\cdot min(R,G,B)}{R+G+B}$</li>
+<li>$I=(R+G+B)/3$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>颜色模型的应用 — 利用 HIS 模型特性消除红眼<ul>
+<li>“红眼”—闪光灯照相的结果</li>
+<li>在HIS空间可定义红眼为<ul>
+<li>$-\pi/4&lt;$色度$&lt;\pi/4$ </li>
+<li>色饱和度&gt;0.3</li>
+</ul>
+</li>
+<li>算法：<ul>
+<li>在脸部的特定区域进行色空间转换RGB→HSI测试每一点像素</li>
+<li>如果：$-\pi/4&lt;H&lt;\pi/4$ and $S&gt;0.3$ 则该像素为红眼像素，使其成为灰色：S=0</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>灰度至RGB的转换 (伪彩色显示)：<ul>
+<li>$R = a |sin(bx)|$<br>$G = a |sin(bx+c)|$<br>$B = a |sin(bx+2c)|$<br>where x = gray level intensity, $a = 255, b=2*\pi/255, c = \pi/5$</li>
+</ul>
+</li>
+</ul>
+<h2 id="基本运算"><a href="#基本运算" class="headerlink" title="基本运算"></a>基本运算</h2><h3 id="像素级运算"><a href="#像素级运算" class="headerlink" title="像素级运算"></a>像素级运算</h3><p><strong>点运算</strong></p>
+<ul>
+<li>线性点运算：<ul>
+<li>$D_{out} = f(D_{in}) = aD_{in} + b$</li>
+<li>$I_{out}(x,y) =a*I_{in}(x,y) + b$<ul>
+<li>a=1,b=0: 恒等</li>
+<li>a&lt;0: 黑白反转</li>
+<li>|a|&gt;1: 增加对比度</li>
+<li>|a|&lt;1: 减小对比度</li>
+<li>b&gt;0: 增加亮度</li>
+<li>b&lt;0: 减小亮度</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>非线性点运算<ul>
+<li>$f(I(x,y)) = I(x,y) + C\times I(x,y)\times (I(x,y)_m - I(x,y))$<ul>
+<li>C&gt;0: 增强中间部分亮度</li>
+<li>C&lt;0: 减小中间部分亮度</li>
+<li>what is $I(x,y)_m$?</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>映射表点运算</li>
+<li>点运算特点<ul>
+<li>点运算针对图像中的每一个像素灰度，独立地进行灰度值的改变</li>
+<li>输出图像中每个像素点的灰度值，仅取决于相应输入像素点的值</li>
+<li>点运算不改变图像内的空间关系</li>
+<li>从像素到像素的操作</li>
+<li>点运算可完全由灰度变换函数或灰度映射表确定</li>
+</ul>
+</li>
+</ul>
+<p><strong>代数运算</strong></p>
+<ul>
+<li>加法运算：<ul>
+<li>$C(x,y) = A(x,y)+B(x,y)$</li>
+<li>应用：去除叠加性噪音，生成图像叠加效果</li>
+<li>去除叠加性噪音：对 M 幅加性噪声图像进行平均，可以使图像的平方信噪比提高 M 倍。（噪声互不相关，且均值为0，多个噪声图像相加后可以降低噪声的影响）</li>
+<li>图像叠加：$g(x,y) = \alpha f(x,y) + \beta h(x,y)$, 其中 $\alpha+\beta=1$</li>
+</ul>
+</li>
+<li>减法运算：<ul>
+<li>$C(x,y) = A(x,y)-B(x,y)$</li>
+<li>应用：去除不需要的叠加性图案（背景图像），检测同一场景两幅图像之间的变化</li>
+</ul>
+</li>
+<li>乘法运算：<ul>
+<li>$C(x,y) = A(x,y)\times B(x,y)$</li>
+<li>应用：图像的局部显示：用二值蒙版图像与原图像做乘法</li>
+</ul>
+</li>
+</ul>
+<p><strong>逻辑运算</strong></p>
+<ul>
+<li>求反<ul>
+<li>$g(x,y) = R-f(x,y)$, $R$ 为$f(x,y)$ 的灰度级</li>
+<li>应用：获得一个图像的负像，获得一个子图像的补图像</li>
+</ul>
+</li>
+<li>异或<ul>
+<li>$g(x,y) = f(x,y) \oplus h(x,y)$</li>
+<li>应用：获得相交子图像</li>
+</ul>
+</li>
+<li>或</li>
+<li>与</li>
+</ul>
+<h3 id="空域变换"><a href="#空域变换" class="headerlink" title="空域变换"></a>空域变换</h3><p>在图像空间，对图像的形状、像素值等进行变化、映射等处理。<br><strong>几何变换</strong></p>
+<ul>
+<li>改变图像的形状，大小，位置</li>
+<li>二维图像几何变换的定义：<ul>
+<li>对于原始图像f(x,y)，坐标变换函数 $x’ = a(x,y); y’ = b(x,y)$</li>
+<li>唯一确定了几何变换：$g(x’,y’) = f(a(x,y), b(x,y))$, $g(x,y)$是目标图像</li>
+</ul>
+</li>
+<li>二维基本变换：多项式变换，透视变换</li>
+<li>多项式变换：<ul>
+<li>基本公式：$x’=\sum_{i=0}^M\sum_{j=0}^N a_{ij}x_iy_j, y’=\sum_{i=0}^M\sum_{j=0}^N b_{ij}x_iy_j $</li>
+<li>线性变换 - 多项式变换中的一阶变换：$x’=ax+by+e, y’=cx+dy+f$</li>
+<li>原始图像与目标图像之间的坐标变换函数为线性函数，可以通过与之对应的线性矩阵变换来实现</li>
+<li>齐次坐标表示法：用n+1维向量表示n维向量</li>
+<li>仿射变换</li>
+</ul>
+</li>
+<li>二维图像的基本几何变换具有特征：<ul>
+<li>变换前图形上的每一点，在变换后的图形上都有一确定的对应点，如原来直线上的中点变换为新直线的中点</li>
+<li>平行直线变换后仍保持平行，相交直线变换后仍相交</li>
+<li>变换前直线上的线段比等于变换后对应的线段比</li>
+</ul>
+</li>
+<li>常见几何变换：<ul>
+<li>错切变换：<ul>
+<li>景物在平面上的非垂直投影效果。</li>
+<li>$x$方向错切：$x’=x+d_xy， y’=y$</li>
+<li>$y$方向错切：$x’=x， y’= y+d_yx$</li>
+</ul>
+</li>
+<li>伪仿射变换 — 双线性几何变换<ul>
+<li>$x’=ax+by+gxy+e, y’=cx+dy+hxy+f$</li>
+<li>特点：与xy平面上坐标轴平行的直线，变换为x’y’平面上的直线</li>
+<li>与xy平面上坐标轴不平行的直线，变换为x’y’平面上的曲线</li>
+</ul>
+</li>
+<li>非线性几何变换:<ul>
+<li>在二维平面上， 实现图像几何形状的任意变换, 校正图像的几何失真</li>
+<li>一般的，原始图像与目标图像之间，存在一一对应的特征点（ tiepoints, GCPs）</li>
+<li>需用高阶多项式进行近似描述, 通过原始图像与目标图像之间多个对应特征点(GCP点)，可以确定多项式中的未知参数</li>
+<li>多项式阶数与GCP数量的关系: $GCPs\ge \frac{(t+1)(t+2)}{2}$</li>
+</ul>
+</li>
+<li>透视变换:<ul>
+<li>将一个平面上的点P(x,y)，以投影中心O为基准，投影成另一个平面上的点P’(x,y)</li>
+<li>二维图像透视变换函数及其齐次坐标表示为: $x’=\frac{ax+by+e}{mx+ly+1}; y’=\frac{cx+dy+f}{mx+ly+1}$ (跟齐次矩阵的第三个矩阵有关，实现透视变换)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>基本几何变换的特征<ul>
+<li>坐标空间的变化<ul>
+<li>范围发生变化</li>
+<li>大小发生变化</li>
+</ul>
+</li>
+<li>像素值的变化<ul>
+<li>像素值不发生变化——位置改变</li>
+<li>像素值发生变化——旋转、缩放、变形变换        </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>灰度插值<ul>
+<li>图像旋转之后，会出现许多的空洞点，对这些空洞点必须进行填充处理</li>
+<li>最近邻插值法<ul>
+<li>选择最临近点像素灰度值</li>
+<li>特点： 简单快速，灰度保真性好，误差较大，视觉特性较差，有马赛克效应</li>
+</ul>
+</li>
+<li>双线性插值（一阶插值）<ul>
+<li>在x, y两个方向上分别进行一次线性插值，根据距离确定权重</li>
+<li>应用双曲抛物面方程：$f(x,y)=ax+by+cxy+d$</li>
+<li>归一化坐标值：$0&lt;x&lt;1,0&lt;y&lt;1$, 可有$f(x,y)=[f(1,0)-f(0,0)]x+[f(0,1)-f(0,0)]y+[f(1,1)+f(0,0)-f(0,1)-f(1,0)]xy+f(0,0)$</li>
+<li>注意：双线性插值的结果不是线性的，它是两个线性函数的积</li>
+<li>需得到四个未知参数——利用四个已知点</li>
+<li>特点: 计算中较为充分地考虑相邻各点的特征，具有灰度平滑过渡特点; 一般情况下可得到满意结果; 具有低通滤波特性，使图像轮廓模糊; 平滑作用使图像细节退化，尤其在放大时; 不连续性会产生不希望的结果</li>
+</ul>
+</li>
+<li>最佳插值函数:<ul>
+<li>在满足Nyquist条件下，从离散信号$x(nTs)$可恢复连续信号x(t) ：$x(t) = \sum^{+\infty}_{i=-\infty}x(nT_s)sinc(\frac{\pi}{T_s}(t-nT_s))$</li>
+</ul>
+</li>
+<li>高阶插值:<ul>
+<li>如果将以上的sinc函数截断，仅取原点周围有限范围函数（-2，2）</li>
+<li>同时利用三次多项式来近似理论上的最佳插值函数sinc(x)</li>
+<li>由此形成常用的三次卷积插值算法，又称三次内插法，两次立方法(Cubic)。 CC插值法等。</li>
+<li>三次卷积插值算法实现：利用待插值点周围的16个邻点像素值</li>
+<li>三次卷积插值算法特点： 为满足二维Nyquist条件下，最佳重构公式的近似； 只有图像满足特定的条件，三次卷积插值算法才可获得最佳结果； 可使待求点的灰度值更好地模拟实际可能值； 可取得更好的视觉效果； 三次卷积内插突出的优点是高频信息损失少，可将噪声平滑； 4×4时，像元均值和标准差信息损失小； 计算量大为增加</li>
+</ul>
+</li>
+<li>图像处理中内插方法的选择<ul>
+<li>内插方法的选择除了考虑图像的显示要求及计算量，还要考虑内插结果对分析的影响</li>
+<li>当纹理信息为主要信息时，最近邻采样将严重改变原图像的纹理信息</li>
+<li>但灰度信息为主要信息时，双线性内插及三次卷积内插将减少图像异质性，增加图像同质性，其中，双线性内插方法使这种变化更为明显</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>非几何变换</strong><br>非几何变换属于像素值的变换，没有几何位置的改变—灰度变换。 灰度变换的目的是为了改善画质，使图像的显示效果更加清晰。</p>
+<ul>
+<li>基本非几何变换类型<ul>
+<li>Negative：$s=L-1-r$</li>
+<li>Log: $s=clog(1+r)$</li>
+<li>Inverse log: $s=e^{cr}-1$</li>
+<li>Power-law: $s=cr^{\gamma}$</li>
+<li>r: input gray level; s: output gray level</li>
+</ul>
+</li>
+<li>模板运算 (kernel)<ul>
+<li>一个系数矩阵，经常是奇数</li>
+</ul>
+</li>
+<li>灰度变换<ul>
+<li>对于输入图像f(x, y)，灰度变换T将产生一个输出图像g(x, y)， g(x, y)的每一个像素值，均取决于f(x, y)中对应点的像素值</li>
+<li>例子：<ul>
+<li>图像求反</li>
+<li>对比度拉伸</li>
+<li>对比度展宽——突出图像中关心的部分</li>
+<li>灰度窗——只显示指定灰度级范围内的信息</li>
+<li>灰度级切片——只保留感兴趣的部分，其余部分置为0</li>
+<li>图像输入输出的Gamma失真</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>直方图变换<ul>
+<li>直方图是用来表达一幅图像灰度级分布情况的统计表</li>
+<li>横坐标为灰度，纵坐标为某一灰度值的像素个数，或 出现的频率</li>
+</ul>
+</li>
+</ul>
+<h3 id="直方图变换"><a href="#直方图变换" class="headerlink" title="直方图变换"></a>直方图变换</h3><ul>
+<li>基本理论</li>
+<li>直方图均衡</li>
+</ul>
+<hr>
+<p>Reference：<br><a href="https://www.bilibili.com/video/BV1Xb411U79J?t=3&amp;p=4" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1Xb411U79J?t=3&amp;p=4</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">CV</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2020/04/15/digital_image_lds/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-LPR" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/02/05/LPR/">LPR 贷款基础利率</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2020/02/05/LPR/" class="archive-article-date">
+  	<time datetime="2020-02-05T08:57:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要实行LPR"><span class="toc-number">1.</span> <span class="toc-text">为什么要实行LPR</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#利率双轨制"><span class="toc-number">1.1.</span> <span class="toc-text">利率双轨制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算方式"><span class="toc-number">1.2.</span> <span class="toc-text">计算方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#跟房贷的关系"><span class="toc-number">2.</span> <span class="toc-text">跟房贷的关系</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要实行LPR"><span class="toc-text">为什么要实行LPR</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#利率双轨制"><span class="toc-text">利率双轨制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算方式"><span class="toc-text">计算方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#跟房贷的关系"><span class="toc-text">跟房贷的关系</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h2 id="为什么要实行LPR"><a href="#为什么要实行LPR" class="headerlink" title="为什么要实行LPR"></a>为什么要实行LPR</h2><ul>
+<li>LPR (Loan Prime Rate)，全称 <strong>贷款基础利率</strong></li>
+<li>引入LPR 是为了解决利率双轨制的问题，进一步推进利率市场化</li>
+</ul>
+<h3 id="利率双轨制"><a href="#利率双轨制" class="headerlink" title="利率双轨制"></a>利率双轨制</h3><p>指的是有两个利率：</p>
+<ul>
+<li>市场利率：<ul>
+<li>指由资金市场上供求关系决定的利率</li>
+<li>央行向各金融机构(商业银行，政策银行)发放货币，金融机构将一些抵押物抵押给央行，这个过程叫做中期借贷便利(MLF), 俗称麻辣粉。到期后(3/6/12个月)，商业银行将本金和利息再还给央行。这个利息，就是MLF的利率来的，是由央行决定的</li>
+<li>但由于这个决定需要根据市场来调节，所以是一种市场化的调控手段</li>
+</ul>
+</li>
+<li>政策利率：<ul>
+<li>央行自己定的，跟市场无关，想定多少就多少</li>
+<li>主要指 基准利率</li>
+<li>基准利率是 央行规定的存贷款利率</li>
+<li>商业银行贷款给个人、企业时，是在基准利率基础上，再加一个银行自己定的浮点</li>
+</ul>
+</li>
+<li>这种双轨制会导致一个问题，就是货币政策传导不畅<ul>
+<li>当央行想刺激经济时，会加大MLF的数目并减少MLF的利率</li>
+<li>但钱到达商业银行时，由于基准利率没有变化，个人/企业实际贷款的利率依然不变，或者变化较为延迟(商业银行规定的上浮)，达不到货币政策的目标</li>
+<li>另一个办法就是调节基准利率，这样的做法就造成 又用政策来主导市场了，不开放</li>
+</ul>
+</li>
+</ul>
+<h3 id="计算方式"><a href="#计算方式" class="headerlink" title="计算方式"></a>计算方式</h3><p>$$LPR = MLF + 加点 $$</p>
+<ul>
+<li>MLF 是央行决定的</li>
+<li>加点是由商业银行决定的，但不是一家商业银行决定的<ul>
+<li>目前是由18家银行(国有，私有，外资银行等)的报价来决定的</li>
+<li>根据各报价行的报价，剔除最高、最低各1家报价，对其余报价进行算术平均计算后，得出贷款基础利率报价平均利率，每月更新(20号)。</li>
+</ul>
+</li>
+</ul>
+<p>而商业银行借贷给个人、企业的利率，则是在这个LPR上，再加个商业银行自己规定的加点，这个加点是根据个人/企业资产的优劣情况由商业银行自己决定的</p>
+<h2 id="跟房贷的关系"><a href="#跟房贷的关系" class="headerlink" title="跟房贷的关系"></a>跟房贷的关系</h2><p>引入LPR后，房贷利率则为：$LPR + 政策利率 + 商业银行加点$</p>
+<ul>
+<li>目前最新公布的 LPR 5年为 4.8%，一年为4.15%</li>
+<li>政策利率就 比如 首套政策利率为0， 二套政策利率上浮不低于60个点 等等</li>
+</ul>
+<p>以前的房贷利率计算方式：</p>
+<ul>
+<li>$基准利率x(1+浮动)$</li>
+<li>转化为 LPR的话，需保证转化后当前的利率跟2019.12.20的利率一样<ul>
+<li>如，2019.12.20的某人的房贷利率是5.39%, 由于LPR是4.8%，所以他政策利率和银行加点总和为5.39-4.8=0.59%</li>
+<li>则此后，该人的房贷利率为 LPR+0.59%</li>
+</ul>
+</li>
+</ul>
+<p>总的来说，LPR会呈下降的趋势</p>
+<hr>
+<p>Reference：<br><a href="https://www.bilibili.com/video/av82411679?from=search&amp;seid=1074737621911846292" target="_blank" rel="noopener">https://www.bilibili.com/video/av82411679?from=search&amp;seid=1074737621911846292</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂文</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">经济</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2020/02/05/LPR/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-coursera_motion_pl07" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -2093,469 +2622,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-coursera_visual_percep05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/08/08/coursera_visual_percep05/">Coursera Visual Perception for Self-Driving Cars 05</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/08/08/coursera_visual_percep05/" class="archive-article-date">
-  	<time datetime="2019-08-08T12:30:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Semantic-Segmentation"><span class="toc-number">1.</span> <span class="toc-text">Semantic Segmentation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Semantic-Segmentation-Problem"><span class="toc-number">1.1.</span> <span class="toc-text">The Semantic Segmentation Problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConvNets-for-Semantic-Segmentation"><span class="toc-number">1.2.</span> <span class="toc-text">ConvNets for Semantic Segmentation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Semantic-Segmentation-for-Road-Scene-Understanding"><span class="toc-number">1.3.</span> <span class="toc-text">Semantic Segmentation for Road Scene Understanding</span></a></li></ol></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Semantic-Segmentation"><span class="toc-text">Semantic Segmentation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Semantic-Segmentation-Problem"><span class="toc-text">The Semantic Segmentation Problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConvNets-for-Semantic-Segmentation"><span class="toc-text">ConvNets for Semantic Segmentation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Semantic-Segmentation-for-Road-Scene-Understanding"><span class="toc-text">Semantic Segmentation for Road Scene Understanding</span></a></li></ol></li></ol>
-        </div>
-    </div>
- -->
-        <p>From Coursera, State Estimation and Localization for Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/learn/visual-perception-self-driving-cars" target="_blank" rel="noopener">https://www.coursera.org/learn/visual-perception-self-driving-cars</a></p>
-<h2 id="Semantic-Segmentation"><a href="#Semantic-Segmentation" class="headerlink" title="Semantic Segmentation"></a>Semantic Segmentation</h2><h3 id="The-Semantic-Segmentation-Problem"><a href="#The-Semantic-Segmentation-Problem" class="headerlink" title="The Semantic Segmentation Problem"></a>The Semantic Segmentation Problem</h3><ul>
-<li>Given an input image, we want to classify each pixel into a set of preset categories. The categories can be static road elements e.g. roads, sidewalk, traffic lights or dynamic obstacles e.g. cars, pedestrians, and cyclists or a background class that encompasses any category we do not include in our preset categories.</li>
-<li>Semantic segmentation is still through a function estimator<ul>
-<li>Given an image, we take every pixel as an input and output a vector of class scores per pixel. </li>
-<li>A pixel belongs to the class with the highest class score.</li>
-</ul>
-</li>
-</ul>
-<p><strong>Performance of semantic segmentation</strong></p>
-<ul>
-<li>True Positive(TP): The number of correctly classified pixels belonging to classX</li>
-<li>False Positive(FP): The number of pixels that do not belong to class X in ground truth but are classified that class by the algorithm</li>
-<li>False Negative(FN): The number of pixels that do belong to class X in ground truth,but are not classified as that class by the algorithm<br>$$IOU_{class} = \frac{TP}{TP+FP+FN}$$</li>
-<li>Class lOU over all the data is calculated by computing the sum of TP, FP, FN for all images first</li>
-<li>Averaging the class IOU is usually not a very good idea!</li>
-<li>CityScapes Segmentation Dataset</li>
-</ul>
-<h3 id="ConvNets-for-Semantic-Segmentation"><a href="#ConvNets-for-Semantic-Segmentation" class="headerlink" title="ConvNets for Semantic Segmentation"></a>ConvNets for Semantic Segmentation</h3><ul>
-<li>Semantic segmentation takes a camera images input and provides a category classification for every pixel in that image as output. This problem can be modeled as a function approximation problem, and ConvNets can once again be used to approximate the required function.</li>
-<li>The ConvNet model can be chosen as the same ConvNet model we used for object detection. That is, a feature extractor followed by an output layer. We do not need anchors here as we are not trying to localize objects. </li>
-<li>In VGG architecture, <ul>
-<li>the input image is the size of MxNx3</li>
-<li>As with object detection, the resolution will be reduced by half after every pooling layer. On the other hand, the depth will increase due to the convolutional layers. </li>
-<li>The output feature map of the convolutional feature extractor will be downsampled by 16 times.</li>
-<li>We can add as many convolutional pooling blocks as needed, but that will further shrink our feature map.</li>
-</ul>
-</li>
-<li>However, output for semantic segmentation is to have a classification for every pixel in the image. How can we achieve this given a down sampled feature map that is 16 times smaller than our original input?</li>
-<li>A simple solution would be the following:<ul>
-<li>first compute the output by passing the 16 times downsampled output feature map through a softmax layer.</li>
-<li>We can then determine the class of every pixel in the subsampled output by taking the highest class score obtained by the softmax layer.</li>
-<li>The final step would be to proceed to upsample, the downsampled output back to the original image resolution. </li>
-<li>however, this naive upsampling might produce inadequate results</li>
-</ul>
-</li>
-<li>one of the most challenging problems in semantic segmentation is attaining smooth and accurate boundaries around the objects. <ul>
-<li>Smooth boundaries are hard to attain as in general boundaries in the image space are ambiguous, especially for thin objects such as pools, similar looking objects such as roads and sidewalks, and far away objects.</li>
-</ul>
-</li>
-<li>Naive upsampling also induces two additional problems:<ul>
-<li>Any object less than 16 pixels in width or height usually fully disappears in their upsampled image. This affects both thin objects such as pools and far away objects. As they are below the minimum dimensions required for the pixels to appear from the original image.</li>
-</ul>
-</li>
-<li>To remedy these problems, researchers have formulated what is commonly referred to as a feature decoder. <ul>
-<li>The feature decoder can be thought of as a mirror image of the feature extractor. </li>
-<li>Instead of using the convolution pooling paradigm to downsample the resolution, it uses upsampling layers followed by a convolutional layer to upsample the resolution of the feature map.</li>
-<li>The upsampling usually using nearest neighbor methods achieves the opposite effect to pooling, but results in an inaccurate feature map.</li>
-<li>The following convolutional layers are then used to correct the features in the upsampled feature map with learnable filter banks.</li>
-<li>This correction usually provides the required smooth boundaries as we go forward through the feature decoder.</li>
-</ul>
-</li>
-<li>Similar to the feature extractor, each upsampling convolution block is referred to as a deconvolution.<ul>
-<li>As we go through the first deconvolution block, the input feature map is upsampled to twice the input resolution. </li>
-<li>The depth is controlled by how many filters are defined for each successive convolutional layer. </li>
-<li>As we go forward through the rest of the decoder, we finally arrive at a feature map of similar resolution to the input image. </li>
-</ul>
-</li>
-<li>The output can be a linear output layer, followed by a softmax function. This layer is very similar to the classification output layer in object detection. <ul>
-<li>this layer provides a k-dimensional vector per pixel with the kth element being how confident the neural network is that the pixel belongs to the kth class.</li>
-</ul>
-</li>
-<li>Classification Loss: $L_{cls}=\frac 1{N_{total} \, \sum_i CrossEntropy(s^*_i,s_i)}$<ul>
-<li>$N_{total}$ is the total number of classified pixels in all the images of a mini-batch. Usually, a mini-batch would comprise of 8 to 16 images, and the choice of this number depends on how much memory your GPU has.</li>
-<li>$s_i$ is the output of the neural network</li>
-<li>$s^*_i$ is the ground truth classification</li>
-</ul>
-</li>
-</ul>
-<h3 id="Semantic-Segmentation-for-Road-Scene-Understanding"><a href="#Semantic-Segmentation-for-Road-Scene-Understanding" class="headerlink" title="Semantic Segmentation for Road Scene Understanding"></a>Semantic Segmentation for Road Scene Understanding</h3><p><strong>3D Drivable Surface Estimation</strong><br>Steps:</p>
-<ol>
-<li>Generate semantic segmentation output</li>
-<li>Associate 3D point coordinates with 2D image pixels</li>
-<li>Choose 3D points belonging to the Drivable Surface category</li>
-<li>Estimate 3D drivable surface model</li>
-</ol>
-<p>Plane Model: $$ax+by+z=d$$<br>Least squares formulation: $$p=[a,b,d], \; argmin_A(Ap-B)$$ $$A = [x_1 \; y_1 \; -1; x_2 \; y_2 \; -1; …; x_N \; y_N \; -1], \quad B = [-z_1; -z_2; … ; -z_N]$$<br>Solution: $p=(A^TA)^{-1}A^TB$</p>
-<ul>
-<li>Minimum number of points to estimate model: 3 non-collinear points</li>
-<li>RANSAC Algorithm:<ul>
-<li>From the data, randomly select 3 points.</li>
-<li>Compute model parameters a, b, and d using least squares estimation.</li>
-<li>Compute number of inliers, N.</li>
-<li>If N &gt; threshold, terminate and return the computed plane parameters. Else, go back to step 1.</li>
-<li>Recompute the model parameter using all the inliers in the inlier set.</li>
-</ul>
-</li>
-</ul>
-<p>Semantic Lane Estimation</p>
-<ul>
-<li>Estimate the lane, the area where the car can drive on the drivable surface</li>
-<li>Estimate what is at the boundaries of the lane:<ul>
-<li>Curb</li>
-<li>Road</li>
-<li>Car</li>
-</ul>
-</li>
-<li>Steps:<ul>
-<li>Extract segmentation mask from pixels belonging to lane separators such as lane markings or curbs.</li>
-<li>Extract edges from this segmentation mask using an edge detector.</li>
-<li>Linear Lane Model:Use the Hough transform to detect lines in the output edge map.</li>
-<li>Filter lines based on slope to remove horizontal lines.</li>
-<li>Remove any line that does not belong to the drivable space.</li>
-<li>Determine which classes occur at the boundary of the lane.</li>
-</ul>
-</li>
-<li>Materials:<ul>
-<li>Hough Transform Line Detection: <a href="https://docs.opencv.org/3.4.3/d9/dbo/tutorial_hough_lines.html" target="_blank" rel="noopener">https://docs.opencv.org/3.4.3/d9/dbo/tutorial_hough_lines.html</a></li>
-<li>Canny Edge Detection: <a href="https://docs.opencv.org/3.4.3/da/d22/tutorial_py_canny.html" target="_blank" rel="noopener">https://docs.opencv.org/3.4.3/da/d22/tutorial_py_canny.html</a></li>
-</ul>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/08/08/coursera_visual_percep05/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-coursera_visual_percep04" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/08/08/coursera_visual_percep04/">Coursera Visual Perception for Self-Driving Cars 04</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/08/08/coursera_visual_percep04/" class="archive-article-date">
-  	<time datetime="2019-08-08T02:30:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2D-Object-Detection"><span class="toc-number">1.</span> <span class="toc-text">2D Object Detection</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Object-Detection-Problem"><span class="toc-number">1.1.</span> <span class="toc-text">The Object Detection Problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2D-Object-detection-with-Convolutional-Neural-Networks"><span class="toc-number">1.2.</span> <span class="toc-text">2D Object detection with Convolutional Neural Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Training-vs-Inference"><span class="toc-number">1.3.</span> <span class="toc-text">Training vs. Inference</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-2D-Object-Detectors-for-Self-Driving-Cars"><span class="toc-number">1.4.</span> <span class="toc-text">Using 2D Object Detectors for Self-Driving Cars</span></a></li></ol></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2D-Object-Detection"><span class="toc-text">2D Object Detection</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Object-Detection-Problem"><span class="toc-text">The Object Detection Problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2D-Object-detection-with-Convolutional-Neural-Networks"><span class="toc-text">2D Object detection with Convolutional Neural Networks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Training-vs-Inference"><span class="toc-text">Training vs. Inference</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-2D-Object-Detectors-for-Self-Driving-Cars"><span class="toc-text">Using 2D Object Detectors for Self-Driving Cars</span></a></li></ol></li></ol>
-        </div>
-    </div>
- -->
-        <p>From Coursera, State Estimation and Localization for Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/learn/visual-perception-self-driving-cars" target="_blank" rel="noopener">https://www.coursera.org/learn/visual-perception-self-driving-cars</a></p>
-<h2 id="2D-Object-Detection"><a href="#2D-Object-Detection" class="headerlink" title="2D Object Detection"></a>2D Object Detection</h2><h3 id="The-Object-Detection-Problem"><a href="#The-Object-Detection-Problem" class="headerlink" title="The Object Detection Problem"></a>The Object Detection Problem</h3><p><strong>2D object detection task problem</strong></p>
-<ul>
-<li>Object detection can be defined as a function estimation problem</li>
-<li>Given an input image x, we want to find the function $f(x;\theta)$ that produces an output vector that includes the coordinates of the top-left of the box, and the coordinates of the lower right corner of the box, and a class score: $f(x;\theta) = [x_{min}, y_{min}, x_{max}, y_{max}, S_{class_1},…S_{class_k}]$</li>
-</ul>
-<p><strong>Evaluating performance measures</strong></p>
-<ul>
-<li>The first step of the evaluation process is to compare the detector localization output to the ground truth boxes via the Intersection-Over-Union metric (IOU).<ul>
-<li>area of intersection of predicted box with a ground truth box, divided by the area of their union</li>
-</ul>
-</li>
-<li>To account for class scores, we define true positives (TP),  False positive (FP) and False Negative (FN). <ul>
-<li>TP: Object class score &gt; score threshold, and IOU &gt; IOU threshold</li>
-<li>FP: Object class score &gt; score threshold, and IOU &lt; IOU threshold</li>
-<li>FN: Number of ground truth objects not detected by the algorithm</li>
-<li>Precision: TP/(TP+FP)</li>
-<li>Recall: TP/(TP+FN)</li>
-<li>Precision Recall Curve (PR-Curve): Use multiple object class score thresholds to compute precision and recall. Plot the values with precision on y-axis, and recall on x-axis</li>
-<li>Average Precision (AP): Area under PR-Curve for a single class. Usually approximated using 11 recall points</li>
-</ul>
-</li>
-</ul>
-<h3 id="2D-Object-detection-with-Convolutional-Neural-Networks"><a href="#2D-Object-detection-with-Convolutional-Neural-Networks" class="headerlink" title="2D Object detection with Convolutional Neural Networks"></a>2D Object detection with Convolutional Neural Networks</h3><p>The Feature Extractor</p>
-<ul>
-<li>Feature extractors are the most computationally expensive component of the 2D object detector</li>
-<li>The output of feature extractors usually has much lower width and height than those of the input image, but much greater depth</li>
-<li>Very active area of research, with new extractors proposed on regular basis</li>
-<li>Most common extractors are: VGG, ResNet, and Inception</li>
-</ul>
-<p>VGG Feature Extractor</p>
-<ul>
-<li>Alternating convolutional and pooling layers</li>
-<li>All convolutional layers are of size 3×3xK, with stride 1 and 1 zero-padding</li>
-<li>All pooling layers use the max function, and are of size 2x2, with stride 2 and no padding.</li>
-</ul>
-<p>Prior boxes/anchor boxes:</p>
-<ul>
-<li>To generate 2D bounding boxes, we usually do not start from scratch and estimate the corners of the bounding box without any prior. </li>
-<li>We assume that we do have a prior on where the boxes are in image space and how large these boxes should be. These priors are called anchor boxes and are manually defined over the whole image usually on an equally-spaced grid. </li>
-<li>During training, the network learns to take each of these anchors and tries to move it as close as possible to the ground truth bounding box in both the centroid location and box dimensions. This is termed <em>residual learning</em> and it takes advantage of the notion that it is easier to nudge an existing box a small amount to improve it rather than to search the entire image for possible object locations.</li>
-<li>Residual learning has proven to provide much better results than attempting to directly estimate bounding boxes without any prior. </li>
-</ul>
-<p>Faster R-CNN:</p>
-<ul>
-<li>For every pixel in the feature map, we associate k anchor boxes. </li>
-<li>We then perform a 3x3xD star convolution operation on that pixels neighborhood. This results in a 1x1xD star feature vector for that pixel. </li>
-<li>We use this one by 1x1xD star feature vector as the feature vector of every one of the k anchors associated with that pixel. </li>
-<li><p>We then proceed to feed the extracted feature vector to the output layers in the neural network.</p>
-</li>
-<li><p>The output layers of a 2D object detector usually comprise of a regression head and a classification head. </p>
-</li>
-<li>The regression head usually includes multiple fully-connected hidden layers with a linear output layer. The regressed output is typically a vector of residuals that need to be added to the anchor that hand to get the ground truth bounding box.</li>
-<li>Another method to update the dimension of the anchors is to regress a residual from the center of the anchor to the center of the ground truth bounding box in addition to two scale factors that correct the ground truth bounding box width and height when multiplied with an anchor’s width and height. </li>
-<li>The classification head is also comprised of multiple fully-connected hidden layers, but with a final softmax output layer. The softmax output is a vector with a single score per class. The highest score usually defines the class of the anchor at hand.</li>
-</ul>
-<h3 id="Training-vs-Inference"><a href="#Training-vs-Inference" class="headerlink" title="Training vs. Inference"></a>Training vs. Inference</h3><p><strong>Minibatch selection</strong></p>
-<ul>
-<li>Negative anchors target:<ul>
-<li>Classification:Background</li>
-<li>Regression:None</li>
-</ul>
-</li>
-<li>Positive anchors target:<ul>
-<li>Classification:Category of the ground truth bounding box</li>
-<li>Regression:Align box parameters with highest IOU ground truth bounding box</li>
-</ul>
-</li>
-<li>Problem: Majority of anchors are negatives results in neural network will label all detections as background</li>
-<li>Solution: Sample a chosen minibatch size,with 3:1 ratio of negative to positive anchors to eliminate bias towards the negative class</li>
-<li>Choose negatives with highest classification loss(online hard negative mining) to be included in the minibatch</li>
-<li>Classification loss: $L_{cls} = \frac 1{N_{total}} \sum_i crossentropy(s^*_i, s_i)$<ul>
-<li>$N_{total}$ is the size of the minibatch</li>
-<li>$s_i$ is the output of the nerual network</li>
-<li>$s^*_i$ is the anchor classification target:<ul>
-<li>Background if anchor is negative</li>
-<li>Ground truth box class if anchor is positive</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Regression Loss: $L_{reg} = \frac 1{N_{total}} \sum_i p_iL_2(b^*_i, b_i) $<ul>
-<li>$p_i$ is 0 if anchor is negative and 1 if anchor is positive</li>
-<li>$N_p$ is the number of positive anchors in the minibatch</li>
-<li>$b^*_i$ the ground truth bounding box</li>
-<li>$b_i$ is the estimated bounding box, applying the regressed residuals to the anchor box parameters</li>
-</ul>
-</li>
-</ul>
-<p><strong>Non-maximum suppression(NMS)</strong></p>
-<ul>
-<li>an extremely powerful approach to improving inference output for anchor based neuron networks. </li>
-<li>Non-max suppression takes as an input a list of predicted boundary boxed b, and each bounding blocks is comprised of the regressed coordinates in the class output score.</li>
-<li>It also needs as an input a predefined IOU threshold which we’ll call ada.</li>
-<li>Algorithm goes as follows<ul>
-<li>first sort the bounding boxes in list B according to their output score. We also initialize an empty set D to hold output bounding boxes.</li>
-<li>then proceed to iterate overall elements in the sorted box list B bar. Inside the for loop, we first determine the box B max with the highest score in the list B, which should be the first element in B bar.</li>
-<li>then remove this bounding box from the bounding box set D bar and add it to the output set D.</li>
-<li>Next, find all boxes remaining in the set B bar that have an IOU greater than ada with the box B max. These boxes significantly overlap with the current maximum box, B max. Any box that satisfies this condition gets removed from the list B bar. We keep iterating through the list B bar until is empty, and then we return the list D.</li>
-<li>D now contains a single bounding box per object.</li>
-</ul>
-</li>
-</ul>
-<h3 id="Using-2D-Object-Detectors-for-Self-Driving-Cars"><a href="#Using-2D-Object-Detectors-for-Self-Driving-Cars" class="headerlink" title="Using 2D Object Detectors for Self-Driving Cars"></a>Using 2D Object Detectors for Self-Driving Cars</h3><p><strong>3D Object Detection</strong></p>
-<ul>
-<li>Estimating the: <ul>
-<li>Category Classification: Car, pedestrian, cyclist </li>
-<li>Position of the centroid in 3D: $[x,y,z]$</li>
-<li>Extent in 3D: $[l,w,h]$ </li>
-<li>Orientation in 3D Y: $[\phi,\psi,\theta]$</li>
-</ul>
-</li>
-<li>The most common and successful way to extend 2D object detection results in 3D is to use LiDAR point clouds.<ul>
-<li>Given a 2D bounding box in an image space and a 3D LiDAR point cloud, we can use the inverse of the camera projection matrix to project the corners of the bounding box as rays into the 3D space. </li>
-</ul>
-</li>
-<li>Advantages:<ul>
-<li>Allows exploitation of mature 2D object detectors, with high precision and recall </li>
-<li>Class already determined from 2D detection. There is no need to use LiDAR data or pass 3D information into the network to determine whether we are looking at a car or a post.</li>
-<li>Does not require prior scene knowledge,such as ground plane location</li>
-</ul>
-</li>
-<li>Disadvantages:<ul>
-<li>The performance of the 3D estimator is bounded by the performance of the 2D detector</li>
-<li>Occlusion and truncation are hard to handle from 2D only</li>
-<li>3D estimator needs to wait for 2D detector, inducing latency in our system</li>
-</ul>
-</li>
-</ul>
-<p><strong>2D object tracking</strong></p>
-<ul>
-<li>Detection: We detect the object independently ineach frame and can record its position over time</li>
-<li>Tracking: We use image measurements to estimate position of object, but also incorporate position predicted by dynamics, i.e., our expectation of object’s motion pattern</li>
-<li>Tracking Assumptions: <ul>
-<li>Camera is not moving instantly to new viewpoint </li>
-<li>Objects do not disappear and reappear in different places in the scene </li>
-<li>If the camera is moving,there is a gradual change in pose between camera and scene</li>
-</ul>
-</li>
-<li>Object Tracking: Prediction<ul>
-<li>Each object will have a predefined motion model in image space, e.g. $p_k = p_{k-1} +v_k\Delta t + N(0,\Sigma)$</li>
-</ul>
-</li>
-<li>Object Tracking: correlation<ul>
-<li>Get Measurement Bounding Boxes from 2D detector.</li>
-<li>Correlate prediction with the highest IOU measurement</li>
-</ul>
-</li>
-<li>Object Tracking: Update<ul>
-<li>The prediction and measurement are fused as part of the Kalman Filter Framework</li>
-</ul>
-</li>
-<li>For each frame, we start new track if a measurement has no correlated prediction</li>
-<li>We also terminate inconsistent tracks, if a predicted object does not correlate with a measurement for a preset number of frames</li>
-<li>The same methodology can be used to track objects in 3D!</li>
-</ul>
-<p><strong>Traffic signs and signals detection</strong></p>
-<ul>
-<li>Traffic signs and signals appear smaller in size compared to cars, two-wheelers, and pedestrians.</li>
-<li>Traffic signs are highly variable with many classes to be trained on.</li>
-<li>Traffic signals have different states that are required to be detected.</li>
-<li>In addition, traffic signals change state as the car drives</li>
-<li>2D object detectors can be used to perform traffic sign and traffic signal detection without any modifications</li>
-<li>However, multi-stage hierarchical models have been shown to outperform the standard single stage object detectors Prior Boxes</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/08/08/coursera_visual_percep04/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/9/">9</a><a class="extend next" rel="next" href="/blog/page/2/">Next &raquo;</a>
@@ -2572,7 +2638,7 @@ var _hmt = _hmt || [];
 			<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     	<div class="footer-left">
             <i class="fa fa-copyright"></i> 
-            2019 Tracy Xin Wang
+            2020 Tracy Xin Wang
             
             <span class="post-meta-divider">|</span>
             <span id="busuanzi_container_site_pv" style="display: inline;">
@@ -2587,7 +2653,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共91.1k字
+              本站总共94.7k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -2694,19 +2760,23 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2730,6 +2800,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">经济</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
               </li>
              
@@ -2746,19 +2820,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Network</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">思考</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2774,11 +2852,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+                <a href="javascript:void(0)" class="js-tag color3">CV</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">

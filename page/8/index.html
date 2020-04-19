@@ -247,6 +247,201 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-MIT6006-Lec03" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/11/05/MIT6006-Lec03/">MIT6006 Lec03 插入排序，归并排序</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/11/05/MIT6006-Lec03/" class="archive-article-date">
+  	<time datetime="2018-11-05T12:37:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#插入排序-Insertion-sort"><span class="toc-number">1.</span> <span class="toc-text">插入排序 (Insertion sort)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Binary-Insertion-sort"><span class="toc-number">1.1.</span> <span class="toc-text">Binary Insertion sort</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#归并排序-Merge-Sort"><span class="toc-number">2.</span> <span class="toc-text">归并排序 (Merge Sort)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solving-Recurrences"><span class="toc-number">3.</span> <span class="toc-text">Solving Recurrences</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#插入排序-Insertion-sort"><span class="toc-text">插入排序 (Insertion sort)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Binary-Insertion-sort"><span class="toc-text">Binary Insertion sort</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#归并排序-Merge-Sort"><span class="toc-text">归并排序 (Merge Sort)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solving-Recurrences"><span class="toc-text">Solving Recurrences</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <p>排序总的问题就是：<br>输入一个序列 <code>A[1···n]</code><br>要求输求它的递增排序之后的排列。</p>
+<h3 id="插入排序-Insertion-sort"><a href="#插入排序-Insertion-sort" class="headerlink" title="插入排序 (Insertion sort)"></a>插入排序 (Insertion sort)</h3><p><strong>Pseudocode</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> j = 2:n</span><br><span class="line">    insert key A[j] into the already sorted sub array A[1 ... j-1] by pairwise key-swaps down to its right position.</span><br></pre></td></tr></table></figure></p>
+<p><strong>Complexity</strong>: $\theta(n^2)$<br>because at the worst case, it needs $\theta(n^2)$ compares and $\theta(n^2)$ swaps.</p>
+<h4 id="Binary-Insertion-sort"><a href="#Binary-Insertion-sort" class="headerlink" title="Binary Insertion sort"></a>Binary Insertion sort</h4><p>注意到在一般的插入排序中，我们会得到一个已经排好序的子序列，那么这时其实就可以用二分查找法来替代之前的逐个compare，这样能减少compare的次数。<br><strong>Pseudocode</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> j = 2:n</span><br><span class="line">    insert key A[j] into the already sorted sub array A[1 ... j-1]</span><br><span class="line">    Use binary search to find the right position</span><br></pre></td></tr></table></figure></p>
+<p>二分查找法花费 $\theta(log n)$ 时间，插入之后移动元素花费 $\theta(n)$ 时间。<br><strong>Complexity</strong>:<br>$\theta(nlog n)$ comparisons, $\theta(n^2)$ swaps</p>
+<h3 id="归并排序-Merge-Sort"><a href="#归并排序-Merge-Sort" class="headerlink" title="归并排序 (Merge Sort)"></a>归并排序 (Merge Sort)</h3><p>采用的是 divide and conquer 的思想。<br><strong>Pseudocode</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">If n = 1, <span class="keyword">done</span> (nothing to sort)</span><br><span class="line">Otherwise, recursively sort A[1 ... n/2] and A[n/2+1 ... n]</span><br><span class="line"><span class="string">"Merge"</span> the two sorted sub-arrays</span><br></pre></td></tr></table></figure></p>
+<p><strong>Complexity</strong>:<br>$\theta(n)$ to merge a total of n elements(linear time)<br>$T(n) = 2T(n/2) + \theta(n)$<br>After plotting the recursion tree, we can find that there are <code>1+lgn</code> layers, and <code>n</code> leaves in the tree. And for each layer, it totally costs <code>cn</code> time. Therefore, complexity is  $\theta(nlg n)$<br>可以看到，在这个树里面，每一层的complexity都是均等的<br><img src="/blog/images/MIT03_01.jpg" width="80%" height="60%"></p>
+<h3 id="Solving-Recurrences"><a href="#Solving-Recurrences" class="headerlink" title="Solving Recurrences"></a>Solving Recurrences</h3><p>对于不同的recurrence tree来说，每一层不同的cost决定了它的complexity主要集中在哪里。<br>如上面的归并排序是每一层都占相等的复杂度。<br>下面是两个例子：<br><strong>叶子部分的计算占主要复杂度</strong>:</p>
+<p><img src="/blog/images/MIT03_02.jpg" width="80%" height="60%"></p>
+<p><strong>根部分的计算占主要复杂度</strong>:</p>
+<p><img src="/blog/images/MIT03_03.jpg" width="80%" height="60%"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/11/05/MIT6006-Lec03/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-life-in-Melbourne01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/11/04/life-in-Melbourne01/">猫本交流杂记（一）</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/11/04/life-in-Melbourne01/" class="archive-article-date">
+  	<time datetime="2018-11-03T22:20:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              
+            </div>
+           -->
+        <!--   -->
+        <p>算下来来墨尔本接近半个月了，从10月16号落地到现在，对这边整个center和研究也有些感悟和感慨，就随手记一点吧。</p>
+<p>今天主要想来说说这边搞研究和国内乃至香港搞研究的一个比较相反的现象。</p>
+<p>有天晚上弄得比较晚（其实也就7点多，但办公室基本没人了…），我们三个中国人（两个PhD学生一个PostDoc）说一起出去吃，然后正好我们老板(澳洲土著)也在，他就说他也一起。这在国内应该是比较少见的，一般来说教授是很少跟自己的学生一起吃饭的，一起吃饭的情况大都是整个实验室聚餐这种。然后我们就一起出去吃了，在一个中国馆子里，期间老板一直负责给我们倒茶水… 看来他已经习惯了中国的饭桌文化。。。</p>
+<p>饭间大家讨论到国内各个阶层都追求学位这个现象，说不管怎么样，大家都想努力地去拿本科甚至研究生的学位，因为这在某种程度上代表着一种地位，也意味着将来出来工资的高收入。土著老板就很不解，他说现实社会实际上是哪怕没有读过书的人，也能赚大钱，做生意会做得很好，为什么还要去拿学位，赚钱不就是这个目的吗，那达到这个目的的方式并不一定要读书啊，你可以说 “Hey look, I have a new car. I don’t care if I have that degree”。这就反应了中外国家思维和心态上的不同，实际上也是社会发展程度的一种映射。</p>
+<p>在澳洲，不管你做什么，你都能挣很多钱，很多体力或者技工的活儿，挣得不比一个教授的工资少，反而真的是一些白领阶层，才是挣得最少的。对大多数人来说，还没有到“兼济天下”这种情怀，那么其实挣钱就是他们的最终目的，只要能挣钱就行，还读什么书呢，不读书都比你读那么多年的书还挣得多，何必呢。所以在澳洲，那些读研究生的，甚至读PhD的，真的是对科研的热爱才会去做的，因为或许他们有更好的选择去挣大钱，但他们还是想搞搞研究，因为这样他们才觉得真的快乐。所以这也是为什么他们能做出很好的成果的原因吧，毕竟是因为热爱，是真的想去探索。</p>
+<p>但在国内和香港不一样，读PhD的目的是为了挣钱，是为了将来有更好的生活，这是社会和人口决定了的，根本还没有精力去追求更高层次的热爱，因为你需要去考虑生活甚至生存。这也是为什么很多PhD读得很痛苦(包括我自己)，读到一半不读了，或者读着读着跑去学cs了。如果每天考虑的是我什么时候才能毕业，做哪个方向更赚钱，那你又怎么有时间去考虑如何把科研做到极致这种事情呢？</p>
+<p>还是有点遗憾吧。少了真正对某个事情的激情和热情，人生会少了很多乐趣的。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂文</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">碎碎念</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/11/04/life-in-Melbourne01/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-NodeJS-learning01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -936,11 +1131,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Tools</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Tools</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
         		</li>
       		
 		</ul>
@@ -1185,375 +1380,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-NeuralMass2008PlosComp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/10/09/NeuralMass2008PlosComp/">Notes of Neural Masses and Cortical Fields</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/10/09/NeuralMass2008PlosComp/" class="archive-article-date">
-  	<time datetime="2018-10-09T01:28:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mean-Field-Models"><span class="toc-number">1.</span> <span class="toc-text">Mean-Field Models</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ensemble-density-models"><span class="toc-number">1.1.</span> <span class="toc-text">Ensemble density models</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#From-spiking-neurons-to-mean-field-models"><span class="toc-number">1.2.</span> <span class="toc-text">From spiking neurons to mean-field models</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-population-density-approach"><span class="toc-number">1.3.</span> <span class="toc-text">The population density approach</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-diffusion-approximation"><span class="toc-number">1.4.</span> <span class="toc-text">The diffusion approximation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-mean-field-model"><span class="toc-number">1.5.</span> <span class="toc-text">The mean-field model</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Neural-Modes-and-Masses"><span class="toc-number">2.</span> <span class="toc-text">Neural Modes and Masses</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Neural-Field-Models"><span class="toc-number">3.</span> <span class="toc-text">Neural Field Models</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mean-Field-Models"><span class="toc-text">Mean-Field Models</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ensemble-density-models"><span class="toc-text">Ensemble density models</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#From-spiking-neurons-to-mean-field-models"><span class="toc-text">From spiking neurons to mean-field models</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-population-density-approach"><span class="toc-text">The population density approach</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-diffusion-approximation"><span class="toc-text">The diffusion approximation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-mean-field-model"><span class="toc-text">The mean-field model</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Neural-Modes-and-Masses"><span class="toc-text">Neural Modes and Masses</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Neural-Field-Models"><span class="toc-text">Neural Field Models</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>This is a summary of paper <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000092" target="_blank" rel="noopener">The Dynamic Brain: From Spiking Neurons to Neural Masses and Cortical Fields</a></p>
-<p>This paper mainly talks about a variety of computational approaches that have been used to characterize the <strong>dynamics of the cortex</strong>.</p>
-<ul>
-<li>The <strong>central theme</strong>: the activity in populations of neurons can be understood by reducing the degrees of freedom from many to few.</li>
-<li>The way to achieve that is: to <strong>reduce the large population of spiking neurons to a distribution function</strong> describing their probabilistic evolution, which <strong>captures the likely distribution of neuronal states at a given time</strong>. </li>
-<li>This can be further <strong>reduced to a single variable</strong> describing the <strong>mean firing rate</strong>.</li>
-</ul>
-<p><br></p>
-<p><strong>Neural Mass models</strong>: capture the dynamics of a neuronal population. </p>
-<blockquote>
-<p>The theory based: Full probability distribution function can be represented by a set of scalars that parameterize it parsimoniously. These parameters are equivalent to the moments of the distribution.)</p>
-</blockquote>
-<p><strong>Neural Field Models</strong>: investigate how neuronal activity unfolds on the spatially continuous cortical sheet by involving differential operators with both temporal and spatial terms.</p>
-<blockquote>
-<p>The theory based: Neuronal activity depends on its current state as well as spatial gradients, which allow its spread horizontally across the cortical surface.</p>
-</blockquote>
-<p><br></p>
-<h3 id="Mean-Field-Models"><a href="#Mean-Field-Models" class="headerlink" title="Mean-Field Models"></a>Mean-Field Models</h3><p>This part provides an overview of mean-field models of neuronal dynamics and their derivation from models of spiking neurons. </p>
-<ul>
-<li>mainly based on the <strong>mean-field approximation</strong></li>
-<li>are formulated using concepts from <strong>statistical physics</strong>.</li>
-<li>suited to data which reflect the behavior of a population of neurons, such as EEG, MEG and fMRI.</li>
-</ul>
-<h4 id="Ensemble-density-models"><a href="#Ensemble-density-models" class="headerlink" title="Ensemble density models"></a>Ensemble density models</h4><ul>
-<li>Ensemble models attempt to model the dynamics of large (theoretically infinite) populations of neurons</li>
-<li>use phase space to represent the neuron attribute space. Each attribute induces a dimension in the phase space of a neuron.</li>
-<li>Three attributes will be included: post-synaptic membrane depolarization, $V$, capacitive current, $I$, and the time since the last action potential, $T$. (therefore, it is a three dimensional phase space)</li>
-<li>The state of each neuron is a point $ν = {V,I,T} ∈ ℜ^3$</li>
-<li>The density of neurons populate the space can be represented as: $p(ν,t)$<ul>
-<li>As the state of each neuron evolves, the points will flow through phase space, and the ensemble density $p(ν,t)$ will evolve until it reaches some steady state or equilibrium.</li>
-<li>$p(ν,t)$ is a scalar function returning the probability density at each point in phase space. </li>
-</ul>
-</li>
-<li>the density dynamics conform to a simple equation: the <strong>Fokker-Planck equation</strong>:<ul>
-<li>This equation comprises a flow and a dispersion term</li>
-<li>phase flow, $f(ν,t)$ describes the dynamics</li>
-<li>dispersion, $D(ν,t)$, describes the random fluctuations<br>$$\dot p = - \nabla \cdot (f-D\nabla)p \equiv \frac{\partial p}{\partial t} = tr(-\frac{\partial (fp)}{\partial v}+\frac{\partial}{\partial v}(D \frac {\partial p}{\partial v}))$$</li>
-</ul>
-</li>
-<li>This level of description is usually framed as a <strong>stochastic differential equation</strong> (Langevin equation) that describes how the states evolve as functions of each other and some random fluctuations with $dv = f(v)dt + \sigma d \omega$.<ul>
-<li>$D = \frac 12 \sigma^2$</li>
-<li>$\omega$ is a standard Wiener process,i.e. $w(t)−w(t+Δt)∼N(0, Δt)$</li>
-</ul>
-</li>
-<li>The density dynamics can be written as a linear operator or Jacobian Q:<br>$$\dot p = Qp$$ $$Q = \nabla \cdot (D \nabla - f)$$</li>
-<li>For any model of neuronal dynamics, specified as a stochastic differential equation, there is a deterministic linear equation that can be integrated to generate ensemble dynamics. </li>
-</ul>
-<h4 id="From-spiking-neurons-to-mean-field-models"><a href="#From-spiking-neurons-to-mean-field-models" class="headerlink" title="From spiking neurons to mean-field models"></a>From spiking neurons to mean-field models</h4><ul>
-<li>For a single neuron, we can assume the spiking dynamics as the $leaky integrate-and-fire (LIF)$ model. </li>
-<li>In the LIF model, each neuron i can be fully described in terms of a single internal variable, namely the depolarization $V_i(t)$ of the neural membrane. </li>
-<li>The basic circuit of a LIF model consists of a capacitor, $C$, in parallel with a resistor, $R$, driven by a synaptic current.</li>
-<li>When the voltage across the capacitor reaches a threshold $θ$, the circuit is shunted (reset) and a $δ$ pulse (spike) is generated and transmitted to other neurons. </li>
-<li>The subthreshold membrane potential of each neuron evolves according to a simple RC circuit, with a time constant $τ = RC$ given by the following equation:<ul>
-<li>$I_i(t)$ is the total synaptic current flow into the cell i</li>
-<li>$V_L$ is the leak or resting potential of the cell in the absence of external afferent inputs<br>$$\tau \frac{dV_i(t)}{dt} = -[V_i(t)-V_L] + RI_i(t)$$</li>
-</ul>
-</li>
-<li>The total synaptic current coming into the cell i is therefore given by the sum of the contributions of δ-spikes produced at presynaptic neurons. </li>
-<li>Assume that $N$ neurons synapse onto cell i and that $J_{ij}$ is the efficacy of synapse j, then the total synaptic afferent current is given by<ul>
-<li>$t_j^{(k)}$ is the emission time of the kth spike from the jth presynaptic neuron.<br>$$RI_i(t) = \tau \sum^N_{j=1} J_{ij} \sum_k \delta (t-t_j^{(k)})$$</li>
-</ul>
-</li>
-<li>Substitute the above equation gets:<ul>
-<li>H(t) is the Heaviside function (H(t) = 1 if t&gt;0, and H(t) = 0 if t&lt;0) (acutally is a step function)<br>$$V_i(t) = V_L + \sum^N_{j=1} J_{ij} \int^t_0 e^{-s/\tau} \sum_k \delta (t-s-t_j^{(k)})ds<br>= V_L + \sum^N_{j=1} J_{ij} e^{-(t-t_j^{(k)})/\tau} \sum_k H(t-t_j^{(k)})$$</li>
-</ul>
-</li>
-</ul>
-<h4 id="The-population-density-approach"><a href="#The-population-density-approach" class="headerlink" title="The population density approach"></a>The population density approach</h4><p>A cortical column has $O(10^4)$−$O(10^8)$ neurons which are massively interconnected (on average, a neuron makes contact with $O(10^4)$ other neurons). The underlying dynamics of such networks can be described explicitly by the set of coupled differential equations. However, direct simulations of these equations will be very complex and computationally expensive. Therefore, we adopt the <strong>population density approach</strong>, using the Fokker-Planck formalism. <em>The Fokker-Planck equation summarizes the flow and dispersion of states over phase space in a way that is a natural summary of population dynamics in genetics.</em> The following will show how to derive the Fokker-Planck equation for neuronal dynamics.</p>
-<ul>
-<li>Individual IF neurons are grouped together into populations of statistically similar neurons.</li>
-<li>Then use <strong>probability density function</strong> to describe the distribution of neuronal states (i.e., membrane potential) over the population.</li>
-<li>Key <strong>assumption</strong>: the afferent input currents impinging on neurons in one population are uncorrelated<ul>
-<li>In general, neurons with the same state $V(t)$ at a given time $t$ have a different history because of random fluctuations in the input current $I(t)$.</li>
-<li>The main source of randomness is from fluctuations in recurrent currents and fluctuations in the external currents</li>
-</ul>
-</li>
-<li>Then the dynamics are described by the evolution of the probability density function:<ul>
-<li>which is the <strong>fraction of neurons at time $t$ that have a membrane potential $V(t)$ in the interval $[ν,ν+dν]$</strong><br>$$p(v, t)dv = Prob\{V(t)\in [v, v+dv]\}$$</li>
-</ul>
-</li>
-<li>The evolution of the population density is given by the <strong>Chapman-Kolmogorov equation</strong>:<ul>
-<li>$ρ(ε|ν) = Prob\{V(t+dt) = ν+ε|V(t) = ν\}$ is the conditional probability that generates an infinitesimal change $ε = V(t+dt)−V(t)$ in the infinitesimal interval $dt$.<br>$$p(v, t+dt) = \int^{+\infty}_{-\infty} p(v-\varepsilon,t)\rho(\varepsilon|v-\varepsilon)d\varepsilon$$</li>
-</ul>
-</li>
-<li>The Chapman-Kolmogorov equation can be written in a differential form by performing a Taylor expansion in $p(ν′,t) ρ(ε|ν′)$ around $ν′ = ν$:<ul>
-<li>assume that $p(ν′,t)$ and $ρ(ε| ν′)$ are infinitely many times differentiable in $ν$<br>$$p(v’,t)\rho (\varepsilon|v’) = \sum^{\infty}_{k=0} \frac{(-\varepsilon)^k}{k!} \frac{\partial^k}{\partial v’^k} [p(v’,t)\rho(\varepsilon|v’)] \mid {v’=v}$$</li>
-</ul>
-</li>
-<li>Combine the above equatin and can get:<ul>
-<li>$〈…〉ν$ denotes the average with respect to $ρ(ε| ν)$ at a given $ν$<br>$$p(v,t+dt) = \sum^\infty_{k=0} \frac{(-1)^k}{k!} \frac{\partial^k}{\partial v^k} [p(v,t)\langle \varepsilon^k \rangle _v]$$</li>
-</ul>
-</li>
-<li>Take the limit for $dt \to 2$:<br>$$\frac{\partial p(v,t)}{\partial t} = \sum^\infty_{k=1} \frac{(-1)^k}{k!} \frac{\partial^k}{\partial v^k} [p(v,t)lim_{dt \to 0 }\frac 1{dt} \langle \varepsilon^k \rangle_v]$$</li>
-</ul>
-<h4 id="The-diffusion-approximation"><a href="#The-diffusion-approximation" class="headerlink" title="The diffusion approximation"></a>The diffusion approximation</h4><ul>
-<li>The above temporal evolution requires the moments $〈ε^k〉_υ$. </li>
-<li>These moments can be calculated by the mean-field approximation</li>
-<li>The mean-field approximation replaces the time-averaged discharge rate of individual cells with a common time-dependent population activity </li>
-<li>Therefore, infinitesimal change, $dV(t)$, in the membrane potential of all neurons is:<ul>
-<li>$N$ is the number of neurons</li>
-<li>$〈J〉_J$ denotes the average of the synaptic weights in the population.</li>
-<li>$Q(t)$ is the mean population firing rate and determined by the proportion of active neurons by counting the number of spikes $n_{spikes}(t,t+dt)$ in a small time interval dt and dividing by N and by dt: $Q(t) = lim_{dt \to 0} \frac{n_{spikes}(t,t+dt)}{Ndt}$<br>$$dV(t) = \langle J\rangle_J NQ(t) dt - \frac{V(t)-V_L}{\tau}dt$$</li>
-</ul>
-</li>
-<li>The first two moments in the Kramers-Moyal expansion are called <strong>drift</strong> and <strong>diffusion coefficients</strong>, respectively as follows:<br>$$M^{(1)} = lim_{dt \to 0} \frac1{dt} \langle \varepsilon\rangle_v =\langle J\rangle_J NQ(t) - \frac{v-V_L}{\tau} = \frac{\mu(t)}{\tau} - \frac{v-V_L}{\tau}$$ $$M^{(2)} = lim_{dt \to 0} \frac1{dt} \langle \varepsilon^2 \rangle_v =\langle J^2 \rangle_J NQ(t) = \frac{\sigma(t)^2}{\tau}$$</li>
-<li>The diffusion approximation allows to omit all higher orders k&gt;2 in the Kramers-Moyal expansion. The resulting differential equation describing the temporal evolution of the population density is called the Fokker-Planck equation:<br>$$\frac{\partial p(v,t)}{\partial t} = \frac1{2\tau} \sigma^2 (t) \frac{\partial^2p(v,t)}{\partial v^2} + \frac{\partial}{\partial v}[(\frac{v-V_L-\mu(t)}{\tau})p(v,t)]$$</li>
-<li>If the <strong>drift is linear</strong> and the <strong>diffusion coefficient, $σ^2(t)$, is given by a constant</strong>, the Fokker-Planck equation describes a well-known stochastic process called the <strong>Ornstein-Uhlenbeck process</strong>. And the input afferent currents are given by<ul>
-<li>$ω(t)$ is a white noise process<br>$$RI(t) = \mu(t) + \sigma \sqrt \tau \omega(t)$$</li>
-</ul>
-</li>
-</ul>
-<h4 id="The-mean-field-model"><a href="#The-mean-field-model" class="headerlink" title="The mean-field model"></a>The mean-field model</h4><h3 id="Neural-Modes-and-Masses"><a href="#Neural-Modes-and-Masses" class="headerlink" title="Neural Modes and Masses"></a>Neural Modes and Masses</h3><h3 id="Neural-Field-Models"><a href="#Neural-Field-Models" class="headerlink" title="Neural Field Models"></a>Neural Field Models</h3>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Brain</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/10/09/NeuralMass2008PlosComp/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Laplacian-matrix" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/10/05/Laplacian-matrix/">Laplacian Matrix and Spectral Clustering</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/10/05/Laplacian-matrix/" class="archive-article-date">
-  	<time datetime="2018-10-05T02:34:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-information"><span class="toc-number">1.</span> <span class="toc-text">Basic information:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Graph-Laplacian-and-properties"><span class="toc-number">2.</span> <span class="toc-text">Graph Laplacian and properties</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#The-unnormalized-Laplacian-matrix"><span class="toc-number">2.1.</span> <span class="toc-text">The unnormalized Laplacian matrix:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-normalized-Laplacian"><span class="toc-number">2.2.</span> <span class="toc-text">The normalized Laplacian:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spectral-clustering-algorithms"><span class="toc-number">3.</span> <span class="toc-text">Spectral clustering algorithms</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Unnormalized-spectral-clustering"><span class="toc-number">3.1.</span> <span class="toc-text">Unnormalized spectral clustering</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Normalized-spectral-clustering-using-L-rw"><span class="toc-number">3.2.</span> <span class="toc-text">Normalized spectral clustering using $L_{rw}$</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Normalized-spectral-clustering-using-L-sym"><span class="toc-number">3.3.</span> <span class="toc-text">Normalized spectral clustering using $L_{sym}$</span></a></li></ol></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-information"><span class="toc-text">Basic information:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Graph-Laplacian-and-properties"><span class="toc-text">Graph Laplacian and properties</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#The-unnormalized-Laplacian-matrix"><span class="toc-text">The unnormalized Laplacian matrix:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-normalized-Laplacian"><span class="toc-text">The normalized Laplacian:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spectral-clustering-algorithms"><span class="toc-text">Spectral clustering algorithms</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Unnormalized-spectral-clustering"><span class="toc-text">Unnormalized spectral clustering</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Normalized-spectral-clustering-using-L-rw"><span class="toc-text">Normalized spectral clustering using $L_{rw}$</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Normalized-spectral-clustering-using-L-sym"><span class="toc-text">Normalized spectral clustering using $L_{sym}$</span></a></li></ol></li></ol>
-        </div>
-    </div>
- -->
-        <p>When I was reading paper, some people used this Laplacian metrix as a small step in their network analysis. I then found some papers and tutorials regarding this topic to have a general idea of what it is. The followings are some summary for reference.</p>
-<p>Either Laplacian graph or spectral clustering is in the field of spectral graph theory. It studies the properties of graphs via the eigenvalues and eigenvectors of their associated graph matrices: the adjacency matrix and the graph Laplacian and its variants.</p>
-<p>The most important application of the Laplacian is spectral clustering that corresponds to a computationally tractable solution to the graph partitionning problem.<br>Another application is spectral matching that solves for graph matching.</p>
-<h3 id="Basic-information"><a href="#Basic-information" class="headerlink" title="Basic information:"></a>Basic information:</h3><p><strong>Degree matrix</strong>: a diagonal matrix which contains information about the degree of each vertex — the sum of weights of all edges attached to that vertex. The value of diagonal is the degree of the vertex.<br><strong>Similarity function</strong>: also called similarity measures, to quantify the similarity between two objects and is the basic and preliminary thing to do clustering. Denoted as $s_{ij}$ between point i and point j. Some examples: Cosine similarity, kernel functions, Gaussian similarity ($s(x_i, x_j) = exp(-|x_i-x_j|^2/2\sigma^2)$).<br><strong>Similarity graph</strong>: to model the local neighborhood relationships between the data points. There are several similarity graphs can be chosen:</p>
-<ul>
-<li><strong>ε-neighborhood graph</strong>: connect all points whose pairwise distances that are smaller than ε. The ε-neighborhood graph is usually considered as an unweighted graph. (以数值来说话)</li>
-<li><strong>k-nearest neighbor graphs</strong>: connect vertex $v_i$ with vertex $v_j$ if $v_j$ is among the k-nearest neighbors of $v_i$. (Attention: this definition can lead to a directed graph, as the neighborhood relationship is not symmetric, e.g. vertex $v_j$ can be the k-th nearest neighbor of $v_i$ but $v_i$ may not be the k-th nearest neighbor of $v_j$) (以个数来说话)</li>
-<li><strong>fully connected graph</strong>: simply connect all points with positive similarity with each other, and weight all edges by $s_{ij}$. As the graph should represent the local neighborhood relationships, this construction is only useful if the similarity function itself models local neighborhoods, e.g. Gaussian similarity function. </li>
-</ul>
-<p><br></p>
-<h3 id="Graph-Laplacian-and-properties"><a href="#Graph-Laplacian-and-properties" class="headerlink" title="Graph Laplacian and properties"></a>Graph Laplacian and properties</h3><h4 id="The-unnormalized-Laplacian-matrix"><a href="#The-unnormalized-Laplacian-matrix" class="headerlink" title="The unnormalized Laplacian matrix:"></a>The unnormalized Laplacian matrix:</h4><p>$$ L = D - A $$<br>where, D is the degree matrix and A is the adjacency matrix of the graph.</p>
-<p><strong>Property of the unnormalized laplacian matrix</strong>:</p>
-<ul>
-<li>For every vector $f\in R^n$: $f’Lf=\frac12\sum_{i,j=1}^nw_{ij}(f_i-f_j)^2$</li>
-<li>L is symmetric and positive semi-definite</li>
-<li>The smallest eigenvalue of L is 0, the corresponding eigenvextor is the constant one vector 1.</li>
-<li>L has $n$ non-negative, real-valued eigenvalues $0=\lambda_1 \le \lambda_2 \le … \le \lambda_n$</li>
-</ul>
-<p><br></p>
-<h4 id="The-normalized-Laplacian"><a href="#The-normalized-Laplacian" class="headerlink" title="The normalized Laplacian:"></a>The normalized Laplacian:</h4><p>There are two matrices that are called normalized graph Laplacians in literature:<br>$$L_{sym} = D^{-1/2}LD^{-1/2} = I - D^{-1/2}WD^{-1/2}$$<br>$$L_{rm} = D^{-1}L = I - D^{-1}W$$<br>The first matrix is denoted by $L_{sym}$ as it is symmetric matrix.<br>The seond one is denoted by $L_{rm}$ as it is closely related to a random walk.</p>
-<p><strong>Property of the normalized laplacian matrix</strong>:</p>
-<ul>
-<li>For every vector $f\in R^n$: $f’L_{sym}f=\frac12\sum_{i,j=1}^nw_{ij}(\frac{f_i}{\sqrt {d_i}} - \frac{f_j}{\sqrt {d_j}})^2$</li>
-<li>$\lambda$ is an eigenvalue of $L_{rw}$ with eigenvector $u$ if and only if $\lambda$ is an eigenvalue of $L_{sym}$ with eigenvector $w=D^{1/2}u$</li>
-<li>$\lambda$ is an eigenvalue of $L_{rw}$ with eigenvector $u$ if and only if $\lambda$  and $u$  solve the generalized eigenproblem $Lu = λDu$</li>
-<li>0 is an eigenvalue of $L_{rw}$ with the constant one vector 1 as eigenvector. 0 is an eigenvalue of $L_{sym}$ with eigenvector $D^{1/2}1$.</li>
-<li>$L_{sym}$ and $L_{rw}$ are positive semi-definite and have $n$ nonnegative real-valued eigenvalues $0 = λ_1 ≤···≤ λ_n$.</li>
-</ul>
-<p><br></p>
-<h3 id="Spectral-clustering-algorithms"><a href="#Spectral-clustering-algorithms" class="headerlink" title="Spectral clustering algorithms"></a>Spectral clustering algorithms</h3><p>Assume the data consists of $n$ “points” $x_1,…,x_n$ which can be arbitrary objects. We measure their pairwise similarities $s_{ij} = s(x_i,x_j)$ by some similarity function which is symmetric and non-negative, and we denote the corresponding similarity matrixby $S = (s_{ij} )_{i,j=1,…,n}$.</p>
-<h4 id="Unnormalized-spectral-clustering"><a href="#Unnormalized-spectral-clustering" class="headerlink" title="Unnormalized spectral clustering"></a>Unnormalized spectral clustering</h4><p><strong>Input</strong>: Similarity matrix $S ∈ R^{n×n}$, number k of clusters to construct.</p>
-<blockquote>
-<ol>
-<li>Construct a similarity graph by one of similarity functions. Let $W$ be its weighted adjacency matrix.</li>
-<li>Compute the unnormalized Laplacian $L$.</li>
-<li>Compute the first $k$ eigenvectors $u_1,…,u_k$ of $L$</li>
-<li>Let $U ∈ R^{n×k}$ be the matrix containing the vectors $u_1,…,u_k$ as columns.</li>
-<li>For $i = 1,…,n$, let $y_i ∈ R^k$ be the vector corresponding to the i-th row of $U$</li>
-<li>Cluster the points $(y_i)_{i=1,…,n}$ in $R^k$ with the k-means algorithm into clusters $C_1,…,C_k$</li>
-</ol>
-</blockquote>
-<p><strong>Output</strong>: Clusters $A_1,…,A_k$ with $A_i =\{j|y_j ∈ C_i\}$.</p>
-<p><br></p>
-<h4 id="Normalized-spectral-clustering-using-L-rw"><a href="#Normalized-spectral-clustering-using-L-rw" class="headerlink" title="Normalized spectral clustering using $L_{rw}$"></a>Normalized spectral clustering using $L_{rw}$</h4><p><strong>Input</strong>: Similarity matrix $S ∈ R^{n×n}$, number k of clusters to construct.</p>
-<blockquote>
-<ol>
-<li>Construct a similarity graph by one of similarity functions. Let $W$ be its weighted adjacency matrix.</li>
-<li>Compute the unnormalized Laplacian $L$.</li>
-<li>Compute the first k generalized eigenvectors $u_1,…,u_k$ of the generalized eigenproblem $Lu=λDu$</li>
-<li>Let $U ∈ R^{n×k}$ be the matrix containing the vectors $u_1,…,u_k$ as columns.</li>
-<li>For $i = 1,…,n$, let $y_i ∈ R^k$ be the vector corresponding to the i-th row of $U$</li>
-<li>Cluster the points $(y_i)_{i=1,…,n}$ in $R^k$ with the k-means algorithm into clusters $C_1,…,C_k$</li>
-</ol>
-</blockquote>
-<p><strong>Output</strong>: Clusters $A_1,…,A_k$ with $A_i =\{j|y_j ∈ C_i\}$.</p>
-<p><br></p>
-<h4 id="Normalized-spectral-clustering-using-L-sym"><a href="#Normalized-spectral-clustering-using-L-sym" class="headerlink" title="Normalized spectral clustering using $L_{sym}$"></a>Normalized spectral clustering using $L_{sym}$</h4><p><strong>Input</strong>: Similarity matrix $S ∈ R^{n×n}$, number k of clusters to construct.</p>
-<blockquote>
-<ol>
-<li>Construct a similarity graph by one of similarity functions. Let $W$ be its weighted adjacency matrix.</li>
-<li>Compute the normalized Laplacian $L_{sym}$.</li>
-<li>Compute the first k eigenvectors $u_1,…,u_k$ of $L_{sym}$</li>
-<li>Form the matrix $T ∈ R^{n×k}$ from $U$ by normalizing the rows to norm 1,that is set $t_{ij} =u_{ij}/(\sum_k u_{ik}^2)^{1/2}$.</li>
-<li>For $i = 1,…,n$, let $y_i ∈ R^k$ be the vector corresponding to the i-th row of $T$</li>
-<li>Cluster the points $(y_i)_{i=1,…,n}$ in $R^k$ with the k-means algorithm into clusters $C_1,…,C_k$</li>
-</ol>
-</blockquote>
-<p><strong>Output</strong>: Clusters $A_1,…,A_k$ with $A_i =\{j|y_j ∈ C_i\}$.</p>
-<p><br></p>
-<p><strong>Attention</strong>: Eigenvalues will always be ordered increasingly, respecting multiplicities. Therefore, “the first k eigenvectors” refers to the eigenvectors corresponding to the k smallest eigenvalues.</p>
-<p><br></p>
-<p>Reference:<br><a href="https://www.sciencedirect.com/science/article/pii/S1053811917305463" target="_blank" rel="noopener">https://www.sciencedirect.com/science/article/pii/S1053811917305463</a><br><a href="https://link.springer.com/content/pdf/10.1007%2Fs11222-007-9033-z.pdf" target="_blank" rel="noopener">https://link.springer.com/content/pdf/10.1007%2Fs11222-007-9033-z.pdf</a><br><a href="http://www2.imm.dtu.dk/projects/manifold/Papers/Laplacian.pdf" target="_blank" rel="noopener">http://www2.imm.dtu.dk/projects/manifold/Papers/Laplacian.pdf</a><br><a href="https://csustan.csustan.edu/~tom/Clustering/GraphLaplacian-tutorial.pdf" target="_blank" rel="noopener">https://csustan.csustan.edu/~tom/Clustering/GraphLaplacian-tutorial.pdf</a><br><a href="https://www.youtube.com/watch?v=FRZvgNvALJ4" target="_blank" rel="noopener">https://www.youtube.com/watch?v=FRZvgNvALJ4</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/10/05/Laplacian-matrix/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/blog/page/7/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/6/">6</a><a class="page-number" href="/blog/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/blog/page/9/">9</a><a class="extend next" rel="next" href="/blog/page/9/">Next &raquo;</a>
@@ -1570,7 +1396,7 @@ var _hmt = _hmt || [];
 			<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     	<div class="footer-left">
             <i class="fa fa-copyright"></i> 
-            2019 Tracy Xin Wang
+            2020 Tracy Xin Wang
             
             <span class="post-meta-divider">|</span>
             <span id="busuanzi_container_site_pv" style="display: inline;">
@@ -1585,7 +1411,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共91.1k字
+              本站总共94.7k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -1692,19 +1518,23 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1728,6 +1558,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">经济</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
               </li>
              
@@ -1744,19 +1578,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Network</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">思考</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1772,11 +1610,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+                <a href="javascript:void(0)" class="js-tag color3">CV</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">
