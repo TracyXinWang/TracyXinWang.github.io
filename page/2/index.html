@@ -247,19 +247,19 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-coursera_motion_pl03" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-coursera_motion_pl04" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/08/21/coursera_motion_pl03/">Coursera Motion Planning for Self-Driving Cars 03</a>
+      <a class="article-title" href="/blog/2019/08/21/coursera_motion_pl04/">Coursera Motion Planning for Self-Driving Cars 04</a>
     </h1>
   
 
         
-        <a href="/blog/2019/08/21/coursera_motion_pl03/" class="archive-article-date">
+        <a href="/blog/2019/08/21/coursera_motion_pl04/" class="archive-article-date">
   	<time datetime="2019-08-21T04:30:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-21</time>
 </a>
         
@@ -270,7 +270,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Mission-Planning-in-Driving-Environments"><span class="toc-number">1.</span> <span class="toc-text">Mission Planning in Driving Environments</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Creating-a-Road-Network-Graph"><span class="toc-number">1.1.</span> <span class="toc-text">Creating a Road Network Graph</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dijkstra’s-Shortest-Path-Search"><span class="toc-number">1.2.</span> <span class="toc-text">Dijkstra’s Shortest Path Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#A-Shortest-Path-Search"><span class="toc-number">1.3.</span> <span class="toc-text">A* Shortest Path Search</span></a></li></ol></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Dynamic-Object-Interactions"><span class="toc-number">1.</span> <span class="toc-text">Dynamic Object Interactions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Motion-Prediction"><span class="toc-number">1.1.</span> <span class="toc-text">Motion Prediction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Map-Aware-Motion-Prediction"><span class="toc-number">1.2.</span> <span class="toc-text">Map-Aware Motion Prediction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Time-to-Collision"><span class="toc-number">1.3.</span> <span class="toc-text">Time to Collision</span></a></li></ol></li></ol>
             </div>
            -->
         <!--  
@@ -279,40 +279,220 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Mission-Planning-in-Driving-Environments"><span class="toc-text">Mission Planning in Driving Environments</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Creating-a-Road-Network-Graph"><span class="toc-text">Creating a Road Network Graph</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dijkstra’s-Shortest-Path-Search"><span class="toc-text">Dijkstra’s Shortest Path Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#A-Shortest-Path-Search"><span class="toc-text">A* Shortest Path Search</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Dynamic-Object-Interactions"><span class="toc-text">Dynamic Object Interactions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Motion-Prediction"><span class="toc-text">Motion Prediction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Map-Aware-Motion-Prediction"><span class="toc-text">Map-Aware Motion Prediction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Time-to-Collision"><span class="toc-text">Time to Collision</span></a></li></ol></li></ol>
         </div>
     </div>
  -->
         <p>From Coursera, State Estimation and Localization for Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/learn/motion-planning-self-driving-cars" target="_blank" rel="noopener">https://www.coursera.org/learn/motion-planning-self-driving-cars</a></p>
-<h2 id="Mission-Planning-in-Driving-Environments"><a href="#Mission-Planning-in-Driving-Environments" class="headerlink" title="Mission Planning in Driving Environments"></a>Mission Planning in Driving Environments</h2><h3 id="Creating-a-Road-Network-Graph"><a href="#Creating-a-Road-Network-Graph" class="headerlink" title="Creating a Road Network Graph"></a>Creating a Road Network Graph</h3><p>Graph:</p>
+<h2 id="Dynamic-Object-Interactions"><a href="#Dynamic-Object-Interactions" class="headerlink" title="Dynamic Object Interactions"></a>Dynamic Object Interactions</h2><h3 id="Motion-Prediction"><a href="#Motion-Prediction" class="headerlink" title="Motion Prediction"></a>Motion Prediction</h3><p><strong>Definition</strong></p>
 <ul>
-<li>The edges is defined by the segments of the road that connect each sample point according to the rules of the road.</li>
-<li>the edges of the graph are directed</li>
-<li>When the graph is unweighted, a good candidate algorithm is the Breadth-First Search or BFS.</li>
+<li>Motion prediction of the dynamic object’s attempts to estimate the future position, heading and velocity</li>
+<li>Important as it allows: <ul>
+<li>Planning a set of maneuvers to correctly interact with dynamic objects</li>
+<li>Avoid collisions on a planned trajectory</li>
 </ul>
-<p>BFS:</p>
-<ul>
-<li>At a high level, BFS can be thought of as iterating through all of the vertices in the graph but doing so in a manner such that all adjacent vertices are evaluated first before proceeding deeper into the graph.</li>
+</li>
 </ul>
-<h3 id="Dijkstra’s-Shortest-Path-Search"><a href="#Dijkstra’s-Shortest-Path-Search" class="headerlink" title="Dijkstra’s Shortest Path Search"></a>Dijkstra’s Shortest Path Search</h3><p>Dijkstra’s Algorithm </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Algorithm Dijkstra<span class="string">'s (G,s,t)</span></span><br><span class="line"><span class="string">    open &lt;- MinHeap()</span></span><br><span class="line"><span class="string">    closed &lt;- Set()</span></span><br><span class="line"><span class="string">    predecessors &lt;- Dict()</span></span><br><span class="line"><span class="string">    open.push(s.0)</span></span><br><span class="line"><span class="string">    while !open.isEmpty() do</span></span><br><span class="line"><span class="string">        if isGoal(u) then</span></span><br><span class="line"><span class="string">            return extractPath(u, predecessors)</span></span><br><span class="line"><span class="string">        for all v $\in$ u.successors() </span></span><br><span class="line"><span class="string">            if v $\in$ closed then</span></span><br><span class="line"><span class="string">                continue</span></span><br><span class="line"><span class="string">            uvCost &lt;- edgeCost(G,u,v)</span></span><br><span class="line"><span class="string">            if v $\in$ open then</span></span><br><span class="line"><span class="string">                if uCost + uvCost &lt; open[v] then</span></span><br><span class="line"><span class="string">                    open[v] &lt;- uCost + uvCost</span></span><br><span class="line"><span class="string">                    predecessors[v] &lt;- u</span></span><br><span class="line"><span class="string">            else</span></span><br><span class="line"><span class="string">                open.push(v, uCost + uvCost)</span></span><br><span class="line"><span class="string">                predecessors[v] &lt;- u</span></span><br><span class="line"><span class="string">        closed add(u)</span></span><br></pre></td></tr></table></figure>
-<h3 id="A-Shortest-Path-Search"><a href="#A-Shortest-Path-Search" class="headerlink" title="A* Shortest Path Search"></a>A* Shortest Path Search</h3><p>Heuristic:</p>
+<p><strong>Requirements for Motion Prediction Models</strong></p>
 <ul>
-<li>a search heuristic is an estimate of the remaining cost to reach the destination vertex from any given vertex in the graph. </li>
-<li>in this case, a useful estimate on the cost or length between any two vertices is the straight line or Euclidean distance between them</li>
+<li>Mandatory Requirements:<ul>
+<li>Class of the Dynamic Object </li>
+<li>Current dynamic object states: position, heading and velocity</li>
 </ul>
-<p><strong>Euclidean Heuristic</strong></p>
-<ul>
-<li>Exploits structure of the problem</li>
-<li>Fast to calculate</li>
-<li>Straight-line distance between two vertices is a useful estimate of true distance along the graph<br>$$h(v) = |t-v|$$</li>
+</li>
+<li>Optional Requirements: <ul>
+<li>History of Vehicle states: the position, heading and velocity <ul>
+<li>Requires object tracking States between identifications over a set amount of time</li>
 </ul>
-<p><img src="/blog/images/motion_pl02.jpg" width="80%" height="80%"></p>
-<p>Extensions to Other Factors</p>
+</li>
+<li>Current high definition roadmap</li>
+<li>Image of the current dynamic object</li>
+</ul>
+</li>
+</ul>
+<p><strong>Assumptions in Motion Prediction for simplification</strong></p>
 <ul>
-<li>Traffic, speed limits, and weather affect mission planning</li>
-<li>Time rather than distance is better at capturing these factors</li>
-<li>Replace distance edge weights with time estimates</li>
+<li>Cars<ul>
+<li>Physics-based prediction: vehicles must follow a set of physical constraints governing their movement, e.g. Vehicle Kinematics and Dynamics</li>
+<li>Maneuver-based assumptions: all motions by a vehicle on the road are made up of a finite set of maneuvers in a restricted domain in the environment, e.g. vehicles on the road will stay on the road and follow the driving rules like unlikely to drive over sidewalks or lawns or through obstacles</li>
+<li>Interactions-aware Assumptions: incorporate the assumption that the dynamic objects will react and interact with each other. e.g. the vehicle in the destination lane will slow down to make more room for the incoming vehicle to maintain a safe following distance.</li>
+</ul>
+</li>
+<li>Pedestrians:<ul>
+<li>the same three categories assumptions as the cars</li>
+<li>Pedestrians are unpredictable</li>
+<li>Can rapidly change speed and heading</li>
+<li>Pedestrians use crossings Pedestrians use sidewalks</li>
+<li>Pedestrians have right of way, but will stop if threatened</li>
+</ul>
+</li>
+</ul>
+<p><strong>Constant Velocity Prediction Model</strong></p>
+<ul>
+<li>Simple</li>
+<li>Computationally efficient</li>
+<li>Assumption is that the dynamic object will maintain its <ul>
+<li>velocity</li>
+<li>Magnitude</li>
+<li>Heading<br>Algorithm:</li>
+</ul>
+</li>
+<li>Input:<ul>
+<li>$T$: time horizon to predict over</li>
+<li>$dt$: time between predictions</li>
+<li>$x_{obj}$: current dynamic object state<ul>
+<li>Position: $x_{obj}.pos$</li>
+<li>Velocity: $x_{obj}.vel$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Output:<ul>
+<li>$x_{1:T}$: list of future vehicle states</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$t &lt;- 0$</span><br><span class="line">$x_o = x_&#123;obj&#125;$</span><br><span class="line">while $t*dt &lt; T$ do</span><br><span class="line">    $t = t + 1$</span><br><span class="line">    $x_t.pos &lt;- x_&#123;t-1&#125;.pos + dt*x_&#123;t-1&#125;.vel$</span><br><span class="line">    $x_t.vel &lt;- x_&#123;t-1&#125;.vel$</span><br><span class="line">end while</span><br><span class="line">return $x_&#123;1:T&#125;$</span><br></pre></td></tr></table></figure>
+<p>Issues</p>
+<ul>
+<li>Don’t account for Vehicle Dynamics fully</li>
+<li>Don’t account for the Road (Position,adjustment)</li>
+<li>Don’t account for Road Signs(Velocity adjustment)</li>
+<li>Assumptions are too Strong and Incorrect for most Dynamic Object Motion</li>
+</ul>
+<h3 id="Map-Aware-Motion-Prediction"><a href="#Map-Aware-Motion-Prediction" class="headerlink" title="Map-Aware Motion Prediction"></a>Map-Aware Motion Prediction</h3><p><strong>Assumptions to Improve Prediction</strong></p>
+<ul>
+<li>Positional Assumptions<ul>
+<li>Vehicles on driving lane usually follow the given drive lane</li>
+<li>Changing drive lanes is usually prompted by an indicator signal</li>
+</ul>
+</li>
+<li>Velocity Assumptions<ul>
+<li>Vehicles usually modify their velocity when approaching restrictive geometry(tight turns)</li>
+<li>Vehicles usually modify the velocity when approaching regulatory elements</li>
+</ul>
+</li>
+</ul>
+<p><strong>Improvement of Position Estimation</strong></p>
+<ul>
+<li>Roadways with natural curvature</li>
+<li>Vehicles on drive lane usually follow the given drive lane</li>
+<li>The predicted path is set to follow the center of the driving lane which the dynamic vehicle is on</li>
+</ul>
+<p><strong>Improvement of Path Prediction</strong></p>
+<ul>
+<li>Problems with the model:<ul>
+<li>Difficult to predict lane change maneuvers without extra information</li>
+<li>Multiple possible lanelets such as when on an intersection</li>
+</ul>
+</li>
+<li>Solution with the model:<ul>
+<li>Most likely prediction</li>
+<li>Multi-hypothesis prediction</li>
+</ul>
+</li>
+</ul>
+<p><strong>Multi-hypothesis Approach</strong></p>
+<ul>
+<li>Consider the range of all possible motions <ul>
+<li>Left, right, stay stopped</li>
+</ul>
+</li>
+<li>Provides more information to local planner</li>
+<li>Safer due to human error (forgotten turn signal)</li>
+</ul>
+<p><strong>Improvements to Velocity Prediction</strong></p>
+<ul>
+<li>Road curvature can be used to improve the velocity prediction over the path</li>
+<li>Improve the velocity prediction based on regulatory elements in the environment <ul>
+<li>Stop locations, deceleration profiles </li>
+<li>Lanelet priors</li>
+</ul>
+</li>
+</ul>
+<h3 id="Time-to-Collision"><a href="#Time-to-Collision" class="headerlink" title="Time to Collision"></a>Time to Collision</h3><p><strong>Definition of Time to Collision</strong></p>
+<ul>
+<li>Assuming all dynamic object continue along their predicted path: <ul>
+<li>Will then be a collision between any of the objects?</li>
+<li>If so how far into the future?</li>
+</ul>
+</li>
+<li>Time to Collision is comprised of: <ul>
+<li>Collision point between the two dynamic objects </li>
+<li>Prediction of the time to arrive to the collision point</li>
+</ul>
+</li>
+<li>Requirements for Accuracy: <ul>
+<li>Accurate predicted trajectories for all dynamic objects (position, heading and velocity)</li>
+<li>Accurate dynamic objects geometries</li>
+</ul>
+</li>
+</ul>
+<p><strong>Approaches to calculate time to collision</strong></p>
+<ul>
+<li>Two basic approaches to calculating time to collision:<ul>
+<li>Simulation approach</li>
+<li>Estimation approach</li>
+</ul>
+</li>
+<li>Simulation approach<ul>
+<li>Simulate the movement of each vehicle as time passes</li>
+<li>Taking account of the vehicle model over time</li>
+<li>Checking if any part of the two dynamic object has collided</li>
+</ul>
+</li>
+<li>Estimation approach<ul>
+<li>Geometries of the vehicles are approximated over duration of the predicted path</li>
+<li>Collision point is estimated based the cars predictions</li>
+<li>Many assumptions are usually made by this method usually to estimate time to collision</li>
+</ul>
+</li>
+</ul>
+<p><strong>Relative Strengths and Weaknesses</strong></p>
+<ul>
+<li>Simulation Approach Estimation Approach<ul>
+<li>Computationally expensive</li>
+<li>Higher accuracy if simulated with high fidelity</li>
+<li>Offline Applications (Dataset evaluation or Simulations)</li>
+</ul>
+</li>
+<li>Estimation Approach<ul>
+<li>Computationally inexpensive<ul>
+<li>Memory footprint</li>
+<li>Computational time</li>
+</ul>
+</li>
+<li>Less accurate due to approximations and estimations</li>
+<li>Real Time Applications(In Car Prediction)</li>
+</ul>
+</li>
+</ul>
+<p><strong>Simulation approach Pseudocode</strong><br>Inputs:</p>
+<ul>
+<li>$D$: list of all dynamic objects<ul>
+<li>Predicted paths</li>
+</ul>
+</li>
+<li>$dt$: time between simulation steps</li>
+<li>$N_c$: number of circles for collision approximation<br>Outputs:</li>
+<li>$P_{coll}$: list of all collision points</li>
+<li>$TTC$: list of all times to collision points<br><img src="/blog/images/motion_pl03.jpg" width="80%" height="80%"></li>
+</ul>
+<p><strong>Estimation of Dynamic Object State</strong></p>
+<ul>
+<li>Each predicted vehicle state has a predicted time at each location</li>
+<li>Find the closest vehicle state along the predicted path to the current simulation time</li>
+<li>Efficient Collision Detection Method<ul>
+<li>Represent each car as a set of circles</li>
+<li>Check if a collision will occur between two circles $$d_{i,j} = \sqrt{(x_j - x_i)^2+(y_j -y_i)^2} \quad r_i + r_j \gt d_{i,j}$$</li>
+<li>Calculate collision point $$C_x = \frac{(x_i<em>r_j)+(x_j</em>r_i)}{(r_i+r_j)}, C_y = \frac{(y_i<em>r_j)+(y_j</em>r_i)}{(r_i+r_j)} $$</li>
+<li>Tradeoff between:<ul>
+<li>Accuracy</li>
+<li>Number of computations</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
       
@@ -341,7 +521,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/08/21/coursera_motion_pl03/">展开全文 >></a>
+          <a class="article-more-a" href="/blog/2019/08/21/coursera_motion_pl04/">展开全文 >></a>
         </p>
       
 
@@ -2903,7 +3083,19 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Coding</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2911,11 +3103,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2935,23 +3127,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">经济</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2959,7 +3135,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Network</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2971,19 +3159,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Network</a>
+                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3003,11 +3183,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+                <a href="javascript:void(0)" class="js-tag color4">learning</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">learning</a>
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
