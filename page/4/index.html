@@ -247,6 +247,435 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-python12" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/06/05/python12/">Python核心技术与实战12 实现一个搜索引擎</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/06/05/python12/" class="archive-article-date">
+  	<time datetime="2019-06-05T01:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本概念"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bag-of-Words-and-Inverted-Index"><span class="toc-number">2.</span> <span class="toc-text">Bag of Words and Inverted Index</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LRU和多重继承"><span class="toc-number">3.</span> <span class="toc-text">LRU和多重继承</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本概念"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bag-of-Words-and-Inverted-Index"><span class="toc-text">Bag of Words and Inverted Index</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LRU和多重继承"><span class="toc-text">LRU和多重继承</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <p><strong>To be practice!</strong></p>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ul>
+<li>一个搜索引擎由搜索器、索引器、检索器和用户接口四个部分组成。</li>
+<li>搜索器，就是我们常提到的爬虫（scrawler），它能在互联网上大量爬取各类网站的内容，送给索引器。索引器拿到网页和内容后，会对内容进行处理，形成索引（index），存储于内部的数据库等待检索。</li>
+<li>用户接口是指网页和App前端界面，例如百度和谷歌的搜索页面。用户通过用户接口，向搜索引擎发出询问（query），询问解析后送达检索器；检索器高效检索后，再将结果返回给用户。</li>
+</ul>
+<p>先定义 SearchEngineBase 基类：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">class SearchEngineBase(object):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">    def add_corpus(self, file_path):</span><br><span class="line">        with open(file_path, &apos;r&apos;) as fin:</span><br><span class="line">            text = fin.read()</span><br><span class="line">        self.process_corpus(file_path, text)</span><br><span class="line"></span><br><span class="line">    def process_corpus(self, id, text):</span><br><span class="line">        raise Exception(&apos;process_corpus not implemented.&apos;)</span><br><span class="line"></span><br><span class="line">    def search(self, query):</span><br><span class="line">        raise Exception(&apos;search not implemented.&apos;)</span><br><span class="line"></span><br><span class="line">def main(search_engine):</span><br><span class="line">    for file_path in [&apos;1.txt&apos;, &apos;2.txt&apos;, &apos;3.txt&apos;, &apos;4.txt&apos;, &apos;5.txt&apos;]:</span><br><span class="line">        search_engine.add_corpus(file_path)</span><br><span class="line"></span><br><span class="line">    while True:</span><br><span class="line">        query = input()</span><br><span class="line">        results = search_engine.search(query)</span><br><span class="line">        print(&apos;found &#123;&#125; result(s):&apos;.format(len(results)))</span><br><span class="line">        for result in results:</span><br><span class="line">            print(result)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>SearchEngineBase可以被继承，继承的类分别代表不同的算法引擎。每一个引擎都应该实现process_corpus()和search()两个函数，对应我们刚刚提到的索引器和检索器。main()函数提供搜索器和用户接口，于是一个简单的包装界面就有了。</li>
+<li>具体看这段代码：<ul>
+<li>add_corpus() 函数负责读取文件内容，将文件路径作为ID，连同内容一起送到process_corpus中。</li>
+<li>process_corpus 需要对内容进行处理，然后文件路径为ID，将处理后的内容存下来。处理后的内容，就叫做索引（index）。</li>
+<li>search 则给定一个询问，处理询问，再通过索引检索，然后返回。</li>
+</ul>
+</li>
+</ul>
+<p>然后定义一个基本可以工作的搜索引擎：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">class SimpleEngine(SearchEngineBase):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(SimpleEngine, self).__init__()</span><br><span class="line">        self.__id_to_texts = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    def process_corpus(self, id, text):</span><br><span class="line">        self.__id_to_texts[id] = text</span><br><span class="line"></span><br><span class="line">    def search(self, query):</span><br><span class="line">        results = []</span><br><span class="line">        for id, text in self.__id_to_texts.items():</span><br><span class="line">            if query in text:</span><br><span class="line">                results.append(id)</span><br><span class="line">        return results</span><br><span class="line"></span><br><span class="line">search_engine = SimpleEngine()</span><br><span class="line">main(search_engine)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">########## 输出 ##########</span><br><span class="line"></span><br><span class="line">simple</span><br><span class="line">found 0 result(s):</span><br><span class="line">little</span><br><span class="line">found 2 result(s):</span><br><span class="line">1.txt</span><br><span class="line">2.txt</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>SimpleEngine 实现了一个继承SearchEngineBase的子类，继承并实现了process_corpus和search 接口，同时，也顺手继承了add_corpus函数（当然你想重写也是可行的），因此我们可以在main()函数中直接调取。</li>
+<li>在新的构造函数中，se1f.__id_to_texts={}初始化了自己的私有变量，也就是这个用来存储文件名到文件内容的字典。</li>
+<li>process_corpus()函数则非常直白地将文件内容插入到字典中。这里注意，ID需要是唯一的，不然相同ID的新内容会覆盖掉旧的内容。</li>
+<li>search 直接枚举字典，从中找到要搜索的字符串。如果能够找到，则将ID放到结果列表中，最后返回。</li>
+</ul>
+<h3 id="Bag-of-Words-and-Inverted-Index"><a href="#Bag-of-Words-and-Inverted-Index" class="headerlink" title="Bag of Words and Inverted Index"></a>Bag of Words and Inverted Index</h3><p>先实现一个名叫Bag of Words的搜索模型:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line"></span><br><span class="line">class BOWEngine(SearchEngineBase):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(BOWEngine, self).__init__()</span><br><span class="line">        self.__id_to_words = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    def process_corpus(self, id, text):</span><br><span class="line">        self.__id_to_words[id] = self.parse_text_to_words(text)</span><br><span class="line"></span><br><span class="line">    def search(self, query):</span><br><span class="line">        query_words = self.parse_text_to_words(query)</span><br><span class="line">        results = []</span><br><span class="line">        for id, words in self.__id_to_words.items():</span><br><span class="line">            if self.query_match(query_words, words):</span><br><span class="line">                results.append(id)</span><br><span class="line">        return results</span><br><span class="line">    </span><br><span class="line">    @staticmethod</span><br><span class="line">    def query_match(query_words, words):</span><br><span class="line">        for query_word in query_words:</span><br><span class="line">            if query_word not in words:</span><br><span class="line">                return False</span><br><span class="line">        return True</span><br><span class="line"></span><br><span class="line">    @staticmethod</span><br><span class="line">    def parse_text_to_words(text):</span><br><span class="line">        # 使用正则表达式去除标点符号和换行符</span><br><span class="line">        text = re.sub(r&apos;[^\w ]&apos;, &apos; &apos;, text)</span><br><span class="line">        # 转为小写</span><br><span class="line">        text = text.lower()</span><br><span class="line">        # 生成所有单词的列表</span><br><span class="line">        word_list = text.split(&apos; &apos;)</span><br><span class="line">        # 去除空白单词</span><br><span class="line">        word_list = filter(None, word_list)</span><br><span class="line">        # 返回单词的 set</span><br><span class="line">        return set(word_list)</span><br><span class="line"></span><br><span class="line">search_engine = BOWEngine()</span><br><span class="line">main(search_engine)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">########## 输出 ##########</span><br><span class="line"></span><br><span class="line">i have a dream</span><br><span class="line">found 3 result(s):</span><br><span class="line">1.txt</span><br><span class="line">2.txt</span><br><span class="line">3.txt</span><br><span class="line">freedom children</span><br><span class="line">found 1 result(s):</span><br><span class="line">5.txt</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>先来理解一个概念，BOW Model，即Bag of Words Model，中文叫做词袋模型。这是NLP领域最常见最简单的模型之一。</li>
+<li>假设一个文本，不考虑语法、句法、段落，也不考虑词汇出现的顺序，只将这个文本看成这些词汇的集合。于是相应的，我们把id to texts 替换成id_to_words，这样就只需要存这些单词，而不是全部文章，也不需要考虑顺序。</li>
+<li>process_corpus()函数调用类静态函数 parse_text_to_words，将文章打碎形成词袋，放入set之后再放到字典中。</li>
+<li>search()函数则稍微复杂一些。这里我们假设，想得到的结果，是所有的搜索关键词都要出现在同一篇文章中。那么，我们需要同样打碎query得到一个set，然后把set中的每一个词，和我们的索引中每一篇文章进行核对，看一下要找的词是否在其中。而这个过程由静态函数query_match负责。</li>
+</ul>
+<p><strong>优化</strong></p>
+<ul>
+<li><p>遍历代价太大，而其实每次查询的query单词量不会很多；其次，词袋模型并不考虑单词间的顺序，但有些人希望单词按顺序出现，或者希望搜索的单词在文中离得近一些，这种情况下词袋模型就无能为力了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line"></span><br><span class="line">class BOWInvertedIndexEngine(SearchEngineBase):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(BOWInvertedIndexEngine, self).__init__()</span><br><span class="line">        self.inverted_index = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    def process_corpus(self, id, text):</span><br><span class="line">        words = self.parse_text_to_words(text)</span><br><span class="line">        for word in words:</span><br><span class="line">            if word not in self.inverted_index:</span><br><span class="line">                self.inverted_index[word] = []</span><br><span class="line">            self.inverted_index[word].append(id)</span><br><span class="line"></span><br><span class="line">    def search(self, query):</span><br><span class="line">        query_words = list(self.parse_text_to_words(query))</span><br><span class="line">        query_words_index = list()</span><br><span class="line">        for query_word in query_words:</span><br><span class="line">            query_words_index.append(0)</span><br><span class="line">        </span><br><span class="line">        # 如果某一个查询单词的倒序索引为空，我们就立刻返回</span><br><span class="line">        for query_word in query_words:</span><br><span class="line">            if query_word not in self.inverted_index:</span><br><span class="line">                return []</span><br><span class="line">        </span><br><span class="line">        result = []</span><br><span class="line">        while True:</span><br><span class="line">            </span><br><span class="line">            # 首先，获得当前状态下所有倒序索引的 index</span><br><span class="line">            current_ids = []</span><br><span class="line">            </span><br><span class="line">            for idx, query_word in enumerate(query_words):</span><br><span class="line">                current_index = query_words_index[idx]</span><br><span class="line">                current_inverted_list = self.inverted_index[query_word]</span><br><span class="line">                </span><br><span class="line">                # 已经遍历到了某一个倒序索引的末尾，结束 search</span><br><span class="line">                if current_index &gt;= len(current_inverted_list):</span><br><span class="line">                    return result</span><br><span class="line"></span><br><span class="line">                current_ids.append(current_inverted_list[current_index])</span><br><span class="line"></span><br><span class="line">            # 然后，如果 current_ids 的所有元素都一样，那么表明这个单词在这个元素对应的文档中都出现了</span><br><span class="line">            if all(x == current_ids[0] for x in current_ids):</span><br><span class="line">                result.append(current_ids[0])</span><br><span class="line">                query_words_index = [x + 1 for x in query_words_index]</span><br><span class="line">                continue</span><br><span class="line">            </span><br><span class="line">            # 如果不是，我们就把最小的元素加一</span><br><span class="line">            min_val = min(current_ids)</span><br><span class="line">            min_val_pos = current_ids.index(min_val)</span><br><span class="line">            query_words_index[min_val_pos] += 1</span><br><span class="line"></span><br><span class="line">    @staticmethod</span><br><span class="line">    def parse_text_to_words(text):</span><br><span class="line">        # 使用正则表达式去除标点符号和换行符</span><br><span class="line">        text = re.sub(r&apos;[^\w ]&apos;, &apos; &apos;, text)</span><br><span class="line">        # 转为小写</span><br><span class="line">        text = text.lower()</span><br><span class="line">        # 生成所有单词的列表</span><br><span class="line">        word_list = text.split(&apos; &apos;)</span><br><span class="line">        # 去除空白单词</span><br><span class="line">        word_list = filter(None, word_list)</span><br><span class="line">        # 返回单词的 set</span><br><span class="line">        return set(word_list)</span><br><span class="line"></span><br><span class="line">search_engine = BOWInvertedIndexEngine()</span><br><span class="line">main(search_engine)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">########## 输出 ##########</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">little</span><br><span class="line">found 2 result(s):</span><br><span class="line">1.txt</span><br><span class="line">2.txt</span><br><span class="line">little vicious</span><br><span class="line">found 1 result(s):</span><br><span class="line">2.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>新模型继续使用之前的接口，仍然只在init()、pr ocess_corpus()和search()三个函数进行修改。</p>
+</li>
+<li>开头的Inverted Index，即倒序索引，是非常有名的搜索引擎方法: 也就是说这次反过来，我们保留的是word-&gt;id的字典。于是情况就豁然开朗了，在search时，我们只需要把想要的query_word的几个倒序索引单独拎出来，然后从这几个列表中找共有的元素，那些共有的元素，即ID，就是我们想要的查询结果。这样，我们就避免了将所有的index过一遍的尴尬,这解决了遍历的问题</li>
+<li>process_corpus 建立倒序索引。注意，这里的代码都是非常精简的。在工业界领域，需要一个unique ID生成器，来对每一篇文章标记上不同的ID，倒序索引也应该按照这个uniqueid来进行排序。</li>
+<li>search()函数，会根据 query_words 拿到所有的倒序索引，如果拿不到，就表示有的query word不存在于任何文章中，直接返回空；拿到之后，运行一个“合并K个有序数组”的算法，从中拿到我们想要的ID，并返回。注意，这里用到的算法并不是最优的，最优的写法需要用最小堆来存储index。这是一道有名的leetcode hard题，有兴趣请参考：</li>
+<li>关于实现搜索单词按顺序出现，或者搜索的单词在文中离得近一些的情况，我们需要在Inverted Index上，对于每篇文章也保留单词的位置信息，这样一来，在合并操作的时候处理一下就可以了。</li>
+</ul>
+<h3 id="LRU和多重继承"><a href="#LRU和多重继承" class="headerlink" title="LRU和多重继承"></a>LRU和多重继承</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">import pylru</span><br><span class="line"></span><br><span class="line">class LRUCache(object):</span><br><span class="line">    def __init__(self, size=32):</span><br><span class="line">        self.cache = pylru.lrucache(size)</span><br><span class="line">    </span><br><span class="line">    def has(self, key):</span><br><span class="line">        return key in self.cache</span><br><span class="line">    </span><br><span class="line">    def get(self, key):</span><br><span class="line">        return self.cache[key]</span><br><span class="line">    </span><br><span class="line">    def set(self, key, value):</span><br><span class="line">        self.cache[key] = value</span><br><span class="line"></span><br><span class="line">class BOWInvertedIndexEngineWithCache(BOWInvertedIndexEngine, LRUCache):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(BOWInvertedIndexEngineWithCache, self).__init__()</span><br><span class="line">        LRUCache.__init__(self)</span><br><span class="line">    </span><br><span class="line">    def search(self, query):</span><br><span class="line">        if self.has(query):</span><br><span class="line">            print(&apos;cache hit!&apos;)</span><br><span class="line">            return self.get(query)</span><br><span class="line">        </span><br><span class="line">        result = super(BOWInvertedIndexEngineWithCache, self).search(query)</span><br><span class="line">        self.set(query, result)</span><br><span class="line">        </span><br><span class="line">        return result</span><br><span class="line"></span><br><span class="line">search_engine = BOWInvertedIndexEngineWithCache()</span><br><span class="line">main(search_engine)</span><br><span class="line"></span><br><span class="line">########## 输出 ##########</span><br><span class="line"></span><br><span class="line">little</span><br><span class="line">found 2 result(s):</span><br><span class="line">1.txt</span><br><span class="line">2.txt</span><br><span class="line">little</span><br><span class="line">cache hit!</span><br><span class="line">found 2 result(s):</span><br><span class="line">1.txt</span><br><span class="line">2.txt</span><br></pre></td></tr></table></figure>
+<ul>
+<li>LRUCache定义了一个缓存类，你可以通过继承这个类来调用其方法。LRU缓存是一种很经典的缓存（同时，LRU的实现也是硅谷大厂常考的算法面试题，这里为了简单，我直接使用pylru这个包），它符合自然界的局部性原理，可以保留最近使用过的对象，而逐渐淘汰掉很久没有被用过的对象。</li>
+<li>这里的缓存使用起来也很简单，调用has()函数判断是否在缓存中，如果在，调用get函数直接返回结果；如果不在，送入后台计算结果，然后再塞入缓存。</li>
+<li><p>我们可以看到，BOWInvertedlndexEngineWithCache类，多重继承了两个类。首先，你需要注意的是构造函数。多重继承有两种初始化方法:</p>
+<ul>
+<li><p>第一种方法，用下面这行代码，直接初始化该类的第一个父类：不过使用这种方法时，要求继承链的最顶层父类必须要继承 object。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">super(BOWInvertedIndexEngineWithCache, self).__init__()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第二种方法，对于多重继承，如果有多个构造函数需要调用，我们必须用传统的方法LRUCach e._init（self）。</p>
+</li>
+</ul>
+</li>
+<li>注意，search()函数被子类BOWInvertedlndexEngineWithCache 再次重载，但是我还需要调用BOWInvertedlndexEngine的search()函数，这时该怎么办呢？请看下面这行代码：这样我们可以强行调用被覆益的父类的函数<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">super(BOWInvertedIndexEngineWithCache, self).search(query)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>关于私有化：<br>Python并没有真正的私有化支持，但可用下划线得到伪私有：</p>
+<ul>
+<li><code>_xxx</code> “单下划线 “ 开始的成员变量叫做保护变量，意思是只有类对象和子类对象自己能访问到这些变量，需通过类提供的接口进行访问；</li>
+<li><code>__xxx</code> 类中的私有变量/方法名，只有类对象自己能访问，连子类对象也不能访问到这个数据。</li>
+<li><code>__xxx__</code> 魔法函数，前后均有一个“双下划线” 代表python里特殊方法专用的标识，如 <strong>init</strong>() 代表类的构造函数。</li>
+<li>如果想要强行访问父类的私有类型，做法是 self._ParentClass__var，这是非常不推荐的 hacky method。以下是示范代码：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class A:</span><br><span class="line">    __a = 1</span><br><span class="line"></span><br><span class="line">class B(A):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">b = B()</span><br><span class="line">print(b._A__a)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Reference:<br><a href="https://time.geekbang.org/column/article/98998" target="_blank" rel="noopener">https://time.geekbang.org/column/article/98998</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/06/05/python12/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-python11" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/06/03/python11/">Python核心技术与实战11 面向对象</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/06/03/python11/" class="archive-article-date">
+  	<time datetime="2019-06-03T13:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#对象基础"><span class="toc-number">1.</span> <span class="toc-text">对象基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进阶"><span class="toc-number">2.</span> <span class="toc-text">进阶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#继承"><span class="toc-number">3.</span> <span class="toc-text">继承</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#对象基础"><span class="toc-text">对象基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进阶"><span class="toc-text">进阶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#继承"><span class="toc-text">继承</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="对象基础"><a href="#对象基础" class="headerlink" title="对象基础"></a>对象基础</h3><p>示例代码：<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">class Document():</span><br><span class="line">    def __init__(self, title, author, context):</span><br><span class="line">        print(&apos;init function called&apos;)</span><br><span class="line">        self.title = title</span><br><span class="line">        self.author = author</span><br><span class="line">        self.__context = context # __ 开头的属性是私有属性</span><br><span class="line"></span><br><span class="line">    def get_context_length(self):</span><br><span class="line">        return len(self.__context)</span><br><span class="line"></span><br><span class="line">    def intercept_context(self, length):</span><br><span class="line">        self.__context = self.__context[:length]</span><br><span class="line"></span><br><span class="line">harry_potter_book = Document(&apos;Harry Potter&apos;, &apos;J. K. Rowling&apos;, &apos;... Forever Do not believe any thing is capable of thinking independently ...&apos;)</span><br><span class="line"></span><br><span class="line">print(harry_potter_book.title)</span><br><span class="line">print(harry_potter_book.author)</span><br><span class="line">print(harry_potter_book.get_context_length())</span><br><span class="line"></span><br><span class="line">harry_potter_book.intercept_context(10)</span><br><span class="line"></span><br><span class="line">print(harry_potter_book.get_context_length())</span><br><span class="line"></span><br><span class="line">print(harry_potter_book.__context)</span><br><span class="line"></span><br><span class="line">########## 输出 ##########</span><br><span class="line"></span><br><span class="line">init function called</span><br><span class="line">Harry Potter</span><br><span class="line">J. K. Rowling</span><br><span class="line">77</span><br><span class="line">10</span><br><span class="line"></span><br><span class="line">---------------------------------------------------------------------------</span><br><span class="line">AttributeError                            Traceback (most recent call last)</span><br><span class="line">&lt;ipython-input-5-b4d048d75003&gt; in &lt;module&gt;()</span><br><span class="line">    22 print(harry_potter_book.get_context_length())</span><br><span class="line">    23 </span><br><span class="line">---&gt; 24 print(harry_potter_book.__context)</span><br><span class="line"></span><br><span class="line">AttributeError: &apos;Document&apos; object has no attribute &apos;__context&apos;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>类：一群有着相似性的事物的集合，这里对应Python的class。</li>
+<li>对象：集合中的一个事物，这里对应由class生成的某一个object，比如代码中的harry potter_book。</li>
+<li>属性：对象的某个静态特征，比如上述代码中的title、author和_context。</li>
+<li>函数：对象的某个动态能力，比如上述代码中的intercept_context()函数。</li>
+<li><strong>init</strong> 表示构造函数，即在一个对象生成时会被自动调用的函数。我们能看到，<code>harry_po tter_book=Document(...)</code>这一行代码被执行的时候，<code>init function called</code>字符串会被打印出来。</li>
+<li>而 get_context length()和intercept_context()则为类的普通函数，我们调用它们来对对象的属性做一些事情。</li>
+<li>class Document 还有三个属性，title、author和_context分别表示标题、作者和内容，通过构造函数传入。这里代码很直观，我们可以看到，intercept_context 能修改对象harry_potter_book的_context 属性。</li>
+<li>另外注意的一点是，如果一个属性以<code>__</code>（注意，此处有两个_）开头，我们就默认这个属性是私有属性。私有属性，是指不希望在类的函数之外的地方被访问和修改的属性。所以，你可以看到，title和author 能够很自由地被打印出来，但是print（harry potter_book.__context）就会报错。</li>
+</ul>
+<h3 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h3><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">class Document():</span><br><span class="line">    </span><br><span class="line">    WELCOME_STR = &apos;Welcome! The context for this book is &#123;&#125;.&apos;</span><br><span class="line">    </span><br><span class="line">    def __init__(self, title, author, context):</span><br><span class="line">        print(&apos;init function called&apos;)</span><br><span class="line">        self.title = title</span><br><span class="line">        self.author = author</span><br><span class="line">        self.__context = context</span><br><span class="line">    </span><br><span class="line">    # 类函数</span><br><span class="line">    @classmethod</span><br><span class="line">    def create_empty_book(cls, title, author):</span><br><span class="line">        return cls(title=title, author=author, context=&apos;nothing&apos;)</span><br><span class="line">    </span><br><span class="line">    # 成员函数</span><br><span class="line">    def get_context_length(self):</span><br><span class="line">        return len(self.__context)</span><br><span class="line">    </span><br><span class="line">    # 静态函数</span><br><span class="line">    @staticmethod</span><br><span class="line">    def get_welcome(context):</span><br><span class="line">        return Document.WELCOME_STR.format(context)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">empty_book = Document.create_empty_book(&apos;What Every Man Thinks About Apart from Sex&apos;, &apos;Professor Sheridan Simove&apos;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(empty_book.get_context_length())</span><br><span class="line">print(empty_book.get_welcome(&apos;indeed nothing&apos;))</span><br><span class="line"></span><br><span class="line">########## 输出 ##########</span><br><span class="line"></span><br><span class="line">init function called</span><br><span class="line">7</span><br><span class="line">Welcome! The context for this book is indeed nothing.</span><br></pre></td></tr></table></figure>
+</code></pre><ul>
+<li>如何在一个类中定义一些常量，每个对象都可以方便访问这些常量而不用重新构造？:<ul>
+<li>在Python的类里，只需要和函数并列地声明并赋值，就可以实现这一点，例如这段代码中的WELCOME_STR。</li>
+<li>一种很常规的做法，是用全大写来表示常量，因此我们可以在类中使用self.WELCOME_STR，或者在类外使用Entity.WELCOME_STR，来表达这个字符</li>
+</ul>
+</li>
+<li>如果一个函数不涉及到访问修改这个类的属性，而放到类外面有点不恰当，怎么做才能更优雅呢？<ul>
+<li>针对这个问题，我们提出了<strong>类函数、成员函数和静态函数</strong>三个概念。</li>
+<li>前两者产生的影响是动态的，能够访问或者修改对象的属性；</li>
+<li>而静态函数则与类没有什么关联，最明显的特征便是，静态函数的第一个参数没有任何特殊性。</li>
+<li>一般而言，<strong>静态函数</strong>可以用来做一些简单独立的任务，既方便测试，也能优化代码结构。静态函数还可以通过在函数前一行加上@staticmethod来表示，代码中也有相应的示例。这其实使用了装饰器的概念，我们会在后面的章节中详细讲解。</li>
+<li>而<strong>类函数</strong>的第一个参数一般为cls，表示必须传一个类进来。类函数最常用的功能是实现不同的init 构造函数，比如上文代码中，我们使用create_empty_book类函数，来创造新的书籍对象，其context一定为’nothing’。这样的代码，就比你直接构造要清晰一些。类似的，类函数需要装饰器@classmethod 来声明。</li>
+<li><strong>成员函数</strong>则是我们最正常的类的函数，它不需要任何装饰器声明，第一个参数self代表当前对象的引用，可以通过此函数，来实现想要的查询/修改类的属性等功能。</li>
+</ul>
+</li>
+</ul>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>既然类是一群相似的对象的集合，那么可不可以是一群相似的类的集合呢？这就涉及到类的继承</p>
+<ul>
+<li><p>类的继承，指的是一个类既拥有另一个类的特征，也拥有不同于另一个类的独特特征。在这里的第一个类叫做子类，另一个叫做父类，特征其实就是类的属性和函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">class Entity():</span><br><span class="line">    def __init__(self, object_type):</span><br><span class="line">        print(&apos;parent class init called&apos;)</span><br><span class="line">        self.object_type = object_type</span><br><span class="line">    </span><br><span class="line">    def get_context_length(self):</span><br><span class="line">        raise Exception(&apos;get_context_length not implemented&apos;)</span><br><span class="line">    </span><br><span class="line">    def print_title(self):</span><br><span class="line">        print(self.title)</span><br><span class="line"></span><br><span class="line">class Document(Entity):</span><br><span class="line">    def __init__(self, title, author, context):</span><br><span class="line">        print(&apos;Document class init called&apos;)</span><br><span class="line">        Entity.__init__(self, &apos;document&apos;)</span><br><span class="line">        self.title = title</span><br><span class="line">        self.author = author</span><br><span class="line">        self.__context = context</span><br><span class="line">    </span><br><span class="line">    def get_context_length(self):</span><br><span class="line">        return len(self.__context)</span><br><span class="line">    </span><br><span class="line">class Video(Entity):</span><br><span class="line">    def __init__(self, title, author, video_length):</span><br><span class="line">        print(&apos;Video class init called&apos;)</span><br><span class="line">        Entity.__init__(self, &apos;video&apos;)</span><br><span class="line">        self.title = title</span><br><span class="line">        self.author = author</span><br><span class="line">        self.__video_length = video_length</span><br><span class="line">    </span><br><span class="line">    def get_context_length(self):</span><br><span class="line">        return self.__video_length</span><br><span class="line"></span><br><span class="line">harry_potter_book = Document(&apos;Harry Potter(Book)&apos;, &apos;J. K. Rowling&apos;, &apos;... Forever Do not believe any thing is capable of thinking independently ...&apos;)</span><br><span class="line">harry_potter_movie = Video(&apos;Harry Potter(Movie)&apos;, &apos;J. K. Rowling&apos;, 120)</span><br><span class="line"></span><br><span class="line">print(harry_potter_book.object_type)</span><br><span class="line">print(harry_potter_movie.object_type)</span><br><span class="line"></span><br><span class="line">harry_potter_book.print_title()</span><br><span class="line">harry_potter_movie.print_title()</span><br><span class="line"></span><br><span class="line">print(harry_potter_book.get_context_length())</span><br><span class="line">print(harry_potter_movie.get_context_length())</span><br><span class="line"></span><br><span class="line">########## 输出 ##########</span><br><span class="line"></span><br><span class="line">Document class init called</span><br><span class="line">parent class init called</span><br><span class="line">Video class init called</span><br><span class="line">parent class init called</span><br><span class="line">document</span><br><span class="line">video</span><br><span class="line">Harry Potter(Book)</span><br><span class="line">Harry Potter(Movie)</span><br><span class="line">77</span><br><span class="line">120</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在上面的代码中，Document和Video它们有相似的地方，都有相应的标题、作者和内容等属性。我们可以从中抽象出一个叫做Entity的类，来作为它俩的父类。</p>
+</li>
+<li>首先需要注意的是构造函数。每个类都有构造函数，继承类在生成对象的时候，是不会自动调用父类的构造函数的，因此你必须在init()函数中显式调用父类的构造函数。它们的执行顺序是子类的构造函数-&gt;父类的构造函数。</li>
+<li>其次需要注意父类get_context_length()函数。如果使用Entity 直接生成对象，调用get_context_length()函数，就会raise error中断程序的执行。这其实是一种很好的写法，叫做函数重写，可以使子类必须重新写一遍 get_context_length()函数，来覆盖掉原有函数。</li>
+<li>最后需要注意到print title()函数，这个函数定义在父类中，但是子类的对象可以毫无阻力地使用它来打印title，这也就体现了继承的优势：减少重复的代码，降低系统的嫡值（即复杂度）。</li>
+</ul>
+<p><strong>抽象函数和抽象类</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">from abc import ABCMeta, abstractmethod</span><br><span class="line"></span><br><span class="line">class Entity(metaclass=ABCMeta):</span><br><span class="line">    @abstractmethod</span><br><span class="line">    def get_title(self):</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">    @abstractmethod</span><br><span class="line">    def set_title(self, title):</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">class Document(Entity):</span><br><span class="line">    def get_title(self):</span><br><span class="line">        return self.title</span><br><span class="line">    </span><br><span class="line">    def set_title(self, title):</span><br><span class="line">        self.title = title</span><br><span class="line"></span><br><span class="line">document = Document()</span><br><span class="line">document.set_title(&apos;Harry Potter&apos;)</span><br><span class="line">print(document.get_title())</span><br><span class="line"></span><br><span class="line">entity = Entity()</span><br><span class="line"></span><br><span class="line">########## 输出 ##########</span><br><span class="line"></span><br><span class="line">Harry Potter</span><br><span class="line"></span><br><span class="line">---------------------------------------------------------------------------</span><br><span class="line">TypeError                                 Traceback (most recent call last)</span><br><span class="line">&lt;ipython-input-7-266b2aa47bad&gt; in &lt;module&gt;()</span><br><span class="line">     21 print(document.get_title())</span><br><span class="line">     22 </span><br><span class="line">---&gt; 23 entity = Entity()</span><br><span class="line">     24 entity.set_title(&apos;Test&apos;)</span><br><span class="line"></span><br><span class="line">TypeError: Can&apos;t instantiate abstract class Entity with abstract methods get_title, set_title</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>Entity本身是没有什么用的，只需拿来定义Document和Video的一些基本元素就够了。不过，万一你不小心生成Entity的对象该怎么办呢？为了防止这样的手误，就引入了抽象类的概念。</li>
+<li>抽象类是一种特殊的类，它生下来就是作为父类存在的，一旦对象化就会报错。同样，抽象函数定义在抽象类之中，子类必须重写该函数才能使用。相应的抽象函数，则是使用装饰器@abstractmethod来表示。</li>
+<li>在上述代码中，entity=Entity()直接报错，只有通过Document 继承Entity才能正常使用。</li>
+<li>这其实正是软件工程中一个很重要的概念，定义接口。大型工程往往需要很多人合作开发，比如在Facebook中，在idea提出之后，开发组和产品组首先会召开产品设计会，PM（Product Manager，产品经理）写出产品需求文档，然后迭代；TL（Team Leader，项目经理）编写开发文档，开发文档中会定义不同模块的大致功能和接口、每个模块之间如何协作、单元测试和集成测试、线上灰度测试、监测和日志等等一系列开发流程。</li>
+</ul>
+<p>Reference:<br>极客时间</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/06/03/python11/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-python10" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/05/31/python10/">Python核心技术与实战10 匿名函数</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/05/31/python10/" class="archive-article-date">
+  	<time datetime="2019-05-31T13:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数基础"><span class="toc-number">1.</span> <span class="toc-text">函数基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数式编程"><span class="toc-number">2.</span> <span class="toc-text">函数式编程</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数基础"><span class="toc-text">函数基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数式编程"><span class="toc-text">函数式编程</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="函数基础"><a href="#函数基础" class="headerlink" title="函数基础"></a>函数基础</h3><ul>
+<li><p>格式如下：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lambda argument1, argument2,... argumentN : expression</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">square = lambda x: x**2</span><br><span class="line">square(3)</span><br><span class="line"></span><br><span class="line">9</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>lambda是一个表达式（expression），并不是一个语句（statement）。</p>
+</li>
+<li>lambda的主体是只有一行的简单表达式，并不能扩展成一个多行的代码块。</li>
+</ul>
+<h3 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h3><ul>
+<li>函数式编程，是指代码中每一块都是不可变的（immutable），都由纯函数（pure function）的形式组成。这里的纯函数，是指函数本身相互独立、互不影响，对于相同的输入，总会有相同的输出，没有任何副作用。</li>
+<li>Python 主要提供了这么几个函数：map()、filter())和reduce()，通常结合匿名函数lambda一起使用。</li>
+<li><p>map(function，iterable)函数，前面的例子提到过，它表示，对iterable中的每个元素，都运用function这个函数，最后返回一个新的可遍历的集合。比如刚才列表的例子，要对列表中的每个元素乘以2，那么用map就可以表示为下面这样：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">l = [1, 2, 3, 4, 5]</span><br><span class="line">new_list = map(lambda x: x * 2, l) # [2， 4， 6， 8， 10]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>filter(function，iterable)函数，和map函数类似，function同样表示一个函数对象。filter()函数表示对iterable中的每个元素，都使用function判断，并返回True或者False，最后将返回True的元素组成一个新的可遍历的集合。e.g.，比如我要返回一个列表中的所有偶数，可以写成下面这样：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">l = [1, 2, 3, 4, 5]</span><br><span class="line">new_list = filter(lambda x: x % 2 == 0, l) # [2,4]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>reduce(function，iterable)函数，通常用来对一个集合做一些累积操作。function 同样是一个函数对象，规定它有两个参数，表示对iterable中的每个元素以及上一次调用后的结果，运用function 进行计算，所以最后返回的是一个单独的数值。e.g.，我想要计算某个列表元素的乘积，就可以用reduce()函数来表示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">l = [1, 2, 3, 4, 5]</span><br><span class="line">new_list = reduce(lambda x, y: x * y, l)    # 1*2*3*4*5=120</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/05/31/python10/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-python09" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -662,158 +1091,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-python05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/05/22/python05/">Python核心技术与实战05 深入浅出字符串</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/05/22/python05/" class="archive-article-date">
-  	<time datetime="2019-05-22T10:44:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-number">1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用操作"><span class="toc-number">2.</span> <span class="toc-text">常用操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串的格式化"><span class="toc-number">3.</span> <span class="toc-text">字符串的格式化</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用操作"><span class="toc-text">常用操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串的格式化"><span class="toc-text">字符串的格式化</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ul>
-<li><p>可用单引号，双引号，或者三引号：</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">'jason'</span></span><br><span class="line">city = <span class="string">'beijing'</span></span><br><span class="line">text = <span class="string">"welcome to jike shijian"</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Python 的三引号字符串，则主要应用于多行字符串的情境. e.g. 函数的注释</p>
-</li>
-<li>转义字符(反斜杠开头)：<ul>
-<li>\newline: 接下一行</li>
-<li>\: \</li>
-</ul>
-</li>
-</ul>
-<h3 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h3><ul>
-<li><p>支持索引，切片和遍历等等操作</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">'Jason'</span></span><br><span class="line">name[<span class="number">0</span>]</span><br><span class="line">    <span class="string">'J'</span></span><br><span class="line">name[<span class="number">1</span>:<span class="number">3</span>]</span><br><span class="line">    <span class="string">'as'</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>遍历字符串相当于遍历字符串中的每个字符</p>
-<ul>
-<li><code>for char in name</code></li>
-</ul>
-</li>
-<li><p>Python 的字符串是不可变的: 改变一个字符串内部的字符是不允许的。</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'hello'</span></span><br><span class="line">s[<span class="number">0</span>] = <span class="string">'H'</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">TypeError: <span class="string">'str'</span> object does <span class="keyword">not</span> support item assignment</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Python 中字符串的改变，通常只能通过创建新的字符串来完成</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'H'</span> + s[<span class="number">1</span>:]</span><br><span class="line">s = s.replace(<span class="string">'h'</span>, <span class="string">'H'</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>字符串拼接方法：</p>
-<ul>
-<li><p>使用 ‘+=’ ：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">100000</span>):</span><br><span class="line">    s += str(n)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用内置函数 join :</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">l = []</span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">100000</span>):</span><br><span class="line">    l.append(str(n))</span><br><span class="line">l = <span class="string">' '</span>.join(l)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>字符串分割：</p>
-<ul>
-<li>split(): string.split(separator)，表示把字符串按照 separator 分割成子字符串并返回一个分割后子字符串组合的<em>列表</em><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">query_data</span><span class="params">(namespace, table)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    given namespace and table, query database to get corresponding</span></span><br><span class="line"><span class="string">    data         </span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">path = <span class="string">'hive://ads/training_table'</span></span><br><span class="line">namespace = path.split(<span class="string">'//'</span>)[<span class="number">1</span>].split(<span class="string">'/'</span>)[<span class="number">0</span>] <span class="comment"># 返回'ads'</span></span><br><span class="line">table = path.split(<span class="string">'//'</span>)[<span class="number">1</span>].split(<span class="string">'/'</span>)[<span class="number">1</span>] <span class="comment"># 返回 'training_table'</span></span><br><span class="line">data = query_data(namespace, table)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>其他函数：</p>
-<ul>
-<li>string.strip(str)，表示去掉首尾的 str 字符串</li>
-<li>string.lstrip(str)，表示去掉开头的 str 字符串</li>
-<li>string.rstrip(str)，表示去掉结尾的 str 字符串</li>
-<li>string.find(sub, start, end)，表示从 start 到 end 查找字符串中子字符串 sub 的位置</li>
-</ul>
-</li>
-</ul>
-<h3 id="字符串的格式化"><a href="#字符串的格式化" class="headerlink" title="字符串的格式化"></a>字符串的格式化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'no data available for person with id: &#123;&#125;, name: &#123;&#125;'</span>.format(id, name))</span><br><span class="line"><span class="comment"># 类似于 matlab 里面的 %d, %s</span></span><br></pre></td></tr></table></figure>
-<p>\newline</p>
-<p>极客时间版权所有: <a href="https://time.geekbang.org/column/article/95897" target="_blank" rel="noopener">https://time.geekbang.org/column/article/95897</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/05/22/python05/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-python03" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -953,6 +1230,158 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/blog/2019/05/22/python03/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-python05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/05/22/python05/">Python核心技术与实战05 深入浅出字符串</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/05/22/python05/" class="archive-article-date">
+  	<time datetime="2019-05-22T10:44:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-number">1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用操作"><span class="toc-number">2.</span> <span class="toc-text">常用操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串的格式化"><span class="toc-number">3.</span> <span class="toc-text">字符串的格式化</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用操作"><span class="toc-text">常用操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串的格式化"><span class="toc-text">字符串的格式化</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ul>
+<li><p>可用单引号，双引号，或者三引号：</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">'jason'</span></span><br><span class="line">city = <span class="string">'beijing'</span></span><br><span class="line">text = <span class="string">"welcome to jike shijian"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Python 的三引号字符串，则主要应用于多行字符串的情境. e.g. 函数的注释</p>
+</li>
+<li>转义字符(反斜杠开头)：<ul>
+<li>\newline: 接下一行</li>
+<li>\: \</li>
+</ul>
+</li>
+</ul>
+<h3 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h3><ul>
+<li><p>支持索引，切片和遍历等等操作</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">'Jason'</span></span><br><span class="line">name[<span class="number">0</span>]</span><br><span class="line">    <span class="string">'J'</span></span><br><span class="line">name[<span class="number">1</span>:<span class="number">3</span>]</span><br><span class="line">    <span class="string">'as'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>遍历字符串相当于遍历字符串中的每个字符</p>
+<ul>
+<li><code>for char in name</code></li>
+</ul>
+</li>
+<li><p>Python 的字符串是不可变的: 改变一个字符串内部的字符是不允许的。</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'hello'</span></span><br><span class="line">s[<span class="number">0</span>] = <span class="string">'H'</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">TypeError: <span class="string">'str'</span> object does <span class="keyword">not</span> support item assignment</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Python 中字符串的改变，通常只能通过创建新的字符串来完成</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'H'</span> + s[<span class="number">1</span>:]</span><br><span class="line">s = s.replace(<span class="string">'h'</span>, <span class="string">'H'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>字符串拼接方法：</p>
+<ul>
+<li><p>使用 ‘+=’ ：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">100000</span>):</span><br><span class="line">    s += str(n)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用内置函数 join :</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">l = []</span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">100000</span>):</span><br><span class="line">    l.append(str(n))</span><br><span class="line">l = <span class="string">' '</span>.join(l)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>字符串分割：</p>
+<ul>
+<li>split(): string.split(separator)，表示把字符串按照 separator 分割成子字符串并返回一个分割后子字符串组合的<em>列表</em><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">query_data</span><span class="params">(namespace, table)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    given namespace and table, query database to get corresponding</span></span><br><span class="line"><span class="string">    data         </span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">path = <span class="string">'hive://ads/training_table'</span></span><br><span class="line">namespace = path.split(<span class="string">'//'</span>)[<span class="number">1</span>].split(<span class="string">'/'</span>)[<span class="number">0</span>] <span class="comment"># 返回'ads'</span></span><br><span class="line">table = path.split(<span class="string">'//'</span>)[<span class="number">1</span>].split(<span class="string">'/'</span>)[<span class="number">1</span>] <span class="comment"># 返回 'training_table'</span></span><br><span class="line">data = query_data(namespace, table)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>其他函数：</p>
+<ul>
+<li>string.strip(str)，表示去掉首尾的 str 字符串</li>
+<li>string.lstrip(str)，表示去掉开头的 str 字符串</li>
+<li>string.rstrip(str)，表示去掉结尾的 str 字符串</li>
+<li>string.find(sub, start, end)，表示从 start 到 end 查找字符串中子字符串 sub 的位置</li>
+</ul>
+</li>
+</ul>
+<h3 id="字符串的格式化"><a href="#字符串的格式化" class="headerlink" title="字符串的格式化"></a>字符串的格式化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'no data available for person with id: &#123;&#125;, name: &#123;&#125;'</span>.format(id, name))</span><br><span class="line"><span class="comment"># 类似于 matlab 里面的 %d, %s</span></span><br></pre></td></tr></table></figure>
+<p>\newline</p>
+<p>极客时间版权所有: <a href="https://time.geekbang.org/column/article/95897" target="_blank" rel="noopener">https://time.geekbang.org/column/article/95897</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/05/22/python05/">展开全文 >></a>
         </p>
       
 
@@ -1273,542 +1702,9 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-Huawei_note" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/05/14/Huawei_note/">编程规范</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/05/14/Huawei_note/" class="archive-article-date">
-  	<time datetime="2019-05-14T10:44:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#头文件"><span class="toc-number">1.</span> <span class="toc-text">头文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#原则"><span class="toc-number">1.1.</span> <span class="toc-text">原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#规则"><span class="toc-number">1.2.</span> <span class="toc-text">规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#建议"><span class="toc-number">1.3.</span> <span class="toc-text">建议</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数"><span class="toc-number">2.</span> <span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#原则-1"><span class="toc-number">2.1.</span> <span class="toc-text">原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#规则-1"><span class="toc-number">2.2.</span> <span class="toc-text">规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#建议-1"><span class="toc-number">2.3.</span> <span class="toc-text">建议</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#标识符命名与定义"><span class="toc-number">3.</span> <span class="toc-text">标识符命名与定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变量"><span class="toc-number">4.</span> <span class="toc-text">变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#原则-2"><span class="toc-number">4.1.</span> <span class="toc-text">原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#规则和建议"><span class="toc-number">4.2.</span> <span class="toc-text">规则和建议</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#宏、常量"><span class="toc-number">5.</span> <span class="toc-text">宏、常量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#质量保证"><span class="toc-number">6.</span> <span class="toc-text">质量保证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#程序效率"><span class="toc-number">7.</span> <span class="toc-text">程序效率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注释"><span class="toc-number">8.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全性"><span class="toc-number">9.</span> <span class="toc-text">安全性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文档引用资源"><span class="toc-number">10.</span> <span class="toc-text">文档引用资源</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#头文件"><span class="toc-text">头文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#原则"><span class="toc-text">原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#规则"><span class="toc-text">规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#建议"><span class="toc-text">建议</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数"><span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#原则-1"><span class="toc-text">原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#规则-1"><span class="toc-text">规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#建议-1"><span class="toc-text">建议</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#标识符命名与定义"><span class="toc-text">标识符命名与定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变量"><span class="toc-text">变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#原则-2"><span class="toc-text">原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#规则和建议"><span class="toc-text">规则和建议</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#宏、常量"><span class="toc-text">宏、常量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#质量保证"><span class="toc-text">质量保证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#程序效率"><span class="toc-text">程序效率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注释"><span class="toc-text">注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全性"><span class="toc-text">安全性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文档引用资源"><span class="toc-text">文档引用资源</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h3><ul>
-<li>在一个设计良好的系统中， 修改一个文件，只需要重新编译数个，甚至是一个文件：<ul>
-<li>e.g. 若文件A包含B， B包含C， C包含D，最终几乎每一个源文件都包含了项目组所有的头文件，从而导致<br>绝大部分编译时间都花在解析头文件<h4 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h4></li>
-</ul>
-</li>
-<li>头文件中适合放置接口的声明，不适合放置实现<ul>
-<li>头文件是模块（ Module）或单元（ Unit）的对外接口。头文件中应放置对外部的声明，如对外提供的函数声明、宏定义、类型定义等。</li>
-<li>内部使用的函数（相当于类的私有方法）声明不应放在头文件中。</li>
-<li>内部使用的宏、枚举、结构定义不应放入头文件中。</li>
-<li>变量定义不应放在头文件中，应放在.c文件中。</li>
-<li>变量的声明尽量不要放在头文件中，亦即尽量不要使用全局变量作为接口。变量是模块或单元的内部实现细节，不应通过在头文件中声明的方式直接暴露给外部，应通过函数接口的方式进行对外暴露。 即使必须使用全局变量，也只应当在.c中定义全局变量，在.h中仅声明变量为全局的。</li>
-</ul>
-</li>
-<li>头文件应当职责单一<ul>
-<li>不常用的头文件不应该被包含</li>
-</ul>
-</li>
-<li>头文件应向稳定的方向包含<ul>
-<li>头文件的包含关系是一种依赖，一般来说，应当让不稳定的模块依赖稳定的模块，从而当不稳定的模块发生变化时，不会影响（编译）稳定的模块。</li>
-<li>如：产品依赖于平台，平台依赖于标准库。<h4 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h4></li>
-</ul>
-</li>
-<li>每一个.c文件应有一个同名.h文件，用于声明需要对外公开的接口</li>
-<li>禁止头文件循环依赖</li>
-<li>c/.h文件禁止包含用不到的头文件</li>
-<li>头文件应当自包含：<ul>
-<li>自包含就是任意一个头文件均可独立编译</li>
-</ul>
-</li>
-<li>总是编写内部#include保护符（ #define 保护）<ul>
-<li>以阻止头文件内容被包含多于一次：通常的手段是为每个文件配置一个宏，当头文件第一次被包含时就定义这个宏，并在头文件被再次包含时使用它以排除文件内容</li>
-<li>所有头文件都应当使用#define 防止头文件被多重包含，命名格式为<code>FILENAME_H</code>，为了保证唯一性，更好的命名是<code>PROJECTNAME_PATH_FILENAME_H</code></li>
-<li>没有在宏最前面加上<code>_</code>，即使用<code>FILENAME_H</code>代替<code>_FILENAME_H_</code>，是因为一般以”_”和”__”开头的标识符为系统保留或者标准库使用</li>
-</ul>
-</li>
-<li>禁止在头文件中定义变量</li>
-<li>只能通过包含头文件的方式使用其他.c提供的接口，禁止在.c中通过extern的方式使用外部函数接口、变量<ul>
-<li>若a.c使用了b.c定义的foo()函数，则应当在b.h中声明extern int foo(int input)；并在a.c中通过#include &lt;b.h&gt;来使用foo。禁止通过在a.c中直接写extern int foo(int input);来使用foo，后面这种写法容易在foo改变时可能导致声明和定义不一致。</li>
-</ul>
-</li>
-<li>禁止在extern “C”中包含头文件<ul>
-<li>在extern “C”中包含头文件， 会导致extern “C”嵌套， Visual Studio对extern “C”嵌套层次有限制，嵌套层次太多会编译错误</li>
-<li>P9-10 ？？？<h4 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h4></li>
-</ul>
-</li>
-<li>一个模块通常包含多个.c文件，建议放在同一个目录下，目录名即为模块名。为方便外部使用者，建议每一个模块提供一个.h，文件名为目录名</li>
-<li>如果一个模块包含多个子模块，则建议每一个子模块提供一个对外的.h，文件名为子模块名。说明：降低接口使用者的编写难度。</li>
-<li>头文件不要使用非习惯用法的扩展名，如.inc</li>
-<li>同一产品统一包含头文件排列方式：<ul>
-<li>常见的包含头文件排列方式： 功能块排序、文件名升序、稳定度排序</li>
-<li>以升序方式排列头文件可以避免头文件被重复包含</li>
-<li>以稳定度排序， 建议将不稳定的头文件放在前面，这样不必编译稳定文件就可知不稳定文件有没有问题，减少编译时间</li>
-</ul>
-</li>
-</ul>
-<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><ul>
-<li>代码的有效组织包括：逻辑层组织和物理层组织两个方面。</li>
-<li>逻辑层，主要是把不同功能的函数通过某种联系组织起来，主要关注模块间的接口，也就是模块的架构。</li>
-<li>物理层，无论使用什么样的目录或者名字空间等，需要把函数用一种标准的方法组织起来。例如：设计良好的目录结构、函数名字、文件组织等，这样可以方便查找<h4 id="原则-1"><a href="#原则-1" class="headerlink" title="原则"></a>原则</h4></li>
-<li>一个函数仅完成一件功能</li>
-<li>重复代码应该尽可能提炼成函数<h4 id="规则-1"><a href="#规则-1" class="headerlink" title="规则"></a>规则</h4></li>
-<li>避免函数过长，新增函数不超过50行（非空非注释行）</li>
-<li>避免函数的代码块嵌套过深，新增函数的代码块嵌套不超过4层</li>
-<li>可重入函数应避免使用共享变量；若需要使用，则应通过互斥手段（关中断、信号量）对其加以保护<ul>
-<li>可重入函数是指可能被多个任务并发调用的函数。在多任务操作系统中，函数具有可重入性是多个任务可以共用此函数的必要条件。共享变量指的全局变量和static变量</li>
-<li>编写C语言的可重入函数时，不应使用static局部变量，否则必须经过特殊处理，才能使函数具有可重入性</li>
-<li>P16 例子</li>
-</ul>
-</li>
-<li>对参数的合法性检查，由调用者负责还是由接口函数负责，应在项目组/模块内应统一规定。缺省由调用者负责<ul>
-<li>对于模块间接口函数的参数的合法性检查这一问题，往往有两个极端现象，即：要么是调用者和被调用者对参数均不作合法性检查，结果就遗漏了合法性检查这一必要的处理过程，造成问题隐患；要么就是调用者和被调用者均对参数进行合法性检查，这种情况虽不会造成问题，但产生了冗余代码，降低了效率</li>
-</ul>
-</li>
-<li>对函数的错误返回码要全面处理<ul>
-<li>一个函数（标准库中的函数/第三方库函数/用户定义的函数）能够提供一些指示错误发生的方法。这可以通过使用错误标记、特殊的返回数据或者其他手段，不管什么时候函数提供了这样的机制，调用程序应该在函数返回时立刻检查错误指示</li>
-</ul>
-</li>
-<li>设计高扇入，合理扇出（小于7）的函数<ul>
-<li>扇出是指一个函数直接调用（控制）其它函数的数目，而扇入是指有多少上级函数调用它<h4 id="建议-1"><a href="#建议-1" class="headerlink" title="建议"></a>建议</h4></li>
-</ul>
-</li>
-<li>函数不变参数使用const</li>
-<li>函数应避免使用全局变量、静态局部变量和I/O操作，不可避免的地方应集中使用<ul>
-<li>带有内部“存储器”的函数的功能可能是不可预测的，因为它的输出可能取决于内部存储器（如某标记）的状态。这样的函数既不易于理解又不利于测试和维护。</li>
-<li>在C语言中，函数的static局部变量是函数的内部存储器，有可能使函数的功能不可预测，然而，当某函数的返回值为指针类型时，则必须是static的局部变量的地址作为返回值，若为auto类，则返回为错针。</li>
-</ul>
-</li>
-<li>检查函数所有非参数输入的有效性，如数据文件、公共变量等<ul>
-<li>函数的输入主要有两种：一种是参数输入；另一种是全局变量、数据文件的输入，即非参数输入。函数在使用输入参数之前，应进行有效性检查。</li>
-</ul>
-</li>
-<li>函数的参数个数不超过5个</li>
-<li>除打印类函数外，不要使用可变长参函数</li>
-<li>在源文件范围内声明和定义的所有函数，除非外部可见，否则应该增加static关键字<ul>
-<li>如果一个函数只是在同一文件中的其他地方调用，那么就用static声明。</li>
-<li>使用static确保只是在声明它的文件中是可见的，并且避免了和其他文件或库中的相同标识符发生混淆的可能性。</li>
-<li>建议定义一个STATIC宏，在调试阶段，将STATIC定义为static，版本发布时，改为空，以便于后续的打热补丁等操作</li>
-</ul>
-</li>
-</ul>
-<h3 id="标识符命名与定义"><a href="#标识符命名与定义" class="headerlink" title="标识符命名与定义"></a>标识符命名与定义</h3><ul>
-<li>文件命名统一采用小写字符</li>
-<li>全局变量应增加“g_”前缀</li>
-<li>静态变量应增加“s_”前缀</li>
-<li>函数命名应以函数要执行的动作命名，一般采用动词或者动词＋名词的结构</li>
-<li>对于数值或者字符串等等常量的定义，建议采用全大写字母，单词之间加下划线“_”的方式命名（枚举同样建议使用此方式定义）</li>
-</ul>
-<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><h4 id="原则-2"><a href="#原则-2" class="headerlink" title="原则"></a>原则</h4><ul>
-<li>一个变量只有一个功能，不能把一个变量用作多种用途</li>
-<li>struct 功能单一；不要设计面面俱到的数据结构</li>
-<li>不用或者少用全局变量:<ul>
-<li>单个文件内部可以使用static的全局变量，可以将其理解为类的私有成员变量</li>
-</ul>
-</li>
-<li>防止局部变量与全局变量同名<h4 id="规则和建议"><a href="#规则和建议" class="headerlink" title="规则和建议"></a>规则和建议</h4></li>
-<li>通讯过程中使用的结构，必须注意字节序</li>
-<li>严禁使用未经初始化的变量作为右值</li>
-<li>构造仅有一个模块或函数可以修改、创建，而其余有关模块或函数只访问的全局变量，防止多个不同模块或函数都可以修改、创建同一全局变量的现象</li>
-<li>使用面向接口编程思想，通过API访问数据：如果本模块的数据需要对外部模块开放，应提供接口函数来设置、获取，同时注意全局数据的访问互斥</li>
-<li>明确全局变量的初始化顺序，避免跨模块的初始化依赖</li>
-</ul>
-<h3 id="宏、常量"><a href="#宏、常量" class="headerlink" title="宏、常量"></a>宏、常量</h3><ul>
-<li>用宏定义表达式时，要使用完备的括号：<ul>
-<li>e.g.: #define RECTANGLE_AREA(a, b) ((a) * (b))</li>
-</ul>
-</li>
-<li><p>将宏所定义的多条表达式放在大括号中, 多条语句时写成do while(0)的方式     </p>
-<ul>
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#define FOO(x) do &#123; \</span><br><span class="line">    printf(&quot;arg is %s\n&quot;, x); \</span><br><span class="line">    do_something_useful(x); \</span><br><span class="line">    &#125; while(0)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>使用宏时，不允许参数发生变化</p>
-<ul>
-<li>e.g. 定义SQUARE(a) 为((a) * (a))， 并赋值 a++</li>
-</ul>
-</li>
-<li>不允许直接使用魔鬼数字：<ul>
-<li>对于局部使用的唯一含义的魔鬼数字，可以在代码周围增加说明注释，也可以定义局部const变量，变量命名自注释</li>
-<li>对于广泛使用的数字，必须定义const全局变量/宏；同样变量/宏命名应是自注释的</li>
-</ul>
-</li>
-<li>常量建议使用const定义代替宏</li>
-<li>宏定义中尽量不使用return、 goto、 continue、 break等改变程序流程的语句</li>
-</ul>
-<h3 id="质量保证"><a href="#质量保证" class="headerlink" title="质量保证"></a>质量保证</h3><ul>
-<li>必须了解编译系统的内存分配方式，特别是编译系统对不同类型的变量的内存分配规则，如局部变量在何处分配、静态变量在何处分配等</li>
-<li>禁止内存操作越界<ul>
-<li>数组的大小要考虑最大情况，避免数组分配空间不够</li>
-<li>避免使用危险函数sprintf /vsprintf/strcpy/strcat/gets操作字符串，使用相对安全的函数 snprintf/strncpy/strncat/fgets代替    </li>
-<li>使用memcpy/memset时一定要确保长度不要越界</li>
-<li>字符串考虑最后的’ \0’， 确保所有字符串是以’ \0’结束</li>
-<li>指针加减操作时，考虑指针类型长度</li>
-<li>数组下标进行检查</li>
-<li>使用时sizeof或者strlen计算结构/字符串长度，避免手工计算</li>
-</ul>
-</li>
-<li>禁止内存泄漏<ul>
-<li>内存和资源（包括定时器/文件句柄/Socket/队列/信号量/GUI等各种资源）泄漏是常见的错误</li>
-<li>异常出口处检查内存、定时器/文件句柄/Socket/队列/信号量/GUI等资源是否全部释放</li>
-<li>删除结构指针时，必须从底层向上层顺序删除</li>
-<li>使用指针数组时，确保在释放数组时，数组中的每个元素指针是否已经提前被释放了</li>
-<li>避免重复分配内存</li>
-<li>小心使用有return、 break语句的宏，确保前面资源已经释放</li>
-<li>检查队列中每个成员是否释放</li>
-</ul>
-</li>
-<li>禁止引用已经释放的内存空间    <ul>
-<li>内存释放后，把指针置为NULL；使用内存指针前进行非空判断</li>
-<li>耦合度较强的模块互相调用时，一定要仔细考虑其调用关系，防止已经删除的对象被再次使用</li>
-<li>避免操作已发送消息的内存</li>
-<li>自动存储对象的地址不应赋值给其他的在第一个对象已经停止存在后仍然保持的对象（具有更大作用域的对象或者静态对象或者从一个函数返回的对象）</li>
-</ul>
-</li>
-<li>函数中分配的内存，在函数退出之前要释放<ul>
-<li>有很多函数申请内存，保存在数据结构中，要在申请处加上注释，说明在何处释放</li>
-</ul>
-</li>
-<li>if语句尽量加上else分支，对没有else分支的语句要小心对待</li>
-<li>不要滥用goto语句</li>
-</ul>
-<h3 id="程序效率"><a href="#程序效率" class="headerlink" title="程序效率"></a>程序效率</h3><ul>
-<li>将不变条件的计算移到循环体外</li>
-<li>对于多维大数组，避免来回跳跃式访问数组成员</li>
-<li>创建资源库，以减少分配对象的开销</li>
-<li>将多次被调用的 “小函数”改为inline函数或者宏实现</li>
-</ul>
-<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><ul>
-<li>文件头部应进行注释，注释必须列出：版权说明、版本号、生成日期、作者姓名、工号、内容、功能说明、与其它文件的关系、修改日志等，头文件的注释中还应有函数功能简要说明。</li>
-<li>函数声明处注释描述函数功能、性能及用法，包括输入和输出参数、函数返回值、可重入的要求等；定义处详细描述函数功能和实现要点，如实现的简要步骤、实现的理由、 设计约束等</li>
-<li>全局变量要有较详细的注释，包括对其功能、取值范围以及存取时注意事项等的说明</li>
-</ul>
-<h3 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h3><ul>
-<li>对用户输入进行检查：<ul>
-<li>用户输入作为循环条件，数组下标，内存分配的尺寸参数，格式化字符串，业务数据（如作为命令执行参数、拼装sql语句、以特定格式持久化）等时需尤为注意</li>
-<li>用户输入作为数值的，做数值范围检查</li>
-<li>用户输入是字符串的，检查字符串长度</li>
-<li>用户输入作为格式化字符串的，检查关键字“ %”</li>
-<li>用户输入作为业务数据，对关键字进行检查、转义</li>
-</ul>
-</li>
-<li>确保所有字符串是以NULL结束<ul>
-<li>C语言中‟\0‟作为字符串的结束符，即NULL结束符。</li>
-<li>标准字符串处理函数（如strcpy()、 strlen()）依赖NULL结束符来确定字符串的长度。没有正确使用NULL结束字符串会导致缓冲区溢出和其它未定义的行为</li>
-</ul>
-</li>
-<li>不要将边界不明确的字符串写到固定长度的数组中<ul>
-<li>边界不明确的字符串（如来自gets()、 getenv()、 scanf()的字符串），长度可能大于目标数组长度，直接拷贝到固定长度的数组中容易导致缓冲区溢出</li>
-</ul>
-</li>
-<li>避免整数溢出<ul>
-<li>当一个整数被增加超过其最大值时会发生整数上溢，被减小小于其最小值时会发生整数下溢</li>
-<li>带符号和无符号的数都有可能发生溢出</li>
-</ul>
-</li>
-<li>避免符号错误<ul>
-<li>有时从带符号整型转换到无符号整型会发生符号错误，符号错误并不丢失数据，但数据失去了原来的含义</li>
-</ul>
-</li>
-<li>避免截断错误<ul>
-<li>将一个较大整型转换为较小整型，并且该数的原值超出较小类型的表示范围，就会发生截断错误，原值的低位被保留而高位被丢弃。截断错误会引起数据丢失</li>
-</ul>
-</li>
-<li>避免使用strlen()计算二进制数据的长度<ul>
-<li>strlen()函数用于计算字符串的长度，它返回字符串中第一个NULL结束符之前的字符的数量。因此用strlen()处理文件I/O函数读取的内容时要小心，因为这些内容可能是二进制也可能是文本</li>
-</ul>
-</li>
-</ul>
-<h3 id="文档引用资源"><a href="#文档引用资源" class="headerlink" title="文档引用资源"></a>文档引用资源</h3><ul>
-<li>google C++ Style Guide</li>
-<li>《 敏捷软件开发：原则、模式与实践》 （ Robert C.Martin 著 ） 第二部分“敏捷设计”章节</li>
-<li>《 敏捷软件开发：原则、模式与实践》 第八章，单一职责原则(SRP)</li>
-<li>《代码整洁之道》 </li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/05/14/Huawei_note/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-life-in-Melbourne02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/04/20/life-in-Melbourne02/">后会有期</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/04/20/life-in-Melbourne02/" class="archive-article-date">
-  	<time datetime="2019-04-20T07:34:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              
-            </div>
-           -->
-        <!--   -->
-        <p>消耗了18kg的米，3.8L的油，2瓶老干妈，1.5瓶豆瓣酱，8T的硬盘，4支笔芯，1个草稿本，半年的交流就这样结束了。</p>
-<p>到土澳的第一天坐在巴士开往city的时候，想起了17年的圣诞节，Angel邀请我们去她朋友家吃饭玩游戏。游戏大致是每个人抽一张卡，上面有个问题，你必须如实回答。我抽到的问题大概描述是，如果不考虑其他的一切，你最想居住的一个地方是哪里，为什么。我想了一下，说澳大利亚，理由是可能是受初中语文老师影响，觉得那边日子很诗意，大牧场放牛羊做自己喜欢的事情，多爽。<br>从着手申请交流到最终选择墨大再到到达的前一刻，我都没有想起这件事，却在实实在在踏上这片土地的时候，想起了当时说的话，顿时感叹或许是念念不忘，冥冥之中？</p>
-<p>这半年里我逐渐想明白了一件事情，合适的才是最好的。其实道理都知道，可人就是这样，总想争取最好的。当时最终确定的时候我给丁哥说我选择墨大，不去斯坦福了。丁哥说他老板绝对不会同意他去一个排名跟中大差不多的学校。（墨大：???）现在结束交流了，我只想说我一定是花光了前几年积攒的运气，才遇到Andrew这样一个好supervisor. Angel带我入了neuroscience的门，Andrew让我看到用数学、工程和统计的方法研究neuroscience有多美。原来可以这么简单！原来这样做的原因是这样的！如果早一点遇到Andrew，我还会不会像现在这样，对不留学术界的态度这样决绝。毕竟我可是抱着要研究这个世界上最复杂的系统这个信念来读phd的呀。<br>有次我遇到一个问题，觉得无法解决，有点愁眉苦脸那种，跑去问Andrew。Andrew噼里啪啦一下给我好几个解决方案。然后完了问我，are you happy now? 让我第一次觉得做科研就是为了快乐呀。</p>
-<p>除了Andrew，其他最让我想说感谢的就是组里面的人了。随便问谁什么问题，都是手把手教，一步一步解释那种。我还记得有次我问 Caio 一个问题，他先是给我在草稿纸上讲了整个流程，然后一行一行代码给我演示，最后让我自己操作了一下确保真的完全ok了才走。实验室的中国学姐在她忙得不行的时候，都花时间特别仔细地给我讲问她的问题。大概是继承了Andrew的优良传统吧，毕竟他给我讲完之后都会让我复述一遍确保我没有哪里出问题, 还说如果我忘了就再问他他会提醒我。所谓，慢即是快。我那个草稿本，有很大一部分，都是这些可爱的人讲解时留下的笔迹。</p>
-<p>严谨，是这里给我留下的另一个印象。每个study的 sanity check 是必不可少的，这在现在灌水日益严重的学术界太难得了。我记得我来这里第一个月做的东西，其实结果当时还不错的，后来Andrew提醒了一下初始化的问题（伪随机），然后我又把程序跑了几遍，发现结果不太稳定，模型并不robust，也没想出解决办法，于是后来就暂放了这个项目。结果上一周吧发现有人发了一篇跟我们当时想法一模一样的paper，我们很惊喜，联系到作者，结果一问发现人家根本就没考虑这个问题，不知道还有伪随机这种东西。。。Andrew说我应该写一篇techinical report 告诉大家这个模型不可靠，使用需谨慎。我说那这不会得罪很多人吗（提出这个模型的组也是个大牛组）。。。他说可是这是事实啊，没办法，科研就是这样的。</p>
-<p>他们一起组成了我对磕盐的一切幻想。愿你们一直可以这样快乐地磕盐下去。</p>
-<p>在这里其实比较遗憾的是自己口语太渣了，所以没能跟来自世界各个地方的学生深度交流。他们真的对这个世界，自己的国家，发生的事情有自己的看法，他们也常问起中国的发展，tell us more about China. 每次听他们讲对一个事情的看法并坚持自己的看法都是一件很享受的事情。</p>
-<p>当然还有house mates了，一问人多大，妈呀99年，吓死人，全是比自己小的。做饭最多的就是我和一楼小哥，他顿顿都是新鲜菜，我是做一次吃一天。其实我觉得还好啊，据我所知办公室有人做一次吃一周…他就老觉得我就是裹腹而已。。。嗯，这下可以回去吃食堂了。今天走之前室友们还一起吃了个饭，饭后每个人吃了两三个汤圆，寓意还挺好，谢谢大家了。</p>
-<p>Angel还在的时候，曾经吃饭时说起quit这个问题，我说很佩服那些读了一两年还毅然选择quit的同学，他们真的很有勇气。Angel说，其实选择继续读下去，不是一件更有勇气的事情吗。<br>可能是吧。</p>
-<p>谢谢这里遇见的每个人，祝你们在接下来的日子里，平安喜乐。<br>后会有期</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂文</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">碎碎念</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/04/20/life-in-Melbourne02/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Net_Reduction" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/04/11/Net_Reduction/">NetworK Reduction Algorithm - Disparity filter</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/04/11/Net_Reduction/" class="archive-article-date">
-  	<time datetime="2019-04-11T01:29:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Disparity-filter"><span class="toc-number">1.</span> <span class="toc-text">Disparity filter</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Disparity-filter"><span class="toc-text">Disparity filter</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>The thing that network reduction algorithm does is to extract the backbone structure of undirected weighted network. There are different algorithms to e.g. k-core decomposition, minimum spanning tree and disparity filter. The main idea is to reduce the density to make the matrix or the graph more sparse.</p>
-<h3 id="Disparity-filter"><a href="#Disparity-filter" class="headerlink" title="Disparity filter"></a>Disparity filter</h3><p>The disparity filter algorithm depends on the statistical null model.<br>The steps are as follows:</p>
-<ul>
-<li>Create the null model of normalised weighted distribution<ul>
-<li>we define the strength of a node $i$ is $s_i = \sum_jw_{ij}$, where $w_{ij}$ is the weight of link between i and j.</li>
-<li>The null model needs to be normalised to make sure that the nodes with low strength will not be biased. A normalized weight $p_{ij}$ is defined as $p_{ij} = w_{ij}/s_i$</li>
-<li>Distribute the strength to nodes randomly: the normalized weights of a certain node with degree k is generated like this: k − 1 pins are randomly assigned between the interval 0 and 1. The interval is divided into k subintervals. The length of the subinterval represents the normalized weight of each link in the null model.</li>
-<li>Based on the above null model. we can derive that the normalized weight distribution of a node with degree k follows $\rho (x)\,dx=(k-1)(1-x)^{ {k-2} }\,dx$</li>
-</ul>
-</li>
-<li>Disparity filter<ul>
-<li>For a given normalized weight $p_{ij}$, the p-value $α<em>{ij}$ of $p</em>{ij}$ based on the null model is given by $\alpha _{ {ij} }=1-(k-1)\int <em>{0}^{ {p</em>{ {ij} } } }(1-x)^{ {k-2} }\,dx$ which reduces to ${\displaystyle \alpha <em>{ij}=(1-p</em>{ij})^{k-1} }$. </li>
-<li>The meaning of $α<em>{ij}$ is the probability of having normalized weight larger or equal to $p</em>{ij}$ in the framework of the given null model. By setting a significance level α (between 0 and 1), for any link of normalized weight $p_{ij}$, if $α_{ij}$ is larger than α, it will be filtered out (set as 0).</li>
-</ul>
-</li>
-<li>MATLAB code:  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">w_thresh = disparity_func(s)</span><br><span class="line">    w=s;   % s is the input matrix (e.g. similarity matrix, connectivity matrix)</span><br><span class="line">    w_null=zeros(length(w),length(w));</span><br><span class="line">    <span class="keyword">for</span> j=1:length(w) % column</span><br><span class="line">        w_null(:,j)=w(:,j)/sum(w(:,j)); % compute the node strength <span class="keyword">for</span> each </span><br><span class="line">    end</span><br><span class="line">    ind_upper=find(triu(ones(length(w),length(w)),1));</span><br><span class="line">    </span><br><span class="line">    fprintf(<span class="string">'Find the smallest p-value needed for graph to remain connected...\n'</span>);</span><br><span class="line">    dns=linspace(0,1,200); % P-value</span><br><span class="line">    <span class="keyword">for</span> i=1:length(dns)</span><br><span class="line">        w_thresh=s;                 % Initialize the w_thresh every time</span><br><span class="line">        <span class="keyword">for</span> j=1:length(ind_upper)</span><br><span class="line">            [ii,jj]=ind2sub(size(w),ind_upper(j));</span><br><span class="line">            <span class="keyword">if</span> (1-w_null(ii,jj))^(K-1)&gt;dns(i) &amp;&amp; (1-w_null(jj,ii))^(K-1)&gt;dns(i)</span><br><span class="line">                w_thresh(ii,jj)=0; w_thresh(jj,ii)=0;</span><br><span class="line">            end</span><br><span class="line">        end</span><br><span class="line">        [~,comp_sizes]=get_components(~~w_thresh);</span><br><span class="line">        <span class="keyword">if</span> length(comp_sizes)==1</span><br><span class="line">            <span class="built_in">break</span></span><br><span class="line">        end</span><br><span class="line">    end</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>Reference:<br>wiki</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Network</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/04/11/Net_Reduction/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/blog/page/3/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/blog/page/5/">5</a><a class="page-number" href="/blog/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/9/">9</a><a class="extend next" rel="next" href="/blog/page/5/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/blog/page/3/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/blog/page/5/">5</a><a class="page-number" href="/blog/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/10/">10</a><a class="extend next" rel="next" href="/blog/page/5/">Next &raquo;</a>
     </nav>
   
 
@@ -1837,7 +1733,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共94.7k字
+              本站总共102.3k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -1944,19 +1840,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Coding</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1964,11 +1848,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1984,19 +1868,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">经济</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Deep learning</a>
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">经济</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Deep learning</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2008,18 +1904,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
@@ -2028,11 +1912,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Self-driving</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Network</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Stochastic</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Self-driving</a>
               </li>
              
               <li class="article-tag-list-item">

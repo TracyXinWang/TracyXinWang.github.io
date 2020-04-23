@@ -247,6 +247,668 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-coursera_state_est03" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/07/29/coursera_state_est03/">Coursera State Estimation and Localization for Self-Driving Cars 03</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/07/29/coursera_state_est03/" class="archive-article-date">
+  	<time datetime="2019-07-29T08:57:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#GNSS-INS-Sensing-for-Pose-Estimation"><span class="toc-number">1.</span> <span class="toc-text">GNSS/INS Sensing for Pose Estimation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3D-Geometry-and-Reference-Frames"><span class="toc-number">1.1.</span> <span class="toc-text">3D Geometry and Reference Frames</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Inertial-Measurement-Unit-IMU"><span class="toc-number">1.2.</span> <span class="toc-text">The Inertial Measurement Unit (IMU)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Global-Navigation-Satellite-Systems-GNSS"><span class="toc-number">1.3.</span> <span class="toc-text">The Global Navigation Satellite Systems (GNSS)</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#GNSS-INS-Sensing-for-Pose-Estimation"><span class="toc-text">GNSS/INS Sensing for Pose Estimation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3D-Geometry-and-Reference-Frames"><span class="toc-text">3D Geometry and Reference Frames</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Inertial-Measurement-Unit-IMU"><span class="toc-text">The Inertial Measurement Unit (IMU)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Global-Navigation-Satellite-Systems-GNSS"><span class="toc-text">The Global Navigation Satellite Systems (GNSS)</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <p>From Coursera, State Estimation and Localization for Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/learn/state-estimation-localization-self-driving-cars" target="_blank" rel="noopener">https://www.coursera.org/learn/state-estimation-localization-self-driving-cars</a></p>
+<h2 id="GNSS-INS-Sensing-for-Pose-Estimation"><a href="#GNSS-INS-Sensing-for-Pose-Estimation" class="headerlink" title="GNSS/INS Sensing for Pose Estimation"></a>GNSS/INS Sensing for Pose Estimation</h2><h3 id="3D-Geometry-and-Reference-Frames"><a href="#3D-Geometry-and-Reference-Frames" class="headerlink" title="3D Geometry and Reference Frames"></a>3D Geometry and Reference Frames</h3><p><strong>Reference frame and vector coordinates</strong></p>
+<ul>
+<li>Vectors can be expressed in different coordinate frames</li>
+<li>The coordinates of the vector are related through a rotation matrix: $r_b = C_{ba}r_a$, $C_{ba}$ is the rotation matrix takes coordinates in frame a and rotates them into frame b </li>
+</ul>
+<p><strong>Rotation representations</strong></p>
+<ul>
+<li>rotation matrix (direction cosine matrix): <ul>
+<li>$C_{ba}=[b_1 \;b_2\; b_3]^T[a_1 \; a_2\; a_3] \in R^{3\times 3}$</li>
+<li>$r_b = C_{ba}r_a$</li>
+<li>$C_{ba}C^T_{ba} = C_{ba}C_{ab} = 1$</li>
+</ul>
+</li>
+<li>Unit quaternions<ul>
+<li>$q=[q_w \; q_v]T = [\cos \frac \phi 2 \quad \hat u \sin \frac \phi 2]^T$</li>
+<li>$| q| = 1$</li>
+<li>$r_b = C(q_{ba}r_a)$</li>
+<li>$C(q) = (q^2_w-q^T_vq_v)1+2q_vq^T_v + 2q_w[q_v]_x$ </li>
+<li>Quaternion multiplication and rotations</li>
+</ul>
+</li>
+<li>Euler angles<ul>
+<li>$C(\theta_3,\theta_2,\theta_1) = C_3(\theta_3)C_2(\theta_2)C_1(\theta_1) $</li>
+<li>suffer from singularity</li>
+</ul>
+</li>
+</ul>
+<p>The importance of the ECEF, ECIF and Navigation reference frames</p>
+<p><strong>Reference Frames</strong></p>
+<ul>
+<li>ECIF: Earth-Centred Inertial Frame<ul>
+<li>ECIF coordinate frame is fixed, Earth rotates about the z axis.</li>
+</ul>
+</li>
+<li>ECEF: Earth-Centred Earth-Fixed Frame<ul>
+<li>ECEF coordinate frame rotates with the Earth.</li>
+<li>x axis aligns the prime meridian</li>
+</ul>
+</li>
+<li>Navigation<ul>
+<li>NED frame</li>
+<li>ENU frame</li>
+</ul>
+</li>
+<li>Sensor/Vehicle frame</li>
+</ul>
+<h3 id="The-Inertial-Measurement-Unit-IMU"><a href="#The-Inertial-Measurement-Unit-IMU" class="headerlink" title="The Inertial Measurement Unit (IMU)"></a>The Inertial Measurement Unit (IMU)</h3><p><strong>Components</strong></p>
+<ul>
+<li>gyroscopes<ul>
+<li>measures a rotational rate in the sensor frame</li>
+<li>Microelectromechanical systems(MEMS) are much smaller and cheaper</li>
+<li>Measure rotational rates instead of orientation directly</li>
+<li>Measurements are noisy and drift over time</li>
+</ul>
+</li>
+<li>accelerometers <ul>
+<li>measures a specific force (or acceleration relative to free-fall) in the sensor frame</li>
+<li>Cheaper MEMS based accelerometers use a miniature cantilever beam with a proof mass attached to it. When the sensor is accelerated, the beam deflects.</li>
+<li>More expensive sensors may also use Piezoelectric materials</li>
+<li>Accelerometers measure acceleration relative to free-fall-this is also called the proper acceleration or specific force: $$a_{mean} = f = \frac{F_{non-gravity}}{m}$$</li>
+<li>In localization, we typically require the acceleration relative to a fixed reference frame<ul>
+<li>‘coordinate’acceleration</li>
+<li>computed using fundamental equation for accelerometers in a gravity field: $f+g=\ddot r_i$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="The-Global-Navigation-Satellite-Systems-GNSS"><a href="#The-Global-Navigation-Satellite-Systems-GNSS" class="headerlink" title="The Global Navigation Satellite Systems (GNSS)"></a>The Global Navigation Satellite Systems (GNSS)</h3><p>Global Navigation Satellite System (GNSS) is a catch-all term for a satellite system(s) that can be used to pinpoint a receiver’s position</p>
+<p>GPS - Computing Position:</p>
+<ul>
+<li>Each GPS satellite transmits a signal that encodes<ul>
+<li>its position (via accurate ephemeris information)</li>
+<li>time of signal transmission (via onboard atomic clock)</li>
+</ul>
+</li>
+<li>To compute a GPS position fix in the Earth-centred frame, the receiver uses the speed of light to compute distances to each satellite based on time of signal arrival</li>
+<li>At least four satellites are required to solve for 3D position, three if only 2D is required</li>
+</ul>
+<p>GPS I Error Sources:</p>
+<ul>
+<li>Ephemeris &amp; clock errors<ul>
+<li>A clock error of $lx10^{-6}$s gives a 300m position error!</li>
+</ul>
+</li>
+<li>Geometric Dilution of Precision (GDOP)<ul>
+<li>The configuration of the visible satellites affects position precision</li>
+</ul>
+</li>
+</ul>
+<p>Improvements of GPS:</p>
+<ul>
+<li>Basic GPS:<ul>
+<li>mobile receiver</li>
+<li>no error correction</li>
+<li>~ 10m accuracy</li>
+</ul>
+</li>
+<li>Differential GPS (DGPS):<ul>
+<li>mobile receiver + fixed base station(s)</li>
+<li>estimate eror caused by atmospheric effects</li>
+<li>~10m accuracy</li>
+</ul>
+</li>
+<li>Real-Time Kinematic (RTK) GPS<ul>
+<li>mobile receiver + fixed base station(s)</li>
+<li>estimate relative position using phase of carrier signal</li>
+<li>~2cm accuracy</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/07/29/coursera_state_est03/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-coursera_state_est02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/07/25/coursera_state_est02/">Coursera State Estimation and Localization for Self-Driving Cars 02</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/07/25/coursera_state_est02/" class="archive-article-date">
+  	<time datetime="2019-07-25T14:57:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linear-and-Nonlinear-Kalman-Filters"><span class="toc-number">1.</span> <span class="toc-text">Linear and Nonlinear Kalman Filters</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Linear-Kalman-Filter"><span class="toc-number">1.1.</span> <span class="toc-text">The (Linear) Kalman Filter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kalman-Filter-and-The-Bias-BLUEs"><span class="toc-number">1.2.</span> <span class="toc-text">Kalman Filter and The Bias BLUEs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Extended-Kalman-Filter"><span class="toc-number">1.3.</span> <span class="toc-text">The Extended Kalman Filter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Error-State-Extended-Kalman-Filter-ES-EKF"><span class="toc-number">1.4.</span> <span class="toc-text">The Error State Extended Kalman Filter (ES-EKF)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Limitations-of-the-EKF"><span class="toc-number">1.5.</span> <span class="toc-text">Limitations of the EKF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#An-Alternative-to-the-EKF-The-Unscented-Kalman-Filter"><span class="toc-number">1.6.</span> <span class="toc-text">An Alternative to the EKF - The Unscented Kalman Filter</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linear-and-Nonlinear-Kalman-Filters"><span class="toc-text">Linear and Nonlinear Kalman Filters</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Linear-Kalman-Filter"><span class="toc-text">The (Linear) Kalman Filter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kalman-Filter-and-The-Bias-BLUEs"><span class="toc-text">Kalman Filter and The Bias BLUEs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Extended-Kalman-Filter"><span class="toc-text">The Extended Kalman Filter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Error-State-Extended-Kalman-Filter-ES-EKF"><span class="toc-text">The Error State Extended Kalman Filter (ES-EKF)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Limitations-of-the-EKF"><span class="toc-text">Limitations of the EKF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#An-Alternative-to-the-EKF-The-Unscented-Kalman-Filter"><span class="toc-text">An Alternative to the EKF - The Unscented Kalman Filter</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <p>From Coursera, State Estimation and Localization for Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/learn/state-estimation-localization-self-driving-cars" target="_blank" rel="noopener">https://www.coursera.org/learn/state-estimation-localization-self-driving-cars</a></p>
+<h2 id="Linear-and-Nonlinear-Kalman-Filters"><a href="#Linear-and-Nonlinear-Kalman-Filters" class="headerlink" title="Linear and Nonlinear Kalman Filters"></a>Linear and Nonlinear Kalman Filters</h2><h3 id="The-Linear-Kalman-Filter"><a href="#The-Linear-Kalman-Filter" class="headerlink" title="The (Linear) Kalman Filter"></a>The (Linear) Kalman Filter</h3><ul>
+<li>The Kalman Filter requires the following motion and measurement models: <ul>
+<li>Motion madel: $x_k=F_{k-1}x_{k-1}+G_{k-1}u_{k-1} + w_{k-1}$</li>
+<li>measurement model: $y_k = H_kx_k+v_k$</li>
+</ul>
+</li>
+<li>with the following noise properties: $$v_k ~ N(0,R_k) \quad w_k ~ N(0,Q_k)$$ <ul>
+<li>$v_k$ is the measurement noise, $w_k$ is the process/motion noise</li>
+</ul>
+</li>
+</ul>
+<p>The Kalman filter can be regarded as a recursive least squares estimator that also includes a motion model.<br>It has twp stages: the prediction and the </p>
+<ul>
+<li>Prediction: $$\check x_k = F_{k-1}x_{k-1}+G_{k-1}u_{k-1}$$ $$\check P_k = F_{k-1}\hat P_{k-1}\hat F^T_{k-1} + Q_{k-1}$$</li>
+<li>Optimal gain: $$K_k = \check P_k H^T_k(H_k\check P_k H^T_k + R_k)^{-1}$$</li>
+<li>Correction: $$\hat x_k = \check x_k + K_k(y_k-H_k\check x_k)$$ $$\hat P_k = (1-K_kH_k)\check P_k$$</li>
+</ul>
+<p>Summary:</p>
+<ul>
+<li>The Kalman Filter is very similar to RLS but includes a motion model that tells us how the state evolves over time</li>
+<li>The Kalman Filter updates a state estimate through two stages:<ul>
+<li>prediction using the motion model</li>
+<li>correction using the measurement model</li>
+</ul>
+</li>
+</ul>
+<h3 id="Kalman-Filter-and-The-Bias-BLUEs"><a href="#Kalman-Filter-and-The-Bias-BLUEs" class="headerlink" title="Kalman Filter and The Bias BLUEs"></a>Kalman Filter and The Bias BLUEs</h3><p><strong>Bias</strong></p>
+<ul>
+<li>Bias = $E(\hat p_k) - p_k$ ,where pk is the true position</li>
+<li>A filter is an unbiased if for all k : $E[\hat e_k] = E[\hat p_k -p_k] = E[\hat p_k] - p_k = 0$</li>
+<li>How to compute bias analytically?<ul>
+<li>consider the error dynamics: </li>
+<li>predicted state error: $\check e_k = \check x_k - x_k$</li>
+<li>corrected estimate error: $\hat e_k = \hat x_k - x_k$</li>
+<li>using Kalman Filter equation we can derive: $$\check e_k = F_{k-1}\check e_{k-1} - w_k$$ $$\hat e_k = (1-K_kH_k)\check e_k + K_kv_k$$</li>
+</ul>
+</li>
+<li>For Kalman filter, for all k: $$E[\check e_k] = E[F_{k-1}\check e_{k-1} - w_k] = F_{k-1} E[\check e_{k-1} - E[w_k] = 0$$ $$E[\hat e_k] = E[(1-K_kH_k)\check e_k +K_kv_k] = (1-K_kH_k)E[\check e_k]+K_kE[v_k]=0 $$<ul>
+<li>unbiased prediction!</li>
+<li>so long as $E[\hat e_0]=0, E[v]=0, E[w]=0 $, which is the white uncorrelated noise</li>
+</ul>
+</li>
+</ul>
+<p><strong>consistency</strong></p>
+<ul>
+<li>the filter is consistent if for all k: $E[\hat e^2_k]=E[(\hat p_k-p_k)^2]=\hat P_k $<ul>
+<li>that is to say: for all time steps k, the filter co-variants $P_k$ matches the expected value of the square of our error.</li>
+</ul>
+</li>
+<li>Practically, this means that our filter is neither overconfident, nor underconfident in the estimate it has produced: <ul>
+<li>A filter that is overconfident, and hence inconsistent, will report a covariance that is optimistic: the filter will essentially place too much emphasis on its own estimate and will be less sensitive to future measurement updates.</li>
+</ul>
+</li>
+<li>So long as the initial estimate is consisten and we have white zero noise, then all the estimates will be consistent</li>
+</ul>
+<p><strong>Kalman filter is the Best Linear Unbiased</strong></p>
+<ul>
+<li>given white uncorrelated zero mean noise, the Kalman Filter is unbiased and consistent.</li>
+<li>We can also say that the filter is consistent</li>
+<li>In general，if we have white，uncorrelated zero-mean noise，the Kalman filter is the best（i.e，lowest variance）unbiased estimator that uses only a linear combination of measurements</li>
+</ul>
+<h3 id="The-Extended-Kalman-Filter"><a href="#The-Extended-Kalman-Filter" class="headerlink" title="The Extended Kalman Filter"></a>The Extended Kalman Filter</h3><p>EKF: Uses first-order linearization to turn a nonlinear problem into a linear one</p>
+<ul>
+<li>As we introduced, the Kalman filter is actually the best of all possible estimators for linear systems</li>
+<li>However, linear systems don’t exist in reality. </li>
+<li>Therefore, we need to use a kind of Kalman filter that can apply to non-linear system. That is the extended kalman filter</li>
+<li>The key concept in the Extended Kalman Filter is the idea of linearizing a nonlinear system</li>
+</ul>
+<p>Role of Jacobian matrices in the EKF and how to compute them</p>
+<p><strong>Linearizing a nonlinear system</strong></p>
+<ul>
+<li>Linearization means to choose an operating point $a$ and finding a linear approximation to the nonlinear function in the neighborhood of $a$</li>
+<li>in two dimensions, this means finding the tangent line to the function f of x when x equals a.</li>
+<li>Mathematically, we do this by taking the Taylor series expansion of the function: $$f(x)\approx f(a) + \frac{\partial f(x)}{\partial x}|_{x=a}(x-a) + \frac{1}{2!}\frac{\partial^2f(x)}{\partial x^2}|{x=a}(x-a)^2 + … $$</li>
+<li>For linearization, we’re only interested in the first order terms of the Taylor series expansion.</li>
+</ul>
+<p>Pick the most recent state estimate as the operating point:</p>
+<ul>
+<li>we can get the linearized motion and measurment model</li>
+<li>the model involves Jacobian Matrices: <ul>
+<li>In vector calculus，a Jacobian matrix is the matrix of all first-order partial derivatives of a vector-valued function</li>
+<li>Intuitively，the Jacobian matrix tells you how fast each output of the function is changing along each input dimension</li>
+</ul>
+</li>
+</ul>
+<p>Apply the EKF to a simple nonlinear tracking problem</p>
+<h3 id="The-Error-State-Extended-Kalman-Filter-ES-EKF"><a href="#The-Error-State-Extended-Kalman-Filter-ES-EKF" class="headerlink" title="The Error State Extended Kalman Filter (ES-EKF)"></a>The Error State Extended Kalman Filter (ES-EKF)</h3><p>Error-state formulation of the Extended Kalman Filter</p>
+<ul>
+<li>We can think of the vehicle state as composed of two parts: a large part called the nominal state, $\hat x$, and a small part called the error state, $\delta x$: $x=\hat x+\delta x$</li>
+<li>We can think of the error state as the place where all of these modelling errors and process noise accumulate over time, so that the error state is just the difference between the nominal state and the true state at any given time.</li>
+<li>If we can figure out what the error state is, we can actually use it as a correction to the nominal state to bring us closer to the true state. </li>
+<li>So in the ES-EKF, instead of doing Kalman filtering on the full state which might have lots of complicated non-linear behaviors, we’re going to use the EKF to estimate the error state instead, and then use the estimate of the error state as a correction to the nominal state</li>
+<li>Mathematically, we’re going to rearrange our linearized motion model so that we now have an equation that can tell us how the difference between the true state at time, k, and our predicted state at time, k, is related to the same difference at time, $k-1$. <ul>
+<li>that means we can build the equations called the error state kinematics.</li>
+</ul>
+</li>
+</ul>
+<p>Loop:</p>
+<ul>
+<li>update the nominal state using the non-linear motion model and the current best estimate of the state. </li>
+<li>keep track of the state covariance, which grows as we integrate more and more process noise from the motion model. </li>
+<li>repeat the loop updating the nominal state and the error state covariance for as long as we like until we receive the measurement and want to do a correction. <ul>
+<li>then compute the Kalman gain</li>
+<li>compute the best estimate of the error state using the Kalman gain, the measurement, and our nonlinear measurement model</li>
+<li>update the nomial state by just adding our estimate of the error state to the nominal state to get the correct state estimate for the full state</li>
+<li>finally update the state covariance using the usual equations. </li>
+</ul>
+</li>
+</ul>
+<p>Advantages of the Error-state EKF over the vanilla EKF:</p>
+<ul>
+<li>Better performance compared to the vanilla EKF <ul>
+<li>The”small”error state is more amenable to linear filtering than the “large” nominal state, which can be integrated nonlinearly</li>
+</ul>
+</li>
+<li>Easy to work with constrained quantities(e.g., rotations in 3D)<ul>
+<li>We can also break down the state using a generalized composition operator</li>
+</ul>
+</li>
+</ul>
+<h3 id="Limitations-of-the-EKF"><a href="#Limitations-of-the-EKF" class="headerlink" title="Limitations of the EKF"></a>Limitations of the EKF</h3><p><strong>Linearization error</strong></p>
+<ul>
+<li>The EKF works by linearizing the nonlinear motion and measurement models to update the mean and covariance of the state</li>
+<li>The difference between the linear approximation and the nonlinear function is called linearization error</li>
+<li>In general, the linearization error depends on two things:<ul>
+<li>how non-linear the original function is to begin with. If our nonlinear function very slowly or is quite flat much of the time, linear approximation is going to be a pretty good fit. </li>
+<li>how far away from the operating point the linear approximation is being used. The further away you move from the operating point, the more likely the linear approximation is to diverge from the true function. </li>
+</ul>
+</li>
+</ul>
+<p><strong>Computing Jacobians</strong></p>
+<ul>
+<li>Analytical differentiation is prone to human eror</li>
+<li>Numerical differentiation can be slow and unstable</li>
+<li>Automatic differentiation (e.g., at compile time) can also behave unpredictably</li>
+</ul>
+<h3 id="An-Alternative-to-the-EKF-The-Unscented-Kalman-Filter"><a href="#An-Alternative-to-the-EKF-The-Unscented-Kalman-Filter" class="headerlink" title="An Alternative to the EKF - The Unscented Kalman Filter"></a>An Alternative to the EKF - The Unscented Kalman Filter</h3><ul>
+<li>an alternative approach to non-linear common filtering that relies on something called the unscented transform to pass probability distributions through nonlinear functions.</li>
+</ul>
+<p><strong>Use the Unscented transform to pass a probability distribution through a nonlinear function</strong></p>
+<ul>
+<li>The basic idea in the unscented transform has three steps. <ul>
+<li>First, we choose a set of sample points from our input distribution. These aren’t random samples, but deterministic samples chosen to be a certain number of standard deviations away from the mean.</li>
+<li>these samples are called sigma points, and the unscented transform is sometimes called the sigma point transform.</li>
+<li>After getting the sigma points, pass each sigma point through the nonlinear function, producing a new set of sigma points belonging to the output distribution.</li>
+<li>Finally, compute the sample mean and covariance of the output sigma points with some carefully chosen weights, and these will give us a good approximation of the mean and covariance of the true output distribution.</li>
+</ul>
+</li>
+<li>The unscented transform - Choosing Sigma Points<ul>
+<li>In general, for an $n$ dimensional probability distribution, we need $2n+1$ sigma points, one for the mean and the rest symmetrically distributed about the mean.</li>
+<li>The first step in determining where the sigma point should be is taking something called the <em>Cholesky decomposition</em> of the <em>covariance matrix</em> associated with the input distribution: $LL^T=\Sigma_{xx}$ (L is the lower triangular)</li>
+<li>In fact, if the input PDF is one dimensional the Cholesky decomposition is just the square root of the variants, which is  the standard deviation.</li>
+</ul>
+</li>
+<li>The unscented transform - Transforming nad recombing<ul>
+<li>pass each of the sigma points through nonlinear function to get a new set of transformed sigma points.</li>
+<li>And finally compute the mean and covariance of the output PDF: each of the points gets a specific weight in the mean and covariance calculations, and that weight depends on the parameter kappa and the dimension of the input distribution N. </li>
+</ul>
+</li>
+</ul>
+<p><strong>How the unscented Kalman filter (UKF)uses the Unscented transform in the prediction and correction steps</strong></p>
+<ul>
+<li>We can easily use the Unscented Transform in our Kalman Filtering framework with nonlinear models;</li>
+<li>Prediction step:<ul>
+<li>To propagate the state from time (k-1) to time k, apply the Unscented Transform using the current best guess for the mean and covariance</li>
+<li>decompose the estimated state covariance from time k- 1 and compute sigma point centered around the estimated means state from time k- 1</li>
+<li>propagate our sigma points through our nonlinear motion model to get a new set of sigma points for the predicted state at time k.</li>
+<li>finally, calculate the predicted mean and covariance for the state at time K. At this point it’s important to account for the process noise by adding its covariance to the covariance of the transformed sigma points to get the final predicted covariance.</li>
+</ul>
+</li>
+<li>Correction step<ul>
+<li>To correct the state estimate using measurements at time k,use the nonlinear measurement model and the sigma points from the prediction step to predict the measurements</li>
+<li>First, redraw our sigma points using the predicted covariance matrix. We need to do this a second time because we added process noise at the end of the last step, and this will modify the positions of some of the sigma points. </li>
+<li>plug these new sigma points one by one into our nonlinear measurement model to get another set of sigma points for the predicted measurements, then we can estimate the mean and covariance of the predicted measurements using the sample mean and covariance formulas.</li>
+<li>To compute the common gain, we’re also going to need the cross covariance between the predicted state and the predicted measurements, which tells us how the measurements are correlated with the state.</li>
+<li>Then use the Kalman gain to optimally correct the mean and covariance of the predicted state</li>
+</ul>
+</li>
+</ul>
+<p><strong>Advantages of the UKF over the EKF</strong></p>
+<ul>
+<li>recommand to use UKF</li>
+<li>address the limitations of EKF</li>
+</ul>
+<p><strong>Apply the UKF to a simple nonlinear tracking problem</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/07/25/coursera_state_est02/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-coursera_state_est01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/07/23/coursera_state_est01/">Coursera State Estimation and Localization for Self-Driving Cars 01</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2019/07/23/coursera_state_est01/" class="archive-article-date">
+  	<time datetime="2019-07-23T14:57:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Least-Squares"><span class="toc-number">1.</span> <span class="toc-text">Least Squares</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ordinary-and-weighted-least-squares"><span class="toc-number">1.1.</span> <span class="toc-text">Ordinary and weighted least squares</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Recursive-least-squares"><span class="toc-number">1.2.</span> <span class="toc-text">Recursive least squares</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Maximum-likelihood-and-the-method-of-least-squares"><span class="toc-number">1.3.</span> <span class="toc-text">Maximum likelihood and the method of least squares</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Least-Squares"><span class="toc-text">Least Squares</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ordinary-and-weighted-least-squares"><span class="toc-text">Ordinary and weighted least squares</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Recursive-least-squares"><span class="toc-text">Recursive least squares</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Maximum-likelihood-and-the-method-of-least-squares"><span class="toc-text">Maximum likelihood and the method of least squares</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <p>From Coursera, State Estimation and Localization for Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/learn/state-estimation-localization-self-driving-cars" target="_blank" rel="noopener">https://www.coursera.org/learn/state-estimation-localization-self-driving-cars</a></p>
+<h2 id="Least-Squares"><a href="#Least-Squares" class="headerlink" title="Least Squares"></a>Least Squares</h2><h3 id="Ordinary-and-weighted-least-squares"><a href="#Ordinary-and-weighted-least-squares" class="headerlink" title="Ordinary and weighted least squares"></a>Ordinary and weighted least squares</h3><p><strong>Ordinary least squares</strong></p>
+<p>example from estimating resistance:</p>
+<ul>
+<li>let the measurement model be: $$y_i = x + v_i$$<ul>
+<li>$x$ is the actual resistance</li>
+<li>$v_i$ is the measurement noise</li>
+<li>then the squared error is : $e^2_i = (y_i-x)^2$</li>
+</ul>
+</li>
+<li>The squared error criterion: $$ \hat x_{LS}=argmin_x (e^2_1+e^2_2+e^2_3+e^2_4) = L_{LS}(x)$$<ul>
+<li>the ‘best’ estimate of resistance is the one that minimizes the sum of squared errors.</li>
+<li>rewrite into vector form: $$ e= y- H x$$</li>
+<li>$H$ is called Jacobian:  $[1 1 1 1]^T$</li>
+<li>therefore, $$L_{LS}(x) = (e^2_1+e^2_2+e^2_3+e^2_4) =  e^Te$$ $$=(y-Hx)^T(y-Hx)$$ $$=y^Ty - x^TH^Ty - y^THx + x^TH^THx$$</li>
+<li>therefore, the rest thing is to minimize the above equation</li>
+<li>get partial derivative with respect to the parameter, set to 0:<br>$$\frac{\partial L}{\partial x}|_{x=\hat x} = -y^TH-y^TH+2\hat x^T H^TH=0$$ $$-2y^TH+2\hat x^TH^TH=0$$</li>
+<li>re-arrange, we get (when H is full-column rank) $$\hat x_{LS} = (H^TH)^{-1} H^Ty$$</li>
+</ul>
+</li>
+<li>Assumptions:<ul>
+<li>Our measurement model,$y=x+v$,is linear</li>
+<li>Measurements are equally weighted (we do not suspect that some have more noise than others)</li>
+</ul>
+</li>
+</ul>
+<p><strong>weighted least squares</strong></p>
+<p>The same example: Suppose we take measurements with multiple multimeters,some of which are better than others</p>
+<ul>
+<li>Consider the general linear measurement model for m measurements and n unknowns: $$y = Hx+v$$</li>
+<li>In regular least squares, we implicitly assumed that each noise term was of equal variance: $$E(v^2_i) = \sigma^2 (i=1,…,m)$$ $$R=E(vv^T) = diag(\sigma^2,…,\sigma^2)$$</li>
+<li>If we assume each noise term is independent, but of different variance<br>$E(v^2_i) = \sigma_i^2 (i=1,…,m)$, $R=E(vv^T) = diag(\sigma_1^2,…,\sigma_m^2)$</li>
+<li>Then we can define a weighted least squares criterion as: $$L_{WLS}(x)=e^TR^{-1}e = \frac{e^2_1}{\sigma^2_1} + \frac{e^2_2}{\sigma^2_2} + … + \frac{e^2_m}{\sigma^2_m}$$, where $e = y-Hx$</li>
+<li>expanding the new criterion: $$L_{WLS}(x) = e^TR^{-1}e = (y-Hx)^TR^{-1}(y-Hx)$$<ul>
+<li>get the derivative: $$\frac{\partial L}{\partial x}|_{x=\hat x} = 0 = -y^TR^{-1}H + \hat x^T H^TR^{-1}H$$</li>
+<li>get $$H^T R^{-1} H \hat x_{WLS} = H^TR^{-1}y$$</li>
+<li>the weighted normal equation: $$\hat x = (H^TR^{-1}H)^{-1} H^T R^{-1}y$$</li>
+</ul>
+</li>
+</ul>
+<p>Comparison between ordinary and weighted least squares:<br><img src="/blog/images/state_est01.jpg" width="80%" height="80%"></p>
+<p>Summary:</p>
+<ul>
+<li>Measurements can come from sensors that have different noisy characteristics</li>
+<li>Weighted least squares lets us weight each measurement according to noise variance</li>
+</ul>
+<h3 id="Recursive-least-squares"><a href="#Recursive-least-squares" class="headerlink" title="Recursive least squares"></a>Recursive least squares</h3><p>In the above example, what if we have a stream of data?<br>We can use linear recursive estimator</p>
+<ul>
+<li>Suppose we have an optimal estimate, $\hat X_{k-1}$, of our unknown parameters at time k-1</li>
+<li>Then we obtain a new measurement at time k: $y_k = H_kx+v_k$</li>
+<li>We can use a linear recursive update: $\hat x_k = \hat x_{k-1} + K_k(y_k-H_k \hat x_{k-1})$<ul>
+<li>We update our new state as a linear combination of the previous best guess and the current measurement residual (or error), weighted by a gain matrix $K_k$</li>
+</ul>
+</li>
+<li>What is teh gain matrix?<ul>
+<li>We can compute the gain matrix by minimizing a similar least squares criterion, but this time we’ll use a probabilistic formulation</li>
+</ul>
+</li>
+<li>We wish to minimize the <em>expected value of the sum of squared errors</em> of our current estimate at time step k: $$L_{RLS} = E[(x_k-\hat x_k)^2]=\sigma_k^2$$</li>
+<li>If we have n unknown parameters at time step k,we generalize this to $$L_{RLS} = E[(x_{1k}-\hat x_{1k})^2 + … +(x_{nk}-\hat x_{nk})^2] = Trace(P_k)$$<ul>
+<li>$P_k$ is the estimator covariance</li>
+</ul>
+</li>
+<li>Using linear recursive formulation, we can express covariance as a function of $K_k$: $$P_k = (1-K_kH_k)P_{k-1} (1-K_kH_k)^T + K_kR_kK^T_k$$</li>
+<li>We can show(through matrix calculus) that this is minimized when $$K_k = P_{k-1}H^T_k(H_kP_{k-1}H^T_k + R_k)^{-1}$$</li>
+<li>With this expression, we can also simplify our expression for $P_k$: $$P_k = P_{k-1} - K_kH_kP_{k-1} = (1-K_kH_k)P_{k-1}$$</li>
+</ul>
+<p><strong>Recursive Least Squares I Algorithm</strong></p>
+<ul>
+<li>Initialize the esimator: $$\hat x_0 = E[x]$$ $$P_0 = E[(x-\hat x_0)(x-\hat x_0)^T]$$</li>
+<li>Set up the measurement model，defining the Jacobian and the measurement covariance matrix: $$y_k = H_kx+v_k$$</li>
+<li>Update the estimate of $\hat x_k$ and the covariance $P_k$ using: $$K_k = P_{k-1}H^T_k(H_kP_{k-1}H^T_k +R_k)^{-1}$$ $$\hat x_k = \hat x_{k-1} + K_k(y_k-H_k\hat x_{k-1}) $$ $$P_k = (1-K_kH_k)P_{k-1}$$</li>
+</ul>
+<p><strong>Summary</strong></p>
+<ul>
+<li>RLS produces a ‘running estimate’ of parameter(s)for a stream of measurements</li>
+<li>RLS is a linear recursive estimator that minimizes the (co)variance of the parameter(s) at the current time</li>
+</ul>
+<h3 id="Maximum-likelihood-and-the-method-of-least-squares"><a href="#Maximum-likelihood-and-the-method-of-least-squares" class="headerlink" title="Maximum likelihood and the method of least squares"></a>Maximum likelihood and the method of least squares</h3><p>The maximum likelihood estimate, given additive Gaussian noise, is equivalent to the least squares or weighted least squares solutions we derived earlier.</p>
+<p>Summary:</p>
+<ul>
+<li>LS and WLS produce the same estimates as maximum likelihood assuming Gaussian noise</li>
+<li>Central Limit Theorem states that complex errors will tend towards a Gaussian distribution</li>
+<li>Least squares estimates are significantly affected by outliers</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2019/07/23/coursera_state_est01/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-coursera_self_driving04" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1793,438 +2455,9 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-python12" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/06/05/python12/">Python核心技术与实战12 实现一个搜索引擎</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/06/05/python12/" class="archive-article-date">
-  	<time datetime="2019-06-05T01:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本概念"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bag-of-Words-and-Inverted-Index"><span class="toc-number">2.</span> <span class="toc-text">Bag of Words and Inverted Index</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LRU和多重继承"><span class="toc-number">3.</span> <span class="toc-text">LRU和多重继承</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本概念"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bag-of-Words-and-Inverted-Index"><span class="toc-text">Bag of Words and Inverted Index</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LRU和多重继承"><span class="toc-text">LRU和多重继承</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p><strong>To be practice!</strong></p>
-<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ul>
-<li>一个搜索引擎由搜索器、索引器、检索器和用户接口四个部分组成。</li>
-<li>搜索器，就是我们常提到的爬虫（scrawler），它能在互联网上大量爬取各类网站的内容，送给索引器。索引器拿到网页和内容后，会对内容进行处理，形成索引（index），存储于内部的数据库等待检索。</li>
-<li>用户接口是指网页和App前端界面，例如百度和谷歌的搜索页面。用户通过用户接口，向搜索引擎发出询问（query），询问解析后送达检索器；检索器高效检索后，再将结果返回给用户。</li>
-</ul>
-<p>先定义 SearchEngineBase 基类：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">class SearchEngineBase(object):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">    def add_corpus(self, file_path):</span><br><span class="line">        with open(file_path, &apos;r&apos;) as fin:</span><br><span class="line">            text = fin.read()</span><br><span class="line">        self.process_corpus(file_path, text)</span><br><span class="line"></span><br><span class="line">    def process_corpus(self, id, text):</span><br><span class="line">        raise Exception(&apos;process_corpus not implemented.&apos;)</span><br><span class="line"></span><br><span class="line">    def search(self, query):</span><br><span class="line">        raise Exception(&apos;search not implemented.&apos;)</span><br><span class="line"></span><br><span class="line">def main(search_engine):</span><br><span class="line">    for file_path in [&apos;1.txt&apos;, &apos;2.txt&apos;, &apos;3.txt&apos;, &apos;4.txt&apos;, &apos;5.txt&apos;]:</span><br><span class="line">        search_engine.add_corpus(file_path)</span><br><span class="line"></span><br><span class="line">    while True:</span><br><span class="line">        query = input()</span><br><span class="line">        results = search_engine.search(query)</span><br><span class="line">        print(&apos;found &#123;&#125; result(s):&apos;.format(len(results)))</span><br><span class="line">        for result in results:</span><br><span class="line">            print(result)</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>SearchEngineBase可以被继承，继承的类分别代表不同的算法引擎。每一个引擎都应该实现process_corpus()和search()两个函数，对应我们刚刚提到的索引器和检索器。main()函数提供搜索器和用户接口，于是一个简单的包装界面就有了。</li>
-<li>具体看这段代码：<ul>
-<li>add_corpus() 函数负责读取文件内容，将文件路径作为ID，连同内容一起送到process_corpus中。</li>
-<li>process_corpus 需要对内容进行处理，然后文件路径为ID，将处理后的内容存下来。处理后的内容，就叫做索引（index）。</li>
-<li>search 则给定一个询问，处理询问，再通过索引检索，然后返回。</li>
-</ul>
-</li>
-</ul>
-<p>然后定义一个基本可以工作的搜索引擎：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">class SimpleEngine(SearchEngineBase):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(SimpleEngine, self).__init__()</span><br><span class="line">        self.__id_to_texts = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    def process_corpus(self, id, text):</span><br><span class="line">        self.__id_to_texts[id] = text</span><br><span class="line"></span><br><span class="line">    def search(self, query):</span><br><span class="line">        results = []</span><br><span class="line">        for id, text in self.__id_to_texts.items():</span><br><span class="line">            if query in text:</span><br><span class="line">                results.append(id)</span><br><span class="line">        return results</span><br><span class="line"></span><br><span class="line">search_engine = SimpleEngine()</span><br><span class="line">main(search_engine)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">########## 输出 ##########</span><br><span class="line"></span><br><span class="line">simple</span><br><span class="line">found 0 result(s):</span><br><span class="line">little</span><br><span class="line">found 2 result(s):</span><br><span class="line">1.txt</span><br><span class="line">2.txt</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>SimpleEngine 实现了一个继承SearchEngineBase的子类，继承并实现了process_corpus和search 接口，同时，也顺手继承了add_corpus函数（当然你想重写也是可行的），因此我们可以在main()函数中直接调取。</li>
-<li>在新的构造函数中，se1f.__id_to_texts={}初始化了自己的私有变量，也就是这个用来存储文件名到文件内容的字典。</li>
-<li>process_corpus()函数则非常直白地将文件内容插入到字典中。这里注意，ID需要是唯一的，不然相同ID的新内容会覆盖掉旧的内容。</li>
-<li>search 直接枚举字典，从中找到要搜索的字符串。如果能够找到，则将ID放到结果列表中，最后返回。</li>
-</ul>
-<h3 id="Bag-of-Words-and-Inverted-Index"><a href="#Bag-of-Words-and-Inverted-Index" class="headerlink" title="Bag of Words and Inverted Index"></a>Bag of Words and Inverted Index</h3><p>先实现一个名叫Bag of Words的搜索模型:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line"></span><br><span class="line">class BOWEngine(SearchEngineBase):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(BOWEngine, self).__init__()</span><br><span class="line">        self.__id_to_words = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    def process_corpus(self, id, text):</span><br><span class="line">        self.__id_to_words[id] = self.parse_text_to_words(text)</span><br><span class="line"></span><br><span class="line">    def search(self, query):</span><br><span class="line">        query_words = self.parse_text_to_words(query)</span><br><span class="line">        results = []</span><br><span class="line">        for id, words in self.__id_to_words.items():</span><br><span class="line">            if self.query_match(query_words, words):</span><br><span class="line">                results.append(id)</span><br><span class="line">        return results</span><br><span class="line">    </span><br><span class="line">    @staticmethod</span><br><span class="line">    def query_match(query_words, words):</span><br><span class="line">        for query_word in query_words:</span><br><span class="line">            if query_word not in words:</span><br><span class="line">                return False</span><br><span class="line">        return True</span><br><span class="line"></span><br><span class="line">    @staticmethod</span><br><span class="line">    def parse_text_to_words(text):</span><br><span class="line">        # 使用正则表达式去除标点符号和换行符</span><br><span class="line">        text = re.sub(r&apos;[^\w ]&apos;, &apos; &apos;, text)</span><br><span class="line">        # 转为小写</span><br><span class="line">        text = text.lower()</span><br><span class="line">        # 生成所有单词的列表</span><br><span class="line">        word_list = text.split(&apos; &apos;)</span><br><span class="line">        # 去除空白单词</span><br><span class="line">        word_list = filter(None, word_list)</span><br><span class="line">        # 返回单词的 set</span><br><span class="line">        return set(word_list)</span><br><span class="line"></span><br><span class="line">search_engine = BOWEngine()</span><br><span class="line">main(search_engine)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">########## 输出 ##########</span><br><span class="line"></span><br><span class="line">i have a dream</span><br><span class="line">found 3 result(s):</span><br><span class="line">1.txt</span><br><span class="line">2.txt</span><br><span class="line">3.txt</span><br><span class="line">freedom children</span><br><span class="line">found 1 result(s):</span><br><span class="line">5.txt</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>先来理解一个概念，BOW Model，即Bag of Words Model，中文叫做词袋模型。这是NLP领域最常见最简单的模型之一。</li>
-<li>假设一个文本，不考虑语法、句法、段落，也不考虑词汇出现的顺序，只将这个文本看成这些词汇的集合。于是相应的，我们把id to texts 替换成id_to_words，这样就只需要存这些单词，而不是全部文章，也不需要考虑顺序。</li>
-<li>process_corpus()函数调用类静态函数 parse_text_to_words，将文章打碎形成词袋，放入set之后再放到字典中。</li>
-<li>search()函数则稍微复杂一些。这里我们假设，想得到的结果，是所有的搜索关键词都要出现在同一篇文章中。那么，我们需要同样打碎query得到一个set，然后把set中的每一个词，和我们的索引中每一篇文章进行核对，看一下要找的词是否在其中。而这个过程由静态函数query_match负责。</li>
-</ul>
-<p><strong>优化</strong></p>
-<ul>
-<li><p>遍历代价太大，而其实每次查询的query单词量不会很多；其次，词袋模型并不考虑单词间的顺序，但有些人希望单词按顺序出现，或者希望搜索的单词在文中离得近一些，这种情况下词袋模型就无能为力了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line"></span><br><span class="line">class BOWInvertedIndexEngine(SearchEngineBase):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(BOWInvertedIndexEngine, self).__init__()</span><br><span class="line">        self.inverted_index = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    def process_corpus(self, id, text):</span><br><span class="line">        words = self.parse_text_to_words(text)</span><br><span class="line">        for word in words:</span><br><span class="line">            if word not in self.inverted_index:</span><br><span class="line">                self.inverted_index[word] = []</span><br><span class="line">            self.inverted_index[word].append(id)</span><br><span class="line"></span><br><span class="line">    def search(self, query):</span><br><span class="line">        query_words = list(self.parse_text_to_words(query))</span><br><span class="line">        query_words_index = list()</span><br><span class="line">        for query_word in query_words:</span><br><span class="line">            query_words_index.append(0)</span><br><span class="line">        </span><br><span class="line">        # 如果某一个查询单词的倒序索引为空，我们就立刻返回</span><br><span class="line">        for query_word in query_words:</span><br><span class="line">            if query_word not in self.inverted_index:</span><br><span class="line">                return []</span><br><span class="line">        </span><br><span class="line">        result = []</span><br><span class="line">        while True:</span><br><span class="line">            </span><br><span class="line">            # 首先，获得当前状态下所有倒序索引的 index</span><br><span class="line">            current_ids = []</span><br><span class="line">            </span><br><span class="line">            for idx, query_word in enumerate(query_words):</span><br><span class="line">                current_index = query_words_index[idx]</span><br><span class="line">                current_inverted_list = self.inverted_index[query_word]</span><br><span class="line">                </span><br><span class="line">                # 已经遍历到了某一个倒序索引的末尾，结束 search</span><br><span class="line">                if current_index &gt;= len(current_inverted_list):</span><br><span class="line">                    return result</span><br><span class="line"></span><br><span class="line">                current_ids.append(current_inverted_list[current_index])</span><br><span class="line"></span><br><span class="line">            # 然后，如果 current_ids 的所有元素都一样，那么表明这个单词在这个元素对应的文档中都出现了</span><br><span class="line">            if all(x == current_ids[0] for x in current_ids):</span><br><span class="line">                result.append(current_ids[0])</span><br><span class="line">                query_words_index = [x + 1 for x in query_words_index]</span><br><span class="line">                continue</span><br><span class="line">            </span><br><span class="line">            # 如果不是，我们就把最小的元素加一</span><br><span class="line">            min_val = min(current_ids)</span><br><span class="line">            min_val_pos = current_ids.index(min_val)</span><br><span class="line">            query_words_index[min_val_pos] += 1</span><br><span class="line"></span><br><span class="line">    @staticmethod</span><br><span class="line">    def parse_text_to_words(text):</span><br><span class="line">        # 使用正则表达式去除标点符号和换行符</span><br><span class="line">        text = re.sub(r&apos;[^\w ]&apos;, &apos; &apos;, text)</span><br><span class="line">        # 转为小写</span><br><span class="line">        text = text.lower()</span><br><span class="line">        # 生成所有单词的列表</span><br><span class="line">        word_list = text.split(&apos; &apos;)</span><br><span class="line">        # 去除空白单词</span><br><span class="line">        word_list = filter(None, word_list)</span><br><span class="line">        # 返回单词的 set</span><br><span class="line">        return set(word_list)</span><br><span class="line"></span><br><span class="line">search_engine = BOWInvertedIndexEngine()</span><br><span class="line">main(search_engine)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">########## 输出 ##########</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">little</span><br><span class="line">found 2 result(s):</span><br><span class="line">1.txt</span><br><span class="line">2.txt</span><br><span class="line">little vicious</span><br><span class="line">found 1 result(s):</span><br><span class="line">2.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>新模型继续使用之前的接口，仍然只在init()、pr ocess_corpus()和search()三个函数进行修改。</p>
-</li>
-<li>开头的Inverted Index，即倒序索引，是非常有名的搜索引擎方法: 也就是说这次反过来，我们保留的是word-&gt;id的字典。于是情况就豁然开朗了，在search时，我们只需要把想要的query_word的几个倒序索引单独拎出来，然后从这几个列表中找共有的元素，那些共有的元素，即ID，就是我们想要的查询结果。这样，我们就避免了将所有的index过一遍的尴尬,这解决了遍历的问题</li>
-<li>process_corpus 建立倒序索引。注意，这里的代码都是非常精简的。在工业界领域，需要一个unique ID生成器，来对每一篇文章标记上不同的ID，倒序索引也应该按照这个uniqueid来进行排序。</li>
-<li>search()函数，会根据 query_words 拿到所有的倒序索引，如果拿不到，就表示有的query word不存在于任何文章中，直接返回空；拿到之后，运行一个“合并K个有序数组”的算法，从中拿到我们想要的ID，并返回。注意，这里用到的算法并不是最优的，最优的写法需要用最小堆来存储index。这是一道有名的leetcode hard题，有兴趣请参考：</li>
-<li>关于实现搜索单词按顺序出现，或者搜索的单词在文中离得近一些的情况，我们需要在Inverted Index上，对于每篇文章也保留单词的位置信息，这样一来，在合并操作的时候处理一下就可以了。</li>
-</ul>
-<h3 id="LRU和多重继承"><a href="#LRU和多重继承" class="headerlink" title="LRU和多重继承"></a>LRU和多重继承</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">import pylru</span><br><span class="line"></span><br><span class="line">class LRUCache(object):</span><br><span class="line">    def __init__(self, size=32):</span><br><span class="line">        self.cache = pylru.lrucache(size)</span><br><span class="line">    </span><br><span class="line">    def has(self, key):</span><br><span class="line">        return key in self.cache</span><br><span class="line">    </span><br><span class="line">    def get(self, key):</span><br><span class="line">        return self.cache[key]</span><br><span class="line">    </span><br><span class="line">    def set(self, key, value):</span><br><span class="line">        self.cache[key] = value</span><br><span class="line"></span><br><span class="line">class BOWInvertedIndexEngineWithCache(BOWInvertedIndexEngine, LRUCache):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(BOWInvertedIndexEngineWithCache, self).__init__()</span><br><span class="line">        LRUCache.__init__(self)</span><br><span class="line">    </span><br><span class="line">    def search(self, query):</span><br><span class="line">        if self.has(query):</span><br><span class="line">            print(&apos;cache hit!&apos;)</span><br><span class="line">            return self.get(query)</span><br><span class="line">        </span><br><span class="line">        result = super(BOWInvertedIndexEngineWithCache, self).search(query)</span><br><span class="line">        self.set(query, result)</span><br><span class="line">        </span><br><span class="line">        return result</span><br><span class="line"></span><br><span class="line">search_engine = BOWInvertedIndexEngineWithCache()</span><br><span class="line">main(search_engine)</span><br><span class="line"></span><br><span class="line">########## 输出 ##########</span><br><span class="line"></span><br><span class="line">little</span><br><span class="line">found 2 result(s):</span><br><span class="line">1.txt</span><br><span class="line">2.txt</span><br><span class="line">little</span><br><span class="line">cache hit!</span><br><span class="line">found 2 result(s):</span><br><span class="line">1.txt</span><br><span class="line">2.txt</span><br></pre></td></tr></table></figure>
-<ul>
-<li>LRUCache定义了一个缓存类，你可以通过继承这个类来调用其方法。LRU缓存是一种很经典的缓存（同时，LRU的实现也是硅谷大厂常考的算法面试题，这里为了简单，我直接使用pylru这个包），它符合自然界的局部性原理，可以保留最近使用过的对象，而逐渐淘汰掉很久没有被用过的对象。</li>
-<li>这里的缓存使用起来也很简单，调用has()函数判断是否在缓存中，如果在，调用get函数直接返回结果；如果不在，送入后台计算结果，然后再塞入缓存。</li>
-<li><p>我们可以看到，BOWInvertedlndexEngineWithCache类，多重继承了两个类。首先，你需要注意的是构造函数。多重继承有两种初始化方法:</p>
-<ul>
-<li><p>第一种方法，用下面这行代码，直接初始化该类的第一个父类：不过使用这种方法时，要求继承链的最顶层父类必须要继承 object。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">super(BOWInvertedIndexEngineWithCache, self).__init__()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>第二种方法，对于多重继承，如果有多个构造函数需要调用，我们必须用传统的方法LRUCach e._init（self）。</p>
-</li>
-</ul>
-</li>
-<li>注意，search()函数被子类BOWInvertedlndexEngineWithCache 再次重载，但是我还需要调用BOWInvertedlndexEngine的search()函数，这时该怎么办呢？请看下面这行代码：这样我们可以强行调用被覆益的父类的函数<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">super(BOWInvertedIndexEngineWithCache, self).search(query)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>关于私有化：<br>Python并没有真正的私有化支持，但可用下划线得到伪私有：</p>
-<ul>
-<li><code>_xxx</code> “单下划线 “ 开始的成员变量叫做保护变量，意思是只有类对象和子类对象自己能访问到这些变量，需通过类提供的接口进行访问；</li>
-<li><code>__xxx</code> 类中的私有变量/方法名，只有类对象自己能访问，连子类对象也不能访问到这个数据。</li>
-<li><code>__xxx__</code> 魔法函数，前后均有一个“双下划线” 代表python里特殊方法专用的标识，如 <strong>init</strong>() 代表类的构造函数。</li>
-<li>如果想要强行访问父类的私有类型，做法是 self._ParentClass__var，这是非常不推荐的 hacky method。以下是示范代码：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class A:</span><br><span class="line">    __a = 1</span><br><span class="line"></span><br><span class="line">class B(A):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">b = B()</span><br><span class="line">print(b._A__a)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>Reference:<br><a href="https://time.geekbang.org/column/article/98998" target="_blank" rel="noopener">https://time.geekbang.org/column/article/98998</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/06/05/python12/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-python11" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/06/03/python11/">Python核心技术与实战11 面向对象</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/06/03/python11/" class="archive-article-date">
-  	<time datetime="2019-06-03T13:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#对象基础"><span class="toc-number">1.</span> <span class="toc-text">对象基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进阶"><span class="toc-number">2.</span> <span class="toc-text">进阶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#继承"><span class="toc-number">3.</span> <span class="toc-text">继承</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#对象基础"><span class="toc-text">对象基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进阶"><span class="toc-text">进阶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#继承"><span class="toc-text">继承</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="对象基础"><a href="#对象基础" class="headerlink" title="对象基础"></a>对象基础</h3><p>示例代码：<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">class Document():</span><br><span class="line">    def __init__(self, title, author, context):</span><br><span class="line">        print(&apos;init function called&apos;)</span><br><span class="line">        self.title = title</span><br><span class="line">        self.author = author</span><br><span class="line">        self.__context = context # __ 开头的属性是私有属性</span><br><span class="line"></span><br><span class="line">    def get_context_length(self):</span><br><span class="line">        return len(self.__context)</span><br><span class="line"></span><br><span class="line">    def intercept_context(self, length):</span><br><span class="line">        self.__context = self.__context[:length]</span><br><span class="line"></span><br><span class="line">harry_potter_book = Document(&apos;Harry Potter&apos;, &apos;J. K. Rowling&apos;, &apos;... Forever Do not believe any thing is capable of thinking independently ...&apos;)</span><br><span class="line"></span><br><span class="line">print(harry_potter_book.title)</span><br><span class="line">print(harry_potter_book.author)</span><br><span class="line">print(harry_potter_book.get_context_length())</span><br><span class="line"></span><br><span class="line">harry_potter_book.intercept_context(10)</span><br><span class="line"></span><br><span class="line">print(harry_potter_book.get_context_length())</span><br><span class="line"></span><br><span class="line">print(harry_potter_book.__context)</span><br><span class="line"></span><br><span class="line">########## 输出 ##########</span><br><span class="line"></span><br><span class="line">init function called</span><br><span class="line">Harry Potter</span><br><span class="line">J. K. Rowling</span><br><span class="line">77</span><br><span class="line">10</span><br><span class="line"></span><br><span class="line">---------------------------------------------------------------------------</span><br><span class="line">AttributeError                            Traceback (most recent call last)</span><br><span class="line">&lt;ipython-input-5-b4d048d75003&gt; in &lt;module&gt;()</span><br><span class="line">    22 print(harry_potter_book.get_context_length())</span><br><span class="line">    23 </span><br><span class="line">---&gt; 24 print(harry_potter_book.__context)</span><br><span class="line"></span><br><span class="line">AttributeError: &apos;Document&apos; object has no attribute &apos;__context&apos;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>类：一群有着相似性的事物的集合，这里对应Python的class。</li>
-<li>对象：集合中的一个事物，这里对应由class生成的某一个object，比如代码中的harry potter_book。</li>
-<li>属性：对象的某个静态特征，比如上述代码中的title、author和_context。</li>
-<li>函数：对象的某个动态能力，比如上述代码中的intercept_context()函数。</li>
-<li><strong>init</strong> 表示构造函数，即在一个对象生成时会被自动调用的函数。我们能看到，<code>harry_po tter_book=Document(...)</code>这一行代码被执行的时候，<code>init function called</code>字符串会被打印出来。</li>
-<li>而 get_context length()和intercept_context()则为类的普通函数，我们调用它们来对对象的属性做一些事情。</li>
-<li>class Document 还有三个属性，title、author和_context分别表示标题、作者和内容，通过构造函数传入。这里代码很直观，我们可以看到，intercept_context 能修改对象harry_potter_book的_context 属性。</li>
-<li>另外注意的一点是，如果一个属性以<code>__</code>（注意，此处有两个_）开头，我们就默认这个属性是私有属性。私有属性，是指不希望在类的函数之外的地方被访问和修改的属性。所以，你可以看到，title和author 能够很自由地被打印出来，但是print（harry potter_book.__context）就会报错。</li>
-</ul>
-<h3 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h3><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">class Document():</span><br><span class="line">    </span><br><span class="line">    WELCOME_STR = &apos;Welcome! The context for this book is &#123;&#125;.&apos;</span><br><span class="line">    </span><br><span class="line">    def __init__(self, title, author, context):</span><br><span class="line">        print(&apos;init function called&apos;)</span><br><span class="line">        self.title = title</span><br><span class="line">        self.author = author</span><br><span class="line">        self.__context = context</span><br><span class="line">    </span><br><span class="line">    # 类函数</span><br><span class="line">    @classmethod</span><br><span class="line">    def create_empty_book(cls, title, author):</span><br><span class="line">        return cls(title=title, author=author, context=&apos;nothing&apos;)</span><br><span class="line">    </span><br><span class="line">    # 成员函数</span><br><span class="line">    def get_context_length(self):</span><br><span class="line">        return len(self.__context)</span><br><span class="line">    </span><br><span class="line">    # 静态函数</span><br><span class="line">    @staticmethod</span><br><span class="line">    def get_welcome(context):</span><br><span class="line">        return Document.WELCOME_STR.format(context)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">empty_book = Document.create_empty_book(&apos;What Every Man Thinks About Apart from Sex&apos;, &apos;Professor Sheridan Simove&apos;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(empty_book.get_context_length())</span><br><span class="line">print(empty_book.get_welcome(&apos;indeed nothing&apos;))</span><br><span class="line"></span><br><span class="line">########## 输出 ##########</span><br><span class="line"></span><br><span class="line">init function called</span><br><span class="line">7</span><br><span class="line">Welcome! The context for this book is indeed nothing.</span><br></pre></td></tr></table></figure>
-</code></pre><ul>
-<li>如何在一个类中定义一些常量，每个对象都可以方便访问这些常量而不用重新构造？:<ul>
-<li>在Python的类里，只需要和函数并列地声明并赋值，就可以实现这一点，例如这段代码中的WELCOME_STR。</li>
-<li>一种很常规的做法，是用全大写来表示常量，因此我们可以在类中使用self.WELCOME_STR，或者在类外使用Entity.WELCOME_STR，来表达这个字符</li>
-</ul>
-</li>
-<li>如果一个函数不涉及到访问修改这个类的属性，而放到类外面有点不恰当，怎么做才能更优雅呢？<ul>
-<li>针对这个问题，我们提出了<strong>类函数、成员函数和静态函数</strong>三个概念。</li>
-<li>前两者产生的影响是动态的，能够访问或者修改对象的属性；</li>
-<li>而静态函数则与类没有什么关联，最明显的特征便是，静态函数的第一个参数没有任何特殊性。</li>
-<li>一般而言，<strong>静态函数</strong>可以用来做一些简单独立的任务，既方便测试，也能优化代码结构。静态函数还可以通过在函数前一行加上@staticmethod来表示，代码中也有相应的示例。这其实使用了装饰器的概念，我们会在后面的章节中详细讲解。</li>
-<li>而<strong>类函数</strong>的第一个参数一般为cls，表示必须传一个类进来。类函数最常用的功能是实现不同的init 构造函数，比如上文代码中，我们使用create_empty_book类函数，来创造新的书籍对象，其context一定为’nothing’。这样的代码，就比你直接构造要清晰一些。类似的，类函数需要装饰器@classmethod 来声明。</li>
-<li><strong>成员函数</strong>则是我们最正常的类的函数，它不需要任何装饰器声明，第一个参数self代表当前对象的引用，可以通过此函数，来实现想要的查询/修改类的属性等功能。</li>
-</ul>
-</li>
-</ul>
-<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>既然类是一群相似的对象的集合，那么可不可以是一群相似的类的集合呢？这就涉及到类的继承</p>
-<ul>
-<li><p>类的继承，指的是一个类既拥有另一个类的特征，也拥有不同于另一个类的独特特征。在这里的第一个类叫做子类，另一个叫做父类，特征其实就是类的属性和函数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">class Entity():</span><br><span class="line">    def __init__(self, object_type):</span><br><span class="line">        print(&apos;parent class init called&apos;)</span><br><span class="line">        self.object_type = object_type</span><br><span class="line">    </span><br><span class="line">    def get_context_length(self):</span><br><span class="line">        raise Exception(&apos;get_context_length not implemented&apos;)</span><br><span class="line">    </span><br><span class="line">    def print_title(self):</span><br><span class="line">        print(self.title)</span><br><span class="line"></span><br><span class="line">class Document(Entity):</span><br><span class="line">    def __init__(self, title, author, context):</span><br><span class="line">        print(&apos;Document class init called&apos;)</span><br><span class="line">        Entity.__init__(self, &apos;document&apos;)</span><br><span class="line">        self.title = title</span><br><span class="line">        self.author = author</span><br><span class="line">        self.__context = context</span><br><span class="line">    </span><br><span class="line">    def get_context_length(self):</span><br><span class="line">        return len(self.__context)</span><br><span class="line">    </span><br><span class="line">class Video(Entity):</span><br><span class="line">    def __init__(self, title, author, video_length):</span><br><span class="line">        print(&apos;Video class init called&apos;)</span><br><span class="line">        Entity.__init__(self, &apos;video&apos;)</span><br><span class="line">        self.title = title</span><br><span class="line">        self.author = author</span><br><span class="line">        self.__video_length = video_length</span><br><span class="line">    </span><br><span class="line">    def get_context_length(self):</span><br><span class="line">        return self.__video_length</span><br><span class="line"></span><br><span class="line">harry_potter_book = Document(&apos;Harry Potter(Book)&apos;, &apos;J. K. Rowling&apos;, &apos;... Forever Do not believe any thing is capable of thinking independently ...&apos;)</span><br><span class="line">harry_potter_movie = Video(&apos;Harry Potter(Movie)&apos;, &apos;J. K. Rowling&apos;, 120)</span><br><span class="line"></span><br><span class="line">print(harry_potter_book.object_type)</span><br><span class="line">print(harry_potter_movie.object_type)</span><br><span class="line"></span><br><span class="line">harry_potter_book.print_title()</span><br><span class="line">harry_potter_movie.print_title()</span><br><span class="line"></span><br><span class="line">print(harry_potter_book.get_context_length())</span><br><span class="line">print(harry_potter_movie.get_context_length())</span><br><span class="line"></span><br><span class="line">########## 输出 ##########</span><br><span class="line"></span><br><span class="line">Document class init called</span><br><span class="line">parent class init called</span><br><span class="line">Video class init called</span><br><span class="line">parent class init called</span><br><span class="line">document</span><br><span class="line">video</span><br><span class="line">Harry Potter(Book)</span><br><span class="line">Harry Potter(Movie)</span><br><span class="line">77</span><br><span class="line">120</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在上面的代码中，Document和Video它们有相似的地方，都有相应的标题、作者和内容等属性。我们可以从中抽象出一个叫做Entity的类，来作为它俩的父类。</p>
-</li>
-<li>首先需要注意的是构造函数。每个类都有构造函数，继承类在生成对象的时候，是不会自动调用父类的构造函数的，因此你必须在init()函数中显式调用父类的构造函数。它们的执行顺序是子类的构造函数-&gt;父类的构造函数。</li>
-<li>其次需要注意父类get_context_length()函数。如果使用Entity 直接生成对象，调用get_context_length()函数，就会raise error中断程序的执行。这其实是一种很好的写法，叫做函数重写，可以使子类必须重新写一遍 get_context_length()函数，来覆盖掉原有函数。</li>
-<li>最后需要注意到print title()函数，这个函数定义在父类中，但是子类的对象可以毫无阻力地使用它来打印title，这也就体现了继承的优势：减少重复的代码，降低系统的嫡值（即复杂度）。</li>
-</ul>
-<p><strong>抽象函数和抽象类</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">from abc import ABCMeta, abstractmethod</span><br><span class="line"></span><br><span class="line">class Entity(metaclass=ABCMeta):</span><br><span class="line">    @abstractmethod</span><br><span class="line">    def get_title(self):</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">    @abstractmethod</span><br><span class="line">    def set_title(self, title):</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">class Document(Entity):</span><br><span class="line">    def get_title(self):</span><br><span class="line">        return self.title</span><br><span class="line">    </span><br><span class="line">    def set_title(self, title):</span><br><span class="line">        self.title = title</span><br><span class="line"></span><br><span class="line">document = Document()</span><br><span class="line">document.set_title(&apos;Harry Potter&apos;)</span><br><span class="line">print(document.get_title())</span><br><span class="line"></span><br><span class="line">entity = Entity()</span><br><span class="line"></span><br><span class="line">########## 输出 ##########</span><br><span class="line"></span><br><span class="line">Harry Potter</span><br><span class="line"></span><br><span class="line">---------------------------------------------------------------------------</span><br><span class="line">TypeError                                 Traceback (most recent call last)</span><br><span class="line">&lt;ipython-input-7-266b2aa47bad&gt; in &lt;module&gt;()</span><br><span class="line">     21 print(document.get_title())</span><br><span class="line">     22 </span><br><span class="line">---&gt; 23 entity = Entity()</span><br><span class="line">     24 entity.set_title(&apos;Test&apos;)</span><br><span class="line"></span><br><span class="line">TypeError: Can&apos;t instantiate abstract class Entity with abstract methods get_title, set_title</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>Entity本身是没有什么用的，只需拿来定义Document和Video的一些基本元素就够了。不过，万一你不小心生成Entity的对象该怎么办呢？为了防止这样的手误，就引入了抽象类的概念。</li>
-<li>抽象类是一种特殊的类，它生下来就是作为父类存在的，一旦对象化就会报错。同样，抽象函数定义在抽象类之中，子类必须重写该函数才能使用。相应的抽象函数，则是使用装饰器@abstractmethod来表示。</li>
-<li>在上述代码中，entity=Entity()直接报错，只有通过Document 继承Entity才能正常使用。</li>
-<li>这其实正是软件工程中一个很重要的概念，定义接口。大型工程往往需要很多人合作开发，比如在Facebook中，在idea提出之后，开发组和产品组首先会召开产品设计会，PM（Product Manager，产品经理）写出产品需求文档，然后迭代；TL（Team Leader，项目经理）编写开发文档，开发文档中会定义不同模块的大致功能和接口、每个模块之间如何协作、单元测试和集成测试、线上灰度测试、监测和日志等等一系列开发流程。</li>
-</ul>
-<p>Reference:<br>极客时间</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/06/03/python11/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-python10" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/05/31/python10/">Python核心技术与实战10 匿名函数</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/05/31/python10/" class="archive-article-date">
-  	<time datetime="2019-05-31T13:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-31</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数基础"><span class="toc-number">1.</span> <span class="toc-text">函数基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数式编程"><span class="toc-number">2.</span> <span class="toc-text">函数式编程</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数基础"><span class="toc-text">函数基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数式编程"><span class="toc-text">函数式编程</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="函数基础"><a href="#函数基础" class="headerlink" title="函数基础"></a>函数基础</h3><ul>
-<li><p>格式如下：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lambda argument1, argument2,... argumentN : expression</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>用法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">square = lambda x: x**2</span><br><span class="line">square(3)</span><br><span class="line"></span><br><span class="line">9</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>lambda是一个表达式（expression），并不是一个语句（statement）。</p>
-</li>
-<li>lambda的主体是只有一行的简单表达式，并不能扩展成一个多行的代码块。</li>
-</ul>
-<h3 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h3><ul>
-<li>函数式编程，是指代码中每一块都是不可变的（immutable），都由纯函数（pure function）的形式组成。这里的纯函数，是指函数本身相互独立、互不影响，对于相同的输入，总会有相同的输出，没有任何副作用。</li>
-<li>Python 主要提供了这么几个函数：map()、filter())和reduce()，通常结合匿名函数lambda一起使用。</li>
-<li><p>map(function，iterable)函数，前面的例子提到过，它表示，对iterable中的每个元素，都运用function这个函数，最后返回一个新的可遍历的集合。比如刚才列表的例子，要对列表中的每个元素乘以2，那么用map就可以表示为下面这样：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">l = [1, 2, 3, 4, 5]</span><br><span class="line">new_list = map(lambda x: x * 2, l) # [2， 4， 6， 8， 10]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>filter(function，iterable)函数，和map函数类似，function同样表示一个函数对象。filter()函数表示对iterable中的每个元素，都使用function判断，并返回True或者False，最后将返回True的元素组成一个新的可遍历的集合。e.g.，比如我要返回一个列表中的所有偶数，可以写成下面这样：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">l = [1, 2, 3, 4, 5]</span><br><span class="line">new_list = filter(lambda x: x % 2 == 0, l) # [2,4]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>reduce(function，iterable)函数，通常用来对一个集合做一些累积操作。function 同样是一个函数对象，规定它有两个参数，表示对iterable中的每个元素以及上一次调用后的结果，运用function 进行计算，所以最后返回的是一个单独的数值。e.g.，我想要计算某个列表元素的乘积，就可以用reduce()函数来表示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">l = [1, 2, 3, 4, 5]</span><br><span class="line">new_list = reduce(lambda x, y: x * y, l)    # 1*2*3*4*5=120</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/05/31/python10/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/blog/page/2/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/blog/page/4/">4</a><a class="page-number" href="/blog/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/9/">9</a><a class="extend next" rel="next" href="/blog/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/blog/page/2/">&laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/blog/page/4/">4</a><a class="page-number" href="/blog/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/10/">10</a><a class="extend next" rel="next" href="/blog/page/4/">Next &raquo;</a>
     </nav>
   
 
@@ -2253,7 +2486,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共94.7k字
+              本站总共102.3k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -2360,19 +2593,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Coding</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2380,11 +2601,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2400,19 +2621,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">经济</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">碎碎念</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Deep learning</a>
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">经济</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Deep learning</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2424,18 +2657,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
@@ -2444,11 +2665,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Self-driving</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Network</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Stochastic</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Self-driving</a>
               </li>
              
               <li class="article-tag-list-item">

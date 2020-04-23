@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://tracyxinwang.site/blog/blog/2020/04/23/digital_image_lds_spatial/</loc>
+    <lastmod>2020-04-23T07:50:26.349Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2020/04/20/digital_image_lds_frequency/</loc>
+    <lastmod>2020-04-23T03:02:36.505Z</lastmod>
+  </url>  <url>
+    <loc>http://tracyxinwang.site/blog/blog/2020/04/22/writing_skills/</loc>
+    <lastmod>2020-04-22T09:17:47.933Z</lastmod>
+  </url>  <url>
     <loc>http://tracyxinwang.site/blog/blog/2020/04/15/digital_image_lds/</loc>
     <lastmod>2020-04-19T06:37:26.466Z</lastmod>
   </url>  <url>
