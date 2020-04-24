@@ -5,29 +5,29 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://tracyxinwang.site/blog">
+  <link rel="dns-prefetch" href="https://tracyxinwang.github.io">
   <title>MIT6006 Lec13 Graphs I Breadth First Search | Xin Wang&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Graph RepresentationsAdjacency lists:  Array $Adj$ of $|V|$ linked lists for each vertex $u∈V$, $Adj[u]$ stores $u$’s neighbors, i.e., ${v∈V|(u,v)∈E}$    Implicit Graphs:  $Adj(u)$ is a function — com">
 <meta name="keywords" content="Algorithm,Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MIT6006 Lec13 Graphs I Breadth First Search">
-<meta property="og:url" content="http://tracyxinwang.site/blog/2018/12/09/MIT6006-Lec13/index.html">
+<meta property="og:url" content="https://tracyxinwang.github.io/2018/12/09/MIT6006-Lec13/index.html">
 <meta property="og:site_name" content="Xin Wang&#39;s Blog">
 <meta property="og:description" content="Graph RepresentationsAdjacency lists:  Array $Adj$ of $|V|$ linked lists for each vertex $u∈V$, $Adj[u]$ stores $u$’s neighbors, i.e., ${v∈V|(u,v)∈E}$    Implicit Graphs:  $Adj(u)$ is a function — com">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://tracyxinwang.site/blog/images/MIT13_01.jpg">
-<meta property="og:image" content="http://tracyxinwang.site/blog/images/MIT13_02.jpg">
-<meta property="og:updated_time" content="2018-12-09T07:16:49.000Z">
+<meta property="og:image" content="https://tracyxinwang.github.io/images/MIT13_01.jpg">
+<meta property="og:image" content="https://tracyxinwang.github.io/images/MIT13_02.jpg">
+<meta property="og:updated_time" content="2020-04-24T01:17:18.699Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIT6006 Lec13 Graphs I Breadth First Search">
 <meta name="twitter:description" content="Graph RepresentationsAdjacency lists:  Array $Adj$ of $|V|$ linked lists for each vertex $u∈V$, $Adj[u]$ stores $u$’s neighbors, i.e., ${v∈V|(u,v)∈E}$    Implicit Graphs:  $Adj(u)$ is a function — com">
-<meta name="twitter:image" content="http://tracyxinwang.site/blog/images/MIT13_01.jpg">
+<meta name="twitter:image" content="https://tracyxinwang.github.io/images/MIT13_01.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Xin Wang&#39;s Blog" type="application/atom+xml">
   
   
-    <link rel="icon" href="favicon1.png">
+    <link rel="icon" href="/favicon1.png">
   
   <link rel="stylesheet" type="text/css" href="/./main.0cf68a.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -87,7 +87,7 @@ var _hmt = _hmt || [];
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="avatar.jpg" class="js-avatar">
+			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/">Tracy Xin Wang</a></h1>
@@ -178,7 +178,7 @@ var _hmt = _hmt || [];
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="avatar.jpg" class="js-avatar">
+				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Tracy Xin Wang</h1>
@@ -312,10 +312,10 @@ var _hmt = _hmt || [];
 <ul>
 <li>level 0 = {s}</li>
 <li>level i = vertices reachable by path of i edges but not fewer</li>
-<li>build level $i &gt; 0$ from level $i − 1$ by trying all outgoing edges, but ignoring vertices from previous levels<br><img src="/blog/images/MIT13_01.jpg" width="50%" height="50%"></li>
+<li>build level $i &gt; 0$ from level $i − 1$ by trying all outgoing edges, but ignoring vertices from previous levels<br><img src="/images/MIT13_01.jpg" width="50%" height="50%"></li>
 </ul>
 <p><strong>Breadth-First-Search Algorithm</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">BFS (V,Adj,s): </span><br><span class="line">    level = &#123;s: 0&#125;</span><br><span class="line">    parent = &#123;s: None&#125;</span><br><span class="line">    i = 1</span><br><span class="line">    frontier = [s]      <span class="comment"># previous level, i − 1</span></span><br><span class="line">    <span class="keyword">while</span> frontier:</span><br><span class="line">        next = [ ]          <span class="comment"># next level, i</span></span><br><span class="line">        <span class="keyword">for</span> u <span class="keyword">in</span> frontier:</span><br><span class="line">            <span class="keyword">for</span> v <span class="keyword">in</span> Adj[u]:</span><br><span class="line">                <span class="keyword">if</span> v not <span class="keyword">in</span> level:  <span class="comment"># not yet seen</span></span><br><span class="line">                    level[v] = i    <span class="comment"># = level[u] + 1</span></span><br><span class="line">                    parent[v] = u</span><br><span class="line">                    next.append(v)</span><br><span class="line">        frontier = next</span><br><span class="line">        i + =1</span><br></pre></td></tr></table></figure></p>
-<p>Example:<br><img src="/blog/images/MIT13_02.jpg"></p>
+<p>Example:<br><img src="/images/MIT13_02.jpg"></p>
 <p><strong>Analysis</strong>:</p>
 <ul>
 <li>vertex $V$ enters next (&amp; then frontier) only once (because level[v] then set)</li>
@@ -440,7 +440,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://tracyxinwang.site/blog/2018/12/09/MIT6006-Lec13/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://tracyxinwang.github.io/2018/12/09/MIT6006-Lec13/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -645,19 +645,19 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Coding</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -701,15 +701,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
               </li>
              
               <li class="article-tag-list-item">

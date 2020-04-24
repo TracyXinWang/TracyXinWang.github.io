@@ -5,14 +5,14 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://tracyxinwang.site/blog">
+  <link rel="dns-prefetch" href="https://tracyxinwang.github.io">
   <title>Xin Wang&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="CUHK在读博士生">
 <meta name="keywords" content="大脑建模，前通信狗，程序媛">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Xin Wang&#39;s Blog">
-<meta property="og:url" content="http://tracyxinwang.site/blog/page/8/index.html">
+<meta property="og:url" content="https://tracyxinwang.github.io/page/8/index.html">
 <meta property="og:site_name" content="Xin Wang&#39;s Blog">
 <meta property="og:description" content="CUHK在读博士生">
 <meta property="og:locale" content="zh-Hans">
@@ -23,7 +23,7 @@
     <link rel="alternative" href="/atom.xml" title="Xin Wang&#39;s Blog" type="application/atom+xml">
   
   
-    <link rel="icon" href="favicon1.png">
+    <link rel="icon" href="/favicon1.png">
   
   <link rel="stylesheet" type="text/css" href="/./main.0cf68a.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -83,7 +83,7 @@ var _hmt = _hmt || [];
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="avatar.jpg" class="js-avatar">
+			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/">Tracy Xin Wang</a></h1>
@@ -174,7 +174,7 @@ var _hmt = _hmt || [];
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="avatar.jpg" class="js-avatar">
+				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Tracy Xin Wang</h1>
@@ -738,11 +738,11 @@ var _hmt = _hmt || [];
 <h4 id="Binary-Insertion-sort"><a href="#Binary-Insertion-sort" class="headerlink" title="Binary Insertion sort"></a>Binary Insertion sort</h4><p>注意到在一般的插入排序中，我们会得到一个已经排好序的子序列，那么这时其实就可以用二分查找法来替代之前的逐个compare，这样能减少compare的次数。<br><strong>Pseudocode</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> j = 2:n</span><br><span class="line">    insert key A[j] into the already sorted sub array A[1 ... j-1]</span><br><span class="line">    Use binary search to find the right position</span><br></pre></td></tr></table></figure></p>
 <p>二分查找法花费 $\theta(log n)$ 时间，插入之后移动元素花费 $\theta(n)$ 时间。<br><strong>Complexity</strong>:<br>$\theta(nlog n)$ comparisons, $\theta(n^2)$ swaps</p>
 <h3 id="归并排序-Merge-Sort"><a href="#归并排序-Merge-Sort" class="headerlink" title="归并排序 (Merge Sort)"></a>归并排序 (Merge Sort)</h3><p>采用的是 divide and conquer 的思想。<br><strong>Pseudocode</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">If n = 1, <span class="keyword">done</span> (nothing to sort)</span><br><span class="line">Otherwise, recursively sort A[1 ... n/2] and A[n/2+1 ... n]</span><br><span class="line"><span class="string">"Merge"</span> the two sorted sub-arrays</span><br></pre></td></tr></table></figure></p>
-<p><strong>Complexity</strong>:<br>$\theta(n)$ to merge a total of n elements(linear time)<br>$T(n) = 2T(n/2) + \theta(n)$<br>After plotting the recursion tree, we can find that there are <code>1+lgn</code> layers, and <code>n</code> leaves in the tree. And for each layer, it totally costs <code>cn</code> time. Therefore, complexity is  $\theta(nlg n)$<br>可以看到，在这个树里面，每一层的complexity都是均等的<br><img src="/blog/images/MIT03_01.jpg" width="80%" height="60%"></p>
+<p><strong>Complexity</strong>:<br>$\theta(n)$ to merge a total of n elements(linear time)<br>$T(n) = 2T(n/2) + \theta(n)$<br>After plotting the recursion tree, we can find that there are <code>1+lgn</code> layers, and <code>n</code> leaves in the tree. And for each layer, it totally costs <code>cn</code> time. Therefore, complexity is  $\theta(nlg n)$<br>可以看到，在这个树里面，每一层的complexity都是均等的<br><img src="/images/MIT03_01.jpg" width="80%" height="60%"></p>
 <h3 id="Solving-Recurrences"><a href="#Solving-Recurrences" class="headerlink" title="Solving Recurrences"></a>Solving Recurrences</h3><p>对于不同的recurrence tree来说，每一层不同的cost决定了它的complexity主要集中在哪里。<br>如上面的归并排序是每一层都占相等的复杂度。<br>下面是两个例子：<br><strong>叶子部分的计算占主要复杂度</strong>:</p>
-<p><img src="/blog/images/MIT03_02.jpg" width="80%" height="60%"></p>
+<p><img src="/images/MIT03_02.jpg" width="80%" height="60%"></p>
 <p><strong>根部分的计算占主要复杂度</strong>:</p>
-<p><img src="/blog/images/MIT03_03.jpg" width="80%" height="60%"></p>
+<p><img src="/images/MIT03_03.jpg" width="80%" height="60%"></p>
 
       
 
@@ -1626,19 +1626,19 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Coding</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1682,15 +1682,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
               </li>
              
               <li class="article-tag-list-item">
