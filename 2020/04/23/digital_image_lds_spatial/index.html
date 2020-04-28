@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Xin Wang&#39;s Blog">
 <meta property="og:description" content="空域处理点运算法 — 灰度级变换 灰度变换 将一个灰度区间映射到另一个灰度区间的变换 分类：线性变换，非线性变换 作用：灰度变换可使图像动态范围加大，图像对比度扩展，图像清晰，特征明显，是图像增强的重要手段 应用：亮度调整、对比度拉伸、灰度级切片 获取变换函数的方法：固定函数、交互样点插值、直方图   线性变换： 原始图像：$f(i,j)$，灰度范围：$[a, b]$，变换后图像：$f’(i, j">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-24T07:50:47.185Z">
+<meta property="og:updated_time" content="2020-04-28T07:51:36.971Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数字图像处理与分析 图像增强">
 <meta name="twitter:description" content="空域处理点运算法 — 灰度级变换 灰度变换 将一个灰度区间映射到另一个灰度区间的变换 分类：线性变换，非线性变换 作用：灰度变换可使图像动态范围加大，图像对比度扩展，图像清晰，特征明显，是图像增强的重要手段 应用：亮度调整、对比度拉伸、灰度级切片 获取变换函数的方法：固定函数、交互样点插值、直方图   线性变换： 原始图像：$f(i,j)$，灰度范围：$[a, b]$，变换后图像：$f’(i, j">
@@ -269,7 +269,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#空域处理"><span class="toc-number">1.</span> <span class="toc-text">空域处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#点运算法-—-灰度级变换"><span class="toc-number">1.1.</span> <span class="toc-text">点运算法 — 灰度级变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#直方图增强"><span class="toc-number">1.2.</span> <span class="toc-text">直方图增强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#彩色图像增强"><span class="toc-number">1.3.</span> <span class="toc-text">彩色图像增强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模板运算法-—-空域过滤器"><span class="toc-number">1.4.</span> <span class="toc-text">模板运算法 — 空域过滤器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#几何变换法-—-变形矫正"><span class="toc-number">1.5.</span> <span class="toc-text">几何变换法 — 变形矫正</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于色彩的处理"><span class="toc-number">1.6.</span> <span class="toc-text">基于色彩的处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#频域处理"><span class="toc-number">2.</span> <span class="toc-text">频域处理</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#空域处理"><span class="toc-number">1.</span> <span class="toc-text">空域处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#点运算法-—-灰度级变换"><span class="toc-number">1.1.</span> <span class="toc-text">点运算法 — 灰度级变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#直方图增强"><span class="toc-number">1.2.</span> <span class="toc-text">直方图增强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#彩色图像增强"><span class="toc-number">1.3.</span> <span class="toc-text">彩色图像增强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模板运算法-—-空域过滤器"><span class="toc-number">1.4.</span> <span class="toc-text">模板运算法 — 空域过滤器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#频域处理"><span class="toc-number">2.</span> <span class="toc-text">频域处理</span></a></li></ol>
             </div>
            -->
         <!--  
@@ -278,7 +278,7 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#空域处理"><span class="toc-text">空域处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#点运算法-—-灰度级变换"><span class="toc-text">点运算法 — 灰度级变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#直方图增强"><span class="toc-text">直方图增强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#彩色图像增强"><span class="toc-text">彩色图像增强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模板运算法-—-空域过滤器"><span class="toc-text">模板运算法 — 空域过滤器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#几何变换法-—-变形矫正"><span class="toc-text">几何变换法 — 变形矫正</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于色彩的处理"><span class="toc-text">基于色彩的处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#频域处理"><span class="toc-text">频域处理</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#空域处理"><span class="toc-text">空域处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#点运算法-—-灰度级变换"><span class="toc-text">点运算法 — 灰度级变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#直方图增强"><span class="toc-text">直方图增强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#彩色图像增强"><span class="toc-text">彩色图像增强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模板运算法-—-空域过滤器"><span class="toc-text">模板运算法 — 空域过滤器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#频域处理"><span class="toc-text">频域处理</span></a></li></ol>
         </div>
     </div>
  -->
@@ -475,10 +475,321 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 </ul>
-<h3 id="模板运算法-—-空域过滤器"><a href="#模板运算法-—-空域过滤器" class="headerlink" title="模板运算法 — 空域过滤器"></a>模板运算法 — 空域过滤器</h3><h3 id="几何变换法-—-变形矫正"><a href="#几何变换法-—-变形矫正" class="headerlink" title="几何变换法 — 变形矫正"></a>几何变换法 — 变形矫正</h3><h3 id="基于色彩的处理"><a href="#基于色彩的处理" class="headerlink" title="基于色彩的处理"></a>基于色彩的处理</h3><h2 id="频域处理"><a href="#频域处理" class="headerlink" title="频域处理"></a>频域处理</h2><ul>
+<h3 id="模板运算法-—-空域过滤器"><a href="#模板运算法-—-空域过滤器" class="headerlink" title="模板运算法 — 空域过滤器"></a>模板运算法 — 空域过滤器</h3><p><strong>分类</strong></p>
+<ul>
+<li>按数学形态：<ul>
+<li>线性滤波器<ul>
+<li>高通：用于边缘增强、边缘提取</li>
+<li>低通：用于平滑图像、去除噪音</li>
+<li>带通：删除特定频率、增强中很少用</li>
+</ul>
+</li>
+<li>非线性滤波器<ul>
+<li>最大值：寻找最亮点</li>
+<li>最小值：寻找最暗点</li>
+<li>中值：平滑图像、去除噪音</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>按处理效果：<ul>
+<li>平滑滤波器</li>
+<li>锐化滤波器</li>
+</ul>
+</li>
+</ul>
+<p><strong>平滑滤波</strong></p>
+<ul>
+<li>主要用途<ul>
+<li>对大图像处理前，删去无用的细小细节</li>
+<li>连接中断的线段和曲线</li>
+<li>降低噪音</li>
+<li>平滑处理，恢复过分锐化的图像</li>
+<li>图像创艺（阴影、软边、朦胧效果）</li>
+</ul>
+</li>
+<li>滤波器模板系数的设计<ul>
+<li>根据空域中低通冲激响应函数的图形来设计模板的系数：e.g. 选择高斯函数作为冲激函数</li>
+<li>设计模板系数的原则<ul>
+<li>大于0</li>
+<li>都选1，或中间选1，周围选0.5</li>
+</ul>
+</li>
+<li>模板尺寸越大， 图像越模糊，图像细节丢失越多</li>
+</ul>
+</li>
+<li>均值滤波器 — 局部平均法<ul>
+<li>待处理像素点的值，等于其周围相邻像素的全体像素的平均值</li>
+<li>以$(i,j)$点为中心取一个$N×N$的窗口(N = 3,5,7,…)，窗口内像素组成的点集以A来表示，经邻域平均法滤波后，像素$(i,j)$的输出为:</li>
+<li>$g(i,j)=\frac{1}{N\times N} \sum_{(x,y)\in A} f(x,y)$</li>
+<li>从线性系统角度，均值滤波器冲激响应函数为一个矩形，空域模板为：$$H=\frac 19 \begin{bmatrix} 1 &amp; 1 &amp; 1 \\ 1 &amp; 1 &amp; 1 \\ 1 &amp; 1 &amp; 1  \end{bmatrix}$$</li>
+</ul>
+</li>
+<li>加权平均滤波器:<ul>
+<li>待处理像素点的值，等于其周围相邻像素的全体像素的加权平均值: $$H_1=\frac 1{10} \begin{bmatrix} 1 &amp; 1 &amp; 1 \\ 1 &amp; 2 &amp; 1 \\ 1 &amp; 1 &amp; 1  \end{bmatrix} \; H_2=\frac 1{16} \begin{bmatrix} 1 &amp; 2 &amp; 1 \\ 2 &amp; 4 &amp; 2 \\ 1 &amp; 2 &amp; 1  \end{bmatrix} \; H_3=\frac 1{8} \begin{bmatrix} 1 &amp; 1 &amp; 1 \\ 1 &amp; 0 &amp; 1 \\ 1 &amp; 1 &amp; 1  \end{bmatrix}$$</li>
+</ul>
+</li>
+<li>中值滤波<ul>
+<li>原理: 用模板区域内像素的中值，作为结果值</li>
+<li>算法：将模板区域内的像素排序，求出中值替代当前值</li>
+<li>优点<ul>
+<li>抑制噪声</li>
+<li>在去除噪音的同时，可以比较好地保留边缘轮廓信息和图像的细节</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>锐化滤波</strong></p>
+<ul>
+<li>主要用途：<ul>
+<li>加强图像中景物的边缘和轮廓</li>
+<li>印刷中的细微层次强调。弥补扫描、挂网对图像的平滑</li>
+<li>超声探测成象，分辨率低，边缘模糊，通过锐化来改善</li>
+<li>图像识别中，分割前的边缘提取</li>
+<li>锐化处理恢复过度平滑、暴光不足的图像</li>
+<li>图像创艺（只剩下边界的特殊图像）</li>
+<li>尖端武器的目标识别、定位</li>
+</ul>
+</li>
+<li>高通滤波器模板系数的设计：<ul>
+<li>根据空域中高通冲激响应函数的图形来设计模板的系数</li>
+<li>设计模板系数的原则<ul>
+<li>中心系数为正值，外围为负值</li>
+<li>系数之和为0</li>
+</ul>
+</li>
+<li>e.g. $\frac 19 \begin{bmatrix} -1 &amp; -1 &amp; -1 \\ -1 &amp; 8 &amp; -1 \\ -1 &amp; -1 &amp; -1  \end{bmatrix}$</li>
+<li>滤波器效果的分析<ul>
+<li>常数或变化平缓的区域，结果为0或很小，图像很暗，亮度被降低了</li>
+<li>在暗的背景上边缘被增强了</li>
+<li>图像的整体对比度降低了</li>
+<li>计算时会出现负值，归0处理为常见</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>高增益滤波<ul>
+<li>原理: <ul>
+<li>弥补高通滤波的缺陷，在增强边和细节的同时，不丢失原图像的低频成分</li>
+<li>高通滤波可看作为：高通 = 原图 – 低通</li>
+<li>在上式原图上乘一个扩大因子A，有高增益滤波：高增益 = A原图 – 低通</li>
+<li>高增益 = A原图 – 低通 = (A – 1)原图 + （原图 – 低通）= (A – 1)原图 + 高通</li>
+<li>当A = 1时，高增益就是高通滤波，当A &gt;1 时，原图像的一部分被加到高通中</li>
+</ul>
+</li>
+<li>模板系数设计<ul>
+<li>$\frac 19 \begin{bmatrix} -1 &amp; -1 &amp; -1 \\ -1 &amp; w &amp; -1 \\ -1 &amp; -1 &amp; -1  \end{bmatrix}$</li>
+<li>对于3x3的模板，设 $w=9A–1$；（高通时$w=8$） A的值决定了滤波器的特性</li>
+<li>当 A=1.1时，意味着把0.1个原图像加到基本高通上。当 A = 1.2时，结果处在上限的边缘</li>
+</ul>
+</li>
+<li>模板尺寸选择：高通滤波模板很少大于3x3</li>
+<li>效果分析<ul>
+<li>高增益比高通的优点：既增强了边，又保留了层次。</li>
+<li>噪音对结果图像的视觉效果有重要的影响，高增益在增强了边的同时也增强了噪音。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>微分滤波器<ul>
+<li>原理<ul>
+<li>均值产生平滑的效果，而均值与积分相似，由此而联想到， 微分可用于产生相反的效果，即 锐化</li>
+<li>在图像处理中应用微分最常用的方法是计算梯度 $\nabla f=[\partial f/\partial x, \partial f/\partial y]$, 该向量的大小为 $\nabla f=mag(\nabla f)=[(\partial f/\partial x)^2+(\partial f/\partial y)^2]^{1/2}$</li>
+<li>考虑一个3x3的图像区域， z代表灰度级，上式在某点$(x,y)$的$∇f$值可用数字方式近似: $(\partial f/\partial x) \approx z_x - z_{x+1},\; (\partial f/\partial y) \approx z_y - z_{y+1}$, 即在$x,y$ 轴方向上相邻值相减 （也可以使用交叉差）</li>
+<li>同时可以用绝对值替换平方和平方根 </li>
+</ul>
+</li>
+<li>滤波器扩大因子及模板系数的设计<ul>
+<li>一阶微分算法：Roberts交叉梯度算子，Prewitt梯度算子，Sobel梯度算子</li>
+<li>二阶微分算法：拉普拉斯算子</li>
+<li>Roberts交叉梯度算子：$$\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; -1 \end{bmatrix}, \;\; \begin{bmatrix} 0 &amp; 1 \\ -1 &amp; 0 \end{bmatrix}$$</li>
+<li>Prewitt梯度算子: $$\begin{bmatrix} -1 &amp; -1 &amp; -1 \\ 0 &amp; 0 &amp; 0 \\ 1 &amp; 1 &amp; 1  \end{bmatrix},\; \begin{bmatrix} -1 &amp; 0 &amp; 1 \\ -1 &amp; 0 &amp; 1 \\ -1 &amp; 0 &amp; 1  \end{bmatrix}$$</li>
+<li>Sobel梯度算子: $$\begin{bmatrix} -1 &amp; -2 &amp; -1 \\ 0 &amp; 0 &amp; 0 \\ 1 &amp; 2 &amp; 1  \end{bmatrix},\; \begin{bmatrix} -1 &amp; 0 &amp; 1 \\ -2 &amp; 0 &amp; 2 \\ -1 &amp; 0 &amp; 1  \end{bmatrix}$$</li>
+<li>拉普拉斯算子: $$\begin{bmatrix} 0 &amp; -1 &amp; 0 \\ -1 &amp; 4 &amp; -1 \\ 0 &amp; -1 &amp; 0  \end{bmatrix}$$</li>
+<li>标准拉普拉斯算子对干扰噪声很敏感，需要加以改进。改进方法可以先平滑后增强，由此产生一系列变形模板 $$\begin{bmatrix} -1 &amp; -1 &amp; -1 \\ -1 &amp; 8 &amp; -1 \\ -1 &amp; -1 &amp; -1  \end{bmatrix},\; \begin{bmatrix} 1 &amp; -2 &amp; 1 \\ -2 &amp; 4 &amp; -2 \\ 1 &amp; -2 &amp; 1  \end{bmatrix},\; \frac{1}{16}\begin{bmatrix} -1 &amp; -2 &amp; -1 \\ -2 &amp; 12 &amp; -2 \\ -1 &amp; -2 &amp; -1  \end{bmatrix}$$</li>
+</ul>
+</li>
+<li>微分滤波器效果的分析<ul>
+<li>直接使用，与高通类似</li>
+<li>梯度&gt;25的赋最大值255，否则赋原值。边被突出，背景保留</li>
+<li>梯度&gt;25的赋最大值255，否则赋0。边被突出，图被二值化</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>模板滤波综合应用<ul>
+<li>超限邻域平均法: 如果某个像素的灰度值大于其邻域像素的平均值，且达到了一定水平，则判断该像素为噪声，继而用邻域像素的均值取代这一像素值</li>
+<li>超限中值滤波: 当某个像素的灰度值超过窗口中像素灰度值排序中间的那个值，且达到一定水平时，则判断该点为噪声，用灰度值排序中间的那个值来代替</li>
+<li>偏置滤波器（Bias Filter）<ul>
+<li>结果图像的像素值完全取决于该像素周围各点，而与其直接点无关</li>
+<li>偏置滤波使结果图像具有某种浅浮雕阴影效果，在调查某些细节时十分有用</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="频域处理"><a href="#频域处理" class="headerlink" title="频域处理"></a>频域处理</h2><ul>
 <li>原理：频率平面与图像空域特性的关系<ul>
 <li>图像变化平缓的部分靠近频率平面的圆心，这个区域为低频区域</li>
 <li>图像中的边、噪音、变化陡峻的部分，以放射方向离开频率平面的圆心，这个区域为高频区域</li>
+<li>恒定的干扰条纹对应于频谱中的某些特征点</li>
+<li>构造一个滤波器，刻意地提升某些频率分量、压低或去除另一些分量，从而达到图像增强的目的</li>
+</ul>
+</li>
+<li>频域滤波增强原理<ul>
+<li>预处理：$f_1(x,y)=f(x,y)*(-1)^{x+y}$</li>
+<li>傅里叶变换: $F(u,v)=F{f_1(x,y)}$</li>
+<li>滤波：$G(u,v)=F(u,v)H(u,v)$, 通过$H(u,v)$对$f(x,y)$分解为基图像后加权系数的修改实现图像的增强</li>
+<li>反变换：$g_1(x,y)=F^{-1}{G(u,v)}$</li>
+<li>后处理：$g(x,y)=g_1(x,y)*(-1)^{x+y}$</li>
+</ul>
+</li>
+</ul>
+<p><strong>低通滤波</strong></p>
+<ul>
+<li>基本思想: 构造一个低通滤波器$H(u,v)$ ，使低频分量顺利通过而有效地阻止高频分量</li>
+<li>理想低通滤波器<ul>
+<li>一个二维理想圆形低通滤波器（ILPF）的转换函数满足 $H(u,v)=\left\lbrace \begin{matrix} 1; \; if D(u,v)\le D_0 \\ 0; \;if D(u,v)&gt;D_0 \end{matrix}\right.$</li>
+<li>$D_0$：截止频率</li>
+<li>$D(u,v)$: $(u,v)$ 到原点的距离，距离函数</li>
+<li>截止频率的设计：<ul>
+<li>先求出总的信号能量$P_T$: $P_T=\sum^{N-1}<em>{u=0} \sum^{N-1}</em>{v=0}P(u,v)$, 其中$p(u,v)=|F(u,v)|^2=R^2(u,v)+I^2(u,v)$ 为能量模</li>
+<li>如果将变换作中心平移，则一个以频域中心为原点， r为半径的圆就包含了百分之 $β$ 的能量: $\beta = 100[\sum_u \sum_vP(u,v)/P_T]$</li>
+<li>求出相应的$D_0$: $r=D_0=(u^2+v^2)^{1/2}$, e.g. $D_0=8时，\beta = 90$</li>
+</ul>
+</li>
+<li>作用：<ul>
+<li>$D_0$半径内的频率分量无损通过</li>
+<li>园外的频率分量会被滤除</li>
+<li>若滤除的高频分量中含有大量的边缘信息，会发生图像边缘模糊现象</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Butterworth低通滤波<ul>
+<li>一个截止频率在与原点距离为$D_0$的n阶Butterworth低通滤波器（BLPF）的变换函数如下: $H(u,v)=\frac{1}{1+[D(u,v)/D_0]^{2n}}$</li>
+<li>设计：<ul>
+<li>变换函数中不存在一个不连续点作为一个通过的和被滤波掉的截止频率的明显划分</li>
+<li>通常把H(u,v)开始小于其最大值的一定比例的点当作其截止频率点</li>
+<li>有两种选择：<ul>
+<li>选择1： $H(u,v) = 0.5$, 当$D_0=D(u,v)$时, $H(u,v)=\frac{1}{1+[D(u,v)/D_0]^{2n}}$</li>
+<li>选择2： $H(u,v) = \frac{1}{\sqrt 2}$, 当$D_0=D(u,v)$时, $H(u,v)=\frac{1}{1+(\sqrt 2 -1)[D(u,v)/D_0]^{2n}}$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>特性:<ul>
+<li>在任何经BLPF处理过的图像中都没有明显的振铃效果，这是滤波器在低频和高频之间平滑过渡的结果</li>
+<li>和理想圆形低通滤波器相比, 没有明显的跳跃, 模糊程度减少, 尾部含有较多的高频，对噪声的平滑效果不如ILPF</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>指数滤波器(ELPF)<ul>
+<li>定义：$H(u,v)=e^{-[\frac{D(u,v)}{D_0}]^n}$</li>
+<li>特性<ul>
+<li>有更加平滑的过渡带，平滑后的图象没有跳跃现象</li>
+<li>与BLPF相比，衰减更快，经过ELPF滤波的图象比BLPF处理的图象更模糊一些</li>
+<li>一般的，2阶指数低通滤波具有较好的特性</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>高斯低通滤波器(GLPF)<ul>
+<li>定义：$H(u,v)=e^{-[\frac{D^2(u,v)}{2D^2_0}]}$</li>
+<li>指数低通滤波器的特例，具有相似的特性</li>
+</ul>
+</li>
+<li>梯形滤波器(TLPF)<ul>
+<li>定义：$H(u,v) = \left\lbrace \begin{matrix} 1 &amp;\; D(u,v)&lt; D_0 \\ \frac{D_1-D(u,v)}{D_1-D_0} &amp;\; D_0\le D(u,v) \le D_1 \\ 0 &amp;\; D(u,v)&gt; D_1 \end{matrix}\right.$</li>
+<li>其中$D_0&lt;D_1$，一般情况下，定义$D_0$为截止频率</li>
+<li>特性<ul>
+<li>结果图像的清晰度优于ILBF，噪声滤波好于BLBF</li>
+<li>振铃效应好于ILBF，差于BLBF</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>高通滤波</strong></p>
+<ul>
+<li>频域高通滤波的基本思想: $H_{hp}(u,v) = 1-H_{lp}(u,v)$</li>
+<li>理想高通滤波器<ul>
+<li>$H(u,v)=\left\lbrace \begin{matrix} 0; \; D(u,v)\le D_0 \\ 1; \; D(u,v)&gt;D_0 \end{matrix}\right.$</li>
+</ul>
+</li>
+<li>Butterworth高通滤波器<ul>
+<li>$H(u,v)=\frac{1}{1+[D_0/D(u,v)]^{2n}}$</li>
+</ul>
+</li>
+<li>Gaussian高通滤波器<ul>
+<li>$H(u,v)=1-e^{-[\frac{D^2(u,v)}{2D^2_0}]}$</li>
+<li>同低通Butterworth一样，有两种截止频率的选择，0.5或$\frac{1}{\sqrt 2}$</li>
+</ul>
+</li>
+<li>指数滤波器<ul>
+<li>$H(u,v)=e^{-[\frac{D_0}{D(u,v)}]^n}$</li>
+</ul>
+</li>
+<li>梯形滤波器</li>
+<li>特性<ul>
+<li>问题：低频成分被严重地消弱了，使图像失去层次</li>
+<li>改进措施：¾加一个常数到变换函数 $H(u,v)+A$, 称之为高频增强滤波</li>
+<li>为了解决变暗的趋势，在变换结果图像上再进行一次直方图均衡化。 这种方法称之为后滤波处理</li>
+</ul>
+</li>
+</ul>
+<p><strong>同态滤波器</strong></p>
+<ul>
+<li>思想:<ul>
+<li>可以把图像的灰度函数$f(x,y)$看作为入射光分量和反射光分量两部分组成 $f(x,y)=i(x,y)r(x,y)$</li>
+<li>$i(x,y)$：入射光。入射光较均匀，随空间位置变化较小～占据低频段</li>
+<li>$r(x,y)$：反射光－取决于物体的特性，物体的亮度特征主要取决于反射光。反射光由于物体性质和结构特点不同而反射强弱很不相同的光，随空间位置变化较剧烈～占据高频段比较宽的范围</li>
+<li>当入射光不均匀时，反射光构成的图像将难以表现物体的全貌</li>
+<li>解决思路：根据占据的高低频段，将入射光和反射光分别处理，在增强物体对比度的同时，适当压缩入射光形成的灰度值范围</li>
+</ul>
+</li>
+<li>算法：<ul>
+<li>对图像 $f(x,y)=i(x,y)r(x,y)$ 取对数：$z(x,y)=\ln f(x,y) = \ln i(x,y) + \ln r(x,y)$</li>
+<li>然后再对该 z(x,y) 做傅立叶变换得到 $Z(u,v)$, 用传递函数$H(u,v)$进行滤波处理：$S(u,v) = H (u,v)Z(u,v)$, 取傅立叶反变换，可得空间域输出$s(x, y)$, 最后滤波结果为 $g(x,y)=e^{s(x,y)}$</li>
+<li>同态滤波器函数$H(u,v)$能够分别对这两部分进行操作，必须能够压缩 $i(x,y)$ 的动态范围，同时增强 $r(x,y)$ 的对比度</li>
+<li>此滤波器可满足以上特性: $H(u,v)=(\gamma_H - \gamma_L)[1-e^{-c(D^2(u,v)/D_0^2)}]+\gamma_L$</li>
+<li>当参数$γ_L$和$γ_H$ 满足$γ_L&lt;1, γ_H&gt;1$ 时，该滤波器函数将减少低频部分、扩大高频部分，最后的结果将是既压缩了入射光的灰度值范围，又扩大了物体的对比度</li>
+</ul>
+</li>
+<li>效果分析<ul>
+<li>图像的明度分量的特点是平缓的空域变化，而反射分量则近于陡峭的空域变化</li>
+<li>这些特性使得将图像的对数的傅立叶变换的低频部分对应于明度分量，而高频部分对应于反射分量</li>
+<li>尽管这种对应关系只是一个粗略的近似，但它们可以用于优化图像的增强操作</li>
+<li>一个好的控制可以通过用同态滤波器对明度和反射分量分别操作来得到</li>
+<li>这个控制要求指定一个滤波器函数$H(u,v)$，它对于傅立叶变换的低频和高频部分的影响是不同的</li>
+</ul>
+</li>
+</ul>
+<p><strong>小波变换滤波</strong></p>
+<ul>
+<li>原理：<ul>
+<li>假定图像相邻像素具有较大的相关性，因而其小波变换后分布于较少的具有较大幅值小波系数中</li>
+<li>噪声由于相关性较小，通常分布较广但具有较小的小波系数</li>
+</ul>
+</li>
+<li>流程：<ul>
+<li>计算原始图像的小波变换</li>
+<li>将小波系数通过一个门限滤波器，滤掉小系数</li>
+<li>结果数据进行小波反变换重建图像</li>
+</ul>
+</li>
+<li>门限滤波器－设计问题<ul>
+<li>Hard threshold: $d_{jk}^{hard}=\left\lbrace \begin{matrix} 0; \; d_{jk}&lt;\lambda \\ d_{jk}; \; d_{jk}\ge \lambda \end{matrix}\right.$</li>
+<li>Soft threshold: $d_{jk}^{soft}=sign(d_{jk})(|d_{jk}|-\lambda)_+$</li>
+<li>$\lambda = \sigma (2\log (N))^{1/2}$, $\sigma$ is the scale of the noise in SD, N is a block size in the WT</li>
+</ul>
+</li>
+<li>讨论：<ul>
+<li>与其他频域滤波不同的是，小波变换滤波假定变换域中信号与噪声的区别不是在位置上，而是在系数的幅值不同上，由此有可能滤出噪声并同时减少细节的损失</li>
+<li>不同的门限构成方式以及在不同分解级别上的滤波， 会有不同的结果</li>
+<li>小波基的选择在噪声滤出的客观指标上有显著的不同</li>
 </ul>
 </li>
 </ul>
@@ -631,7 +942,7 @@ var _hmt = _hmt || [];
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#空域处理"><span class="toc-number">1.</span> <span class="toc-text">空域处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#点运算法-—-灰度级变换"><span class="toc-number">1.1.</span> <span class="toc-text">点运算法 — 灰度级变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#直方图增强"><span class="toc-number">1.2.</span> <span class="toc-text">直方图增强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#彩色图像增强"><span class="toc-number">1.3.</span> <span class="toc-text">彩色图像增强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模板运算法-—-空域过滤器"><span class="toc-number">1.4.</span> <span class="toc-text">模板运算法 — 空域过滤器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#几何变换法-—-变形矫正"><span class="toc-number">1.5.</span> <span class="toc-text">几何变换法 — 变形矫正</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于色彩的处理"><span class="toc-number">1.6.</span> <span class="toc-text">基于色彩的处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#频域处理"><span class="toc-number">2.</span> <span class="toc-text">频域处理</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#空域处理"><span class="toc-number">1.</span> <span class="toc-text">空域处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#点运算法-—-灰度级变换"><span class="toc-number">1.1.</span> <span class="toc-text">点运算法 — 灰度级变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#直方图增强"><span class="toc-number">1.2.</span> <span class="toc-text">直方图增强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#彩色图像增强"><span class="toc-number">1.3.</span> <span class="toc-text">彩色图像增强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模板运算法-—-空域过滤器"><span class="toc-number">1.4.</span> <span class="toc-text">模板运算法 — 空域过滤器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#频域处理"><span class="toc-number">2.</span> <span class="toc-text">频域处理</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -677,7 +988,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共105.2k字
+              本站总共109.2k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -860,11 +1171,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -884,11 +1195,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">learning</a>
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+                <a href="javascript:void(0)" class="js-tag color4">learning</a>
               </li>
              
               <li class="article-tag-list-item">

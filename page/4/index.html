@@ -1091,19 +1091,19 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-python03" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-python05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/22/python03/">Python 核心技术与实战 03</a>
+      <a class="article-title" href="/2019/05/22/python05/">Python核心技术与实战05 深入浅出字符串</a>
     </h1>
   
 
         
-        <a href="/2019/05/22/python03/" class="archive-article-date">
+        <a href="/2019/05/22/python05/" class="archive-article-date">
   	<time datetime="2019-05-22T10:44:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-22</time>
 </a>
         
@@ -1114,7 +1114,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#列表-list-和元组-tuple-的使用"><span class="toc-number">1.</span> <span class="toc-text">列表(list)和元组(tuple)的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-number">1.1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#储存方式"><span class="toc-number">1.2.</span> <span class="toc-text">储存方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表和元组的性能"><span class="toc-number">1.3.</span> <span class="toc-text">列表和元组的性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表和元组的使用场景"><span class="toc-number">1.4.</span> <span class="toc-text">列表和元组的使用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思考题"><span class="toc-number">1.5.</span> <span class="toc-text">思考题</span></a></li></ol></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-number">1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用操作"><span class="toc-number">2.</span> <span class="toc-text">常用操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串的格式化"><span class="toc-number">3.</span> <span class="toc-text">字符串的格式化</span></a></li></ol>
             </div>
            -->
         <!--  
@@ -1123,85 +1123,65 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#列表-list-和元组-tuple-的使用"><span class="toc-text">列表(list)和元组(tuple)的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#储存方式"><span class="toc-text">储存方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表和元组的性能"><span class="toc-text">列表和元组的性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表和元组的使用场景"><span class="toc-text">列表和元组的使用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思考题"><span class="toc-text">思考题</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用操作"><span class="toc-text">常用操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串的格式化"><span class="toc-text">字符串的格式化</span></a></li></ol>
         </div>
     </div>
  -->
-        <h2 id="列表-list-和元组-tuple-的使用"><a href="#列表-list-和元组-tuple-的使用" class="headerlink" title="列表(list)和元组(tuple)的使用"></a>列表(list)和元组(tuple)的使用</h2><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ul>
-<li><p>列表和元组，都是可以放置任意数据类型的有序集合，且不要求元素类型一致</p>
+        <h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ul>
+<li><p>可用单引号，双引号，或者三引号：</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">'jason'</span></span><br><span class="line">city = <span class="string">'beijing'</span></span><br><span class="line">text = <span class="string">"welcome to jike shijian"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Python 的三引号字符串，则主要应用于多行字符串的情境. e.g. 函数的注释</p>
+</li>
+<li>转义字符(反斜杠开头)：<ul>
+<li>\newline: 接下一行</li>
+<li>\: \</li>
+</ul>
+</li>
+</ul>
+<h3 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h3><ul>
+<li><p>支持索引，切片和遍历等等操作</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">'Jason'</span></span><br><span class="line">name[<span class="number">0</span>]</span><br><span class="line">    <span class="string">'J'</span></span><br><span class="line">name[<span class="number">1</span>:<span class="number">3</span>]</span><br><span class="line">    <span class="string">'as'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>遍历字符串相当于遍历字符串中的每个字符</p>
 <ul>
-<li><p>e.g. </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">list = [1,2,&apos;hello&apos;,&apos;world&apos;]</span><br><span class="line">tup = (&apos;jason&apos;,22)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>list有点像是matlab中的array, 只不过是一般化了的array</p>
-</li>
-<li>注意一个是[], 一个是() 来表示数据</li>
+<li><code>for char in name</code></li>
 </ul>
 </li>
-<li><p>区别在于：</p>
+<li><p>Python 的字符串是不可变的: 改变一个字符串内部的字符是不允许的。</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'hello'</span></span><br><span class="line">s[<span class="number">0</span>] = <span class="string">'H'</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">TypeError: <span class="string">'str'</span> object does <span class="keyword">not</span> support item assignment</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Python 中字符串的改变，通常只能通过创建新的字符串来完成</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'H'</span> + s[<span class="number">1</span>:]</span><br><span class="line">s = s.replace(<span class="string">'h'</span>, <span class="string">'H'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>字符串拼接方法：</p>
 <ul>
-<li>列表是动态的，长度大小不固定，可以随意地增加、删减或者改变元素</li>
-<li>元组是静态的，长度大小固定，无法增加删减或者改变</li>
-<li>e.g. 试着改变最后一个元素：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">l = [1, 2, 3, 4]</span><br><span class="line">l[3] = 40 # 更改最后一个元素</span><br><span class="line">l</span><br><span class="line">    [1, 2, 3, 40]</span><br><span class="line"></span><br><span class="line">tup = (1, 2, 3, 4)</span><br><span class="line">tup[3] = 40</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">    File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">TypeError: &apos;tuple&apos; object does not support item assignment</span><br></pre></td></tr></table></figure>
+<li><p>使用 ‘+=’ ：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">100000</span>):</span><br><span class="line">    s += str(n)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用内置函数 join :</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">l = []</span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">100000</span>):</span><br><span class="line">    l.append(str(n))</span><br><span class="line">l = <span class="string">' '</span>.join(l)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
-<li><p>如果想增加一个元素，元组只能另创建一个元组，但列表可以直接加在末尾：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tup = (1, 2, 3, 4)</span><br><span class="line">new_tup = tup + (5, ) # 创建新的元组 new_tup，并依次填充原元组的值</span><br><span class="line">new _tup</span><br><span class="line">    (1, 2, 3, 4, 5)</span><br><span class="line"></span><br><span class="line">l = [1, 2, 3, 4]</span><br><span class="line">l.append(5) # 添加元素 5 到原列表的末尾</span><br><span class="line">l</span><br><span class="line">    [1, 2, 3, 4, 5]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>列表和元组都支持负数索引(索引都是用[])：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">l = [1, 2, 3, 4]</span><br><span class="line">l[-1]</span><br><span class="line">    4</span><br><span class="line"></span><br><span class="line">tup = (1, 2, 3, 4)</span><br><span class="line">tup[-1]</span><br><span class="line">    4</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>都支持切片操作(注意切片操作不包括最后一个索引)：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">l = [1, 2, 3, 4]</span><br><span class="line">l[1:3] # 返回列表中索引从 1 到 2 的子列表</span><br><span class="line">    [2, 3]</span><br><span class="line"></span><br><span class="line">tup = (1, 2, 3, 4)</span><br><span class="line">tup[1:3] # 返回元组中索引从 1 到 2 的子元组</span><br><span class="line">    (2, 3)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>可以随意嵌套：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">l = [[1, 2, 3], [4, 5]] # 列表的每一个元素也是一个列表</span><br><span class="line"></span><br><span class="line">tup = ((1, 2, 3), (4, 5, 6)) # 元组的每一个元素也是一元组</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>可以通过 list() 和 tuple() 函数相互转换</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">list((1, 2, 3))</span><br><span class="line">    [1, 2, 3]</span><br><span class="line"></span><br><span class="line">tuple([1, 2, 3])</span><br><span class="line">    (1, 2, 3)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>列表和元组常用的内置函数：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">l = [3, 2, 3, 7, 8, 1]</span><br><span class="line">l.count(3) </span><br><span class="line">    2</span><br><span class="line">l.index(7)</span><br><span class="line">    3</span><br><span class="line">l.reverse()</span><br><span class="line">l</span><br><span class="line">    [1, 8, 7, 3, 2, 3]</span><br><span class="line">l.sort()</span><br><span class="line">l</span><br><span class="line">    [1, 2, 3, 3, 7, 8]</span><br><span class="line"></span><br><span class="line">tup = (3, 2, 3, 7, 8, 1)</span><br><span class="line">tup.count(3)</span><br><span class="line">    2</span><br><span class="line">tup.index(7)</span><br><span class="line">    3</span><br><span class="line">list(reversed(tup))</span><br><span class="line">    [1, 8, 7, 3, 2, 3]</span><br><span class="line">sorted(tup)</span><br><span class="line">    [1, 2, 3, 3, 7, 8]</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="储存方式"><a href="#储存方式" class="headerlink" title="储存方式"></a>储存方式</h3><ul>
-<li><p>先看一个例子：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">l = [1, 2, 3]</span><br><span class="line">l.__sizeof__()</span><br><span class="line">    64</span><br><span class="line">tup = (1, 2, 3)</span><br><span class="line">tup.__sizeof__()</span><br><span class="line">    48</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>可见同样的元素，元组的存储空间比列表少16字节</p>
+<li><p>字符串分割：</p>
 <ul>
-<li>这是因为列表是动态的，它需要存储指针，来指向对应的元素（上述例子中，对于int型是8字节）</li>
-<li>此外，由于列表可变，所以需要额外存储已经分配的长度大小（8 字节），这样才可以实时追踪列表空间的使用情况，当空间不足时，及时分配额外空间</li>
-<li><p>例子如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">l = []</span><br><span class="line">l.__sizeof__() // 空列表的存储空间为 40 字节</span><br><span class="line">    40</span><br><span class="line">l.append(1)</span><br><span class="line">l.__sizeof__() </span><br><span class="line">    72 // 加入了元素 1 之后，列表为其分配了可以存储 4 个元素的空间 (72 - 40)/8 = 4</span><br><span class="line">l.append(2) </span><br><span class="line">l.__sizeof__()</span><br><span class="line">    72 // 由于之前分配了空间，所以加入元素 2，列表空间不变</span><br><span class="line">l.append(3)</span><br><span class="line">l.__sizeof__() </span><br><span class="line">    72 // 同上</span><br><span class="line">l.append(4)</span><br><span class="line">l.__sizeof__() </span><br><span class="line">    72 // 同上</span><br><span class="line">l.append(5)</span><br><span class="line">l.__sizeof__() </span><br><span class="line">    104 // 加入元素 5 之后，列表的空间不足，所以又额外分配了可以存储 4 个元素的空间</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>所以列表空间分配的时，为了减小每次增加 / 操作空间分配的开销，每次分配空间时都会额外分配一些，这样Over-allocating保证了其操作的高效性：即增加、删除 的时间复杂度为O(1).</p>
+<li>split(): string.split(separator)，表示把字符串按照 separator 分割成子字符串并返回一个分割后子字符串组合的<em>列表</em><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">query_data</span><span class="params">(namespace, table)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    given namespace and table, query database to get corresponding</span></span><br><span class="line"><span class="string">    data         </span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">path = <span class="string">'hive://ads/training_table'</span></span><br><span class="line">namespace = path.split(<span class="string">'//'</span>)[<span class="number">1</span>].split(<span class="string">'/'</span>)[<span class="number">0</span>] <span class="comment"># 返回'ads'</span></span><br><span class="line">table = path.split(<span class="string">'//'</span>)[<span class="number">1</span>].split(<span class="string">'/'</span>)[<span class="number">1</span>] <span class="comment"># 返回 'training_table'</span></span><br><span class="line">data = query_data(namespace, table)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
-<li>list和tuple的内部实现都是array的形式，list因为可变，所以是一个over-allocate的array，tuple因为不可变，所以长度大小固定。</li>
-</ul>
-<h3 id="列表和元组的性能"><a href="#列表和元组的性能" class="headerlink" title="列表和元组的性能"></a>列表和元组的性能</h3><ul>
-<li>元组要比列表更加轻量级一些，所以总体上来说，元组的性能速度要略优于列表</li>
-<li>此外，Python会在后台，对静态数据做一些资源缓存(resource caching). 通常来讲，因为垃圾回收机制的存在，如果一些变量不被使用了，Python就会回收他们所占用的内存，返还给操作系统</li>
-<li>但是对一些静态变量，比如元组，如果它不被使用并且占用空间不大时，Python 会暂时缓存这部分内存，这样下次创建同样大小的元组时，Python 就可以不用再向操作系统发出请求，去寻找内存，而是可以直接分配之前缓存的内存空间，这样就能大大加快程序的运行速度</li>
-<li><p>以下例子是计算初始化一个相同元素的列表和元组分别所需的时间。我们可以看到，元组的初始化速度，要比列表快 5 倍。</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 -m timeit &apos;x=(1,2,3,4,5,6)&apos;</span><br><span class="line">    20000000 loops, best of 5: 9.97 nsec per loop</span><br><span class="line">python3 -m timeit &apos;x=[1,2,3,4,5,6]&apos;</span><br><span class="line">    5000000 loops, best of 5: 50.1 nsec per loop</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>但如果是索引操作的话，两者速度差别非常小：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 -m timeit -s &apos;x=[1,2,3,4,5,6]&apos; &apos;y=x[3]&apos;</span><br><span class="line">    10000000 loops, best of 5: 22.2 nsec per loop</span><br><span class="line">python3 -m timeit -s &apos;x=(1,2,3,4,5,6)&apos; &apos;y=x[3]&apos;</span><br><span class="line">    10000000 loops, best of 5: 21.9 nsec per loop</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="列表和元组的使用场景"><a href="#列表和元组的使用场景" class="headerlink" title="列表和元组的使用场景"></a>列表和元组的使用场景</h3><ul>
-<li>如果存储的数据和数量不变，比如你有一个函数，需要返回的是一个地点的经纬度，然后直接传给前端渲染，那么肯定选用元组更合适</li>
-<li>如果存储的数据或数量是可变的，比如社交平台上的一个日志功能,是统计一个用户在一周之内看了哪些用户的帖子，那么则用列表更合适</li>
-</ul>
-<h3 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h3><p>想创建一个空的列表，我们可以用下面的 A、B 两种方式，请问它们在效率上有什么区别吗？应该优先考虑使用哪种？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 创建空列表</span><br><span class="line"># option A</span><br><span class="line">empty_list = list()</span><br><span class="line"></span><br><span class="line"># option B</span><br><span class="line">empty_list = []</span><br></pre></td></tr></table></figure></p>
+<li><p>其他函数：</p>
 <ul>
-<li>answer: 区别主要在于list()是一个function call，Python的function call会创建stack，并且进行一系列参数检查的操作，比较expensive，反观[]是一个内置的C函数，可以直接被调用，因此效率高。</li>
+<li>string.strip(str)，表示去掉首尾的 str 字符串</li>
+<li>string.lstrip(str)，表示去掉开头的 str 字符串</li>
+<li>string.rstrip(str)，表示去掉结尾的 str 字符串</li>
+<li>string.find(sub, start, end)，表示从 start 到 end 查找字符串中子字符串 sub 的位置</li>
 </ul>
-<p>极客时间版权所有: <a href="https://time.geekbang.org/column/article/94972" target="_blank" rel="noopener">https://time.geekbang.org/column/article/94972</a></p>
+</li>
+</ul>
+<h3 id="字符串的格式化"><a href="#字符串的格式化" class="headerlink" title="字符串的格式化"></a>字符串的格式化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'no data available for person with id: &#123;&#125;, name: &#123;&#125;'</span>.format(id, name))</span><br><span class="line"><span class="comment"># 类似于 matlab 里面的 %d, %s</span></span><br></pre></td></tr></table></figure>
+<p>\newline</p>
+<p>极客时间版权所有: <a href="https://time.geekbang.org/column/article/95897" target="_blank" rel="noopener">https://time.geekbang.org/column/article/95897</a></p>
 
       
 
@@ -1219,7 +1199,11 @@ var _hmt = _hmt || [];
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">learning</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
         		</li>
       		
 		</ul>
@@ -1229,7 +1213,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/22/python03/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/05/22/python05/">展开全文 >></a>
         </p>
       
 
@@ -1430,19 +1414,19 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-python05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-python03" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/22/python05/">Python核心技术与实战05 深入浅出字符串</a>
+      <a class="article-title" href="/2019/05/22/python03/">Python 核心技术与实战 03</a>
     </h1>
   
 
         
-        <a href="/2019/05/22/python05/" class="archive-article-date">
+        <a href="/2019/05/22/python03/" class="archive-article-date">
   	<time datetime="2019-05-22T10:44:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-22</time>
 </a>
         
@@ -1453,7 +1437,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-number">1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用操作"><span class="toc-number">2.</span> <span class="toc-text">常用操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串的格式化"><span class="toc-number">3.</span> <span class="toc-text">字符串的格式化</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#列表-list-和元组-tuple-的使用"><span class="toc-number">1.</span> <span class="toc-text">列表(list)和元组(tuple)的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-number">1.1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#储存方式"><span class="toc-number">1.2.</span> <span class="toc-text">储存方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表和元组的性能"><span class="toc-number">1.3.</span> <span class="toc-text">列表和元组的性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表和元组的使用场景"><span class="toc-number">1.4.</span> <span class="toc-text">列表和元组的使用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思考题"><span class="toc-number">1.5.</span> <span class="toc-text">思考题</span></a></li></ol></li></ol>
             </div>
            -->
         <!--  
@@ -1462,65 +1446,85 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用操作"><span class="toc-text">常用操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串的格式化"><span class="toc-text">字符串的格式化</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#列表-list-和元组-tuple-的使用"><span class="toc-text">列表(list)和元组(tuple)的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#储存方式"><span class="toc-text">储存方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表和元组的性能"><span class="toc-text">列表和元组的性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表和元组的使用场景"><span class="toc-text">列表和元组的使用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思考题"><span class="toc-text">思考题</span></a></li></ol></li></ol>
         </div>
     </div>
  -->
-        <h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ul>
-<li><p>可用单引号，双引号，或者三引号：</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">'jason'</span></span><br><span class="line">city = <span class="string">'beijing'</span></span><br><span class="line">text = <span class="string">"welcome to jike shijian"</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Python 的三引号字符串，则主要应用于多行字符串的情境. e.g. 函数的注释</p>
-</li>
-<li>转义字符(反斜杠开头)：<ul>
-<li>\newline: 接下一行</li>
-<li>\: \</li>
-</ul>
-</li>
-</ul>
-<h3 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h3><ul>
-<li><p>支持索引，切片和遍历等等操作</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">'Jason'</span></span><br><span class="line">name[<span class="number">0</span>]</span><br><span class="line">    <span class="string">'J'</span></span><br><span class="line">name[<span class="number">1</span>:<span class="number">3</span>]</span><br><span class="line">    <span class="string">'as'</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>遍历字符串相当于遍历字符串中的每个字符</p>
+        <h2 id="列表-list-和元组-tuple-的使用"><a href="#列表-list-和元组-tuple-的使用" class="headerlink" title="列表(list)和元组(tuple)的使用"></a>列表(list)和元组(tuple)的使用</h2><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ul>
+<li><p>列表和元组，都是可以放置任意数据类型的有序集合，且不要求元素类型一致</p>
 <ul>
-<li><code>for char in name</code></li>
+<li><p>e.g. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">list = [1,2,&apos;hello&apos;,&apos;world&apos;]</span><br><span class="line">tup = (&apos;jason&apos;,22)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>list有点像是matlab中的array, 只不过是一般化了的array</p>
+</li>
+<li>注意一个是[], 一个是() 来表示数据</li>
 </ul>
 </li>
-<li><p>Python 的字符串是不可变的: 改变一个字符串内部的字符是不允许的。</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'hello'</span></span><br><span class="line">s[<span class="number">0</span>] = <span class="string">'H'</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">TypeError: <span class="string">'str'</span> object does <span class="keyword">not</span> support item assignment</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Python 中字符串的改变，通常只能通过创建新的字符串来完成</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'H'</span> + s[<span class="number">1</span>:]</span><br><span class="line">s = s.replace(<span class="string">'h'</span>, <span class="string">'H'</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>字符串拼接方法：</p>
+<li><p>区别在于：</p>
 <ul>
-<li><p>使用 ‘+=’ ：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">100000</span>):</span><br><span class="line">    s += str(n)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用内置函数 join :</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">l = []</span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">100000</span>):</span><br><span class="line">    l.append(str(n))</span><br><span class="line">l = <span class="string">' '</span>.join(l)</span><br></pre></td></tr></table></figure>
+<li>列表是动态的，长度大小不固定，可以随意地增加、删减或者改变元素</li>
+<li>元组是静态的，长度大小固定，无法增加删减或者改变</li>
+<li>e.g. 试着改变最后一个元素：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">l = [1, 2, 3, 4]</span><br><span class="line">l[3] = 40 # 更改最后一个元素</span><br><span class="line">l</span><br><span class="line">    [1, 2, 3, 40]</span><br><span class="line"></span><br><span class="line">tup = (1, 2, 3, 4)</span><br><span class="line">tup[3] = 40</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">    File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">TypeError: &apos;tuple&apos; object does not support item assignment</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
-<li><p>字符串分割：</p>
+<li><p>如果想增加一个元素，元组只能另创建一个元组，但列表可以直接加在末尾：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tup = (1, 2, 3, 4)</span><br><span class="line">new_tup = tup + (5, ) # 创建新的元组 new_tup，并依次填充原元组的值</span><br><span class="line">new _tup</span><br><span class="line">    (1, 2, 3, 4, 5)</span><br><span class="line"></span><br><span class="line">l = [1, 2, 3, 4]</span><br><span class="line">l.append(5) # 添加元素 5 到原列表的末尾</span><br><span class="line">l</span><br><span class="line">    [1, 2, 3, 4, 5]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>列表和元组都支持负数索引(索引都是用[])：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">l = [1, 2, 3, 4]</span><br><span class="line">l[-1]</span><br><span class="line">    4</span><br><span class="line"></span><br><span class="line">tup = (1, 2, 3, 4)</span><br><span class="line">tup[-1]</span><br><span class="line">    4</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>都支持切片操作(注意切片操作不包括最后一个索引)：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">l = [1, 2, 3, 4]</span><br><span class="line">l[1:3] # 返回列表中索引从 1 到 2 的子列表</span><br><span class="line">    [2, 3]</span><br><span class="line"></span><br><span class="line">tup = (1, 2, 3, 4)</span><br><span class="line">tup[1:3] # 返回元组中索引从 1 到 2 的子元组</span><br><span class="line">    (2, 3)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以随意嵌套：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">l = [[1, 2, 3], [4, 5]] # 列表的每一个元素也是一个列表</span><br><span class="line"></span><br><span class="line">tup = ((1, 2, 3), (4, 5, 6)) # 元组的每一个元素也是一元组</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以通过 list() 和 tuple() 函数相互转换</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">list((1, 2, 3))</span><br><span class="line">    [1, 2, 3]</span><br><span class="line"></span><br><span class="line">tuple([1, 2, 3])</span><br><span class="line">    (1, 2, 3)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>列表和元组常用的内置函数：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">l = [3, 2, 3, 7, 8, 1]</span><br><span class="line">l.count(3) </span><br><span class="line">    2</span><br><span class="line">l.index(7)</span><br><span class="line">    3</span><br><span class="line">l.reverse()</span><br><span class="line">l</span><br><span class="line">    [1, 8, 7, 3, 2, 3]</span><br><span class="line">l.sort()</span><br><span class="line">l</span><br><span class="line">    [1, 2, 3, 3, 7, 8]</span><br><span class="line"></span><br><span class="line">tup = (3, 2, 3, 7, 8, 1)</span><br><span class="line">tup.count(3)</span><br><span class="line">    2</span><br><span class="line">tup.index(7)</span><br><span class="line">    3</span><br><span class="line">list(reversed(tup))</span><br><span class="line">    [1, 8, 7, 3, 2, 3]</span><br><span class="line">sorted(tup)</span><br><span class="line">    [1, 2, 3, 3, 7, 8]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="储存方式"><a href="#储存方式" class="headerlink" title="储存方式"></a>储存方式</h3><ul>
+<li><p>先看一个例子：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">l = [1, 2, 3]</span><br><span class="line">l.__sizeof__()</span><br><span class="line">    64</span><br><span class="line">tup = (1, 2, 3)</span><br><span class="line">tup.__sizeof__()</span><br><span class="line">    48</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可见同样的元素，元组的存储空间比列表少16字节</p>
 <ul>
-<li>split(): string.split(separator)，表示把字符串按照 separator 分割成子字符串并返回一个分割后子字符串组合的<em>列表</em><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">query_data</span><span class="params">(namespace, table)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    given namespace and table, query database to get corresponding</span></span><br><span class="line"><span class="string">    data         </span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">path = <span class="string">'hive://ads/training_table'</span></span><br><span class="line">namespace = path.split(<span class="string">'//'</span>)[<span class="number">1</span>].split(<span class="string">'/'</span>)[<span class="number">0</span>] <span class="comment"># 返回'ads'</span></span><br><span class="line">table = path.split(<span class="string">'//'</span>)[<span class="number">1</span>].split(<span class="string">'/'</span>)[<span class="number">1</span>] <span class="comment"># 返回 'training_table'</span></span><br><span class="line">data = query_data(namespace, table)</span><br></pre></td></tr></table></figure>
+<li>这是因为列表是动态的，它需要存储指针，来指向对应的元素（上述例子中，对于int型是8字节）</li>
+<li>此外，由于列表可变，所以需要额外存储已经分配的长度大小（8 字节），这样才可以实时追踪列表空间的使用情况，当空间不足时，及时分配额外空间</li>
+<li><p>例子如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">l = []</span><br><span class="line">l.__sizeof__() // 空列表的存储空间为 40 字节</span><br><span class="line">    40</span><br><span class="line">l.append(1)</span><br><span class="line">l.__sizeof__() </span><br><span class="line">    72 // 加入了元素 1 之后，列表为其分配了可以存储 4 个元素的空间 (72 - 40)/8 = 4</span><br><span class="line">l.append(2) </span><br><span class="line">l.__sizeof__()</span><br><span class="line">    72 // 由于之前分配了空间，所以加入元素 2，列表空间不变</span><br><span class="line">l.append(3)</span><br><span class="line">l.__sizeof__() </span><br><span class="line">    72 // 同上</span><br><span class="line">l.append(4)</span><br><span class="line">l.__sizeof__() </span><br><span class="line">    72 // 同上</span><br><span class="line">l.append(5)</span><br><span class="line">l.__sizeof__() </span><br><span class="line">    104 // 加入元素 5 之后，列表的空间不足，所以又额外分配了可以存储 4 个元素的空间</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>所以列表空间分配的时，为了减小每次增加 / 操作空间分配的开销，每次分配空间时都会额外分配一些，这样Over-allocating保证了其操作的高效性：即增加、删除 的时间复杂度为O(1).</p>
 </li>
 </ul>
 </li>
-<li><p>其他函数：</p>
+<li>list和tuple的内部实现都是array的形式，list因为可变，所以是一个over-allocate的array，tuple因为不可变，所以长度大小固定。</li>
+</ul>
+<h3 id="列表和元组的性能"><a href="#列表和元组的性能" class="headerlink" title="列表和元组的性能"></a>列表和元组的性能</h3><ul>
+<li>元组要比列表更加轻量级一些，所以总体上来说，元组的性能速度要略优于列表</li>
+<li>此外，Python会在后台，对静态数据做一些资源缓存(resource caching). 通常来讲，因为垃圾回收机制的存在，如果一些变量不被使用了，Python就会回收他们所占用的内存，返还给操作系统</li>
+<li>但是对一些静态变量，比如元组，如果它不被使用并且占用空间不大时，Python 会暂时缓存这部分内存，这样下次创建同样大小的元组时，Python 就可以不用再向操作系统发出请求，去寻找内存，而是可以直接分配之前缓存的内存空间，这样就能大大加快程序的运行速度</li>
+<li><p>以下例子是计算初始化一个相同元素的列表和元组分别所需的时间。我们可以看到，元组的初始化速度，要比列表快 5 倍。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 -m timeit &apos;x=(1,2,3,4,5,6)&apos;</span><br><span class="line">    20000000 loops, best of 5: 9.97 nsec per loop</span><br><span class="line">python3 -m timeit &apos;x=[1,2,3,4,5,6]&apos;</span><br><span class="line">    5000000 loops, best of 5: 50.1 nsec per loop</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>但如果是索引操作的话，两者速度差别非常小：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 -m timeit -s &apos;x=[1,2,3,4,5,6]&apos; &apos;y=x[3]&apos;</span><br><span class="line">    10000000 loops, best of 5: 22.2 nsec per loop</span><br><span class="line">python3 -m timeit -s &apos;x=(1,2,3,4,5,6)&apos; &apos;y=x[3]&apos;</span><br><span class="line">    10000000 loops, best of 5: 21.9 nsec per loop</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="列表和元组的使用场景"><a href="#列表和元组的使用场景" class="headerlink" title="列表和元组的使用场景"></a>列表和元组的使用场景</h3><ul>
+<li>如果存储的数据和数量不变，比如你有一个函数，需要返回的是一个地点的经纬度，然后直接传给前端渲染，那么肯定选用元组更合适</li>
+<li>如果存储的数据或数量是可变的，比如社交平台上的一个日志功能,是统计一个用户在一周之内看了哪些用户的帖子，那么则用列表更合适</li>
+</ul>
+<h3 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h3><p>想创建一个空的列表，我们可以用下面的 A、B 两种方式，请问它们在效率上有什么区别吗？应该优先考虑使用哪种？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 创建空列表</span><br><span class="line"># option A</span><br><span class="line">empty_list = list()</span><br><span class="line"></span><br><span class="line"># option B</span><br><span class="line">empty_list = []</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>string.strip(str)，表示去掉首尾的 str 字符串</li>
-<li>string.lstrip(str)，表示去掉开头的 str 字符串</li>
-<li>string.rstrip(str)，表示去掉结尾的 str 字符串</li>
-<li>string.find(sub, start, end)，表示从 start 到 end 查找字符串中子字符串 sub 的位置</li>
+<li>answer: 区别主要在于list()是一个function call，Python的function call会创建stack，并且进行一系列参数检查的操作，比较expensive，反观[]是一个内置的C函数，可以直接被调用，因此效率高。</li>
 </ul>
-</li>
-</ul>
-<h3 id="字符串的格式化"><a href="#字符串的格式化" class="headerlink" title="字符串的格式化"></a>字符串的格式化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'no data available for person with id: &#123;&#125;, name: &#123;&#125;'</span>.format(id, name))</span><br><span class="line"><span class="comment"># 类似于 matlab 里面的 %d, %s</span></span><br></pre></td></tr></table></figure>
-<p>\newline</p>
-<p>极客时间版权所有: <a href="https://time.geekbang.org/column/article/95897" target="_blank" rel="noopener">https://time.geekbang.org/column/article/95897</a></p>
+<p>极客时间版权所有: <a href="https://time.geekbang.org/column/article/94972" target="_blank" rel="noopener">https://time.geekbang.org/column/article/94972</a></p>
 
       
 
@@ -1538,11 +1542,7 @@ var _hmt = _hmt || [];
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">learning</a>
         		</li>
       		
 		</ul>
@@ -1552,7 +1552,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/22/python05/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/05/22/python03/">展开全文 >></a>
         </p>
       
 
@@ -1733,7 +1733,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共105.2k字
+              本站总共109.2k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -1916,11 +1916,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+                <a href="javascript:void(0)" class="js-tag color1">Samba</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1940,11 +1940,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">learning</a>
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+                <a href="javascript:void(0)" class="js-tag color4">learning</a>
               </li>
              
               <li class="article-tag-list-item">

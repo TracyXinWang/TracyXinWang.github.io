@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://tracyxinwang.github.io/2020/04/23/digital_image_lds_spatial/</loc>
-    <lastmod>2020-04-24T07:50:47.185Z</lastmod>
+    <lastmod>2020-04-28T07:51:36.971Z</lastmod>
   </url>  <url>
     <loc>https://tracyxinwang.github.io/2020/04/22/writing_skills/</loc>
     <lastmod>2020-04-24T01:20:10.269Z</lastmod>
