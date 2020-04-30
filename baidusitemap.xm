@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tracyxinwang.github.io/2020/04/30/wavelet/</loc>
+    <lastmod>2020-04-30T07:44:55.660Z</lastmod>
+  </url>  <url>
+    <loc>https://tracyxinwang.github.io/2020/04/20/digital_image_lds_frequency/</loc>
+    <lastmod>2020-04-30T06:38:23.361Z</lastmod>
+  </url>  <url>
+    <loc>https://tracyxinwang.github.io/2020/04/30/digital_image_compression/</loc>
+    <lastmod>2020-04-30T06:23:22.886Z</lastmod>
+  </url>  <url>
     <loc>https://tracyxinwang.github.io/2020/04/23/digital_image_lds_spatial/</loc>
     <lastmod>2020-04-28T07:51:36.971Z</lastmod>
   </url>  <url>
@@ -51,9 +60,6 @@
   </url>  <url>
     <loc>https://tracyxinwang.github.io/2019/08/16/coursera_motion_pl01/</loc>
     <lastmod>2020-04-24T01:13:16.987Z</lastmod>
-  </url>  <url>
-    <loc>https://tracyxinwang.github.io/2020/04/20/digital_image_lds_frequency/</loc>
-    <lastmod>2020-04-23T03:02:36.505Z</lastmod>
   </url>  <url>
     <loc>https://tracyxinwang.github.io/2020/04/15/digital_image_lds/</loc>
     <lastmod>2020-04-19T06:37:26.466Z</lastmod>

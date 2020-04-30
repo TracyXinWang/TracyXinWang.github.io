@@ -247,6 +247,278 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-python05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/22/python05/">Python核心技术与实战05 深入浅出字符串</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/22/python05/" class="archive-article-date">
+  	<time datetime="2019-05-22T10:44:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-number">1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用操作"><span class="toc-number">2.</span> <span class="toc-text">常用操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串的格式化"><span class="toc-number">3.</span> <span class="toc-text">字符串的格式化</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用操作"><span class="toc-text">常用操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串的格式化"><span class="toc-text">字符串的格式化</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ul>
+<li><p>可用单引号，双引号，或者三引号：</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">'jason'</span></span><br><span class="line">city = <span class="string">'beijing'</span></span><br><span class="line">text = <span class="string">"welcome to jike shijian"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Python 的三引号字符串，则主要应用于多行字符串的情境. e.g. 函数的注释</p>
+</li>
+<li>转义字符(反斜杠开头)：<ul>
+<li>\newline: 接下一行</li>
+<li>\: \</li>
+</ul>
+</li>
+</ul>
+<h3 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h3><ul>
+<li><p>支持索引，切片和遍历等等操作</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">'Jason'</span></span><br><span class="line">name[<span class="number">0</span>]</span><br><span class="line">    <span class="string">'J'</span></span><br><span class="line">name[<span class="number">1</span>:<span class="number">3</span>]</span><br><span class="line">    <span class="string">'as'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>遍历字符串相当于遍历字符串中的每个字符</p>
+<ul>
+<li><code>for char in name</code></li>
+</ul>
+</li>
+<li><p>Python 的字符串是不可变的: 改变一个字符串内部的字符是不允许的。</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'hello'</span></span><br><span class="line">s[<span class="number">0</span>] = <span class="string">'H'</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">TypeError: <span class="string">'str'</span> object does <span class="keyword">not</span> support item assignment</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Python 中字符串的改变，通常只能通过创建新的字符串来完成</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'H'</span> + s[<span class="number">1</span>:]</span><br><span class="line">s = s.replace(<span class="string">'h'</span>, <span class="string">'H'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>字符串拼接方法：</p>
+<ul>
+<li><p>使用 ‘+=’ ：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">100000</span>):</span><br><span class="line">    s += str(n)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用内置函数 join :</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">l = []</span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">100000</span>):</span><br><span class="line">    l.append(str(n))</span><br><span class="line">l = <span class="string">' '</span>.join(l)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>字符串分割：</p>
+<ul>
+<li>split(): string.split(separator)，表示把字符串按照 separator 分割成子字符串并返回一个分割后子字符串组合的<em>列表</em><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">query_data</span><span class="params">(namespace, table)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    given namespace and table, query database to get corresponding</span></span><br><span class="line"><span class="string">    data         </span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">path = <span class="string">'hive://ads/training_table'</span></span><br><span class="line">namespace = path.split(<span class="string">'//'</span>)[<span class="number">1</span>].split(<span class="string">'/'</span>)[<span class="number">0</span>] <span class="comment"># 返回'ads'</span></span><br><span class="line">table = path.split(<span class="string">'//'</span>)[<span class="number">1</span>].split(<span class="string">'/'</span>)[<span class="number">1</span>] <span class="comment"># 返回 'training_table'</span></span><br><span class="line">data = query_data(namespace, table)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>其他函数：</p>
+<ul>
+<li>string.strip(str)，表示去掉首尾的 str 字符串</li>
+<li>string.lstrip(str)，表示去掉开头的 str 字符串</li>
+<li>string.rstrip(str)，表示去掉结尾的 str 字符串</li>
+<li>string.find(sub, start, end)，表示从 start 到 end 查找字符串中子字符串 sub 的位置</li>
+</ul>
+</li>
+</ul>
+<h3 id="字符串的格式化"><a href="#字符串的格式化" class="headerlink" title="字符串的格式化"></a>字符串的格式化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'no data available for person with id: &#123;&#125;, name: &#123;&#125;'</span>.format(id, name))</span><br><span class="line"><span class="comment"># 类似于 matlab 里面的 %d, %s</span></span><br></pre></td></tr></table></figure>
+<p>\newline</p>
+<p>极客时间版权所有: <a href="https://time.geekbang.org/column/article/95897" target="_blank" rel="noopener">https://time.geekbang.org/column/article/95897</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/22/python05/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-python06" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/22/python06/">Python核心技术与实战06 输入输出</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/22/python06/" class="archive-article-date">
+  	<time datetime="2019-05-22T07:44:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-number">1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件输入输出"><span class="toc-number">2.</span> <span class="toc-text">文件输入输出</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件输入输出"><span class="toc-text">文件输入输出</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ul>
+<li>input() 函数暂停程序运行，同时等待键盘输入；直到回车被按下，函数的参数即为提示语，输入的类型永远是<strong>字符串型（str）</strong>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">name = input(&apos;your name:&apos;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="文件输入输出"><a href="#文件输入输出" class="headerlink" title="文件输入输出"></a>文件输入输出</h3><ul>
+<li>用 open() 函数拿到文件的指针<ul>
+<li>第一个参数指定文件位置</li>
+<li>第二个参数，’r’表示读取，’w’ 则表示写，’a’ 表示 append</li>
+</ul>
+</li>
+<li><p>拿到指针后，通过 read() 函数来读取全部内容</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">with open(&apos;in.txt&apos;, &apos;r&apos;) as fin:</span><br><span class="line">    text = fin.read()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>此方法优点是方便，缺点是如果文件过大，一次性读取可能造成内存崩溃</li>
+<li>此时可给read指定参数size, 用来读取最大长度</li>
+<li>也可通过 readline() 函数每次读取一行</li>
+<li>open() 函数对应于 close() 函数，正常情况下，调用了read() 读取完毕之后就应该立刻关掉该打开的文件，但使用 with 语句，就不需要显式调用close(). 在 with 的语境下任务执行完毕后，close() 函数会被自动调用</li>
+</ul>
+</li>
+<li>write() 函数将字符串输出到文件中</li>
+</ul>
+<p>\newline</p>
+<p>极客时间版权所有: <a href="https://time.geekbang.org/column/article/96570" target="_blank" rel="noopener">https://time.geekbang.org/column/article/96570</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/22/python06/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Huawei_note" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -530,11 +802,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
         		</li>
       		
 		</ul>
@@ -1399,263 +1671,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-Nonlinear" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/08/Nonlinear/">Gauss-Newton method to solve Nonlinear Least Square Problem</a>
-    </h1>
-  
-
-        
-        <a href="/2019/02/08/Nonlinear/" class="archive-article-date">
-  	<time datetime="2019-02-08T06:28:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#先验知识"><span class="toc-number">1.</span> <span class="toc-text">先验知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gauss-Newton-method"><span class="toc-number">2.</span> <span class="toc-text">Gauss-Newton method</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Pros-amd-Cons"><span class="toc-number">2.1.</span> <span class="toc-text">Pros amd Cons</span></a></li></ol></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#先验知识"><span class="toc-text">先验知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gauss-Newton-method"><span class="toc-text">Gauss-Newton method</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Pros-amd-Cons"><span class="toc-text">Pros amd Cons</span></a></li></ol></li></ol>
-        </div>
-    </div>
- -->
-        <p><br></p>
-<h3 id="先验知识"><a href="#先验知识" class="headerlink" title="先验知识"></a>先验知识</h3><ul>
-<li><strong>Jacobian</strong>:<ul>
-<li>is the matrix of all first-order partial derivatives of a <strong>vector-valued</strong> function.</li>
-<li>that is to say, the function $f(x)$ maps $R^n \to R^m$</li>
-<li>the Jacobian of $f(x)$ is </li>
-<li>$$\mathbf {J} = {\begin{bmatrix}{\frac {\partial \mathbf {f} }{\partial x_{1}}} &amp; \cdots &amp; {\frac {\partial \mathbf {f} }{\partial x_{n}}} \end{bmatrix}} = {\begin{bmatrix} {\dfrac {\partial f_{1}}{\partial x_{1}}} &amp; \cdots &amp; {\frac {\partial f_{1}}{\partial x_{n}}} \\ \vdots &amp; \ddots &amp; \vdots \\ {\dfrac {\partial f_{m}}{\partial x_{1}}} &amp; \cdots  &amp; {\dfrac {\partial f_{m}}{\partial x_{n}}}\end{bmatrix}}$$</li>
-</ul>
-</li>
-<li><strong>Hessian</strong>:<ul>
-<li>a square matrix of second-order partial derivatives of a <strong>scalar-valued</strong> function, or scalar field.</li>
-<li>that is to say, the function $f(x)$ maps $R^n \to R$</li>
-<li>the Hessian of $f(x)$ is </li>
-<li>$$\mathbf {H} ={\begin{bmatrix}{\dfrac {\partial ^{2}f}{\partial x_{1}^{2}}}&amp;{\dfrac {\partial ^{2}f}{\partial x_{1}\,\partial x_{2}}} &amp; \cdots &amp; {\dfrac {\partial ^{2}f}{\partial x_{1}\,\partial x_{n}}} \\ {\dfrac {\partial ^{2}f}{\partial x_{2}\,\partial x_{1}}}&amp;{\dfrac {\partial ^{2}f}{\partial x_{2}^{2}}}&amp;\cdots &amp;{\dfrac {\partial ^{2}f}{\partial x_{2}\,\partial x_{n}}}\\ \vdots &amp;\vdots &amp;\ddots &amp;\vdots \\ {\dfrac {\partial ^{2}f}{\partial x_{n}\,\partial x_{1}}}&amp;{\dfrac {\partial ^{2}f}{\partial x_{n}\,\partial x_{2}}}&amp;\cdots &amp;{\dfrac {\partial ^{2}f}{\partial x_{n}^{2}}}\end{bmatrix}} $$</li>
-</ul>
-</li>
-<li>Newton’s method in optimization<ul>
-<li>generally, Newton’s method is an iterative method to find the roots of a differentiable function: $f(x)=0$</li>
-<li>在优化当中，找极值时，我们一般会用过求导的方式来找该函数导数为零的点，因为这个点就意味着极值。</li>
-<li>所以Newton’s method在优化运用中，is to find the root of th ederivative of function f: $f’(x)=0$</li>
-<li>In one-dimensional problem, we hope to find the min or max to satisfy: $f’(x^*)=0$</li>
-<li>将f(x)泰勒展开：$$f(x) = f(x_n+\Delta x) \approx f(x_n) + f’(x_n)\Delta x + \frac12 f’’(x_n)\Delta x^2$$</li>
-<li>我们希望在n次迭代后，能找到那个 $x^*$, 此时这个点满足 $f’(x)$, 即：$$f’(x)=0 \to f’(x_n+\Delta x) = 0$$ $$\frac {\partial f(x_n+\Delta x)}{\partial \Delta x} = 0$$ $$\frac {\partial (f(x_n)+f’(x_n)\Delta x + \frac 12 f’’(x_n)\Delta x^2)}{\partial \Delta x} = 0$$ $$f’(x_n) + \frac 12 f’’(x_n)\Delta x^2 =0 $$ $$\therefore \Delta x = - \frac {f’(x_n)}{f’’(x_n)}$$</li>
-<li>所以在Newton’s method中, 寻找极值的方向就是$\Delta x = - \frac {f’(x_n)}{f’’(x_n)}$</li>
-<li>在高阶当中，$\Delta x = - [Hf(x_n)]^{-1} \Delta {f(x_n)}$</li>
-</ul>
-</li>
-</ul>
-<h3 id="Gauss-Newton-method"><a href="#Gauss-Newton-method" class="headerlink" title="Gauss-Newton method"></a>Gauss-Newton method</h3><ul>
-<li>the problem is as follows:$$min_{x\in R^n} f(x) = \frac 12 \sum_{i=1}^m r_i(x)^2$$<ul>
-<li>where $m \ge n$</li>
-<li>n is thge number of parameters</li>
-<li>m is the number of observations</li>
-<li>r(x) is the vector of residuals $r(x) = {\begin{bmatrix} r_1(x) \\ r_2(x) \\ \vdots \\ r_m(x) \end{bmatrix}}$</li>
-</ul>
-</li>
-<li>Note that there could be 3 spaces when considering such probelm:<ul>
-<li>the parameter space</li>
-<li>the observation space</li>
-<li>the model space </li>
-</ul>
-</li>
-<li>the gradient of f(x) is: $$\Delta f(x) = \Delta r(x) r(x) = J(x)^Tr(x)$$<ul>
-<li>where $J(x) = \Delta r(x)^T$, the Jacobian of r(x). (Note only r(x) can have Jacobian but not f(x))</li>
-<li>推导过程直接对原式求导即可</li>
-</ul>
-</li>
-<li>the Hessian of f(x) is: $$\Delta^2 f(x) = \Delta r(x) \Delta r(x)^T + \sum_{i=1}^m r_i(x) \Delta^2 r_i(x)$$ $$= J(x)^TJ(x) + Q(x)$$\</li>
-<li>In optimization, we hope that the residual can approximate 0, if so, $r(x)=0$, and $Q(x) = 0$</li>
-<li><strong>A method that uses the approximation Q(x)=0 is called Gauss-Newton method</strong></li>
-<li>If the search direction using Newton equation: $$\Delta^2 f(x) p^N = - \Delta f(x)$$<ul>
-<li>代入以上的hessian式子： $$(J^T(x)J(x) + Q(x))P^N = - \Delta f(x)$$</li>
-<li>if Q(x) 接近0，$$J^T(x)J(x)P^{GN} = - \Delta f(x) = -J(x)^Tr(x)$$</li>
-<li>if J(x) is full rank, we can have a unique solution; but if not, the problem gets under-deterined ot over-determined.</li>
-</ul>
-</li>
-</ul>
-<h4 id="Pros-amd-Cons"><a href="#Pros-amd-Cons" class="headerlink" title="Pros amd Cons"></a>Pros amd Cons</h4><ul>
-<li>If $r(x^∗) = 0$, then the approximation $Q(x) ≈ 0$ is good and the Gauss-Newton method will behave like the Newton method close to the solution, i.e. converge quadratically if $J(x^∗)$ has full rank. </li>
-<li>The advantage over the Newton method is that we do not need to calculate the second-order derivatives $∇^2 r_i(x)$.</li>
-<li>However, if any residual component $r_i(x^∗)$ and/or the corresponding curvature $∇^2 r_i(x)$ is large, the approximation $Q(x) ≈ 0$ will be poor, and the Gauss-Newton method will converge slower than the Newton method.</li>
-<li>For such problems, the Gauss-Newton method may not even be locally convergent, i.e. without a global strategy such as the line search, it wouldn’t converge no matter how close to the solution we start.</li>
-</ul>
-<p><br></p>
-<p>Reference:<br><a href="https://www8.cs.umu.se/kurser/5DA001/HT07/lectures/lsq-handouts.pdf" target="_blank" rel="noopener">https://www8.cs.umu.se/kurser/5DA001/HT07/lectures/lsq-handouts.pdf</a><br><a href="http://fourier.eng.hmc.edu/e176/lectures/NM/" target="_blank" rel="noopener">http://fourier.eng.hmc.edu/e176/lectures/NM/</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/08/Nonlinear/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Linux" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/15/Linux/">Command line II</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/15/Linux/" class="archive-article-date">
-  	<time datetime="2019-01-15T11:55:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#And-for-reading-use"><span class="toc-number">1.</span> <span class="toc-text">And for reading use</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#And-for-reading-use"><span class="toc-text">And for reading use</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># create a 线程</span></span><br><span class="line">screen -S name</span><br><span class="line"></span><br><span class="line"><span class="comment"># detach the screen</span></span><br><span class="line">ctrl+a+d</span><br><span class="line"></span><br><span class="line"><span class="comment"># recover the screen</span></span><br><span class="line">screen -r </span><br><span class="line"></span><br><span class="line"><span class="comment"># see the list of the screen </span></span><br><span class="line">screen -ls</span><br><span class="line"></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
-<p>f = open(“mini_classes.txt”,”r”)</p>
-<h1 id="And-for-reading-use"><a href="#And-for-reading-use" class="headerlink" title="And for reading use"></a>And for reading use</h1><p>classes = f.readlines()<br>f.close()<br>classes = [c.replace(‘\n’,’’).replace(‘ ‘,’_’) for c in classes]</p>
-<p>ctl+shift+\: terminate python run</p>
-<p>zip -r data.zip data/</p>
-<p>Reference:<br><a href="https://www.tecmint.com/screen-command-examples-to-manage-linux-terminals/" target="_blank" rel="noopener">https://www.tecmint.com/screen-command-examples-to-manage-linux-terminals/</a><br><a href="https://linuxize.com/post/how-to-use-linux-screen/" target="_blank" rel="noopener">https://linuxize.com/post/how-to-use-linux-screen/</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/15/Linux/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
@@ -1687,7 +1702,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共109.2k字
+              本站总共112k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -1794,31 +1809,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Learning</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1842,6 +1837,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Deep learning</a>
               </li>
              
@@ -1854,19 +1861,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Network</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1894,6 +1901,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
@@ -1903,6 +1914,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
               </li>
             
             <div class="clearfix"></div>

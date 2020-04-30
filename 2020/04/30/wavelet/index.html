@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://tracyxinwang.github.io">
-  <title>MIT6006 Lec07 Linear-Time Sorting | Xin Wang&#39;s Blog</title>
+  <title>小波变换及应用 | Xin Wang&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Need to digest again! First lists some claims:  searching among n preprocessed items requires $Ω(lg n)$ time: binary search, AVL tree search optimal sorting n items requires $Ω(nlg n)$: mergesort, hea">
-<meta name="keywords" content="Algorithm,Learning">
+  <meta name="description" content="Basic concept 涉及两个概念 Timing $F_{eq}=\frac{C_f}{S\delta t}$ $C_f$ is teh center frequency of the wavelet $s$ is the waveley scale $\delta_t$ is the sampling interval when scaling a wavelet by a factor">
+<meta name="keywords" content="Learning,Notes">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MIT6006 Lec07 Linear-Time Sorting">
-<meta property="og:url" content="https://tracyxinwang.github.io/2018/11/15/MIT6006-Lec07/index.html">
+<meta property="og:title" content="小波变换及应用">
+<meta property="og:url" content="https://tracyxinwang.github.io/2020/04/30/wavelet/index.html">
 <meta property="og:site_name" content="Xin Wang&#39;s Blog">
-<meta property="og:description" content="Need to digest again! First lists some claims:  searching among n preprocessed items requires $Ω(lg n)$ time: binary search, AVL tree search optimal sorting n items requires $Ω(nlg n)$: mergesort, hea">
+<meta property="og:description" content="Basic concept 涉及两个概念 Timing $F_{eq}=\frac{C_f}{S\delta t}$ $C_f$ is teh center frequency of the wavelet $s$ is the waveley scale $\delta_t$ is the sampling interval when scaling a wavelet by a factor">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-15T05:23:33.770Z">
+<meta property="og:updated_time" content="2020-04-30T07:44:55.660Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MIT6006 Lec07 Linear-Time Sorting">
-<meta name="twitter:description" content="Need to digest again! First lists some claims:  searching among n preprocessed items requires $Ω(lg n)$ time: binary search, AVL tree search optimal sorting n items requires $Ω(nlg n)$: mergesort, hea">
+<meta name="twitter:title" content="小波变换及应用">
+<meta name="twitter:description" content="Basic concept 涉及两个概念 Timing $F_{eq}=\frac{C_f}{S\delta t}$ $C_f$ is teh center frequency of the wavelet $s$ is the waveley scale $\delta_t$ is the sampling interval when scaling a wavelet by a factor">
   
     <link rel="alternative" href="/atom.xml" title="Xin Wang&#39;s Blog" type="application/atom+xml">
   
@@ -246,20 +246,20 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-MIT6006-Lec07" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-wavelet" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      MIT6006 Lec07 Linear-Time Sorting
+      小波变换及应用
     </h1>
   
 
         
-        <a href="/2018/11/15/MIT6006-Lec07/" class="archive-article-date">
-  	<time datetime="2018-11-15T03:52:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-15</time>
+        <a href="/2020/04/30/wavelet/" class="archive-article-date">
+  	<time datetime="2020-04-30T07:49:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-30</time>
 </a>
         
       </header>
@@ -269,7 +269,7 @@ var _hmt = _hmt || [];
         <!--  
             <div id="toc" class="toc-article">
               <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Comparison-model"><span class="toc-number">1.</span> <span class="toc-text">Comparison model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Decision-tree"><span class="toc-number">1.1.</span> <span class="toc-text">Decision tree</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lower-Bounds"><span class="toc-number">2.</span> <span class="toc-text">Lower Bounds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linear-time-Sorting"><span class="toc-number">3.</span> <span class="toc-text">Linear-time Sorting</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Radix-sort"><span class="toc-number">3.1.</span> <span class="toc-text">Radix sort</span></a></li></ol></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-concept"><span class="toc-number">1.</span> <span class="toc-text">Basic concept</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Coherence"><span class="toc-number">2.</span> <span class="toc-text">Coherence</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Matlab-functions"><span class="toc-number">3.</span> <span class="toc-text">Matlab functions</span></a></li></ol>
             </div>
            -->
         <!--  
@@ -278,51 +278,90 @@ var _hmt = _hmt || [];
             <p> 
                 <strong>文章目录</strong>
             </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Comparison-model"><span class="toc-text">Comparison model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Decision-tree"><span class="toc-text">Decision tree</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lower-Bounds"><span class="toc-text">Lower Bounds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linear-time-Sorting"><span class="toc-text">Linear-time Sorting</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Radix-sort"><span class="toc-text">Radix sort</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-concept"><span class="toc-text">Basic concept</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Coherence"><span class="toc-text">Coherence</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Matlab-functions"><span class="toc-text">Matlab functions</span></a></li></ol>
         </div>
     </div>
  -->
-        <p>Need to digest again!</p>
-<p>First lists some claims:</p>
+        <h3 id="Basic-concept"><a href="#Basic-concept" class="headerlink" title="Basic concept"></a>Basic concept</h3><ul>
+<li>涉及两个概念<ul>
+<li>Timing<ul>
+<li>$F_{eq}=\frac{C_f}{S\delta t}$</li>
+<li>$C_f$ is teh center frequency of the wavelet</li>
+<li>$s$ is the waveley scale</li>
+<li>$\delta_t$ is the sampling interval</li>
+<li>when scaling a wavelet by a factor of 2, it results in reducing teh equvalent frequency by an octave</li>
+</ul>
+</li>
+<li>Shifting</li>
+</ul>
+</li>
+</ul>
+<p><strong>Continuous Wavelet Transform (CWT)</strong></p>
 <ul>
-<li>searching among n preprocessed items requires $Ω(lg n)$ time: binary search, AVL tree search optimal</li>
-<li>sorting n items requires $Ω(nlg n)$: mergesort, heap sort, AVL sort optimal</li>
+<li>Application<ul>
+<li>time frequency analysis</li>
+<li>filtering of time localized frequency components</li>
 </ul>
-<h3 id="Comparison-model"><a href="#Comparison-model" class="headerlink" title="Comparison model"></a>Comparison model</h3><ul>
-<li>All the input items are black boxes (ADTs)</li>
-<li>Only support comparisons (&gt;,&lt;, etc.)</li>
-<li>Time cost = number of comparisons</li>
+</li>
+<li>Auitbale analytic wavelets:<ul>
+<li>Morse Wavelets</li>
+<li>Bump Wavelet</li>
+<li>Analytic Morlet Wavelet</li>
 </ul>
-<h4 id="Decision-tree"><a href="#Decision-tree" class="headerlink" title="Decision tree"></a>Decision tree</h4><p>Any comparison algorithm can be viewed/specified as a tree of all possible comparison outcomes &amp; resulting output.</p>
+</li>
+<li>Output of CWT <ul>
+<li>are coefficients which are functions of scales or frequency and time </li>
+</ul>
+</li>
+<li>Wavelet scales:<ul>
+<li>scales per Octave: </li>
+<li>e.g. A signal with 1000 samples analyzed with 20 scales results in 20000 coefficients</li>
+</ul>
+</li>
+</ul>
+<p><strong>Discrete Wavelet Transform (DWT)</strong></p>
 <ul>
-<li>internal node = binary decision</li>
-<li>leaf = output (algorithm is done)</li>
-<li>root-to-leaf path = algorithm execution</li>
-<li>path length (depth) = running time</li>
-<li>height of tree = worst-case running time</li>
+<li>Application<ul>
+<li>denoising</li>
+<li>compressing signals and images</li>
 </ul>
-<p>In fact, binary decision tree model is more powerful than comparison model, and lower bounds extend to it</p>
-<blockquote>
-<p>A sorting algorithm is comparison based if it uses comparison operators to find the order between two numbers.  Comparison sorts can be viewed abstractly in terms of decision trees. A decision tree is a full binary tree that represents the comparisons between elements that are performed by a particular sorting algorithm operating on an input of a given size. The execution of the sorting algorithm corresponds to tracing a path from the root of the decision tree to a leaf. At each internal node, a comparison ai &lt;= aj is made. The left subtree then dictates subsequent comparisons for ai &lt;= aj, and the right subtree dictates subsequent comparisons for ai &gt; aj. When we come to a leaf, the sorting algorithm has established the ordering. </p>
-</blockquote>
-<h3 id="Lower-Bounds"><a href="#Lower-Bounds" class="headerlink" title="Lower Bounds"></a>Lower Bounds</h3><p><strong>Search Lower Bound</strong></p>
-<ul>
-<li>number of leaves &gt;= number of possible answers &gt;= n</li>
-<li>decision tree is binary</li>
-<li>height &gt;=  $lg Θ(n) = lg n ± Θ(1)$</li>
+</li>
+<li>Scaling:<ul>
+<li>The basic scale in DWT is set to 2: $2^j (j=1,2,3,…)$</li>
+<li>can obtain different scales by raising this base scale to integers value represented in this way</li>
 </ul>
-<p><strong>Sorting Lower Bound</strong></p>
-<ul>
-<li>leaf specifies answer as permutation: A[3] ≤ A[1] ≤ A[9] ≤ . . .</li>
-<li>all n! are possible answers</li>
-<li>number of leaves &gt;= n!</li>
+</li>
+<li>Translation:<ul>
+<li>dyadic scaling and shifting: $2^jm, (m=1,2,3,…)$</li>
+<li>this kind of sampling eliminates redundancy in coefficients</li>
 </ul>
-<p>$$ \begin{align*}<br>height &amp; ≥ lg n! \\<br>&amp; = lg(1·2 /cdots (n − 1)·n) \\<br>&amp; = lg 1 + lg 2 + /cdots + lg(n − 1) + lg n \\<br>&amp; = \sum^n_{i=1} lg i \\<br>&amp; \ge \sum^n_{i=n/2} lg i \\<br>&amp; \ge \sum^n_{i=n/2} lg \frac n2 \\<br>&amp; = \frac n2 lg n - \frac n2 \\<br>&amp; = \Omega (n lg n)<br>\end{align*}$$</p>
-<p>Therefore, the lower bound for Comparison based sorting algorithm (Merge Sort, Heap Sort, Quick-Sort .. etc) is $Ω(nLogn)$, i.e., they cannot do better than $n logn$.</p>
-<h3 id="Linear-time-Sorting"><a href="#Linear-time-Sorting" class="headerlink" title="Linear-time Sorting"></a>Linear-time Sorting</h3><h4 id="Radix-sort"><a href="#Radix-sort" class="headerlink" title="Radix sort"></a>Radix sort</h4><p><a href="https://www.geeksforgeeks.org/counting-sort/" target="_blank" rel="noopener">Counting sort</a> is a linear time sorting algorithm that sort in $O(n+k)$ time when elements are in range from 1 to k. But if the elements are in range from 1 to $n^2$, counting sort will take $O(n^2)$.</p>
-<p>How to sort such an array in linear time? Use Radix sort.<br>The idea of Radix Sort is to do digit by digit sort starting from least significant digit to most significant digit. Radix sort uses counting sort as a subroutine to sort.</p>
-<p><br></p>
-<p>Reference:<br><a href="https://www.geeksforgeeks.org/lower-bound-on-comparison-based-sorting-algorithms/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/lower-bound-on-comparison-based-sorting-algorithms/</a><br><a href="https://www.geeksforgeeks.org/radix-sort/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/radix-sort/</a></p>
+</li>
+<li>The output of the transform yields the same number of coefficients as the length of the input signal</li>
+<li>Process:<ul>
+<li>In each level of the computation, the signal will be filtered with a high pass and low pass filters, yielding the coefficients</li>
+<li>dowm through the levels, teh scale will be reduce by 2 times</li>
+</ul>
+</li>
+</ul>
+<h3 id="Coherence"><a href="#Coherence" class="headerlink" title="Coherence"></a>Coherence</h3><ul>
+<li>Time-Varying Coherence<ul>
+<li>Fourier-domain coherence measures the linear correlation between two stationary processes as a function of frequency on a scale from 0 to 1. </li>
+<li>Because wavelets provide local information about data in time and scale (frequency), wavelet-based coherence allows you to measure time-varying correlation as a function of frequency. </li>
+<li>In other words, a wavelet coherence measure suitable for nonstationary processes.</li>
+<li>function <code>wcoherence</code> to output the wavelet coherence, cross-spectrum, scale-to- frequency, or scale-to-period conversions</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<h3 id="Matlab-functions"><a href="#Matlab-functions" class="headerlink" title="Matlab functions"></a>Matlab functions</h3><ul>
+<li>helper function:<ul>
+<li><code>helperPlotScalogram3d</code>:  plot the scalogram as a 3-D surface</li>
+<li><code>helperPlotScalogram</code>: plot the scalogram of the signal and the instantaneous frequencies</li>
+<li><code>helperPlotCoherence</code>: plot the outputs of wcoherence</li>
+</ul>
+</li>
+</ul>
+<p>Reference:<br>MATLAB 出品： <a href="https://www.youtube.com/watch?v=F7Lg-nFYooU" target="_blank" rel="noopener">https://www.youtube.com/watch?v=F7Lg-nFYooU</a><br><a href="https://au.mathworks.com/help/wavelet/time-frequency-analysis.html" target="_blank" rel="noopener">https://au.mathworks.com/help/wavelet/time-frequency-analysis.html</a><br><a href="https://au.mathworks.com/help/wavelet/ug/removing-a-time-localized-frequency-component-using-the-inverse-cwt.html" target="_blank" rel="noopener">https://au.mathworks.com/help/wavelet/ug/removing-a-time-localized-frequency-component-using-the-inverse-cwt.html</a></p>
 
       
 
@@ -367,11 +406,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Notes</a>
         		</li>
       		
 		</ul>
@@ -427,7 +466,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://tracyxinwang.github.io/2018/11/15/MIT6006-Lec07/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://tracyxinwang.github.io/2020/04/30/wavelet/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -441,18 +480,9 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2018/11/17/MIT6006-Lec08/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          MIT6006 Lec08 Hashing I
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/11/14/MIT6006-Lec06/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">MIT6006 Lec06 AVL trees, AVL sort</div>
+    <a href="/2020/04/30/digital_image_compression/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">数字图像处理与分析 图像复原</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -479,7 +509,7 @@ var _hmt = _hmt || [];
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Comparison-model"><span class="toc-number">1.</span> <span class="toc-text">Comparison model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Decision-tree"><span class="toc-number">1.1.</span> <span class="toc-text">Decision tree</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lower-Bounds"><span class="toc-number">2.</span> <span class="toc-text">Lower Bounds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linear-time-Sorting"><span class="toc-number">3.</span> <span class="toc-text">Linear-time Sorting</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Radix-sort"><span class="toc-number">3.1.</span> <span class="toc-text">Radix sort</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-concept"><span class="toc-number">1.</span> <span class="toc-text">Basic concept</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Coherence"><span class="toc-number">2.</span> <span class="toc-text">Coherence</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Matlab-functions"><span class="toc-number">3.</span> <span class="toc-text">Matlab functions</span></a></li></ol>
                     </div>
                 </span>
             </div>

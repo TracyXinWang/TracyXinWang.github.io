@@ -247,6 +247,431 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-coursera_state_est05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/01/coursera_state_est05/">Coursera State Estimation and Localization for Self-Driving Cars 05</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/01/coursera_state_est05/" class="archive-article-date">
+  	<time datetime="2019-08-01T08:57:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#An-Autonomous-Vehicle-State-Estimator"><span class="toc-number">1.</span> <span class="toc-text">An Autonomous Vehicle State Estimator</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#State-Estimation-in-Practice"><span class="toc-number">1.1.</span> <span class="toc-text">State Estimation in Practice</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Multisensor-Fusion-for-State-Estimation"><span class="toc-number">1.2.</span> <span class="toc-text">Multisensor Fusion for State Estimation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sensor-Calibration-A-Necessary-Evil"><span class="toc-number">1.3.</span> <span class="toc-text">Sensor Calibration - A Necessary Evil</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Loss-of-One-or-More-Sensors"><span class="toc-number">1.4.</span> <span class="toc-text">Loss of One or More Sensors</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#An-Autonomous-Vehicle-State-Estimator"><span class="toc-text">An Autonomous Vehicle State Estimator</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#State-Estimation-in-Practice"><span class="toc-text">State Estimation in Practice</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Multisensor-Fusion-for-State-Estimation"><span class="toc-text">Multisensor Fusion for State Estimation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sensor-Calibration-A-Necessary-Evil"><span class="toc-text">Sensor Calibration - A Necessary Evil</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Loss-of-One-or-More-Sensors"><span class="toc-text">Loss of One or More Sensors</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <p>From Coursera, State Estimation and Localization for Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/learn/state-estimation-localization-self-driving-cars" target="_blank" rel="noopener">https://www.coursera.org/learn/state-estimation-localization-self-driving-cars</a></p>
+<h2 id="An-Autonomous-Vehicle-State-Estimator"><a href="#An-Autonomous-Vehicle-State-Estimator" class="headerlink" title="An Autonomous Vehicle State Estimator"></a>An Autonomous Vehicle State Estimator</h2><h3 id="State-Estimation-in-Practice"><a href="#State-Estimation-in-Practice" class="headerlink" title="State Estimation in Practice"></a>State Estimation in Practice</h3><p>Accuracy Requirements</p>
+<ul>
+<li>How accurate does the estimator need to be for safe self-driving?</li>
+<li>Typically less than a meter for highway lane keeping</li>
+<li>Less for driving in dense trafic</li>
+<li>GPS accuracy is 1-5 meters in optimal conditions</li>
+<li>Need additional sensors!</li>
+</ul>
+<p>Speed Requirements</p>
+<ul>
+<li>How fast do we need to update the vehicle state to ensure safe driving?</li>
+<li>How much computation power does the vehicle have on-board?</li>
+<li>How much power can our computing resources consume?</li>
+</ul>
+<p>Localization Failures</p>
+<ul>
+<li>How can localization fail?</li>
+<li>Sensors fail or provide bad data (e.g., GPS in a tunnel)</li>
+<li>Estimation error (e.g, linearization error in the EKF)</li>
+<li>Large state uncertainty (e.g, relying on IMU for too long)</li>
+</ul>
+<h3 id="Multisensor-Fusion-for-State-Estimation"><a href="#Multisensor-Fusion-for-State-Estimation" class="headerlink" title="Multisensor Fusion for State Estimation"></a>Multisensor Fusion for State Estimation</h3><p>Develop an error state extended Kalman Filter for estimating position, velocity and orientation using an IMU, GNSS sensor, and LIDAR.</p>
+<p><strong>Why use GNSS with IMU &amp; LIDAR?</strong></p>
+<ul>
+<li>Eror dynamics are completely different and uncorrelated</li>
+<li>IMU provides ‘smoothing’ of GNSS, fill-in during outages due to jamming or maneuvering</li>
+<li>Wheel odometry is also possible (if only 20 position orientation is desired)· </li>
+<li>GNSS provides absolute positioning information to mitigate IMU drift</li>
+<li>LIDAR provides accurate local positioning within known maps</li>
+</ul>
+<p><strong>Types of EKF coupling</strong></p>
+<ul>
+<li>Tightly coupling:<ul>
+<li>use the raw pseudo range and point cloud measurements from our GNSS and LIDAR as observations</li>
+<li>GNSS/LIDAR Measurement: Pseudo-ranges to satellites LIDAR point clouds</li>
+<li>Accuracy: potentially Higher</li>
+<li>Complexity: Higher</li>
+</ul>
+</li>
+<li>Loosely<ul>
+<li>assume data has already been preprocessed to produce a noisy position estimate</li>
+<li>GNSS/LIDAR Measurement: Position</li>
+<li>Accuracy: potentially lower</li>
+<li>Complexity: Lower</li>
+</ul>
+</li>
+</ul>
+<p><strong>EKF - IMU+GNSS+LIDAR</strong></p>
+<ul>
+<li>use the IMU measurements as noisy inputs to the motion model. This will give us our predicted state, which will update every time we have an IMU measurement. This can happen hundreds of times a second.</li>
+<li>Then we incorporate GNSS and LIDAR measurements whenever they become available(at a much slower rate,  say once a second or slower), and use them to correct our predicted state</li>
+</ul>
+<p><img src="/images/state_est07.jpg" width="80%" height="80%"></p>
+<ul>
+<li>What is state?<ul>
+<li>we’ll use a 10-dimensional state vector that includes a 3D position, a 3D velocity, and a 4D unit quaternion that will represent the orientation of our vehicle with respect to a navigation frame. $$x_k=[p_k \; v_k \; q_k]^T \in R^{10}$$</li>
+<li>assume that IMU output specific forces and rotational rates in the sensor frame, and combine them into a single input vector u. - note that we’re not going to track accelerometer or gyroscope biases. These are often put into the state vector, estimated, and then subtracted off of the IMU measurements. For clarity, we’ll emit them here and assume our IMU measurements are unbiased.</li>
+<li>therefore, the motion model input will consist of specific force and rotational rates from IMU: $$u_k = [f_k \; \omega_k]^T \in R^6$$</li>
+</ul>
+</li>
+<li>Loop<ul>
+<li>Update state with IMU inputs</li>
+<li>Propagate uncertainty</li>
+<li>If GNSS or LIDAR position available:<ul>
+<li><ol>
+<li>Compute Kalman gain</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>Compute error state</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>Correct predicted state</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>Computed orrected covariance</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Sensor-Calibration-A-Necessary-Evil"><a href="#Sensor-Calibration-A-Necessary-Evil" class="headerlink" title="Sensor Calibration - A Necessary Evil"></a>Sensor Calibration - A Necessary Evil</h3><p><strong>Intrinsic Calibration</strong></p>
+<ul>
+<li>deals with sensors specific parameters</li>
+<li>ways to get the parameters:<ul>
+<li>Manufacturer specifications</li>
+<li>Measure by hand</li>
+<li>Estimate as part of the state</li>
+</ul>
+</li>
+</ul>
+<p><strong>Extrinsic Calibration</strong> </p>
+<ul>
+<li>deals with how the sensors are positioned and oriented on the vehicle</li>
+</ul>
+<p><strong>Temporal Calibration</strong></p>
+<ul>
+<li>deals with the time offset between different sensor measurements</li>
+<li>ways to deal with<ul>
+<li>Assume zero</li>
+<li>Hardware synchronization</li>
+<li>Estimate as part of the state</li>
+</ul>
+</li>
+</ul>
+<h3 id="Loss-of-One-or-More-Sensors"><a href="#Loss-of-One-or-More-Sensors" class="headerlink" title="Loss of One or More Sensors"></a>Loss of One or More Sensors</h3>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/01/coursera_state_est05/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-coursera_state_est04" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/31/coursera_state_est04/">Coursera State Estimation and Localization for Self-Driving Cars 04</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/31/coursera_state_est04/" class="archive-article-date">
+  	<time datetime="2019-07-31T08:57:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#LIDAR-Sensing"><span class="toc-number">1.</span> <span class="toc-text">LIDAR Sensing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Light-Detection-and-Ranging-Sensors"><span class="toc-number">1.1.</span> <span class="toc-text">Light Detection and Ranging Sensors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LIDAR-Sensor-Models-and-Point-Clouds"><span class="toc-number">1.2.</span> <span class="toc-text">LIDAR Sensor Models and Point Clouds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pose-Estimation-from-LIDAR-Data"><span class="toc-number">1.3.</span> <span class="toc-text">Pose Estimation from LIDAR Data</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#LIDAR-Sensing"><span class="toc-text">LIDAR Sensing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Light-Detection-and-Ranging-Sensors"><span class="toc-text">Light Detection and Ranging Sensors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LIDAR-Sensor-Models-and-Point-Clouds"><span class="toc-text">LIDAR Sensor Models and Point Clouds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pose-Estimation-from-LIDAR-Data"><span class="toc-text">Pose Estimation from LIDAR Data</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <p>From Coursera, State Estimation and Localization for Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/learn/state-estimation-localization-self-driving-cars" target="_blank" rel="noopener">https://www.coursera.org/learn/state-estimation-localization-self-driving-cars</a></p>
+<h2 id="LIDAR-Sensing"><a href="#LIDAR-Sensing" class="headerlink" title="LIDAR Sensing"></a>LIDAR Sensing</h2><h3 id="Light-Detection-and-Ranging-Sensors"><a href="#Light-Detection-and-Ranging-Sensors" class="headerlink" title="Light Detection and Ranging Sensors"></a>Light Detection and Ranging Sensors</h3><p><strong>The operating principles of LIDAR sensors</strong></p>
+<ul>
+<li>For a basic LIDAR in one dimension, it has three components: a laser, a photodetector, and a very precise stopwatch. </li>
+<li>The laser first emits a short pulse of light usually in the near infrared frequency band along some known ray direction. At the same time, the stopwatch begins counting. The laser pulse travels outwards from the sensor at the speed of light and hits a distant target. </li>
+<li>As long as the surface of the target isn’t too polished or shiny, the laser pulse will scatter off the surface in all directions, and some of that reflected light will travel back along the original ray direction. The photodetector catches that return pulse and the stopwatch tells you how much time has passed between when the pulse first went out and when it came back. That time is called the round-trip time. </li>
+<li>then the distance from the LIDAR to the target is simply half of the round-trip distance calculated by the time and the speed of the light</li>
+<li>This technique is called time-of-flight ranging</li>
+<li>the photodetector also tells the intensity of the return pulse relative to the intensity of the pulse that was emitted. This intensity information is less commonly used for self-driving, but it provides some extra information about the geometry of the environment and the material the beam is reflecting off of.</li>
+</ul>
+<p><strong>The basic LIDAR sensor models in 2D and 3D</strong></p>
+<ul>
+<li>But how do to use the above knowledge to measure a whole bunch of distances in 2D or in 3D? <ul>
+<li>The trick is to build a rotating mirror into the LIDAR that directs the emitted pulses along different directions. </li>
+<li>As the mirror rotates, you can measure distances at points in a 2D slice around the sensor. </li>
+<li>If you then add an up and down nodding motion to the mirror along with the rotation, you can use the same principle to create a scan in 3D. </li>
+</ul>
+</li>
+<li>Measurement Models for 3D LIDAR Sensors<ul>
+<li>LIDARs measure the position of points in 3D using spherical coordinates, range or radial distance from the center origin to the 3D point, elevation angle measured up from the sensors XY plane, and azimuth angle, measured counterclockwise from the sensors x-axis.</li>
+<li>The azimuth and elevation angles are measured using encoders that tell you the orientation of the mirror, and the range is measured using the time of flight as we’ve seen before.</li>
+<li>suppose we want to determine the cartesian XYZ coordinates of our scanned point in the sensor frame, which is something we often want to do when we’re combining multiple LIDAR scans into a map. To convert from spherical to Cartesian coordinates, we use the inverse sensor model: $$[x \; y \; z]^T = h^{-1}(r,\alpha, \varepsilon) = [r\cos\alpha \cos \varepsilon \quad r \sin \alpha \cos \varepsilon \quad r \sin \varepsilon]^T$$ where $\alpha$ is the azimuth angle, $\varepsilon$ is the elevation angle</li>
+<li>Therefore, the forward sensor model is: (which from Cartesian coordinates to spherical coordinates) $$[r \alpha \varepsilon]^T = h(x,y,z) = [\sqrt{x^2+y^2+z^2} \tan^{-1}(\frac yx) \sin^{-1}(\frac{z}{\sqrt{x^2+y^2+z^2}})]^T$$</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/state_est02.jpg" width="80%" height="80%"></p>
+<p><strong>The major sources of measurement error for LIDAR sensors</strong></p>
+<ul>
+<li>Uncertainty in determining the exact time of arrival of the refected signal</li>
+<li>Uncertainty in measuring the exact orientation of the mirror</li>
+<li>Interaction with the target(surface absorption, specular reflection, etc.): e.g.: if the surface is completely black, it might absorb most of the laser pulse. Or if it’s very shiny like a mirror, the laser pulse might be scattered completely away from the original pulse direction.</li>
+<li>Variation of propagation speed (e.g., through materials)</li>
+<li>These factors are commonly accounted for by assuming additive zero-mean Gaussian noise on the spherical coordinates with an empirically determined or manually tuned covariance. </li>
+<li>Motion Distortion<ul>
+<li>Typical scan rate for a 3D LIDAR is 5-20 Hz</li>
+<li>For a moving vehicle, each point in a scan is taken from a slightly different place</li>
+<li>Need to account for this if the vehicle is moving quickly, otherwise motion distortion becomes a problem</li>
+</ul>
+</li>
+</ul>
+<h3 id="LIDAR-Sensor-Models-and-Point-Clouds"><a href="#LIDAR-Sensor-Models-and-Point-Clouds" class="headerlink" title="LIDAR Sensor Models and Point Clouds"></a>LIDAR Sensor Models and Point Clouds</h3><p><strong>The basic point cloud data structure</strong></p>
+<ul>
+<li>assign an index to each of the points, say point 1 through point n, and store the x, y, z coordinates of each point as a 3 by 1 column vector</li>
+</ul>
+<p><strong>Common spatial operations on point clouds</strong></p>
+<ul>
+<li>Translation<br><img src="/images/state_est03.jpg" width="70%" height="70%"></li>
+<li>Rotation<br><img src="/images/state_est04.jpg" width="70%" height="70%"></li>
+<li>Scaling<br><img src="/images/state_est05.jpg" width="70%" height="70%"></li>
+<li>Put them together<br><img src="/images/state_est06.jpg" width="70%" height="70%"></li>
+</ul>
+<p><strong>Least squares to fit a plane to a point cloud</strong></p>
+<ul>
+<li>Plane fitting</li>
+<li>One of the most common and important applications of plane-fitting for self-driving cars is figuring out where the road surface is and predicting where it’s going to be as the car continues driving.<ul>
+<li>we have a bunch of measurements of x, y and z from our LIDAR point cloud, and we want to find values for the plane by the parameters a, b, and c defined: $z=a+bx+cy$</li>
+<li>to find the best fit, we use least-squares estimation</li>
+<li>define a measurement error $e$ for each point in the point cloud: $e_j = \hat z_j - z_j = (\hat a + \hat bx_j + \hat c y_j) - z_j \quad j=1,…n$ </li>
+<li>We can stack all of the measurement errors into matrix form, ad minimize the squared-error criterion to get the least-squares solutions for the parameters</li>
+</ul>
+</li>
+<li>Open-source Point Cloud Library(PCL) has many useful functions for doing basic and advanced operations on point clouds in C++</li>
+</ul>
+<h3 id="Pose-Estimation-from-LIDAR-Data"><a href="#Pose-Estimation-from-LIDAR-Data" class="headerlink" title="Pose Estimation from LIDAR Data"></a>Pose Estimation from LIDAR Data</h3><p><strong>Point set registration problem</strong></p>
+<ul>
+<li>one of the most important problems in computer vision and pattern recognition. used to estimate the motion of a self-driving car from point clouds </li>
+<li>the point set registration problems says, given 2 point clouds in two different coordinate frames, and with the knowledge that they correspond to or contain the same object in the world, how shall we align them to determine how the sensor must have moved between the two scans? </li>
+<li>More specifically, we want to figure out the optimal translation and the optimal rotation between the two sensor reference frames that minimizes the distance between the 2 point clouds.</li>
+<li>ICP is the most popular algorithm to solve this problem.</li>
+</ul>
+<p><strong>Iterative Closest Point(ICP) algorithm</strong></p>
+<ul>
+<li>Intuition: When the optimal motion is found, corresponding points will be closer to each other than to other points</li>
+<li>Heuristic:For each point,the best candidate for a corresponding point is the point that is closest to it right now</li>
+<li>Steps of ICP:<ul>
+<li>Get an initial guess for the transformation ${\check C_{S’S}, \check r^{S’S}_{S}}$: <ul>
+<li>the initial guess can come from a number of sources. </li>
+<li>One of the most common sources is a motion model, which could be supplied by an IMU or by wheel odometry or something really simple like a constant velocity or even a zero velocity model</li>
+<li>How complex the motion model needs to be to give us a good initial guess really depends on how smoothly the car is driving.</li>
+<li>If the car is moving slowly relative to the scanning rate of the LIDAR sensor, one may even use the last known pose as the initial guess.</li>
+</ul>
+</li>
+<li>Associate each point in $P_{S’}$ with the nearest point in $P_S: transform the coordinates of the points in one cloud into the reference frame of the other</li>
+<li>Solve for the optimal transformation ${\hat C_{S’S}, \hat r^{S’S}_S}$</li>
+<li>Repeat until convergence</li>
+</ul>
+</li>
+<li>Solving for the Optimal Transformation<ul>
+<li>use least-squares:</li>
+<li>Special attention need to be paid to the rotation matrix: as two rotation matrices addition will not necessarily results in a valid rotation matrix. 3D rotations belong to something called the special orthogonal group or SO3</li>
+</ul>
+</li>
+<li>Steps:<ul>
+<li>Compute the centroids of each point cloud: <ul>
+<li>$\mu_S = \frac 1n \sum^n_{j=1}P^{j}_S$ </li>
+<li>$\mu_{S’} = \frac 1n\sum^n_{j=1}P^{(j)}_{S’}$</li>
+</ul>
+</li>
+<li>Compute a matrix capturing the spread of the two point clouds: $$W_{S’S} = \frac 1n \sum^n_{j=1}(P^{(j)}{s} - \mu_{S})(P^{(j)}{s’}-\mu_{S’})^T$$ this W matrix can be regarded as something like an inertia matrix you might encounter in mechanics. </li>
+<li>finding the optimal rotation matrix using SVD of W matrix: $$USV^T = W_{S’S}$$ where U V are rotation and S is the scaling matrix. As we’re dealing with rigid body motion in this problem, we don’t want any scaling in a rotation estimate, so we’ll replace the S matrix with something like the identity matrix to remove the scaling.</li>
+<li>Use the optimal rotation to get the optimal translation by aligning the centroids</li>
+</ul>
+</li>
+<li>Estimate the uncertainty:<ul>
+<li>We can obtain an estimate of the covariance matrix of the ICP solution using a formula</li>
+<li>This expression tells us how the covariance of the estimated motion parameters is related to the covariance of the measurements in the two point clouds using certain second-order derivatives of the least squares cost function.</li>
+</ul>
+</li>
+<li>Variants <ul>
+<li>Point-to-point ICP minimizes the Euclidean distance between each point in $P_{S’}$, and the nearest point in $P_S$</li>
+<li>Point-to-plane ICP minimizes the perpendicular distance between each point in $P_{S’}$, and the nearest plane in $P_S$·<ul>
+<li>This tends to work well in structured environments like cities or indoors</li>
+<li>first fit a number of planes to the first point cloud and then minimize the distance between each point in the second cloud and its closest plane in the first cloud.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Common pitfalls of the ICP algorithm</strong></p>
+<ul>
+<li>Outliers - Objects in Motion:<ul>
+<li>be careful to exclude or mitigate the effects of outlying points that violate our assumptions of a stationary world</li>
+<li>One way to do this is by fusing ICP motion estimates with GPS and INS estimates. </li>
+<li>Another option is to identify and ignore moving objects, which we could do with some of the computer vision techniques.</li>
+<li>But an even simpler approach for dealing with outliers like these is to choose a different loss function that is less sensitive to large errors induced by outliers than our standard squared error loss, Robust Loss Functions:</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/31/coursera_state_est04/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-coursera_state_est03" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1399,6 +1824,102 @@ var _hmt = _hmt || [];
 
 
   
+    <article id="post-coursera_self_driving05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/21/coursera_self_driving05/">Coursera Self-Driving 05 Vehicle Longitudinal Control</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/21/coursera_self_driving05/" class="archive-article-date">
+  	<time datetime="2019-07-21T06:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#S"><span class="toc-number">1.</span> <span class="toc-text">S</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#S"><span class="toc-text">S</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <p>From Coursera, Introduction to Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/specializations/self-driving-cars?action=enroll" target="_blank" rel="noopener">https://www.coursera.org/specializations/self-driving-cars?action=enroll</a></p>
+<p>## </p>
+<h3 id="S"><a href="#S" class="headerlink" title="S"></a>S</h3><p>- </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/21/coursera_self_driving05/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-coursera_self_driving03" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1601,102 +2122,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/07/21/coursera_self_driving03/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-coursera_self_driving05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/21/coursera_self_driving05/">Coursera Self-Driving 05 Vehicle Longitudinal Control</a>
-    </h1>
-  
-
-        
-        <a href="/2019/07/21/coursera_self_driving05/" class="archive-article-date">
-  	<time datetime="2019-07-21T06:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#S"><span class="toc-number">1.</span> <span class="toc-text">S</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#S"><span class="toc-text">S</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>From Coursera, Introduction to Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/specializations/self-driving-cars?action=enroll" target="_blank" rel="noopener">https://www.coursera.org/specializations/self-driving-cars?action=enroll</a></p>
-<p>## </p>
-<h3 id="S"><a href="#S" class="headerlink" title="S"></a>S</h3><p>- </p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/07/21/coursera_self_driving05/">展开全文 >></a>
         </p>
       
 
@@ -2053,408 +2478,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-coursera_self_driving01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/20/coursera_self_driving01/">Coursera Self-Driving 01 The Requirements for Autonomy</a>
-    </h1>
-  
-
-        
-        <a href="/2019/07/20/coursera_self_driving01/" class="archive-article-date">
-  	<time datetime="2019-07-20T06:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Requirements-for-Autonomy"><span class="toc-number">1.</span> <span class="toc-text">The Requirements for Autonomy</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Taxonomy-of-Driving"><span class="toc-number">1.1.</span> <span class="toc-text">Taxonomy of Driving</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Requirement-for-perception"><span class="toc-number">1.2.</span> <span class="toc-text">Requirement for perception</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Driving-decision-and-actions"><span class="toc-number">1.3.</span> <span class="toc-text">Driving decision and actions</span></a></li></ol></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Requirements-for-Autonomy"><span class="toc-text">The Requirements for Autonomy</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Taxonomy-of-Driving"><span class="toc-text">Taxonomy of Driving</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Requirement-for-perception"><span class="toc-text">Requirement for perception</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Driving-decision-and-actions"><span class="toc-text">Driving decision and actions</span></a></li></ol></li></ol>
-        </div>
-    </div>
- -->
-        <p>From Coursera, Introduction to Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/specializations/self-driving-cars?action=enroll" target="_blank" rel="noopener">https://www.coursera.org/specializations/self-driving-cars?action=enroll</a></p>
-<h2 id="The-Requirements-for-Autonomy"><a href="#The-Requirements-for-Autonomy" class="headerlink" title="The Requirements for Autonomy"></a>The Requirements for Autonomy</h2><p>Some terms and definitions:<br><strong>Driving task</strong>:</p>
-<ul>
-<li>perceiving the environmrnt</li>
-<li>Planning how to reach from point A to B</li>
-<li>Controlling the vehicle</li>
-</ul>
-<p>Operational Design Domain (ODD)</p>
-<h3 id="Taxonomy-of-Driving"><a href="#Taxonomy-of-Driving" class="headerlink" title="Taxonomy of Driving"></a>Taxonomy of Driving</h3><p>How to classify driving system automation?</p>
-<ul>
-<li>Driver attention requirements</li>
-<li>Driver action requirements</li>
-<li>What exactly makes up a driving task?<ul>
-<li>Lateral control: steering</li>
-<li>Longitudinal control: braking，accelerating</li>
-<li>Object and Event Detection and Response(OEDR)：detection，reaction</li>
-<li>Planning: long term, short term</li>
-<li>Miscellaneous</li>
-</ul>
-</li>
-</ul>
-<p><strong>Taxonomy</strong>:</p>
-<ul>
-<li>Level 0: no automation<ul>
-<li>regular vehicles, no automation</li>
-<li>all be done by the driver</li>
-</ul>
-</li>
-<li>Level 1: Driving Assistance<ul>
-<li>either Longitudinal or Lateral control or both</li>
-<li>e.g.:<ul>
-<li>Adaptive Cruise Control: can control speed, driver has to steer</li>
-<li>Lane Keeping Assistance: can help you stay in your lane,if you drift</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Level 2: Partial Driving Automation<ul>
-<li>need both Longitudinal <em>and</em> Lateral Control </li>
-<li>e.g.:<ul>
-<li>GM Super Cruise</li>
-<li>Nissan ProPilot Assist</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Level 3: Conditional Driving Automation<ul>
-<li>Longitudinal + Lateral Control + OEOR</li>
-<li>Includes automated object and event detection and response (Key differece between level 2)</li>
-<li>e.g. Audi A8 Sedan</li>
-</ul>
-</li>
-<li>Level 4: High Driving Automation <ul>
-<li>Longitudinal + Lateral Control + OEOR + Fallback</li>
-<li>can handle emergencies autonomously, driver can entirely focus on other tasks. But may need driver to handle specific emergencies.</li>
-<li>e.g.: Waymo</li>
-</ul>
-</li>
-<li>Level 5: High Driving Automation<ul>
-<li>Longitudinal + Lateral Control + OEOR + Fallback + Unlirmited ODD</li>
-</ul>
-</li>
-</ul>
-<h3 id="Requirement-for-perception"><a href="#Requirement-for-perception" class="headerlink" title="Requirement for perception"></a>Requirement for perception</h3><p><strong>What is perception</strong></p>
-<ul>
-<li>identification:<ul>
-<li>to know what is the object in front</li>
-</ul>
-</li>
-<li>understanding motion:<ul>
-<li>know what it will do</li>
-</ul>
-</li>
-</ul>
-<p><strong>Goals for perception</strong></p>
-<ul>
-<li>Static:<ul>
-<li>Road and lane markings(on-road)</li>
-<li>Curbs(off-road)</li>
-<li>Traffic lights(off-road)</li>
-<li>Road signs(off-road)</li>
-<li>Construction signs, obstructions, and more(on-road)</li>
-</ul>
-</li>
-<li>dynamic objects (on-road): we need to predoct their motion<ul>
-<li>Vehicles<ul>
-<li>4 wheelers(cars, truck…)</li>
-<li>2 wheelers(motorbikes, bicycles…)</li>
-</ul>
-</li>
-<li>Pedestrians</li>
-</ul>
-</li>
-<li>Ego requirements<ul>
-<li>Position</li>
-<li>Velocity, acceleration</li>
-<li>Orientation, angular motion</li>
-</ul>
-</li>
-</ul>
-<p><strong>Challenges to perception</strong></p>
-<ul>
-<li>Robust detection and segmentation<ul>
-<li>use Machine Learning, deep learning</li>
-<li>Snesor uncertainty: sensors may be suddenly broken</li>
-<li>Occlusion, reflection</li>
-<li>Illumination, lens flare</li>
-<li>Weather, precipitation</li>
-</ul>
-</li>
-</ul>
-<h3 id="Driving-decision-and-actions"><a href="#Driving-decision-and-actions" class="headerlink" title="Driving decision and actions"></a>Driving decision and actions</h3><p><strong>Planning</strong><br>Making decisions:</p>
-<ul>
-<li>Long term:<ul>
-<li>how to navigate from New York to Los Angeles</li>
-</ul>
-</li>
-<li>Short term:<ul>
-<li>Can I change my lane to the lane right of me?</li>
-<li>Can I pass this intersection and join the left road?</li>
-</ul>
-</li>
-<li>Immediate <ul>
-<li>Can I stay on track on this curved road?</li>
-<li>Accelerate or brake, by how much?</li>
-</ul>
-</li>
-</ul>
-<p><strong>Rule Based Planning</strong></p>
-<ul>
-<li>What we just did was rule based planning<ul>
-<li>Involved decision trees!</li>
-</ul>
-</li>
-<li>In reactive rule based planning, we have rules that take into account the current state of ego and other objects and give decisions.</li>
-<li>Examples: <ul>
-<li>If there is a pedestrian on the road, stop.</li>
-<li>If speed limit changes, adjust speed to match it.</li>
-</ul>
-</li>
-</ul>
-<p><strong>Types of planning</strong></p>
-<ul>
-<li>Predictive Planning:<ul>
-<li>Make predictions about other vehicles and how they are moving.Then use these predictions to inform our decisions.</li>
-<li>Example: <ul>
-<li>That car has been stopped for the last 10 seconds. It is going to be stopped for the next few seconds.</li>
-<li></li>
-</ul>
-</li>
-<li>relies on the accuracy of prediction</li>
-</ul>
-</li>
-<li>Reactive planning</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/07/20/coursera_self_driving01/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-python13" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/07/python13/">Python核心技术与实战13 Python 模块化</a>
-    </h1>
-  
-
-        
-        <a href="/2019/06/07/python13/" class="archive-article-date">
-  	<time datetime="2019-06-07T06:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单模块"><span class="toc-number">1.</span> <span class="toc-text">简单模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#项目模块化"><span class="toc-number">2.</span> <span class="toc-text">项目模块化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#神奇的-if-name-‘main‘"><span class="toc-number">3.</span> <span class="toc-text">神奇的 if name == ‘main‘</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单模块"><span class="toc-text">简单模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#项目模块化"><span class="toc-text">项目模块化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#神奇的-if-name-‘main‘"><span class="toc-text">神奇的 if name == ‘main‘</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p><strong>To be practice!</strong></p>
-<h3 id="简单模块"><a href="#简单模块" class="headerlink" title="简单模块"></a>简单模块</h3><ul>
-<li>最简单的模块化方式，就是把函数、类、常量拆分到不同的文件，把它们放在同一个文件夹，然后使用from your_file import function_name，class_name的方式调用。之后，这些函数和类就可以在文件内直接使用了。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># utils.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_sum</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> a + b</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># class_utils.py</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Encoder</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">encode</span><span class="params">(self, s)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> s[::<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Decoder</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decode</span><span class="params">(self, s)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">''</span>.join(reversed(list(s)))</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># main.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> utils <span class="keyword">import</span> get_sum</span><br><span class="line"><span class="keyword">from</span> class_utils <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">print(get_sum(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">encoder = Encoder()</span><br><span class="line">decoder = Decoder()</span><br><span class="line"></span><br><span class="line">print(encoder.encode(<span class="string">'abcde'</span>))</span><br><span class="line">print(decoder.decode(<span class="string">'edcba'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">########## 输出 ##########</span></span><br><span class="line"></span><br><span class="line"><span class="number">3</span></span><br><span class="line">edcba</span><br><span class="line">abcde</span><br></pre></td></tr></table></figure>
-<p>但是所有文件都堆在一个文件夹下也并不是办法，于是，我们试着建一些子文件夹：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># utils/utils.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_sum</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> a + b</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># utils/class_utils.py</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Encoder</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">encode</span><span class="params">(self, s)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> s[::<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Decoder</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decode</span><span class="params">(self, s)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">''</span>.join(reversed(list(s)))</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># src/sub_main.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.append(<span class="string">".."</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> utils.class_utils <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">encoder = Encoder()</span><br><span class="line">decoder = Decoder()</span><br><span class="line"></span><br><span class="line">print(encoder.encode(<span class="string">'abcde'</span>))</span><br><span class="line">print(decoder.decode(<span class="string">'edcba'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">########## 输出 ##########</span></span><br><span class="line"></span><br><span class="line">edcba</span><br><span class="line">abcde</span><br></pre></td></tr></table></figure>
-<p> <br></p>
-<ul>
-<li><p>我们的文件结构是下面这样的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── utils</span><br><span class="line">│   ├── utils.py</span><br><span class="line">│   └── class_utils.py</span><br><span class="line">├── src</span><br><span class="line">│   └── sub_main.py</span><br><span class="line">└── main.py</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>main.py调用子目录的模块时，只需要使用.代替/来表示子目录，utils.utils表示utils 子文件夹下的utils.py模块就行。</p>
-</li>
-<li>如果我们想调用上层目录呢？注意，sys.path.append（”..”）表示将当前程序所在位置向上提了一级，之后就能调用utils的模块了。</li>
-<li>同时要注意一点，import 同一个模块只会被执行一次，这样就可以防止重复导入模块出现问题。当然，良好的编程习惯应该杜绝代码多次导入的情况。</li>
-<li>你可能在许多教程中看到过这样的要求：我们还需要在模块所在的文件夹新建一个_initpy，内容可以为空，也可以用来表述包对外暴露的模块接口。不过，事实上，这是Python2的规范。在Python3规范中，_init.py并不是必须的，很多教程里没提过这一点，或者没讲明白，我希望你还是能注意到这个地方。</li>
-</ul>
-<h3 id="项目模块化"><a href="#项目模块化" class="headerlink" title="项目模块化"></a>项目模块化</h3><p>使用绝对路径来导入文件<br>例子：使用Pycharm,项目结构如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── proto</span><br><span class="line">│   ├── mat.py</span><br><span class="line">├── utils</span><br><span class="line">│   └── mat_mul.py</span><br><span class="line">└── src</span><br><span class="line">    └── main.py</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># proto/mat.py</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Matrix</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, data)</span>:</span></span><br><span class="line">        self.data = data</span><br><span class="line">        self.n = len(data)</span><br><span class="line">        self.m = len(data[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># utils/mat_mul.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> proto.mat <span class="keyword">import</span> Matrix</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mat_mul</span><span class="params">(matrix_1: Matrix, matrix_2: Matrix)</span>:</span></span><br><span class="line">    <span class="keyword">assert</span> matrix_1.m == matrix_2.n</span><br><span class="line">    n, m, s = matrix_1.n, matrix_1.m, matrix_2.m</span><br><span class="line">    result = [[<span class="number">0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> range(n)] <span class="keyword">for</span> _ <span class="keyword">in</span> range(s)]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(s):</span><br><span class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> range(m):</span><br><span class="line">                result[i][k] += matrix_1.data[i][j] * matrix_2.data[j][k]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Matrix(result)</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># src/main.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> proto.mat <span class="keyword">import</span> Matrix</span><br><span class="line"><span class="keyword">from</span> utils.mat_mul <span class="keyword">import</span> mat_mul</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a = Matrix([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])</span><br><span class="line">b = Matrix([[<span class="number">5</span>, <span class="number">6</span>], [<span class="number">7</span>, <span class="number">8</span>]])</span><br><span class="line"></span><br><span class="line">print(mat_mul(a, b).data)</span><br><span class="line"></span><br><span class="line"><span class="comment">########## 输出 ##########</span></span><br><span class="line"></span><br><span class="line">[[<span class="number">19</span>, <span class="number">22</span>], [<span class="number">43</span>, <span class="number">50</span>]]</span><br></pre></td></tr></table></figure>
-<p> <br></p>
-<ul>
-<li>这个例子和前面的例子长得很像，但请注意uti1s/mat_mul.py，你会发现，它import Matrix的方式是from proto.mat。这种做法，直接从项目根目录中导入，并依次向下导入模块mat.py中的Matrix，而不是使用..导入上一级文件夹。</li>
-<li><p>Python解释器在遇到import的时候，它会在一个特定的列表中寻找模块。这个特定的列表，可以用下面的方式拿到：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys  </span><br><span class="line"></span><br><span class="line">print(sys.path)</span><br><span class="line"></span><br><span class="line"><span class="comment">########## 输出 ##########</span></span><br><span class="line"></span><br><span class="line">[<span class="string">''</span>, <span class="string">'/usr/lib/python36.zip'</span>, <span class="string">'/usr/lib/python3.6'</span>, <span class="string">'/usr/lib/python3.6/lib-dynload'</span>, <span class="string">'/usr/local/lib/python3.6/dist-packages'</span>, <span class="string">'/usr/lib/python3/dist-packages'</span>]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>可以看到第一项为空，而Pycharm会将这一项设置为项目根目录的绝对地址，这样在运行main.py时实际上是从根目录去找相应的包的。</p>
-</li>
-<li>在普通Python运行环境中，可以通过修改 PYTHONHOME 来实现绝对路径的添加。Python的Virtual Environment（虚拟运行环境），可以通过Virtualenv工具，非常方便地创建一个全新的Python运行环境。这样能够打造一个独立的运行环境来保持包和模块的纯净性。<ul>
-<li>在一个Virtual Environment里，你能找到一个文件叫activate，在这个文件的末尾，填上下面的内容, 在每次通过activate激活这个运行时环境的时候，它就会自动将项目的根目录添加到搜索路径中去。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PYTHONPATH=&quot;/home/ubuntu/workspace/your_projects&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="神奇的-if-name-‘main‘"><a href="#神奇的-if-name-‘main‘" class="headerlink" title="神奇的 if name == ‘main‘"></a>神奇的 if <strong>name</strong> == ‘<strong>main</strong>‘</h3><ul>
-<li>Python是脚本语言，和C++、Java最大的不同在于，不需要显式提供main()函数入口<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── utils.py</span><br><span class="line">├── utils_with_main.py</span><br><span class="line">├── main.py</span><br><span class="line">└── main_2.py</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># utils.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_sum</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> a + b</span><br><span class="line"></span><br><span class="line">print(<span class="string">'testing'</span>)</span><br><span class="line">print(<span class="string">'&#123;&#125; + &#123;&#125; = &#123;&#125;'</span>.format(<span class="number">1</span>, <span class="number">2</span>, get_sum(<span class="number">1</span>, <span class="number">2</span>)))</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># utils_with_main.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_sum</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> a + b</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    print(<span class="string">'testing'</span>)</span><br><span class="line">    print(<span class="string">'&#123;&#125; + &#123;&#125; = &#123;&#125;'</span>.format(<span class="number">1</span>, <span class="number">2</span>, get_sum(<span class="number">1</span>, <span class="number">2</span>)))</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># main.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> utils <span class="keyword">import</span> get_sum</span><br><span class="line"></span><br><span class="line">print(<span class="string">'get_sum: '</span>, get_sum(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">########## 输出 ##########</span></span><br><span class="line"></span><br><span class="line">testing</span><br><span class="line"><span class="number">1</span> + <span class="number">2</span> = <span class="number">3</span></span><br><span class="line">get_sum: <span class="number">3</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># main_2.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> utils_with_main <span class="keyword">import</span> get_sum</span><br><span class="line"></span><br><span class="line">print(<span class="string">'get_sum_2: '</span>, get_sum(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">########## 输出 ##########</span></span><br><span class="line"></span><br><span class="line">get_sum_2: <span class="number">3</span></span><br></pre></td></tr></table></figure>
-<p> <br></p>
-<ul>
-<li>import在导入文件的时候，会自动把所有暴露在外面的代码全都执行一遍。因此，如果你要把一个东西封装成模块，又想让它可以执行的话，你必须将要执行的代码放在’<code>if __name==__main__</code>下面。</li>
-<li>其实，<code>__name__</code>作为Python的魔术内置参数，本质上是模块对象的一个属性。我们使用import 语句时，<code>__name__</code>就会被赋值为该模块的名字，自然就不等于<code>__main__</code>了。</li>
-</ul>
-<p>from module_name import *和import module_name 的区别：</p>
-<ul>
-<li>from module_name import * 会把 module 中所有的函数和类全拿过来，如果和其他函数名类名有冲突就会出问题；</li>
-<li>import model_name 也会导入所有函数和类，但是调用的时候必须使用 model_name.func 的方法来调用，等于增加了一层 layer，有效避免冲突。</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/07/python13/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -2486,7 +2509,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共109.2k字
+              本站总共112k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -2593,31 +2616,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Learning</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2641,6 +2644,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Deep learning</a>
               </li>
              
@@ -2653,19 +2668,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Network</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
+                <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2693,6 +2708,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
@@ -2702,6 +2721,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
               </li>
             
             <div class="clearfix"></div>
