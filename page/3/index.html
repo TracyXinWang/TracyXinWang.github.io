@@ -247,6 +247,522 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-coursera_visual_percep02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/06/coursera_visual_percep02/">Coursera Visual Perception for Self-Driving Cars 02</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/06/coursera_visual_percep02/" class="archive-article-date">
+  	<time datetime="2019-08-06T13:30:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Visual-Features-Detection-Description-and-Matching"><span class="toc-number">1.</span> <span class="toc-text">Visual Features - Detection, Description and Matching</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Introduction-to-Image-features-and-Feature-Detectors"><span class="toc-number">1.1.</span> <span class="toc-text">Introduction to Image features and Feature Detectors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Introduction-to-feature-detecors"><span class="toc-number">1.2.</span> <span class="toc-text">Introduction to feature detecors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Feature-Descriptors"><span class="toc-number">1.3.</span> <span class="toc-text">Feature Descriptors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Feature-Matching"><span class="toc-number">1.4.</span> <span class="toc-text">Feature Matching</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Feature-Matching-Handling-Ambiguity-in-Matching"><span class="toc-number">1.5.</span> <span class="toc-text">Feature Matching: Handling Ambiguity in Matching</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Outlier-Rejection"><span class="toc-number">1.6.</span> <span class="toc-text">Outlier Rejection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Visual-Odometry"><span class="toc-number">1.7.</span> <span class="toc-text">Visual Odometry</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Visual-Features-Detection-Description-and-Matching"><span class="toc-text">Visual Features - Detection, Description and Matching</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Introduction-to-Image-features-and-Feature-Detectors"><span class="toc-text">Introduction to Image features and Feature Detectors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Introduction-to-feature-detecors"><span class="toc-text">Introduction to feature detecors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Feature-Descriptors"><span class="toc-text">Feature Descriptors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Feature-Matching"><span class="toc-text">Feature Matching</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Feature-Matching-Handling-Ambiguity-in-Matching"><span class="toc-text">Feature Matching: Handling Ambiguity in Matching</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Outlier-Rejection"><span class="toc-text">Outlier Rejection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Visual-Odometry"><span class="toc-text">Visual Odometry</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <p>From Coursera, State Estimation and Localization for Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/learn/visual-perception-self-driving-cars" target="_blank" rel="noopener">https://www.coursera.org/learn/visual-perception-self-driving-cars</a></p>
+<h2 id="Visual-Features-Detection-Description-and-Matching"><a href="#Visual-Features-Detection-Description-and-Matching" class="headerlink" title="Visual Features - Detection, Description and Matching"></a>Visual Features - Detection, Description and Matching</h2><h3 id="Introduction-to-Image-features-and-Feature-Detectors"><a href="#Introduction-to-Image-features-and-Feature-Detectors" class="headerlink" title="Introduction to Image features and Feature Detectors"></a>Introduction to Image features and Feature Detectors</h3><h3 id="Introduction-to-feature-detecors"><a href="#Introduction-to-feature-detecors" class="headerlink" title="Introduction to feature detecors"></a>Introduction to feature detecors</h3><p><strong>Feature extraction</strong></p>
+<ul>
+<li>Application: image stitching<ul>
+<li>given two images from two different cameras, we would like to stitch them together to form a panorama. </li>
+<li>First, we need to identify distinctive points in our images. We call this point image features. </li>
+<li>Second, we associate a descriptor for each feature from its neighborhood. </li>
+<li>Finally, we use these descriptors to match features across two or more images. </li>
+</ul>
+</li>
+<li>Features are points of interest in an image</li>
+<li>Points of interest should have the following characteristics: <ul>
+<li>Saliency: distinctive, identifiable,and different from its immediate neighborhood </li>
+<li>Repeatability: can be found in multiple images using same operations </li>
+<li>Locality: occupies a relatively small subset of image space </li>
+<li>Quantity: enough points represented In the image</li>
+<li>Efficiency: reasonable computation time</li>
+</ul>
+</li>
+<li>How to choose the points of interest:<ul>
+<li>Repetitive texture less patches are challenging to detect consistently</li>
+<li>Patches with large contrast changes (gradients) are easier to detect(edges)</li>
+<li>Gradients in at least two(significantly) different orientations are the easiest to detect(corners)</li>
+<li>The most famous corner detector is the Harris Corner Detector, which uses image gradient information to identify pixels that have a strong change in intensity in both x and y directions.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Algorithms used</strong></p>
+<ul>
+<li>Harris[corners]: Easy to compute, but not scale invariant.<ul>
+<li>meaning that the corners can look different depending on the distance the camera is away from the object generating the corner. </li>
+</ul>
+</li>
+<li>Harris-Laplace[corners]: Same procedure as Harris detector, addition of scale selection based on Laplacian. Scale invariance.</li>
+<li>Features from accelerated segment test(FAST) (corners): Machine learning approach for fast corner detection.<ul>
+<li>high computational efficiency and solid detection performance</li>
+</ul>
+</li>
+<li>Laplacian of Gaussian(LOG) detector[blobs]: Uses the concept of scale space in a large neighborhood(blob). Somewhat scale invariant.</li>
+<li>Difference of Gaussian(DOG) detector[blobs]: Approximates LOG but is faster to compute</li>
+</ul>
+<h3 id="Feature-Descriptors"><a href="#Feature-Descriptors" class="headerlink" title="Feature Descriptors"></a>Feature Descriptors</h3><p><strong>Feature descriptor definition</strong></p>
+<ul>
+<li>Feature: Point of interest in an image defined by its image pixel coordinates [u,v]</li>
+<li>Descriptor f: an n dimensional vector associated with each feature.<ul>
+<li>The descriptor has the task of providing a summary of the image information in the vicinity of the feature itself, and can take on many forms. </li>
+</ul>
+</li>
+<li>Feature descriptors should have the following characteristics:      <ul>
+<li>Repeatability: manifested as robustness and invariance to translation, rotation,scale, and illumination changes</li>
+<li>Distinctiveness: should allow us to distinguish between two close by features,very important for matching later on</li>
+<li>Compactness &amp; Efficiency: reasonable computation time</li>
+</ul>
+</li>
+<li>Designing Invariant Descriptors: SIFT<ul>
+<li>Scale Invariant Feature Transform (SIFT)descriptors</li>
+<li>Given a feature in the image, the shift descriptor takes a 16 by 16 window of pixels around it, we call this window the features local neighborhood.</li>
+<li>then separate this window in to four 4 by 4 cells such that each cell contains 16 pixels.</li>
+<li>Next we compute the edges and edge orientation of each pixel in each cell using the gradient filters.</li>
+<li>For stability of the descriptor, we suppress weak edges using a predefined threshold as they are likely to vary significantly in orientation with small amounts of noise between images.</li>
+<li>Finally, we compute a 32 dimensional histogram of orientations for each cell. And concatenate the histograms for all four cells to get a final 128 dimensional histogram for the feature at hand, we call this histogram or descriptor. </li>
+</ul>
+</li>
+<li>Scale Invariant Feature Transform<ul>
+<li>SIFT is an example of a very well human engineered feature descriptor, and is used in many state-of-the-art systems</li>
+<li>The above process is usually compute on rotatedand scaled version of the 16x16 window, allowing for better scale robustness</li>
+<li>Combined with the DOG feature detector, SIFT descriptors provide a scale,rotation, and illumination invariant detector/descriptor pair.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Algorithms</strong><br>Other Descriptors:</p>
+<ul>
+<li>Speeded-Up Robust Features (SURF)</li>
+<li>Gradient Location-Orientation Histogram (GLOH)</li>
+<li>Binary Robust Independent Elementary Features (BRIEF)</li>
+<li>Oriented Fast and Rotated Brief (ORB): free to use commertially</li>
+<li>Many more!</li>
+</ul>
+<h3 id="Feature-Matching"><a href="#Feature-Matching" class="headerlink" title="Feature Matching"></a>Feature Matching</h3><p><strong>Match features based on a predefined distance function</strong></p>
+<ul>
+<li>Feature Matching: Given a feature and its descriptor in image 1, find the best match in image 2</li>
+<li>Define a distance function $d(f_i,f_j)$ that compares the two descriptors</li>
+<li>For every feature $f_i$ in Image 1: <ul>
+<li>Compute $d(f_i,f_j)$ with all features $f_j$ in image 2</li>
+<li>Find the closest match $f_c$, the match that has the minimum distance. This feature is known as the nearest neighbor.</li>
+<li>Keep this match only if $d(f_i,f_j)$ is below threshold $\delta$</li>
+</ul>
+</li>
+<li>Distance Function<ul>
+<li>Sum of Squared Differences (SSD)： $d(f_i, f_j) =\sum^D_{k=1} (f_{i,k} - f_{j,k})^2$</li>
+<li>Sum of absolute differences (SAD): $d(f_i, f_j) = \sum^D_{k=1} |f_{i,k} - f_{j,k}|$</li>
+<li>Hamming Distance: $d(f_i, f_j) = \sum^D_{k=1} XOR(f_{i,k} - f_{j,k})$</li>
+</ul>
+</li>
+<li>Brute force feature matching might not be fast enough for extremely large amounts of features<ul>
+<li>Use a multidimensional search tree, usually a k-d tree to speed the search by constraining it spatially</li>
+<li>Both of these matchers are implemented in OpenCV as: <code>cv2.BFMatcher()</code>: Brute force matcher; <code>cv2.FlannBasedMatcher()</code>: K-D tree based approximate nearest neighbor matcher</li>
+</ul>
+</li>
+</ul>
+<h3 id="Feature-Matching-Handling-Ambiguity-in-Matching"><a href="#Feature-Matching-Handling-Ambiguity-in-Matching" class="headerlink" title="Feature Matching: Handling Ambiguity in Matching"></a>Feature Matching: Handling Ambiguity in Matching</h3><ul>
+<li>Ambiguous matches: more than one feature points can be found to have the minimum distance when do feature matching. </li>
+<li>The solution is to use distance ratio:<ul>
+<li>Compute $d(f_i,f_j)$ for each feature, $f_i$, in image 1, with all features, $f_j$, in image 2</li>
+<li>Find the closest match $f_c$</li>
+<li>Find the second closest match $f_s$</li>
+<li>Find how better the closest match is than the second closest match. This can be done through distance ratio: $0 \leq \frac{d(f_i,f_c)}{d(f_i,f_s)} \leq 1$</li>
+<li>If the distance ratio is close to one, it means that according to our descriptor and distance function, fi matches both fs and fc. In this case, we don’t want to use this match in our processing later on, as it clearly is not known to our matcher which location in image two corresponds to the feature in image one.</li>
+</ul>
+</li>
+<li>So the Updated Brute Force Feature Matching: <ul>
+<li>Define a distance function $d(f_i,f_j)$ that compares the two descriptors</li>
+<li>Define distance ratio threshold $\rho$</li>
+<li>For every feature $f_i$ in Image 1:<ul>
+<li>Compute $d(f_i,f_j)$ with all features $f_j$ in image 22. </li>
+<li>Find the closest match $f_c$ and the second closest match $f_s$ </li>
+<li>Compute the distance ratio </li>
+<li>Keep matches with distance ratio $&lt; \rho$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Outlier-Rejection"><a href="#Outlier-Rejection" class="headerlink" title="Outlier Rejection"></a>Outlier Rejection</h3><p><strong>Three-step feature extraction framework for the real-world problem of vehicle localization</strong></p>
+<ul>
+<li>Localization problem is defined as follows: <ul>
+<li>given any two images of the same scene from different perspectives, find the translation $T=[t_u, t_v]$, between the coordinate system of the first image , and the coordinate system of the second image.</li>
+<li>also need to solve for the scale and skew due to different viewpoints. </li>
+</ul>
+</li>
+<li>Matched feature pairs in images 1 and 2: <ul>
+<li>$f^{(1)}_i, f^{(2)}_i i \in [0…N]$</li>
+<li>$f^{(1)}_i = (u^{(1)}_i, v^{(1)}_i)$</li>
+<li>Model: $u^{(1)}_i + t_u = u^{(2)}_i$, $v^{(1)}_i + t_v = v^{(2)}_i$</li>
+<li>solve using least squares: $t_u = \frac 1N \sqrt{\sum_i (u^{(1)}_i - u^{(2)}_i)^2}$  $t_v = \frac 1N \sqrt{\sum_i (v^{(1)}_i - v^{(2)}_i)^2}$</li>
+</ul>
+</li>
+</ul>
+<p><strong>Outliers and ANSAC algorithm</strong></p>
+<ul>
+<li>Outliers can be handled using a model-based outlier rejection method called Random Sample Consensus (RANSAC)<br>RANSAC algorithm: </li>
+<li>Initialization:<ul>
+<li>Given a model, find the smallest number M of data points or samples needed to compute the parameters of this model. In the above case is $t_u, t_v$</li>
+</ul>
+</li>
+<li>Main loop:<ul>
+<li>Randomly select M samples from the data.</li>
+<li>Compute the model parameters using only the M samples selected from the data set. </li>
+<li>Use the computed parameters and count how many of the remaining data points agree with this computed solution. The accepted points are retained and referred to as inliers.</li>
+<li>if the number of inliers C is satisfactory, or if the algorithm has iterated a pre-set maximum number of iterations, terminate and return the computed solution and the inlier set. </li>
+<li>Else, go back to step two and repeat.</li>
+</ul>
+</li>
+<li>Finally, recompute and return the model parameters from the best inlier set: The one with the largest number of features. </li>
+</ul>
+<h3 id="Visual-Odometry"><a href="#Visual-Odometry" class="headerlink" title="Visual Odometry"></a>Visual Odometry</h3><p>Visual Odometry(VO): is the process of incrementally estimating the pose of the vehicle by examining the changes that motion induces on the images of its onboard cameras</p>
+<ul>
+<li>VO Pros:<ul>
+<li>Not affected by wheel slip in uneven terrain, rainy/snowy weather, or other adverse conditions.</li>
+<li>More accurate trajectory estimates compared to wheel odometry.</li>
+</ul>
+</li>
+<li>VO Cons:<ul>
+<li>Usually need an external sensor to estimate absolute scale</li>
+<li>Camera is a passive sensor,might not be very robust against weather conditions and illumination changes</li>
+<li>Any form of odometry (incremental state estimation) drifts over time</li>
+</ul>
+</li>
+<li>Problem Formulation:<ul>
+<li>Estimate the camera motion $T_k$ between consecutive images $l_{k-1}$ and $l_k$</li>
+<li>Concatenating these single movements allows the recovery of the full trajectory of the camera, given frames $C_1, …, C_m$</li>
+</ul>
+</li>
+<li>General process of visual odometry:<ul>
+<li>Given: two consecutive image frames $I_{k-1}$ and $I_k$</li>
+<li>First, perform feature detection and description. We end up with a set of features $f_{k-1}$ in image k-1 and $f_k$ in image of k. </li>
+<li>We then proceed to match the features between the two frames to find the ones occurring in both of our target frames.</li>
+<li>After that, we use the matched features to estimate the motion between the two camera frames represented by the transformation $T_k$.</li>
+</ul>
+</li>
+<li>Motion estimation:<ul>
+<li>depends on what type of feature representation we have:<ul>
+<li>2D-2D: both $f_{k-1}$ and $f_k$ are defined in Image coordinates</li>
+<li>3D-3D: both  $f_{k-1}$ and $f_k$ are specified in 3D</li>
+<li>3D-2D: $f_{k-1}$ is specified in 3D and $f_k$ are their corresponding projection on 2D</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Perspective N Point (PNP)<ul>
+<li>Given feature locations in 3D, their corresponding projection in 2D, and the camera intrinsic calibration matrix k,</li>
+<li>Solve for initial guess of [R|t] using Direct Linear Transform(DLT): Forms a linear model and solves for [R|t], with methods such as singular value decomposition(SVD)</li>
+<li>Improve solution using Levenberg-Marquardt algorithm(LM)</li>
+<li>Need at least 3 points to solve(P3P), 4 if we don’t wantambiguous solutions.</li>
+<li>Finally, RANSAC can be incorporated into PnP by assuming that the transformation generated by PnP on four points is our model. </li>
+<li>We then choose a subset of all feature matches to evaluate this model and check the percentage of inliers that result to confirm the validity of the point matches selected. </li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/06/coursera_visual_percep02/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-coursera_visual_percep01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/01/coursera_visual_percep01/">Coursera Visual Perception for Self-Driving Cars 01</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/01/coursera_visual_percep01/" class="archive-article-date">
+  	<time datetime="2019-08-01T13:30:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Basics-of-3D-Computer-Vision"><span class="toc-number">1.</span> <span class="toc-text">Basics of 3D Computer Vision</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Camera-Sensor"><span class="toc-number">1.1.</span> <span class="toc-text">The Camera Sensor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Camera-Projective-Geometry"><span class="toc-number">1.2.</span> <span class="toc-text">Camera Projective Geometry</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Camera-Calibration"><span class="toc-number">1.3.</span> <span class="toc-text">Camera Calibration</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Visual-Depth-Perception-Stereopsis"><span class="toc-number">1.4.</span> <span class="toc-text">Visual Depth Perception - Stereopsis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Visual-Depth-Perception-Computing-the-Disparity"><span class="toc-number">1.5.</span> <span class="toc-text">Visual Depth Perception - Computing the Disparity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Image-filtering"><span class="toc-number">1.6.</span> <span class="toc-text">Image filtering</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Basics-of-3D-Computer-Vision"><span class="toc-text">Basics of 3D Computer Vision</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Camera-Sensor"><span class="toc-text">The Camera Sensor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Camera-Projective-Geometry"><span class="toc-text">Camera Projective Geometry</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Camera-Calibration"><span class="toc-text">Camera Calibration</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Visual-Depth-Perception-Stereopsis"><span class="toc-text">Visual Depth Perception - Stereopsis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Visual-Depth-Perception-Computing-the-Disparity"><span class="toc-text">Visual Depth Perception - Computing the Disparity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Image-filtering"><span class="toc-text">Image filtering</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <p>From Coursera, State Estimation and Localization for Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/learn/visual-perception-self-driving-cars" target="_blank" rel="noopener">https://www.coursera.org/learn/visual-perception-self-driving-cars</a></p>
+<h2 id="Basics-of-3D-Computer-Vision"><a href="#Basics-of-3D-Computer-Vision" class="headerlink" title="Basics of 3D Computer Vision"></a>Basics of 3D Computer Vision</h2><h3 id="The-Camera-Sensor"><a href="#The-Camera-Sensor" class="headerlink" title="The Camera Sensor"></a>The Camera Sensor</h3><p>Pinhole Camera Model:</p>
+<ul>
+<li>focal length: the distance between the pinhole and the image plane. It defines the size of the object projected onto the image </li>
+<li>camera center: The coordinates of the center of the pinhole. These coordinates defined the location on the imaging sensor that the object projection will inhabit. </li>
+</ul>
+<h3 id="Camera-Projective-Geometry"><a href="#Camera-Projective-Geometry" class="headerlink" title="Camera Projective Geometry"></a>Camera Projective Geometry</h3><p>Let’s define the problem we need to solve: a point $O_{world}$ defined at a particular location in the world coordinate frame. We want to project this point from the world frame to the camera image plane. </p>
+<ul>
+<li>Light travels from the $O_{world}$ on the object through the camera aperture to the sensor surface. </li>
+<li>The projection onto the sensor surface through the aperture results in flipped images of the objects in the world.</li>
+<li>need to develop a model for how to project a point from the world frame coordinates x, y and z to, image coordinates u and v:<ul>
+<li>First, select a <em>world frame</em> in which to define the coordinates of all objects and the camera.</li>
+<li>define the <em>camera coordinate frame</em> as the coordinate frame attached to the center of our lens aperture known as the optical sensor.</li>
+<li>We refer to the parameters of the camera pose as the extrinsic parameters, as they are external to the camera and specific to the location of the camera in the world coordinate frame. </li>
+<li>define <em>image coordinate frame</em> as the coordinate frame attached to our virtual image plane emanating from the optical center. The image pixel coordinate system is attached to the top <em>left corner</em> of the virtual image plane.</li>
+<li>So we need to adjust the pixel locations to the image coordinate frame.</li>
+<li>we define the focal length is the distance between the camera and the image coordinate frames along the z-axis of the camera coordinate frame.</li>
+</ul>
+</li>
+<li>Finally, the projection problem reduces to two steps. <ul>
+<li>We first need to project from the world to the camera coordinates, then we project from the camera coordinates to the image coordinates.</li>
+<li>We can then transform image coordinates to pixel coordinates through scaling and offset.</li>
+</ul>
+</li>
+<li>Computing the projection:<ul>
+<li>World -&gt; Camera: $$o_{camera} = [R|t]O_{world}$$</li>
+<li>Camera -&gt; Image: $$o_{image} = [f \; 0 \; u_0 ; 0 \; f \; v_0 ; 0 \; 0 \; 1]o_{camera} = Ko_{camera}$$<ul>
+<li>K is a 3x3 matrix, which depends on camera intrinsic parameters: camera geometry and the camera lens characteristics</li>
+</ul>
+</li>
+<li>World -&gt; Image: $$P = K[R|t]$$</li>
+<li>therefore, $o_{image} = PO = K[R|t]O_{world}$</li>
+</ul>
+</li>
+<li>Image coordinates to Pixel coordinates: $[x y z]^T -&gt; [u v 1]^T = \frac 1z[x y z]^T$</li>
+</ul>
+<p>The digital image:</p>
+<ul>
+<li>an image is represented digitally as an M by N by three array of pixels, with each pixel representing the projection of a 3D point onto the 2D image plane. </li>
+</ul>
+<h3 id="Camera-Calibration"><a href="#Camera-Calibration" class="headerlink" title="Camera Calibration"></a>Camera Calibration</h3><p>The camera calibration problem is defined as finding these unknown intrinsic and extrinsic camera parameters, given n known 3D point coordinates and their corresponding projection to the image plane.</p>
+<ul>
+<li>Our approach will comprise of getting the P matrix first and then decomposing it into the intrinsic parameters K and the extrinsic rotation parameters R and translation parameters t. </li>
+<li>Use scenes with known geometry to:<ul>
+<li>Correspond 2D image coordinates to 3D world coordinates</li>
+<li>Find the Least Squares Solution (or non-linear solution)of the parameters of P</li>
+</ul>
+</li>
+<li>The most commonly used example would be a 3D checkerboard, with squares of known size providing a map of fixed point locations to observe. </li>
+<li>If we have N 3D points and their corresponding N 2D projections, set up homogeneous linear system<ul>
+<li>Solved with Singular Value Decomposition(SVD)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Visual-Depth-Perception-Stereopsis"><a href="#Visual-Depth-Perception-Stereopsis" class="headerlink" title="Visual Depth Perception - Stereopsis"></a>Visual Depth Perception - Stereopsis</h3><p><strong>Stereo Camera Model</strong></p>
+<ul>
+<li>A stereo sensor is usually created by two cameras with parallel optical axes.</li>
+<li>Given a known rotation and translation between the two cameras and a known projection of a point $O$ in 3D to the two camera frames resulting in pixel locations $O_L$ and $O_R$ respectively, we can formulate the necessary equations to compute the 3D coordinates of the point $O$.</li>
+<li>Assumptions:<ul>
+<li>First, we assume that the two cameras used to construct the stereo sensors are identical. </li>
+<li>Second, we will assume that while manufacturing the stereo sensor, we tried as hard as possible to keep the two cameras optical axes aligned.</li>
+<li>project the previous figure to bird’s eye view for easier visualization. </li>
+</ul>
+</li>
+<li>Some parameters:<ul>
+<li>focal length: the distance between the camera center and the image plane.</li>
+<li>the baseline is defined as the distance along the shared x-axis between the left and right camera centers. </li>
+<li>By defining a baseline to represent the transformation between the two camera coordinate frames, we are assuming that the rotation matrix is identity and there is only a non-zero x component in the translation vector. The $[R|t]$ transformation therefore boils down to a single baseline parameter B.</li>
+</ul>
+</li>
+<li>Define the quantities to compute:<ul>
+<li>to compute the x and z coordinates of the point $O$ with respect to the left camera frame.</li>
+<li>The y coordinate can be estimated easily after the x and z coordinates are computed. </li>
+<li>by constructing the similarity, we get $\frac Zf = \frac X{x_L}$ and $\frac Zf = \frac {X-b}{x_R}$</li>
+<li>finally we can get: $X=\frac{zx_L}{f}$, $Y=\frac{zy_L}{f}$</li>
+</ul>
+</li>
+</ul>
+<p><strong>Derive the location of a point in 3D</strong></p>
+<ul>
+<li>Two main problems: <ul>
+<li>We need to know $f,b,u_o,v_o$: Use stereo camera calibration </li>
+<li>We need to find corresponding $x_R$ for each $x_L$: Use disparity computation algorithms</li>
+</ul>
+</li>
+</ul>
+<h3 id="Visual-Depth-Perception-Computing-the-Disparity"><a href="#Visual-Depth-Perception-Computing-the-Disparity" class="headerlink" title="Visual Depth Perception - Computing the Disparity"></a>Visual Depth Perception - Computing the Disparity</h3><p>Disparity: The difference in image location of the same 3D point under perspective to two different cameras</p>
+<ul>
+<li>Correspond pixels in the left image to those in the right image to find matches</li>
+</ul>
+<p><strong>Estimate the disparity through stereo matching</strong></p>
+<ul>
+<li>if moving our 3D point along the line connecting it with the left cameras center. <ul>
+<li>Its projection on the left camera image plane does not change. But for the projection on the right camera plane, the projection moves along the horizontal line. </li>
+<li>This is called an epipolar line and follows directly from the fixed lateral offset and image plane alignment of the two cameras in a stereo pair. We can constrain our correspondence search to be along the epipolar line, reducing the search from 2D to 1D.</li>
+<li>One thing to note is that horizontal epipolar lines only occur if the optical axes of the two cameras are parallel. </li>
+<li>In the case of non parallel optical axis, the epipolar lines are skewed.</li>
+<li>We can use <em>stereo rectification</em> to warpimages originating from two cameras with non-parallel optical axes to force epipolar lines to be horizontal.</li>
+</ul>
+</li>
+<li>A Basic Stereo Algorithm <ul>
+<li>Given: Rectified Images and Stereo Calibration.</li>
+<li>For each epipolar line take a pixel on this line in the left image, compare these left image pixels to every pixel in the right image on the same epipolar line.</li>
+<li>select the right image pixel that matches the left pixel the most closely which can be done by minimizing the cost. </li>
+<li>a very simple cost can be the squared difference in pixel intensities.</li>
+<li>Finally, we can compute the disparity by subtracting the right image location from the left one.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Image-filtering"><a href="#Image-filtering" class="headerlink" title="Image filtering"></a>Image filtering</h3><p><strong>Cross correlation</strong></p>
+<ul>
+<li>The idea to reduce salt-pepper noise is to compute the mean of the whole neighborhood, and replace the outlier pixel with this mean value: $$G[u,v] = \frac 1{(2k+1)^2} \sum^k_{i=-k} \sum^k_{j=-k} I[u-i, v-j]$$ <ul>
+<li>where (2k+1) is the filter size, (u,v) is the center pixel coordinates</li>
+</ul>
+</li>
+<li>The mean equation can be generalized by adding a weight to every pixel in the neighborhood, resulting in cross-correlation. The weight matrix H is called a kernel. <ul>
+<li>Kernal could be: mean filter, gaussian filter</li>
+</ul>
+</li>
+<li>Application：<ul>
+<li>Template matching: The pixel with the highest response from Cross-correlation is the location of the template in an image</li>
+<li>Image gradient computation: Define a finite difference kernel,and apply it to the image to get the image gradient</li>
+</ul>
+</li>
+</ul>
+<p><strong>Convolution</strong></p>
+<ul>
+<li>A convolution is a cross-correlation where the filter is flipped both horizontally and vertically before being applied to the image</li>
+<li>Unlike Cross-Correlation, Convolution is associative. If H and F are filter kernels then: $H<em>(F</em>I) = (H<em>F)</em>I$</li>
+<li>Precompute filter convolutions(H*F)then apply it once to the image to reduce runtime.</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/01/coursera_visual_percep01/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-coursera_state_est05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1824,102 +2340,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-coursera_self_driving05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/21/coursera_self_driving05/">Coursera Self-Driving 05 Vehicle Longitudinal Control</a>
-    </h1>
-  
-
-        
-        <a href="/2019/07/21/coursera_self_driving05/" class="archive-article-date">
-  	<time datetime="2019-07-21T06:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#S"><span class="toc-number">1.</span> <span class="toc-text">S</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#S"><span class="toc-text">S</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p>From Coursera, Introduction to Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/specializations/self-driving-cars?action=enroll" target="_blank" rel="noopener">https://www.coursera.org/specializations/self-driving-cars?action=enroll</a></p>
-<p>## </p>
-<h3 id="S"><a href="#S" class="headerlink" title="S"></a>S</h3><p>- </p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/07/21/coursera_self_driving05/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-coursera_self_driving03" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -2151,333 +2571,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-coursera_self_driving02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/20/coursera_self_driving02/">Coursera Self-Driving 02 Hardware and Software Architectures</a>
-    </h1>
-  
-
-        
-        <a href="/2019/07/20/coursera_self_driving02/" class="archive-article-date">
-  	<time datetime="2019-07-20T09:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Self-Driving-Hardware-and-Software-Architectures"><span class="toc-number">1.</span> <span class="toc-text">Self-Driving Hardware and Software Architectures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Sensors-and-Computing-Hardware"><span class="toc-number">1.1.</span> <span class="toc-text">Sensors and Computing Hardware</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hardware-Configuration-Design"><span class="toc-number">1.2.</span> <span class="toc-text">Hardware Configuration Design</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Software-Architecture"><span class="toc-number">1.3.</span> <span class="toc-text">Software Architecture</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Environment-Representation"><span class="toc-number">1.4.</span> <span class="toc-text">Environment Representation</span></a></li></ol></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Self-Driving-Hardware-and-Software-Architectures"><span class="toc-text">Self-Driving Hardware and Software Architectures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Sensors-and-Computing-Hardware"><span class="toc-text">Sensors and Computing Hardware</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hardware-Configuration-Design"><span class="toc-text">Hardware Configuration Design</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Software-Architecture"><span class="toc-text">Software Architecture</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Environment-Representation"><span class="toc-text">Environment Representation</span></a></li></ol></li></ol>
-        </div>
-    </div>
- -->
-        <p>From Coursera, Introduction to Self-Driving Cars by University of Toronto<br><a href="https://www.coursera.org/specializations/self-driving-cars?action=enroll" target="_blank" rel="noopener">https://www.coursera.org/specializations/self-driving-cars?action=enroll</a></p>
-<h2 id="Self-Driving-Hardware-and-Software-Architectures"><a href="#Self-Driving-Hardware-and-Software-Architectures" class="headerlink" title="Self-Driving Hardware and Software Architectures"></a>Self-Driving Hardware and Software Architectures</h2><h3 id="Sensors-and-Computing-Hardware"><a href="#Sensors-and-Computing-Hardware" class="headerlink" title="Sensors and Computing Hardware"></a>Sensors and Computing Hardware</h3><p><strong>Sensors types and characteristics</strong></p>
-<ul>
-<li>Sensor Categorization:<ul>
-<li>exteroceptive: extero=surroundings</li>
-<li>proprioceptive: proprio=internal</li>
-</ul>
-</li>
-<li>Camera:   <ul>
-<li>Sensors for perception: Essential for correctly perceiving</li>
-<li>Comparison metrics:<ul>
-<li>Resolution</li>
-<li>Field of view</li>
-<li>Dynamic range: difference between the darkest and the lightest tones in an image</li>
-<li>other properties: focal length, depth of field and frame rate </li>
-</ul>
-</li>
-<li>Trade-off between resolution and FOV</li>
-<li>stereo camera: <ul>
-<li>The combination of two cameras with overlapping fields of view and aligned image planes</li>
-<li>allow depth estimation from synchronized image pairs</li>
-<li>Pixel values from image can be matched to the other image producing a disparity map of the scene. This disparity can then be used to estimate depth at each pixel.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Lidar:<ul>
-<li>involves shooting light beams into the environment and measuring the reflected return.</li>
-<li>include a spinning element with multiple stacked light sources</li>
-<li>output detailed 3D scene geometry from LIDAR point cloud</li>
-<li>not effected by the environments lighting. So do not face the same challenges as cameras when operating in poor or variable lighting conditions</li>
-<li>Comparison metrics:<ul>
-<li>Number of beams: 8, 16, 32, and 64</li>
-<li>Points per second: The faster the point collection, the more detailed the 3D point cloud can be.</li>
-<li>Rotation rate: The higher this rate, the faster the 3D point clouds are updated.</li>
-<li>Field of view</li>
-</ul>
-</li>
-<li>Upcoming: Solid state LIDAR<ul>
-<li>without a rotational component of the typical LIDARs</li>
-<li>to become extremely low-cost and reliable.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>RADAR<ul>
-<li>radio detection and ranging</li>
-<li>robust object detection and relative speed estimation</li>
-<li>particularly useful in adverse weather as they are mostly unaffected by precipitation.</li>
-<li>Comparison metrics: <ul>
-<li>range </li>
-<li>field of view </li>
-<li>position and speed accuracy</li>
-</ul>
-</li>
-<li>Configurations: <ul>
-<li>WFOV (Wide FOV), short range </li>
-<li>NFOV (Narrow FOV), long range</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Ultrasonic<ul>
-<li>for sound navigation and ranging</li>
-<li>Short-range all-weather distance measurement</li>
-<li>Ideal for low-cost parking solutions</li>
-<li>Unaffected by lighting, precipitation</li>
-<li>Comparison metrics: <ul>
-<li>Range</li>
-<li>FOV</li>
-<li>Cost</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>GNSS/IMU:<ul>
-<li>Global Navigation Satellite Systems (e.g. GPS or Galileo) and Inertial measurement units</li>
-<li>Direct measure of ego vehicle states <ul>
-<li>position, velocity(GNSS): varying accuracies:RTK,PPP,DGPS </li>
-<li>angular rotation rate(IMU)</li>
-<li>acceleration(IMU)</li>
-<li>heading (IMU, GPS)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Wheel odometry sensors<ul>
-<li>Tracks wheel velocities and orientation</li>
-<li>Uses these to calculate overall speed and orientation of car <ul>
-<li>speed accuracy </li>
-<li>position drift</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><strong>Self-driving computing hardware</strong></p>
-<ul>
-<li>Need a”self-driving brain”: main decision makingunit of the car</li>
-<li>Image processing, Object detection, Mapping <ul>
-<li>GPUs - Graphic Processing Unit </li>
-<li>FPGAs - Field Programmable Gate Array</li>
-<li>ASICs - Application Specific Integrated Chip</li>
-</ul>
-</li>
-<li>Synchronization hardware<ul>
-<li>To synchronize different modules and provide a common clock</li>
-<li>GPS relies on extremely accurate timing to function, and as such can act as an appropriate reference clock when available.</li>
-<li>sensor measurements must be timestamped with consistent times for sensor fusion to function correctly.</li>
-</ul>
-</li>
-<li>Sensor placement:<br><img src="/images/self_driving01.jpg" width="50%" height="50%"></li>
-</ul>
-<h3 id="Hardware-Configuration-Design"><a href="#Hardware-Configuration-Design" class="headerlink" title="Hardware Configuration Design"></a>Hardware Configuration Design</h3><p><strong>Sensor coverage requirements for different scenarios</strong></p>
-<ul>
-<li>Assumptions:<ul>
-<li>Aggressive deceleration: $5 m/s^2$</li>
-<li>Comfortable deceleration: $2 m/s^2$<ul>
-<li>This is the norm，unless otherwise stated</li>
-</ul>
-</li>
-<li>Stopping distance: $d=\frac {v^2}{2a}$</li>
-</ul>
-</li>
-</ul>
-<p><em>Highway driving</em></p>
-<ul>
-<li>Broadly,3 kinds of maneuvers: Emergency Stop, Maintain Speed, Lane change</li>
-<li>Emergency Stop:<ul>
-<li>Longitudinal Coverage: Assume we are speeding at 120kmph</li>
-<li>Stopping distance could be ~110 metres; aggressive deceleration</li>
-<li>Lateral coverage: At least adjacent lanes, since we may change lanes to avoid a hard stop.</li>
-</ul>
-</li>
-<li>Maintain Speed<ul>
-<li>Relative speeds are typically less than 30 kmph.</li>
-<li>Longitudinal coverage: At least~100 metres in front.</li>
-<li>Both vehicles are moving, so don’t need to look as far as emergency-stop case.</li>
-<li>Lateral Coverage: Usually current lane Adjacent lanes would be preferred for merging vehicle detection.</li>
-</ul>
-</li>
-<li>Lane Change</li>
-<li>summary:<br><img src="/images/self_driving02.jpg" width="50%" height="50%"></li>
-</ul>
-<p><em>Urban driving</em></p>
-<ul>
-<li>Broadly,6 kinds of maneuvers: <ul>
-<li>Emergency Stop, Maintain Speed, Lane Change</li>
-<li>Overtaking, Turning,crossing at intersections, Passing roundabouts</li>
-</ul>
-</li>
-<li>Overtaking:<ul>
-<li>Longitudinal coverage: if overtaking a parked or moving vehicle, need to detect oncoming traffic beyond point of return to own lane.</li>
-<li>Lateral coverage: always need to observe adjacent lanes. Need to observe additional lanes if other vehicles can move into adjacent lanes.</li>
-</ul>
-</li>
-<li>Intersections:<ul>
-<li>Observe beyond intersection for approaching vehicles, pedestrian crossings, clear exit lanes.</li>
-<li>Requires near omni-directional sensing for arbitrary intersection angles.</li>
-</ul>
-</li>
-<li>Roundabouts:<ul>
-<li>Lateral coverage: Vehicles are slower than usual, limited range requirement.</li>
-<li>Longitudinal coverage: Due to the shape of theroundabout, need a wider field of view.</li>
-</ul>
-</li>
-<li>Summary:<br><img src="/images/self_driving03.jpg" width="50%" height="50%"></li>
-</ul>
-<p><strong>Overall coverage,blind spots</strong><br><img src="/images/self_driving04.jpg" width="50%" height="50%"></p>
-<h3 id="Software-Architecture"><a href="#Software-Architecture" class="headerlink" title="Software Architecture"></a>Software Architecture</h3><p><strong>the basic architecture of a typical self-driving software</strong><br><img src="/images/self_driving05.jpg" width="50%" height="50%"></p>
-<p><strong>Identify the standard software decomposition</strong></p>
-<ul>
-<li>Environment Perception<ul>
-<li>Localization: GPS/IMU/Wheel Odometry</li>
-<li>Dynamic object detection -&gt; Dynamic object tracking -&gt; Object Motion Prediction: LIDAR, cameras, Radar</li>
-<li>Static object detection: HD road Map</li>
-</ul>
-</li>
-<li>Environment Mapping<ul>
-<li>Occupancy Grid Map: Object tracks, LIDAR</li>
-<li>Localization Map</li>
-<li>Detailed Road Map</li>
-</ul>
-</li>
-<li>Motion Planning<ul>
-<li>Mission Planner</li>
-<li>Behavior planner</li>
-<li>Local planner</li>
-</ul>
-</li>
-<li>Controller<ul>
-<li>Velocity controller: throttle percentage, brake percentage</li>
-<li>Steering controller: steering angle</li>
-</ul>
-</li>
-<li>System Supervisor<ul>
-<li>Hardware supervisor: sensor outputs</li>
-<li>Software supervisor: Environment perception, environment mapping, motion planning, controller</li>
-</ul>
-</li>
-</ul>
-<h3 id="Environment-Representation"><a href="#Environment-Representation" class="headerlink" title="Environment Representation"></a>Environment Representation</h3><p><strong>Localization point cloud or feature map</strong></p>
-<ul>
-<li>localization of vehicle in the environment.</li>
-<li>Collects continuous sets in LIDAR</li>
-<li>The difference between LIDAR maps is used to calculate the movement of the autonomous vehicle</li>
-</ul>
-<p><strong>Occupancy grid map</strong></p>
-<ul>
-<li>collision avoidance with static objects.</li>
-<li>Discretized fine grain grid map<ul>
-<li>Can be 2Dor 3D</li>
-</ul>
-</li>
-<li>Occupancy by a static object<ul>
-<li>Trees and buildings</li>
-</ul>
-</li>
-<li>Curbs and other non drivable surfaces<ul>
-<li>Dynamic objects are removed</li>
-</ul>
-</li>
-</ul>
-<p><strong>Detailed road map</strong></p>
-<ul>
-<li>path planning</li>
-<li>traffic regulation, lane boundaries</li>
-<li>3 Methods of creation:<ul>
-<li>Fully Online</li>
-<li>Fully Offline</li>
-<li>Created Offline and Updated Online</li>
-</ul>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Self-driving</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/07/20/coursera_self_driving02/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -2509,7 +2602,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共112k字
+              本站总共122.2k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -2616,11 +2709,31 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2644,18 +2757,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Deep learning</a>
               </li>
              
@@ -2668,19 +2769,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+                <a href="javascript:void(0)" class="js-tag color3">Network</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2692,11 +2793,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Stochastic</a>
+                <a href="javascript:void(0)" class="js-tag color3">Self-driving</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Self-driving</a>
+                <a href="javascript:void(0)" class="js-tag color1">Stochastic</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2708,7 +2809,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+                <a href="javascript:void(0)" class="js-tag color4">learning</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2716,15 +2817,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">learning</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
+                <a href="javascript:void(0)" class="js-tag color3">读书</a>
               </li>
             
             <div class="clearfix"></div>

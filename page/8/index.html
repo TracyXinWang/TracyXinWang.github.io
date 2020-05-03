@@ -247,6 +247,300 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-MIT6006-Lec08" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/17/MIT6006-Lec08/">MIT6006 Lec08 Hashing I</a>
+    </h1>
+  
+
+        
+        <a href="/2018/11/17/MIT6006-Lec08/" class="archive-article-date">
+  	<time datetime="2018-11-17T07:07:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dictionary-and-Motivation"><span class="toc-number">1.</span> <span class="toc-text">Dictionary and Motivation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Dictionary-problem"><span class="toc-number">1.1.</span> <span class="toc-text">Dictionary problem</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Motivation"><span class="toc-number">1.2.</span> <span class="toc-text">Motivation</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Prehashing-and-Hashing"><span class="toc-number">2.</span> <span class="toc-text">Prehashing and Hashing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Chaining"><span class="toc-number">3.</span> <span class="toc-text">Chaining</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Simple-uniform-hashing"><span class="toc-number">3.1.</span> <span class="toc-text">Simple uniform hashing</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hash-Function"><span class="toc-number">4.</span> <span class="toc-text">Hash Function</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dictionary-and-Motivation"><span class="toc-text">Dictionary and Motivation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Dictionary-problem"><span class="toc-text">Dictionary problem</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Motivation"><span class="toc-text">Motivation</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Prehashing-and-Hashing"><span class="toc-text">Prehashing and Hashing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Chaining"><span class="toc-text">Chaining</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Simple-uniform-hashing"><span class="toc-text">Simple uniform hashing</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hash-Function"><span class="toc-text">Hash Function</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="Dictionary-and-Motivation"><a href="#Dictionary-and-Motivation" class="headerlink" title="Dictionary and Motivation"></a>Dictionary and Motivation</h3><h4 id="Dictionary-problem"><a href="#Dictionary-problem" class="headerlink" title="Dictionary problem"></a>Dictionary problem</h4><ul>
+<li>Dictionary is a abstract data tupe(ADT).</li>
+<li>Which means it maintains a set of items, each with a key</li>
+<li>The available operations are:<ul>
+<li>insert(item): add item to the set (The key must be unique, otherwise overide an exsiting key)</li>
+<li>delete(item): remove item from set</li>
+<li>search(key): return item with key if it exists<br>Balanced BST solve in $O(lg n)$ time per operation. The goal is to make each operation $O(1)$ time.</li>
+</ul>
+</li>
+</ul>
+<p>(remember that BST etc. are data structure, which can be seen as the implementation of ADT)</p>
+<h4 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h4><p>Dictionaries are perhaps the most popular data structure in CS</p>
+<ul>
+<li>built into most modern programming languages (Python, Perl, Ruby, JavaScript, Java, C++, C#, . . . )</li>
+<li>e.g. best docdist code: word counts &amp; inner product</li>
+<li>implement databases: (DB HASH in Berkeley DB)<ul>
+<li>English word → definition (literal dict.)</li>
+<li>English words: for spelling correction</li>
+<li>word → all webpages containing that word</li>
+<li>username → account object</li>
+</ul>
+</li>
+<li>compilers &amp; interpreters: names → variables</li>
+<li>network routers: IP address → wire</li>
+<li>network server: port number → socket/app.</li>
+<li>virtual memory: virtual address → physical</li>
+</ul>
+<h3 id="Prehashing-and-Hashing"><a href="#Prehashing-and-Hashing" class="headerlink" title="Prehashing and Hashing"></a>Prehashing and Hashing</h3><p>How to solve the dictionary problem that is to make operation time to $O(1)$?</p>
+<p><strong>Simple Approach: Direct Access Table</strong><br>This means items would need to be stored in an array, indexed by key (random access). But this has two problems:</p>
+<ol>
+<li>keys must be nonnegative integers (or using two arrays, integers)</li>
+<li>if the key happens to have large range, then need large space — e.g. one key is 2256, even with no other keys, the table must have take that space.</li>
+</ol>
+<p><strong>Solution</strong><br><em>Solution to 1</em>: “prehash” keys to integers</p>
+<ul>
+<li>In theory, possible because keys are finite ⇒ set of keys is countable</li>
+<li>In Python: hash(object) (actually hash is misnomer, should be “prehash”) where object can be a number, string, tuple, etc. or object implementing hash (default = id = memory address)</li>
+<li>In theory, x = y ⇔ hash(x) = hash(y)</li>
+<li>Python applies some heuristics for practicality: for example, hash(‘\0B ’) = 64 = hash(‘\0\0C’)</li>
+<li>Object’s key should not change while in table (else cannot find it anymore)</li>
+<li>No mutable objects like lists</li>
+</ul>
+<p><em>Solution to 2</em>: hashing </p>
+<ul>
+<li>Reduce universe U of all keys (say, integers) down to reasonable size m for table</li>
+<li>idea: m ≈ n = number of keys stored in dictionary</li>
+<li><strong>hash function</strong> h: $U → {0, 1, . . . , m − 1}$</li>
+<li>two keys $k_i, k_j ∈ K$ collide if $h(k_i) = h(k_j)$</li>
+</ul>
+<p>Hash Function: A function that converts a given big phone number to a small practical integer value. The mapped integer value is used as an index in hash table.</p>
+<p>How do we deal with collisions? We will see two ways</p>
+<ol>
+<li>Chaining</li>
+<li>Open addressing: in Lec10</li>
+</ol>
+<h3 id="Chaining"><a href="#Chaining" class="headerlink" title="Chaining"></a>Chaining</h3><p>Linked list of colliding elements in each slot of table</p>
+<ul>
+<li>Search must go through whole list T[h(key)]</li>
+<li>Worst case: all n keys hash to same slot ⇒ Θ(n) per operation</li>
+</ul>
+<h4 id="Simple-uniform-hashing"><a href="#Simple-uniform-hashing" class="headerlink" title="Simple uniform hashing"></a>Simple uniform hashing</h4><p>An assumption (cheating): Each key is equally likely to be hashed to any slot of table, independent of where other keys are hashed.</p>
+<p>let n = number of keys stored in table<br>m = number of slots in table<br>load factor α = n/m = expected number of keys per slot = expected length of a chain</p>
+<p><em>Performance</em>:<br>This implies that expected running time for search is $Θ(1+α)$ — the 1 comes from applying the hash function and random access to the slot whereas the $α$ comes from searching the list. This is equal to $O(1)$ if $α = O(1)$, i.e., $m = Ω(n)$.</p>
+<h3 id="Hash-Function"><a href="#Hash-Function" class="headerlink" title="Hash Function"></a>Hash Function</h3><p>Following are three methods to achieve the above performance</p>
+<p><strong>Division Method</strong>:<br>$$h(k) = k \; mod \; m$$<br>This is practical when m is prime but not too close to power of 2 or 10 (then just depending on low bits/digits).<br>But it is inconvenient to find a prime number, and division is slow.</p>
+<p><strong>Multiplication Method</strong>:<br>$$h(k) = [(a · k) \; mod \; 2^w] \gg (w − r)$$<br>where a is random, k is w bits, and $m = 2^r$.<br>This is practical when a is odd &amp; $2^{w−1}$ &lt; $a$ &lt; $2^w$ &amp; a not too close to $2^{w−1}$ or $2^w$.<br>Multiplication and bit extraction are faster than division.</p>
+<p><strong>Universal Hashing</strong>:<br>For example: $h(k) = [(ak+b) \; mod \; p] mod \; m$ where a and b are random $∈ {0, 1, . . . p−1}$, and p is a large prime ($&gt; |U|$).<br>This implies that for worst case keys $k_1 \ne k_2$, (and for a, b choice of h): $$Pr_{a,b}(event \; X_{k_1k_2}) = Pr_{a,b}\{h(k_1)=h(k_2)\} = \frac 1m$$</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/17/MIT6006-Lec08/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-MIT6006-Lec07" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/15/MIT6006-Lec07/">MIT6006 Lec07 Linear-Time Sorting</a>
+    </h1>
+  
+
+        
+        <a href="/2018/11/15/MIT6006-Lec07/" class="archive-article-date">
+  	<time datetime="2018-11-15T03:52:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Comparison-model"><span class="toc-number">1.</span> <span class="toc-text">Comparison model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Decision-tree"><span class="toc-number">1.1.</span> <span class="toc-text">Decision tree</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lower-Bounds"><span class="toc-number">2.</span> <span class="toc-text">Lower Bounds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linear-time-Sorting"><span class="toc-number">3.</span> <span class="toc-text">Linear-time Sorting</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Radix-sort"><span class="toc-number">3.1.</span> <span class="toc-text">Radix sort</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Comparison-model"><span class="toc-text">Comparison model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Decision-tree"><span class="toc-text">Decision tree</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lower-Bounds"><span class="toc-text">Lower Bounds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linear-time-Sorting"><span class="toc-text">Linear-time Sorting</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Radix-sort"><span class="toc-text">Radix sort</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <p>Need to digest again!</p>
+<p>First lists some claims:</p>
+<ul>
+<li>searching among n preprocessed items requires $Ω(lg n)$ time: binary search, AVL tree search optimal</li>
+<li>sorting n items requires $Ω(nlg n)$: mergesort, heap sort, AVL sort optimal</li>
+</ul>
+<h3 id="Comparison-model"><a href="#Comparison-model" class="headerlink" title="Comparison model"></a>Comparison model</h3><ul>
+<li>All the input items are black boxes (ADTs)</li>
+<li>Only support comparisons (&gt;,&lt;, etc.)</li>
+<li>Time cost = number of comparisons</li>
+</ul>
+<h4 id="Decision-tree"><a href="#Decision-tree" class="headerlink" title="Decision tree"></a>Decision tree</h4><p>Any comparison algorithm can be viewed/specified as a tree of all possible comparison outcomes &amp; resulting output.</p>
+<ul>
+<li>internal node = binary decision</li>
+<li>leaf = output (algorithm is done)</li>
+<li>root-to-leaf path = algorithm execution</li>
+<li>path length (depth) = running time</li>
+<li>height of tree = worst-case running time</li>
+</ul>
+<p>In fact, binary decision tree model is more powerful than comparison model, and lower bounds extend to it</p>
+<blockquote>
+<p>A sorting algorithm is comparison based if it uses comparison operators to find the order between two numbers.  Comparison sorts can be viewed abstractly in terms of decision trees. A decision tree is a full binary tree that represents the comparisons between elements that are performed by a particular sorting algorithm operating on an input of a given size. The execution of the sorting algorithm corresponds to tracing a path from the root of the decision tree to a leaf. At each internal node, a comparison ai &lt;= aj is made. The left subtree then dictates subsequent comparisons for ai &lt;= aj, and the right subtree dictates subsequent comparisons for ai &gt; aj. When we come to a leaf, the sorting algorithm has established the ordering. </p>
+</blockquote>
+<h3 id="Lower-Bounds"><a href="#Lower-Bounds" class="headerlink" title="Lower Bounds"></a>Lower Bounds</h3><p><strong>Search Lower Bound</strong></p>
+<ul>
+<li>number of leaves &gt;= number of possible answers &gt;= n</li>
+<li>decision tree is binary</li>
+<li>height &gt;=  $lg Θ(n) = lg n ± Θ(1)$</li>
+</ul>
+<p><strong>Sorting Lower Bound</strong></p>
+<ul>
+<li>leaf specifies answer as permutation: A[3] ≤ A[1] ≤ A[9] ≤ . . .</li>
+<li>all n! are possible answers</li>
+<li>number of leaves &gt;= n!</li>
+</ul>
+<p>$$ \begin{align*}<br>height &amp; ≥ lg n! \\<br>&amp; = lg(1·2 /cdots (n − 1)·n) \\<br>&amp; = lg 1 + lg 2 + /cdots + lg(n − 1) + lg n \\<br>&amp; = \sum^n_{i=1} lg i \\<br>&amp; \ge \sum^n_{i=n/2} lg i \\<br>&amp; \ge \sum^n_{i=n/2} lg \frac n2 \\<br>&amp; = \frac n2 lg n - \frac n2 \\<br>&amp; = \Omega (n lg n)<br>\end{align*}$$</p>
+<p>Therefore, the lower bound for Comparison based sorting algorithm (Merge Sort, Heap Sort, Quick-Sort .. etc) is $Ω(nLogn)$, i.e., they cannot do better than $n logn$.</p>
+<h3 id="Linear-time-Sorting"><a href="#Linear-time-Sorting" class="headerlink" title="Linear-time Sorting"></a>Linear-time Sorting</h3><h4 id="Radix-sort"><a href="#Radix-sort" class="headerlink" title="Radix sort"></a>Radix sort</h4><p><a href="https://www.geeksforgeeks.org/counting-sort/" target="_blank" rel="noopener">Counting sort</a> is a linear time sorting algorithm that sort in $O(n+k)$ time when elements are in range from 1 to k. But if the elements are in range from 1 to $n^2$, counting sort will take $O(n^2)$.</p>
+<p>How to sort such an array in linear time? Use Radix sort.<br>The idea of Radix Sort is to do digit by digit sort starting from least significant digit to most significant digit. Radix sort uses counting sort as a subroutine to sort.</p>
+<p><br></p>
+<p>Reference:<br><a href="https://www.geeksforgeeks.org/lower-bound-on-comparison-based-sorting-algorithms/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/lower-bound-on-comparison-based-sorting-algorithms/</a><br><a href="https://www.geeksforgeeks.org/radix-sort/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/radix-sort/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/15/MIT6006-Lec07/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-MIT6006-Lec06" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1431,239 +1725,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-MIT6006-Lec02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/03/MIT6006-Lec02/">MIT6006 Lec02 Models of Computation</a>
-    </h1>
-  
-
-        
-        <a href="/2018/11/03/MIT6006-Lec02/" class="archive-article-date">
-  	<time datetime="2018-11-02T23:45:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-model-of-computation"><span class="toc-number">1.</span> <span class="toc-text">What is model of computation?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Random-Access-Machine-RAM"><span class="toc-number">2.</span> <span class="toc-text">Random Access Machine (RAM)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pointer-machine"><span class="toc-number">3.</span> <span class="toc-text">Pointer machine</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-model"><span class="toc-number">4.</span> <span class="toc-text">Python model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Document-Distance-Problem-—-compute-d-D1-D2"><span class="toc-number">5.</span> <span class="toc-text">Document Distance Problem — compute d(D1, D2)</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-model-of-computation"><span class="toc-text">What is model of computation?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Random-Access-Machine-RAM"><span class="toc-text">Random Access Machine (RAM)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pointer-machine"><span class="toc-text">Pointer machine</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-model"><span class="toc-text">Python model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Document-Distance-Problem-—-compute-d-D1-D2"><span class="toc-text">Document Distance Problem — compute d(D1, D2)</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="What-is-model-of-computation"><a href="#What-is-model-of-computation" class="headerlink" title="What is model of computation?"></a>What is model of computation?</h3><p>Model of computation specifies</p>
-<ul>
-<li>what <strong>operations</strong> an algorithm is allowed</li>
-<li><strong>cost</strong> (time, space, . . . ) of each operation</li>
-<li>cost of algorithm = sum of operation costs</li>
-</ul>
-<p>The followings are two kinds of models of computation.</p>
-<h3 id="Random-Access-Machine-RAM"><a href="#Random-Access-Machine-RAM" class="headerlink" title="Random Access Machine (RAM)"></a>Random Access Machine (RAM)</h3><ul>
-<li>It is modeled by a big array. </li>
-<li>For each word, it registers $\theta(1)$</li>
-<li>In $\theta(1)$ time, it can<ul>
-<li>load word</li>
-<li>compute (+,-,*,/,&amp;,|,^) on registers</li>
-<li>store register $r_j$ into memory</li>
-</ul>
-</li>
-<li>What is a word: <ul>
-<li>assume basic objects (e.g. int) fit in word</li>
-</ul>
-</li>
-<li>It is realistic and powerful → implement abstractions</li>
-</ul>
-<h3 id="Pointer-machine"><a href="#Pointer-machine" class="headerlink" title="Pointer machine"></a>Pointer machine</h3><ul>
-<li>can dynamically allocated objects</li>
-<li>object has $O(1)$ fields</li>
-<li>field = word (e.g., int) or pointer to object/null (a.k.a. reference)</li>
-<li>weaker than RAM</li>
-</ul>
-<h3 id="Python-model"><a href="#Python-model" class="headerlink" title="Python model"></a>Python model</h3><p>Python lets you use either mode of thinking, e.g.</p>
-<ul>
-<li>“list” is acutually an array in RAM:<br>  &emsp; &nbsp; L[i] = L[j] + 5: this operation only costs $\theta(1)$ time (constant time)</li>
-<li>object with $O(1)$ attributes (including references) is like a pointer machine<br>  &emsp; &nbsp; $x=x.next$ costs $\theta(1)$ time</li>
-</ul>
-<p>The following are some operations and their costs in Python. To determine their cost, imagine implementation in terms of the above two models(RAM or Pointer). </p>
-<ol>
-<li><strong>list</strong><br> (a) L.append(x): $\theta(1)$ time.  (It uses table doubling)<br> (b) L = L1+L2 ≡<br> &emsp; L = []: cost $\theta(1)$ time to build a list<br> &emsp; for x in L1: L.append(x) costs $\theta(1)$. Totally in L1 is $\theta(|L1|)$<br> &emsp; for x in L2: L.append(x) costs $\theta(1)$. Totally in L2 is $\theta(|L2|)$<br> Therefore, L = L1+L2 costs $\theta(1+|L1|+|L2|)$ time<br> (c) L1.extend(L2) ≡<br>  &emsp; for x in L2: L1.append(x) costs θ(1). Totally $\theta(|L2|)$<br>  &emsp; ≡ L1+ = L2<br> Therefore, costs θ(1 + |L2|) time<br> (d) L2 = L1[i : j] ≡<br>   &emsp; L2 = []: θ(1)<br>   &emsp; for k in range(i, j): L2.append(L1[i]) costs θ(1)<br>  Therefore, costs $θ(j − i + 1) = O(|L|)$<br> (e) len(L):  $θ(1)$ time - since list stores its length in a field<br> (f) L.sort(): $θ(|L|log |L|)$ - via comparison sort </li>
-<li><strong>tuple, str</strong>: similar</li>
-<li><strong>dict</strong>: via hashing, costs $θ(1)$ time</li>
-<li><strong>set</strong>: similar (think of as dict without vals)</li>
-<li><strong>heapq</strong>: heappush &amp; heappop - via heaps → $θ(log(n))$ time</li>
-<li><strong>long</strong>: via Karatsuba algorithm<br> &emsp; x + y → O(|x| + |y|) time where |y| reflects # words<br> &emsp; x ∗ y → O((|x| + |y|)log(3)) ≈ O((|x| + |y|)1.58) time</li>
-</ol>
-<h3 id="Document-Distance-Problem-—-compute-d-D1-D2"><a href="#Document-Distance-Problem-—-compute-d-D1-D2" class="headerlink" title="Document Distance Problem — compute d(D1, D2)"></a>Document Distance Problem — compute d(D1, D2)</h3><p>The problem is acutually to find similarity in documents, and have application in detecting duplicates, plagiarism, and also in web search (D2 = query).<br>In this problem, we define word as the sequence of alphanumeric characters, and document as a sequence of words (ignore space, punctuation).</p>
-<p>The idea is to define distance in terms of <strong>shared words</strong>. Think of document D as a vector:<br>If three axis are defined as three words: the, dog, cat<br>Then vector v1 could be “the cat”, vector v2 could be “the dog”, vector v3 could be “cat dog”</p>
-<p>After looking them as vectors, then we can apply mathematical methods to calculate the distance between these vectors like angle </p>
-<p>The algorithm can be formed as follows:</p>
-<ol>
-<li>split each document into words</li>
-<li>count word frequencies (document vectors)</li>
-<li>compute dot product (&amp; divide)</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/03/MIT6006-Lec02/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-problem-hexo-deploy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/30/problem-hexo-deploy/">Hexo deploy 出现问题</a>
-    </h1>
-  
-
-        
-        <a href="/2018/10/30/problem-hexo-deploy/" class="archive-article-date">
-  	<time datetime="2018-10-30T02:54:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              
-            </div>
-           -->
-        <!--   -->
-        <p>也不知道怎么回事办公室的电脑突然重启了，可能是更新吧，但是更新完了回来发现hexo generate 和 deploy 并不能使用了<br>最开始报的错是 <code>Node 不是内部或外部命令</code>，一看是 node.js 的环境变量没有配置，很奇怪，之前明明是OK的，然后我就在环境变量里面配置了一下node，步骤如下：</p>
-<ul>
-<li>右键<code>我的电脑-属性-高级系统设置</code></li>
-<li>找到下面有个<code>环境变量</code>的选择框，点进去</li>
-<li>此时出来的对话框中有上下两个部分，上面的部分属于<code>用户变量</code>，找到里面有一行是 <code>path</code>，点击<code>编辑</code></li>
-<li>新建一个变量，把node.js所在的路径拷进去就行了，我的是 <code>D:\Program Files\nodejs</code></li>
-</ul>
-<p>然后 <code>hexo generate</code> 就可以了，deploy的时候发现出现以下问题：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">FATAL Something<span class="string">'s wrong. Maybe you can find the solution here: http://hexo.io/docs/troubleshooting.html</span></span><br><span class="line"><span class="string">Error: spawn git ENOENT</span></span><br><span class="line"><span class="string">at notFoundError (C:\Users\XXX\hexo\node_modules\cross-spawn\lib\enoent.js:11:11)</span></span><br><span class="line"><span class="string">at verifyENOENT (C:\Users\XXX\hexo\node_modules\cross-spawn\lib\enoent.js:46:16)</span></span><br><span class="line"><span class="string">at ChildProcess.cp.emit (C:\Users\XXX\hexo\node_modules\cross-spawn\lib\enoent.js:33:19)</span></span><br><span class="line"><span class="string">at Process.ChildProcess._handle.onexit (internal/child_process.js:198:12)</span></span><br></pre></td></tr></table></figure></p>
-<p>那个XXX是hexo所在文件的路径，这里就不放出来了。<br>解决这个的问题最直接的办法就是直接在hexo的当前文件夹下，运行 <code>git bash</code> 然后在bash 处运行 <code>hexo deploy</code>…</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/30/problem-hexo-deploy/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
@@ -1695,7 +1756,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共112k字
+              本站总共122.2k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -1802,11 +1863,31 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1830,18 +1911,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Deep learning</a>
               </li>
              
@@ -1854,19 +1923,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+                <a href="javascript:void(0)" class="js-tag color3">Network</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1878,11 +1947,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Stochastic</a>
+                <a href="javascript:void(0)" class="js-tag color3">Self-driving</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Self-driving</a>
+                <a href="javascript:void(0)" class="js-tag color1">Stochastic</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1894,7 +1963,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+                <a href="javascript:void(0)" class="js-tag color4">learning</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1902,15 +1971,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">learning</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
+                <a href="javascript:void(0)" class="js-tag color3">读书</a>
               </li>
             
             <div class="clearfix"></div>

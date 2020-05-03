@@ -247,6 +247,246 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-SolDerivative" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/19/SolDerivative/">Numerical differentiation - ways to find derivative</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/19/SolDerivative/" class="archive-article-date">
+  	<time datetime="2019-02-19T01:22:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Finite-difference-formulas-Newton’s-difference-quotient"><span class="toc-number">1.</span> <span class="toc-text">Finite difference formulas (Newton’s difference quotient)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Complex-step-approximation"><span class="toc-number">2.</span> <span class="toc-text">Complex-step approximation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Differential-quadrature"><span class="toc-number">3.</span> <span class="toc-text">Differential quadrature</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Finite-difference-formulas-Newton’s-difference-quotient"><span class="toc-text">Finite difference formulas (Newton’s difference quotient)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Complex-step-approximation"><span class="toc-text">Complex-step approximation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Differential-quadrature"><span class="toc-text">Differential quadrature</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <p><br></p>
+<blockquote>
+<p>In numerical analysis, numerical differentiation describes algorithms for estimating the derivative of a mathematical function using values of the function and perhaps other knowledge about the function.</p>
+</blockquote>
+<p>There are mainly two ways to calculate the derivative of a function. (And useful when finding Jacobian matrix)</p>
+<h3 id="Finite-difference-formulas-Newton’s-difference-quotient"><a href="#Finite-difference-formulas-Newton’s-difference-quotient" class="headerlink" title="Finite difference formulas (Newton’s difference quotient)"></a>Finite difference formulas (Newton’s difference quotient)</h3><p>This way is the same as what we learn in high school course. That is to compute the slope of a nearby secant line with a tiny tiny increament h:$$\dfrac {f(x+h)-f(x)}{h}$$<br>And in implementation, we just need to make sure that the h is very very small.</p>
+<p>The above formula is also called the Newton’s forward approximation when $h &gt; 0$. Since it uses the point that are forward to the current point. If $h&lt;0$, then it is called Newton’s backward approximation.<br>If we don’t use the current point and chooce one tiny step both forward and backward to calculate the derivative: $\dfrac {f(x+h)-f(x-h)}{2h}$, then it is called central approximation. And as the error item in this way is proportional to $h^2$, for small values of h, the approximation is more accurate than one-sided(forward/backward) estimation.</p>
+<h3 id="Complex-step-approximation"><a href="#Complex-step-approximation" class="headerlink" title="Complex-step approximation"></a>Complex-step approximation</h3><p>The classical finite difference approximations for numerical differentiation are ill-conditioned. However, if f is a holomorphic function, real-valued on the real line, which can be evaluated at points in the complex plane near x then there are stable methods. The first derivative can be calculated by the complex-step derivative formula as follows: $$f’(x) = \frac{Im(f(x+ih))}{h}$$<br>where $i$ is the imaginary unit, h is the small step size.</p>
+<p>The derivation can be as follows:</p>
+<ul>
+<li>Let $f(x)$ be a function, let $x_0$ be a point on the real axis, and let $h$ be a real parameter. </li>
+<li>Expand $f(x)$ in a Taylor series off the real axis: $$f(x_0+ih) = f(x_0) = ihf’(x_0) - h^2f’’(x_0)/2! - ih^3F^{(3)}/3! + \cdots$$</li>
+<li>Take the imaginary part of both sides and divide by h: $$f’(x_0) = \frac {Im(f(x_0+ih))}{h} + O(h^2)$$</li>
+<li>Therefore, the above gives an approximation to the value of the derivative, $f′(x_0)$, and that is accurate to order $O(h^2)$.</li>
+</ul>
+<p>$h = 1.0E-20$ usually works very well in nearly all cases, and results in derivatives no less accurate than the original algorithm.</p>
+<p>Note that the above formula is only valid for calculating a first-order derivative.</p>
+<h3 id="Differential-quadrature"><a href="#Differential-quadrature" class="headerlink" title="Differential quadrature"></a>Differential quadrature</h3><blockquote>
+<p>Differential quadrature is the approximation of derivatives by using weighted sums of function values. The name is in analogy with quadrature meaning Numerical integration where weighted sums are used in methods such as Simpson’s method or the Trapezium rule. There are various methods for determining the weight coefficients. Differential quadrature is used to solve partial differential equations.</p>
+</blockquote>
+<p><br></p>
+<p>Reference:<br><a href="https://wiki2.org/en/Numerical_differentiation" target="_blank" rel="noopener">https://wiki2.org/en/Numerical_differentiation</a><br><a href="https://blogs.mathworks.com/cleve/2013/10/14/complex-step-differentiation/" target="_blank" rel="noopener">https://blogs.mathworks.com/cleve/2013/10/14/complex-step-differentiation/</a><br><a href="http://mdolab.engin.umich.edu/content/guide-complex-step-derivative-approximation-0" target="_blank" rel="noopener">http://mdolab.engin.umich.edu/content/guide-complex-step-derivative-approximation-0</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/19/SolDerivative/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-UnifyAI" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/16/UnifyAI/">读《浅谈人工智能》有感</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/16/UnifyAI/" class="archive-article-date">
+  	<time datetime="2019-02-16T06:51:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              
+            </div>
+           -->
+        <!--   -->
+        <p>之前看一个师兄写的文章里面，提到推荐做AI的人看下朱松纯教授写的那篇《人工智能的现状、任务、构架和统一》。我虽然不做纯AI，但我一直在想找一个人脑与AI的结合点，非常希望能建立起自己的一个认知框架。隔了大半年了，终于有时间找来读一读。下面大概介绍一下朱教授的观点和我自己的思考。</p>
+<p>朱教授把人工智能分为六大板块：</p>
+<ul>
+<li>计算机视觉： 包括模式识别，图像处理</li>
+<li>自然语言理解与交流： 包括语音识别，对话</li>
+<li>认知与推理： 包括物理和社会常识</li>
+<li>机器人学： 机械，控制，设计，运动规划和任务规划等</li>
+<li>博弈与伦理： multi-agent 的交互，对抗与合作等</li>
+<li>机器学习： 各种统计的建模，分析工具</li>
+</ul>
+<p>在我读PhD的初期，其实是有机会做真的图像处理，做deep learning那一套东西的，可我大致研究了一下，我觉得太火了，不管是本来就是这个领域的，还是其他领域的，都在朝这个方向转，都在发相关的paper。这让我当时就想起了一个词，大跃进。虽然我理解得也不深刻，但我觉得其实还远不到人们想的那样，DL可以实现真正的人工智能。我当时想，别人都在做的，那我不做，既然有这样一个机会让我搞一下真的人脑，那我就来看看，到底真的人脑是什么样子的？然后一直搞到现在，我发现这个坑是真的多，神经科学这个领域从我开始踏入，到现在，一直没有什么质的进展。但是AI的大潮，已经从CV，转到NLP了。上个月参加谷歌组织的机器学习冬令营，我发现做视觉的相对来说少一些，但是做NLP的，一大把。这是一个很有趣的现象，因为CV那块，像朱教授说的那样，刷榜刷得差不多了，在图像识别本身来说，已经没有什么可以进步的了，除非和其他的领域结合。于是人们又自然而然转到NLP上面去。下一个浪潮是哪里呢？我猜是机器人学，因为前两者都要结合啊，需要一个载体或者说agent来帮助表明这东西有多牛逼啊。而且机器人本身，也是需要加上前两者，才能实现智能这一特性的。可是这还是缺思考，缺认知这一块，所以认知和推理，我觉得是下下个浪潮，也是我现在想研究的方向。</p>
+<p>这其实有点像一个统一的过程，分而治之，再合成一个完整的学科。从朱教授的介绍来讲，人工智能发展的60年有两个阶段：</p>
+<ol>
+<li>前30年以数理逻辑的表达和推理为主： 这一期的领军人物懂很多认知科学的东西，有很强的全局观念，但是没有落地，所以不了了之。</li>
+<li>后30年以概率统计的建模、学习和计算为主： 几大学科独立发展，基于概率建模和随机计算，AI再度繁荣</li>
+</ol>
+<p>后30年的代表人物中，朱教授有提到Judea Pearl这个人，11年的图灵奖获得者。巧的是我当时也追过这个人的paper，因为他的因果模型，我觉得是很有希望用在大脑建模过程当中的，找来他的那本著作看，无奈数学推导对我太难，而后放弃，但这个理论，还依然在我的to do list里面。</p>
+<p>那这几大学科怎么统一到AI上面呢？框架是什么？<br>教授给出的方向是：小数据，大任务范式</p>
+<p>他认为智能系统的根源可以追溯到两个基本前提条件：</p>
+<ol>
+<li>物理环境客观的现实与因果链条：这个我理解的是input, 也就是所见所观所得，这些是外部条件来的</li>
+<li>智能物种与生俱来的任务与价值链条：这个我理解的是 inner sense。也就是所思所做，即文章提到的价值观和决策函数。<br>这有点像一个控制里面的系统，有自己内部的构造和决策，加上外界的input，然后推导出output. 而其实我们想达到的AI，也就是一个智能系统罢了。</li>
+</ol>
+<p>但是这个系统不是一层不变的，就像我们的人脑，每时每刻的状态其实都是不一样的。那为什么会变呢，也就是为什么会有学习这个过程呢？</p>
+<ol>
+<li>外来的数据：外部世界通过各种感知信号，传递到人脑，塑造模型。这些数据来源于观察和实践。观察的数据用于学习各种统计模型，即相关性。实践的数据用于学习因果模型，即将行为和结果联系在一起。</li>
+<li>内在的任务：即由内在的价值函数驱动行为，以达到某种目的。</li>
+</ol>
+<p>这个学习的缘由其实和上面的前提条件很像，都是一个是input的东西，一个是inner的东西。不同的在于，前面那个是初始状态，是静止的，后面那个是学习的过程，是动态的，且一直都在变的。</p>
+<p>那怎么根据这些前提条件和驱动因子实现小数据，大任务范式这个统一框架呢？朱教授提到了暗物质，这个暗物质不是物理学中的那个暗物质。我理解的是，它其实代表了一种 common sense 的建立和因果的推理。你看到的，不仅仅是你看到的，还有那些物体背后的联系和因果关系。而这些，就是那些在暗处的东西，那些能促使小数据完成大任务的因子。那这需要什么学科的知识呢？答案是认知，mind。这就涉及到心理学和神经科学相关的东西了。</p>
+<p>在介绍到认知的时候，朱教授引入了博弈伦理。其中提到了两大类的学习方法，我觉得是很有必要单独拿出来看看的，因为这两个学习的方法，其实也是我们真的学习的过程：</p>
+<ol>
+<li><strong>归纳学习(Inductive learning)</strong>: 通过观察大量数据样本来学习，这些样本就是对某个时期、某个地域、某个人群达成的准平衡态的观察。归纳学习的结果就是一个时空因果的概率模型。</li>
+<li><strong>演绎学习(Deductive learning)</strong>: 这个东西文献中很少，也就是从价值函数（还有物理因果）出发，直接推导出这些准平衡态。<br>这就像我们人类早期的学习，都是归纳学习来的，通过观察别人，学习别人，来逐步形成自己的人生观价值观世界观。而后成长到一定年纪的时候，就是演绎学习了，没有见过的东西，通过分析和推理，依然可以得出正确的结论。<br>只可惜我们很多人，一辈子都没有到演绎学习的阶段，从来只是从别人那里听来读来，并没有形成自己的一套方法论。</li>
+</ol>
+<p>我还想提的一点是，归纳学习有点像现在的强化学习，用很少的样本，就是不断去尝试啊，然后得出结果，有一套因果推导在里面。这也是为什么我很关注强化学习的另一个原因。</p>
+<p>之后朱教授讲到学习的极限，停机问题，说实话我对这个方向不是很了解，就不过多分析了。</p>
+<p>最后文章的总结题目是：智能科学-牛顿与达尔文理论体系的统一。提到物理学的责任是寻找支配自然各种现象的统一的力。而智能科学的研究对象是什么呢？是把物理学排除在外的生物意志给拿进来，研究一个物理与生物混合的复杂系统。这里朱教授提到了力的概念，提到了人与人之间，人与物，物与物之间，那些联系其实可用看成一种力，因为这些力是可以真实用数学表达式表达出来的，而且在物理学上是已经很统一很规范了的。那我们要做的其实就是把生物这块的东西，跟物理结合起来。</p>
+<p>在我以前最开始思考AI与人脑的结合的时候，并没有从物理这个方向去想，一是完全没有意识，二是觉得没有什么联系。对物理的理解并不深，所以我对这个观点的看法不加评论。但是有没有一种大统一，是可以独立于物理啊这些理论，在智能的内部（包括人工智能和真人智能），有一个统一的理论，来解释所有的因果和相关呢？我觉得是有的，这也是我一直想找到的一个统一的理论来链接AI和human brain.</p>
+<p>整篇文章让我特别感动的是介绍到David Mumford的时候，说他念念不忘人工智能，从头开始学统计概率，直奔关键体系，而不是拿着锤子找钉子。这恰恰是我目前想追求的，但现实里我却智能拿着锤子找钉子，如果条件允许，我想我还是会钻到统计概率那边，再去学习的，因为我目前的知识体系，还缺少这一块，而这一块又是我认为很重要的。当然，再学个物理也是极好的。</p>
+<p>All in all, 现在的Artificial intelligence 只能算是 engineering，而不是一门真正的science，等真正有人站出来统一这个学科了，或许才能真正称之为 Science of Intelligence。 我希望自己能在有生之年，能够成为这个science of intelligence 建立的推动者。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂文</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">碎碎念</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/16/UnifyAI/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Nonlinear" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -460,11 +700,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
         		</li>
       		
 		</ul>
@@ -1694,283 +1934,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-MIT6006-Lec15" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/10/MIT6006-Lec15/">MIT6006 Lec15 Shortest Paths I&amp;II Intro and Dijkstra</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/10/MIT6006-Lec15/" class="archive-article-date">
-  	<time datetime="2018-12-10T03:10:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-I"><span class="toc-number">1.</span> <span class="toc-text">Part I</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Weighted-graphs"><span class="toc-number">1.1.</span> <span class="toc-text">Weighted graphs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#General-approach"><span class="toc-number">1.2.</span> <span class="toc-text">General approach</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimal-substructure"><span class="toc-number">1.3.</span> <span class="toc-text">Optimal substructure</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-II"><span class="toc-number">2.</span> <span class="toc-text">Part II</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DAG"><span class="toc-number">2.1.</span> <span class="toc-text">DAG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dijkstra’s-Algorithm"><span class="toc-number">2.2.</span> <span class="toc-text">Dijkstra’s Algorithm</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Dijkstra-Complexity"><span class="toc-number">2.2.1.</span> <span class="toc-text">Dijkstra Complexity</span></a></li></ol></li></ol></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-I"><span class="toc-text">Part I</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Weighted-graphs"><span class="toc-text">Weighted graphs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#General-approach"><span class="toc-text">General approach</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimal-substructure"><span class="toc-text">Optimal substructure</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-II"><span class="toc-text">Part II</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DAG"><span class="toc-text">DAG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dijkstra’s-Algorithm"><span class="toc-text">Dijkstra’s Algorithm</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Dijkstra-Complexity"><span class="toc-text">Dijkstra Complexity</span></a></li></ol></li></ol></li></ol>
-        </div>
-    </div>
- -->
-        <h2 id="Part-I"><a href="#Part-I" class="headerlink" title="Part I"></a>Part I</h2><p>Two algorithms: </p>
-<ul>
-<li>Dijkstra $O(VlgV + E)$ assumes non-negative edge weights</li>
-<li>Bellman Ford $O(VE)$ is a general algorithm</li>
-</ul>
-<h3 id="Weighted-graphs"><a href="#Weighted-graphs" class="headerlink" title="Weighted graphs"></a>Weighted graphs</h3><p><strong>Single Source Shortest Paths</strong>:</p>
-<p>Given $G = (V, E)$, $w$ and a source vertex $S$, find $δ(S, V)$ [and the best path] from $S$ to each $v∈V$.</p>
-<p>Data structures:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">d[v] = value inside circle</span><br><span class="line">     = 0, <span class="keyword">if</span> v = s</span><br><span class="line">     = ∞, otherwise     ⇐ initially</span><br><span class="line">d[v] = δ (s,v)          ⇐ at end</span><br><span class="line">d[v] \le δ (s,v)        at all <span class="built_in">times</span></span><br></pre></td></tr></table></figure></p>
-<p>$d[v]$ decreases as we find better paths to v<br>$Π[v]$ = predecessor on best path to $v$, $Π[s] = NIL$</p>
-<p><strong>Negative-Weight Edges</strong>:</p>
-<p>If negative weight edges are present, s.p. algorithm should find negative weight cycles (e.g., Bellman Ford)</p>
-<h3 id="General-approach"><a href="#General-approach" class="headerlink" title="General approach"></a>General approach</h3><p>General structure of S.P. Algorithms (no negative cycles):<br><img src="/images/MIT15_01.jpg"></p>
-<h3 id="Optimal-substructure"><a href="#Optimal-substructure" class="headerlink" title="Optimal substructure"></a>Optimal substructure</h3><p><strong>Theorem</strong>: Subpaths of shortest paths are shortest paths<br>Let $p = &lt; v_0, v_1, . . . v_k &gt;$ be a shortest path<br>Let $p_{ij} = &lt; v_i, v_{i+1}, . . . v_j &gt;$  $0 ≤ i ≤ j ≤ k$<br>Then $p_{ij}$ is a shortest path.</p>
-<h2 id="Part-II"><a href="#Part-II" class="headerlink" title="Part II"></a>Part II</h2><h3 id="DAG"><a href="#DAG" class="headerlink" title="DAG"></a>DAG</h3><ul>
-<li>Topologically sort the DAG. Path from u to v implies that u is before v in the linear ordering.</li>
-<li>One pass over vertices in topologically sorted order relaxing each edge that leaves each vertex. </li>
-</ul>
-<p>Note: Can’t have negative cycles because there are no cycles!</p>
-<h3 id="Dijkstra’s-Algorithm"><a href="#Dijkstra’s-Algorithm" class="headerlink" title="Dijkstra’s Algorithm"></a>Dijkstra’s Algorithm</h3><ul>
-<li>The idea is to maintain two sets</li>
-<li>one set contains vertices included in existing shortest path</li>
-<li>another set includes vertices not yet included. </li>
-<li>At every step of the algorithm, find a vertex <ul>
-<li>which is in the set with not included vertex and </li>
-<li>has a minimum distance from the source.</li>
-<li>update the distance of the shorted path set</li>
-</ul>
-</li>
-</ul>
-<p>For each edge $(u, v) \in E$, assume $w(u, v) ≥ 0$, maintain a set S of vertices whose final shortest path weights have been determined. Repeatedly select $u \in V − S$ with minimum shortest path estimate, add u to S, relax all edges out of u.</p>
-<p><strong>Pseudo-code</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Dijkstra (G, W, s)          //uses priority queue Q</span><br><span class="line">    Initialize (G, s)</span><br><span class="line">    S ← φ</span><br><span class="line">    Q ← V[G]               //Insert into Q</span><br><span class="line">    <span class="keyword">while</span> Q = φ</span><br><span class="line">        <span class="keyword">do</span> u ← EXTRACT-MIN(Q)   //deletes u from Q</span><br><span class="line">        S = S ∪ &#123;u&#125;</span><br><span class="line">        <span class="keyword">for</span> each vertex v $\<span class="keyword">in</span>$ Adj[u]</span><br><span class="line">            <span class="keyword">do</span> RELAX (u, v, w) ← this is an implicit DECREASE KEY operation</span><br></pre></td></tr></table></figure></p>
-<p><u>Strategy</u>: Dijkstra is a greedy algorithm: choose closest vertex in V − S to add to set S.<br><u>Correctness</u>: We know relaxation is safe. The key observation is that each time a vertex u is added to set S, we have $d[u] = δ(s, u)$.</p>
-<h4 id="Dijkstra-Complexity"><a href="#Dijkstra-Complexity" class="headerlink" title="Dijkstra Complexity"></a>Dijkstra Complexity</h4><p>$Θ(v)$ inserts into priority queue<br>$Θ(v)$ EXTRACT_MIN operations<br>$Θ(E)$ DECREASE_KEY operations</p>
-<p><strong>Array impl</strong>:</p>
-<ul>
-<li>Θ(v) time for extra min</li>
-<li>Θ(1) for decrease key<br>Total: Θ(V.V + E.1) = Θ(V^2 + E) = Θ(V^2)</li>
-</ul>
-<p><strong>Binary min-heap</strong>:</p>
-<ul>
-<li>Θ(lgV) for extract min</li>
-<li>Θ(lgV) for decrease key<br>Total: Θ(VlgV + ElgV )</li>
-</ul>
-<p><strong>Fibonacci heap</strong>:</p>
-<ul>
-<li>Θ(lgV ) for extract min</li>
-<li>Θ(1) for decrease key</li>
-<li>amortized cost<br>Total: Θ(VlgV + E)</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/10/MIT6006-Lec15/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MIT6006-Lec14" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/09/MIT6006-Lec14/">MIT6006 Lec14 Graphs II Depth-First Search</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/09/MIT6006-Lec14/" class="archive-article-date">
-  	<time datetime="2018-12-09T07:49:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Depth-First-Search"><span class="toc-number">1.</span> <span class="toc-text">Depth-First Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cycle-Testing"><span class="toc-number">2.</span> <span class="toc-text">Cycle Testing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Topological-Sort"><span class="toc-number">3.</span> <span class="toc-text">Topological Sort</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Depth-First-Search"><span class="toc-text">Depth-First Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cycle-Testing"><span class="toc-text">Cycle Testing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Topological-Sort"><span class="toc-text">Topological Sort</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <h3 id="Depth-First-Search"><a href="#Depth-First-Search" class="headerlink" title="Depth-First Search"></a>Depth-First Search</h3><p><strong>Depth First Search Algorithm</strong>:</p>
-<ul>
-<li>follow path until you get stuck</li>
-<li>backtrack along breadcrumbs(面包屑…) until reach unexplored neighbor</li>
-<li><strong>recursively</strong> explore</li>
-<li>careful not to repeat a vertex</li>
-</ul>
-<p>Pseudo codes are as follows:<br><img src="/images/MIT14_01.jpg"></p>
-<p>Note that DFS and DFS-visit are two things. DFS is the top level of DFS-visit and it makes sure that all the vertex will be visited.</p>
-<p><strong>Edge Classification</strong></p>
-<ul>
-<li>tree edges (parent pointer): visit new vertex via edge</li>
-<li>forward edges: node -&gt; descendant in tree</li>
-<li>backward edges: node -&gt; ancestor in tree</li>
-<li>cross edges: other edges (from one tree to another) between two non-ancestor-related subtrees<br>To compute this classification (back or not), mark nodes for duration they are “on the stack”</li>
-<li>only tree and back edges in undirected graph</li>
-</ul>
-<p><strong>Analysis</strong></p>
-<ul>
-<li>DFS-visit gets called with a vertex s only once (because then parent[s] set)<ul>
-<li>⇒ time in DFS-visit = $\sum_{s∈V}|Adj[s]| = O(E)$</li>
-</ul>
-</li>
-<li>DFS outer loop adds just $O(V)$<ul>
-<li>⇒ $O(V + E)$ time (linear time)</li>
-</ul>
-</li>
-</ul>
-<h3 id="Cycle-Testing"><a href="#Cycle-Testing" class="headerlink" title="Cycle Testing"></a>Cycle Testing</h3><p>For directed graph:</p>
-<ul>
-<li>DFS can be used to detect a cycle in a Graph.</li>
-<li>DFS for a connected graph produces a tree. There is a cycle in a graph only if there is a <strong>back edge</strong> present in the graph. </li>
-<li>For a disconnected graph, get the DFS forest as output. To detect cycle, we can check for a cycle in <em>individual trees</em> by checking back edges.</li>
-</ul>
-<h3 id="Topological-Sort"><a href="#Topological-Sort" class="headerlink" title="Topological Sort"></a>Topological Sort</h3><p>Topological sorting for <u>Directed Acyclic Graph (DAG)</u> is a linear ordering of vertices such that for every directed edge uv, vertex u comes before v in the ordering. Topological Sorting for a graph is not possible if the graph is not a DAG.</p>
-<ul>
-<li>The first vertex in topological sorting is always a vertex with in-degree as 0 (a vertex with no incoming edges).</li>
-<li>We can modify DFS to find Topological Sorting of a graph. </li>
-<li>In DFS, we start from a vertex, we first print it and then recursively call DFS for its adjacent vertices. </li>
-<li>In topological sorting, we use a temporary stack. We don’t print the vertex immediately, we first recursively call topological sorting for all its adjacent vertices, then push it to a stack. Finally, print contents of stack. Note that a vertex is pushed to stack only when all of its adjacent vertices (and their adjacent vertices and so on) are already in stack.</li>
-</ul>
-<p><br><br>Reference:<br><a href="https://www.geeksforgeeks.org/topological-sorting/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/topological-sorting/</a><br><a href="https://www.geeksforgeeks.org/detect-cycle-in-a-graph/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/detect-cycle-in-a-graph/</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/09/MIT6006-Lec14/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
@@ -2002,7 +1965,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共112k字
+              本站总共122.2k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -2109,11 +2072,31 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2137,18 +2120,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Deep learning</a>
               </li>
              
@@ -2161,19 +2132,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+                <a href="javascript:void(0)" class="js-tag color3">Network</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2185,11 +2156,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Stochastic</a>
+                <a href="javascript:void(0)" class="js-tag color3">Self-driving</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Self-driving</a>
+                <a href="javascript:void(0)" class="js-tag color1">Stochastic</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2201,7 +2172,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+                <a href="javascript:void(0)" class="js-tag color4">learning</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2209,15 +2180,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">learning</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
+                <a href="javascript:void(0)" class="js-tag color3">读书</a>
               </li>
             
             <div class="clearfix"></div>

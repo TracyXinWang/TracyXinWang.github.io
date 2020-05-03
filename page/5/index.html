@@ -247,6 +247,345 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-python03" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/22/python03/">Python 核心技术与实战 03</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/22/python03/" class="archive-article-date">
+  	<time datetime="2019-05-22T10:44:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#列表-list-和元组-tuple-的使用"><span class="toc-number">1.</span> <span class="toc-text">列表(list)和元组(tuple)的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-number">1.1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#储存方式"><span class="toc-number">1.2.</span> <span class="toc-text">储存方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表和元组的性能"><span class="toc-number">1.3.</span> <span class="toc-text">列表和元组的性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表和元组的使用场景"><span class="toc-number">1.4.</span> <span class="toc-text">列表和元组的使用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思考题"><span class="toc-number">1.5.</span> <span class="toc-text">思考题</span></a></li></ol></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#列表-list-和元组-tuple-的使用"><span class="toc-text">列表(list)和元组(tuple)的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#储存方式"><span class="toc-text">储存方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表和元组的性能"><span class="toc-text">列表和元组的性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表和元组的使用场景"><span class="toc-text">列表和元组的使用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思考题"><span class="toc-text">思考题</span></a></li></ol></li></ol>
+        </div>
+    </div>
+ -->
+        <h2 id="列表-list-和元组-tuple-的使用"><a href="#列表-list-和元组-tuple-的使用" class="headerlink" title="列表(list)和元组(tuple)的使用"></a>列表(list)和元组(tuple)的使用</h2><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ul>
+<li><p>列表和元组，都是可以放置任意数据类型的有序集合，且不要求元素类型一致</p>
+<ul>
+<li><p>e.g. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">list = [1,2,&apos;hello&apos;,&apos;world&apos;]</span><br><span class="line">tup = (&apos;jason&apos;,22)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>list有点像是matlab中的array, 只不过是一般化了的array</p>
+</li>
+<li>注意一个是[], 一个是() 来表示数据</li>
+</ul>
+</li>
+<li><p>区别在于：</p>
+<ul>
+<li>列表是动态的，长度大小不固定，可以随意地增加、删减或者改变元素</li>
+<li>元组是静态的，长度大小固定，无法增加删减或者改变</li>
+<li>e.g. 试着改变最后一个元素：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">l = [1, 2, 3, 4]</span><br><span class="line">l[3] = 40 # 更改最后一个元素</span><br><span class="line">l</span><br><span class="line">    [1, 2, 3, 40]</span><br><span class="line"></span><br><span class="line">tup = (1, 2, 3, 4)</span><br><span class="line">tup[3] = 40</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">    File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">TypeError: &apos;tuple&apos; object does not support item assignment</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>如果想增加一个元素，元组只能另创建一个元组，但列表可以直接加在末尾：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tup = (1, 2, 3, 4)</span><br><span class="line">new_tup = tup + (5, ) # 创建新的元组 new_tup，并依次填充原元组的值</span><br><span class="line">new _tup</span><br><span class="line">    (1, 2, 3, 4, 5)</span><br><span class="line"></span><br><span class="line">l = [1, 2, 3, 4]</span><br><span class="line">l.append(5) # 添加元素 5 到原列表的末尾</span><br><span class="line">l</span><br><span class="line">    [1, 2, 3, 4, 5]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>列表和元组都支持负数索引(索引都是用[])：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">l = [1, 2, 3, 4]</span><br><span class="line">l[-1]</span><br><span class="line">    4</span><br><span class="line"></span><br><span class="line">tup = (1, 2, 3, 4)</span><br><span class="line">tup[-1]</span><br><span class="line">    4</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>都支持切片操作(注意切片操作不包括最后一个索引)：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">l = [1, 2, 3, 4]</span><br><span class="line">l[1:3] # 返回列表中索引从 1 到 2 的子列表</span><br><span class="line">    [2, 3]</span><br><span class="line"></span><br><span class="line">tup = (1, 2, 3, 4)</span><br><span class="line">tup[1:3] # 返回元组中索引从 1 到 2 的子元组</span><br><span class="line">    (2, 3)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以随意嵌套：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">l = [[1, 2, 3], [4, 5]] # 列表的每一个元素也是一个列表</span><br><span class="line"></span><br><span class="line">tup = ((1, 2, 3), (4, 5, 6)) # 元组的每一个元素也是一元组</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以通过 list() 和 tuple() 函数相互转换</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">list((1, 2, 3))</span><br><span class="line">    [1, 2, 3]</span><br><span class="line"></span><br><span class="line">tuple([1, 2, 3])</span><br><span class="line">    (1, 2, 3)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>列表和元组常用的内置函数：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">l = [3, 2, 3, 7, 8, 1]</span><br><span class="line">l.count(3) </span><br><span class="line">    2</span><br><span class="line">l.index(7)</span><br><span class="line">    3</span><br><span class="line">l.reverse()</span><br><span class="line">l</span><br><span class="line">    [1, 8, 7, 3, 2, 3]</span><br><span class="line">l.sort()</span><br><span class="line">l</span><br><span class="line">    [1, 2, 3, 3, 7, 8]</span><br><span class="line"></span><br><span class="line">tup = (3, 2, 3, 7, 8, 1)</span><br><span class="line">tup.count(3)</span><br><span class="line">    2</span><br><span class="line">tup.index(7)</span><br><span class="line">    3</span><br><span class="line">list(reversed(tup))</span><br><span class="line">    [1, 8, 7, 3, 2, 3]</span><br><span class="line">sorted(tup)</span><br><span class="line">    [1, 2, 3, 3, 7, 8]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="储存方式"><a href="#储存方式" class="headerlink" title="储存方式"></a>储存方式</h3><ul>
+<li><p>先看一个例子：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">l = [1, 2, 3]</span><br><span class="line">l.__sizeof__()</span><br><span class="line">    64</span><br><span class="line">tup = (1, 2, 3)</span><br><span class="line">tup.__sizeof__()</span><br><span class="line">    48</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可见同样的元素，元组的存储空间比列表少16字节</p>
+<ul>
+<li>这是因为列表是动态的，它需要存储指针，来指向对应的元素（上述例子中，对于int型是8字节）</li>
+<li>此外，由于列表可变，所以需要额外存储已经分配的长度大小（8 字节），这样才可以实时追踪列表空间的使用情况，当空间不足时，及时分配额外空间</li>
+<li><p>例子如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">l = []</span><br><span class="line">l.__sizeof__() // 空列表的存储空间为 40 字节</span><br><span class="line">    40</span><br><span class="line">l.append(1)</span><br><span class="line">l.__sizeof__() </span><br><span class="line">    72 // 加入了元素 1 之后，列表为其分配了可以存储 4 个元素的空间 (72 - 40)/8 = 4</span><br><span class="line">l.append(2) </span><br><span class="line">l.__sizeof__()</span><br><span class="line">    72 // 由于之前分配了空间，所以加入元素 2，列表空间不变</span><br><span class="line">l.append(3)</span><br><span class="line">l.__sizeof__() </span><br><span class="line">    72 // 同上</span><br><span class="line">l.append(4)</span><br><span class="line">l.__sizeof__() </span><br><span class="line">    72 // 同上</span><br><span class="line">l.append(5)</span><br><span class="line">l.__sizeof__() </span><br><span class="line">    104 // 加入元素 5 之后，列表的空间不足，所以又额外分配了可以存储 4 个元素的空间</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>所以列表空间分配的时，为了减小每次增加 / 操作空间分配的开销，每次分配空间时都会额外分配一些，这样Over-allocating保证了其操作的高效性：即增加、删除 的时间复杂度为O(1).</p>
+</li>
+</ul>
+</li>
+<li>list和tuple的内部实现都是array的形式，list因为可变，所以是一个over-allocate的array，tuple因为不可变，所以长度大小固定。</li>
+</ul>
+<h3 id="列表和元组的性能"><a href="#列表和元组的性能" class="headerlink" title="列表和元组的性能"></a>列表和元组的性能</h3><ul>
+<li>元组要比列表更加轻量级一些，所以总体上来说，元组的性能速度要略优于列表</li>
+<li>此外，Python会在后台，对静态数据做一些资源缓存(resource caching). 通常来讲，因为垃圾回收机制的存在，如果一些变量不被使用了，Python就会回收他们所占用的内存，返还给操作系统</li>
+<li>但是对一些静态变量，比如元组，如果它不被使用并且占用空间不大时，Python 会暂时缓存这部分内存，这样下次创建同样大小的元组时，Python 就可以不用再向操作系统发出请求，去寻找内存，而是可以直接分配之前缓存的内存空间，这样就能大大加快程序的运行速度</li>
+<li><p>以下例子是计算初始化一个相同元素的列表和元组分别所需的时间。我们可以看到，元组的初始化速度，要比列表快 5 倍。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 -m timeit &apos;x=(1,2,3,4,5,6)&apos;</span><br><span class="line">    20000000 loops, best of 5: 9.97 nsec per loop</span><br><span class="line">python3 -m timeit &apos;x=[1,2,3,4,5,6]&apos;</span><br><span class="line">    5000000 loops, best of 5: 50.1 nsec per loop</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>但如果是索引操作的话，两者速度差别非常小：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 -m timeit -s &apos;x=[1,2,3,4,5,6]&apos; &apos;y=x[3]&apos;</span><br><span class="line">    10000000 loops, best of 5: 22.2 nsec per loop</span><br><span class="line">python3 -m timeit -s &apos;x=(1,2,3,4,5,6)&apos; &apos;y=x[3]&apos;</span><br><span class="line">    10000000 loops, best of 5: 21.9 nsec per loop</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="列表和元组的使用场景"><a href="#列表和元组的使用场景" class="headerlink" title="列表和元组的使用场景"></a>列表和元组的使用场景</h3><ul>
+<li>如果存储的数据和数量不变，比如你有一个函数，需要返回的是一个地点的经纬度，然后直接传给前端渲染，那么肯定选用元组更合适</li>
+<li>如果存储的数据或数量是可变的，比如社交平台上的一个日志功能,是统计一个用户在一周之内看了哪些用户的帖子，那么则用列表更合适</li>
+</ul>
+<h3 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h3><p>想创建一个空的列表，我们可以用下面的 A、B 两种方式，请问它们在效率上有什么区别吗？应该优先考虑使用哪种？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 创建空列表</span><br><span class="line"># option A</span><br><span class="line">empty_list = list()</span><br><span class="line"></span><br><span class="line"># option B</span><br><span class="line">empty_list = []</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>answer: 区别主要在于list()是一个function call，Python的function call会创建stack，并且进行一系列参数检查的操作，比较expensive，反观[]是一个内置的C函数，可以直接被调用，因此效率高。</li>
+</ul>
+<p>极客时间版权所有: <a href="https://time.geekbang.org/column/article/94972" target="_blank" rel="noopener">https://time.geekbang.org/column/article/94972</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/22/python03/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-python04" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/22/python04/">Python核心技术与实战04 字典与集合</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/22/python04/" class="archive-article-date">
+  	<time datetime="2019-05-22T10:44:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--  
+            <div id="toc" class="toc-article">
+              <strong class="toc-title">文章目录</strong>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-number">1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#性能"><span class="toc-number">2.</span> <span class="toc-text">性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工作原理"><span class="toc-number">3.</span> <span class="toc-text">工作原理</span></a></li></ol>
+            </div>
+           -->
+        <!--  
+    <div id="toc-container"> 
+        <div id="toc"> 
+            <p> 
+                <strong>文章目录</strong>
+            </p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础"><span class="toc-text">基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#性能"><span class="toc-text">性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工作原理"><span class="toc-text">工作原理</span></a></li></ol>
+        </div>
+    </div>
+ -->
+        <h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ul>
+<li>字典(dict)：由键（key）和值（value）配对组成的元素的集合<ul>
+<li>在 Python3.7+，字典被确定为有序</li>
+<li>相比于列表和元组，字典的性能更优，特别是对于查找、添加和删除操作，字典都能在常数时间复杂度内完成</li>
+</ul>
+</li>
+<li>集合(set): 和字典基本相同，唯一的区别，就是集合没有键和值的配对，是一系列无序的、唯一的元素组合</li>
+<li><p>创建：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">d1 = &#123;&apos;name&apos;: &apos;jason&apos;, &apos;age&apos;: 20, &apos;gender&apos;: &apos;male&apos;&#125;</span><br><span class="line">d2 = dict(&#123;&apos;name&apos;: &apos;jason&apos;, &apos;age&apos;: 20, &apos;gender&apos;: &apos;male&apos;&#125;)</span><br><span class="line">d3 = dict([(&apos;name&apos;, &apos;jason&apos;), (&apos;age&apos;, 20), (&apos;gender&apos;, &apos;male&apos;)])</span><br><span class="line">d4 = dict(name=&apos;jason&apos;, age=20, gender=&apos;male&apos;) </span><br><span class="line">d1 == d2 == d3 ==d4</span><br><span class="line">True</span><br><span class="line"></span><br><span class="line">s1 = &#123;1, 2, 3&#125;</span><br><span class="line">s2 = set([1, 2, 3])</span><br><span class="line">s1 == s2</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>元素访问：</p>
+<ul>
+<li><p>字典访问：可直接索引, 也可使用get(key,default)函数来索引</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">d = &#123;&apos;name&apos;: &apos;jason&apos;, &apos;age&apos;: 20&#125;</span><br><span class="line">d[&apos;name&apos;]</span><br><span class="line">    &apos;jason&apos;</span><br><span class="line">d[&apos;location&apos;]</span><br><span class="line">    Traceback (most recent call last):</span><br><span class="line">    File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">    KeyError: &apos;location&apos;</span><br><span class="line"></span><br><span class="line">d.get(&apos;name&apos;)</span><br><span class="line">    &apos;jason&apos;</span><br><span class="line">d.get(&apos;location&apos;, &apos;null&apos;)</span><br><span class="line">    &apos;null&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>集合：并不支持索引操作</strong>，因为集合本质上是一个哈希表，和列表不一样</p>
+</li>
+<li>可用 value in dict/set 来判断一个元素是否在字典/集合内<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">s = &#123;1, 2, 3&#125;</span><br><span class="line">1 in s</span><br><span class="line">    True</span><br><span class="line">10 in s</span><br><span class="line">    False</span><br><span class="line"></span><br><span class="line">d = &#123;&apos;name&apos;: &apos;jason&apos;, &apos;age&apos;: 20&#125;</span><br><span class="line">&apos;name&apos; in d</span><br><span class="line">    True</span><br><span class="line">&apos;location&apos; in d</span><br><span class="line">    False</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>增加、删除、更新等操作</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">d = &#123;<span class="string">'name'</span>: <span class="string">'jason'</span>, <span class="string">'age'</span>: <span class="number">20</span>&#125;</span><br><span class="line">d[<span class="string">'gender'</span>] = <span class="string">'male'</span> <span class="comment"># 增加元素对'gender': 'male'</span></span><br><span class="line">d[<span class="string">'dob'</span>] = <span class="string">'1999-02-01'</span> <span class="comment"># 增加元素对'dob': '1999-02-01'</span></span><br><span class="line">d</span><br><span class="line">    &#123;<span class="string">'name'</span>: <span class="string">'jason'</span>, <span class="string">'age'</span>: <span class="number">20</span>, <span class="string">'gender'</span>: <span class="string">'male'</span>, <span class="string">'dob'</span>: <span class="string">'1999-02-01'</span>&#125;</span><br><span class="line">d[<span class="string">'dob'</span>] = <span class="string">'1998-01-01'</span> <span class="comment"># 更新键'dob'对应的值 </span></span><br><span class="line">d.pop(<span class="string">'dob'</span>) <span class="comment"># 删除键为'dob'的元素对</span></span><br><span class="line">    <span class="string">'1998-01-01'</span></span><br><span class="line"></span><br><span class="line">d</span><br><span class="line">    &#123;<span class="string">'name'</span>: <span class="string">'jason'</span>, <span class="string">'age'</span>: <span class="number">20</span>, <span class="string">'gender'</span>: <span class="string">'male'</span>&#125;</span><br><span class="line">s = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;</span><br><span class="line">s.add(<span class="number">4</span>) <span class="comment"># 增加元素 4 到集合</span></span><br><span class="line">s</span><br><span class="line">    &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;</span><br><span class="line">s.remove(<span class="number">4</span>) <span class="comment"># 从集合中删除元素 4</span></span><br><span class="line">s</span><br><span class="line">    &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>集合的 pop() 操作是删除集合中最后一个元素，可是集合本身是无序的，你无法知道会删除哪个元素，因此这个操作谨慎使用</li>
+</ul>
+</li>
+<li><p>对字典或集合进行排序：</p>
+<ul>
+<li><p>对于字典，通常根据键或者值进行升序或降序排序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">d = &#123;<span class="string">'b'</span>: <span class="number">1</span>, <span class="string">'a'</span>: <span class="number">2</span>, <span class="string">'c'</span>: <span class="number">10</span>&#125;</span><br><span class="line">d_sorted_by_key = sorted(d.items(), key=<span class="keyword">lambda</span> x: x[<span class="number">0</span>]) <span class="comment"># 根据字典键的升序排序</span></span><br><span class="line">d_sorted_by_value = sorted(d.items(), key=<span class="keyword">lambda</span> x: x[<span class="number">1</span>]) <span class="comment"># 根据字典值的升序排序</span></span><br><span class="line">d_sorted_by_key</span><br><span class="line">    [(<span class="string">'a'</span>, <span class="number">2</span>), (<span class="string">'b'</span>, <span class="number">1</span>), (<span class="string">'c'</span>, <span class="number">10</span>)]</span><br><span class="line">d_sorted_by_value</span><br><span class="line">    [(<span class="string">'b'</span>, <span class="number">1</span>), (<span class="string">'a'</span>, <span class="number">2</span>), (<span class="string">'c'</span>, <span class="number">10</span>)]</span><br><span class="line"><span class="comment"># 这里返回了一个列表。列表中的每个元素，是由原字典的键和值组成的元组</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对集合进行排序：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s = &#123;<span class="number">3</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>&#125;</span><br><span class="line">sorted(s)</span><br><span class="line">    [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line"><span class="comment"># 返回排好序的列表</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><ul>
+<li>字典和集合是进行过性能高度优化的数据结构，特别是对于查找、添加和删除操作</li>
+<li>例子一：<ul>
+<li>电商企业的后台，存储了每件产品的 ID、名称和价格。现在的需求是，给定某件商品的 ID，我们要找出其价格。</li>
+<li>若用列表来存储这些数据结构，并进行查找，时间复杂度就为O(n), 即使我们先对列表进行排序，然后使用二分查找，也会需要 O(logn), 且列表的排序还需要 O(nlogn) 的时间</li>
+<li>若使用字典，只需 O(1) 的时间复杂度就可以完成，因为字典内部组成是一张哈希表</li>
+</ul>
+</li>
+<li>例子二：<ul>
+<li>现在需求变成，要找出这些商品有多少种不同的价格</li>
+<li>若使用列表，则有两层循环（循环原始数据表和新建的unique列表），最差情况需要O(n^2)</li>
+<li>若选择使用集合，则只有一层循环(只循环原始数据表，新建的unique为集合，添加/查找只需O(1)), 总时间复杂度就是O(n)</li>
+</ul>
+</li>
+</ul>
+<h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3><ul>
+<li>字典和集合的内部结构都是一张哈希表</li>
+<li>字典的表，储存了哈希值，键和值3个元素</li>
+<li>集合的表，只有单一的元素</li>
+<li>插入操作：<ul>
+<li>每次向字典或集合插入一个元素时，Python 会首先计算键的哈希值（hash(key)），再和 mask = PyDicMinSize - 1 做与操作，计算这个元素应该插入哈希表的位置 index = hash(key) &amp; mask。如果哈希表中此位置是空的，那么这个元素就会被插入其中。</li>
+<li>若此位置已被占用，Python 便会比较两个元素的哈希值和键是否相等：若两者都相等，则表明这个元素已经存在，如果值不同，则更新值；若两者中有一个不相等，这种情况我们通常称为哈希冲突（hash collision), 思是两个元素的键不相等，但是哈希值相等。种情况下，Python 便会继续寻找表中空余的位置，直到找到空位为止</li>
+</ul>
+</li>
+<li>查找操作<ul>
+<li>Python 会根据哈希值，找到其应该处于的位置；</li>
+<li>然后，比较哈希表这个位置中元素的哈希值和键，与需要查找的元素是否相等</li>
+<li>如果相等，则直接返回；如果不等，则继续查找，直到找到空位或者抛出异常为止</li>
+</ul>
+</li>
+<li>删除操作<ul>
+<li>Python 会暂时对这个位置的元素，赋于一个特殊的值，等到重新调整哈希表的大小时，再将其删除</li>
+</ul>
+</li>
+<li>哈希冲突的发生，往往会降低字典和集合操作的速度；为了保证其高效性，字典和集合内的哈希表，通常会保证其至少留有1/3 的剩余空间。随着元素的不停插入，当剩余空间小于 1/3 时，Python 会重新获取更大的内存空间，扩充哈希表。在这种情况下，表内所有的元素位置都会被重新排放。</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/22/python04/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-python05" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -351,11 +690,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -471,11 +810,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -802,11 +1141,11 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Coding</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
         		</li>
       		
 		</ul>
@@ -1431,246 +1770,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-SolDerivative" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/19/SolDerivative/">Numerical differentiation - ways to find derivative</a>
-    </h1>
-  
-
-        
-        <a href="/2019/02/19/SolDerivative/" class="archive-article-date">
-  	<time datetime="2019-02-19T01:22:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Finite-difference-formulas-Newton’s-difference-quotient"><span class="toc-number">1.</span> <span class="toc-text">Finite difference formulas (Newton’s difference quotient)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Complex-step-approximation"><span class="toc-number">2.</span> <span class="toc-text">Complex-step approximation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Differential-quadrature"><span class="toc-number">3.</span> <span class="toc-text">Differential quadrature</span></a></li></ol>
-            </div>
-           -->
-        <!--  
-    <div id="toc-container"> 
-        <div id="toc"> 
-            <p> 
-                <strong>文章目录</strong>
-            </p>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Finite-difference-formulas-Newton’s-difference-quotient"><span class="toc-text">Finite difference formulas (Newton’s difference quotient)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Complex-step-approximation"><span class="toc-text">Complex-step approximation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Differential-quadrature"><span class="toc-text">Differential quadrature</span></a></li></ol>
-        </div>
-    </div>
- -->
-        <p><br></p>
-<blockquote>
-<p>In numerical analysis, numerical differentiation describes algorithms for estimating the derivative of a mathematical function using values of the function and perhaps other knowledge about the function.</p>
-</blockquote>
-<p>There are mainly two ways to calculate the derivative of a function. (And useful when finding Jacobian matrix)</p>
-<h3 id="Finite-difference-formulas-Newton’s-difference-quotient"><a href="#Finite-difference-formulas-Newton’s-difference-quotient" class="headerlink" title="Finite difference formulas (Newton’s difference quotient)"></a>Finite difference formulas (Newton’s difference quotient)</h3><p>This way is the same as what we learn in high school course. That is to compute the slope of a nearby secant line with a tiny tiny increament h:$$\dfrac {f(x+h)-f(x)}{h}$$<br>And in implementation, we just need to make sure that the h is very very small.</p>
-<p>The above formula is also called the Newton’s forward approximation when $h &gt; 0$. Since it uses the point that are forward to the current point. If $h&lt;0$, then it is called Newton’s backward approximation.<br>If we don’t use the current point and chooce one tiny step both forward and backward to calculate the derivative: $\dfrac {f(x+h)-f(x-h)}{2h}$, then it is called central approximation. And as the error item in this way is proportional to $h^2$, for small values of h, the approximation is more accurate than one-sided(forward/backward) estimation.</p>
-<h3 id="Complex-step-approximation"><a href="#Complex-step-approximation" class="headerlink" title="Complex-step approximation"></a>Complex-step approximation</h3><p>The classical finite difference approximations for numerical differentiation are ill-conditioned. However, if f is a holomorphic function, real-valued on the real line, which can be evaluated at points in the complex plane near x then there are stable methods. The first derivative can be calculated by the complex-step derivative formula as follows: $$f’(x) = \frac{Im(f(x+ih))}{h}$$<br>where $i$ is the imaginary unit, h is the small step size.</p>
-<p>The derivation can be as follows:</p>
-<ul>
-<li>Let $f(x)$ be a function, let $x_0$ be a point on the real axis, and let $h$ be a real parameter. </li>
-<li>Expand $f(x)$ in a Taylor series off the real axis: $$f(x_0+ih) = f(x_0) = ihf’(x_0) - h^2f’’(x_0)/2! - ih^3F^{(3)}/3! + \cdots$$</li>
-<li>Take the imaginary part of both sides and divide by h: $$f’(x_0) = \frac {Im(f(x_0+ih))}{h} + O(h^2)$$</li>
-<li>Therefore, the above gives an approximation to the value of the derivative, $f′(x_0)$, and that is accurate to order $O(h^2)$.</li>
-</ul>
-<p>$h = 1.0E-20$ usually works very well in nearly all cases, and results in derivatives no less accurate than the original algorithm.</p>
-<p>Note that the above formula is only valid for calculating a first-order derivative.</p>
-<h3 id="Differential-quadrature"><a href="#Differential-quadrature" class="headerlink" title="Differential quadrature"></a>Differential quadrature</h3><blockquote>
-<p>Differential quadrature is the approximation of derivatives by using weighted sums of function values. The name is in analogy with quadrature meaning Numerical integration where weighted sums are used in methods such as Simpson’s method or the Trapezium rule. There are various methods for determining the weight coefficients. Differential quadrature is used to solve partial differential equations.</p>
-</blockquote>
-<p><br></p>
-<p>Reference:<br><a href="https://wiki2.org/en/Numerical_differentiation" target="_blank" rel="noopener">https://wiki2.org/en/Numerical_differentiation</a><br><a href="https://blogs.mathworks.com/cleve/2013/10/14/complex-step-differentiation/" target="_blank" rel="noopener">https://blogs.mathworks.com/cleve/2013/10/14/complex-step-differentiation/</a><br><a href="http://mdolab.engin.umich.edu/content/guide-complex-step-derivative-approximation-0" target="_blank" rel="noopener">http://mdolab.engin.umich.edu/content/guide-complex-step-derivative-approximation-0</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/19/SolDerivative/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-UnifyAI" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/16/UnifyAI/">读《浅谈人工智能》有感</a>
-    </h1>
-  
-
-        
-        <a href="/2019/02/16/UnifyAI/" class="archive-article-date">
-  	<time datetime="2019-02-16T06:51:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--  
-            <div id="toc" class="toc-article">
-              <strong class="toc-title">文章目录</strong>
-              
-            </div>
-           -->
-        <!--   -->
-        <p>之前看一个师兄写的文章里面，提到推荐做AI的人看下朱松纯教授写的那篇《人工智能的现状、任务、构架和统一》。我虽然不做纯AI，但我一直在想找一个人脑与AI的结合点，非常希望能建立起自己的一个认知框架。隔了大半年了，终于有时间找来读一读。下面大概介绍一下朱教授的观点和我自己的思考。</p>
-<p>朱教授把人工智能分为六大板块：</p>
-<ul>
-<li>计算机视觉： 包括模式识别，图像处理</li>
-<li>自然语言理解与交流： 包括语音识别，对话</li>
-<li>认知与推理： 包括物理和社会常识</li>
-<li>机器人学： 机械，控制，设计，运动规划和任务规划等</li>
-<li>博弈与伦理： multi-agent 的交互，对抗与合作等</li>
-<li>机器学习： 各种统计的建模，分析工具</li>
-</ul>
-<p>在我读PhD的初期，其实是有机会做真的图像处理，做deep learning那一套东西的，可我大致研究了一下，我觉得太火了，不管是本来就是这个领域的，还是其他领域的，都在朝这个方向转，都在发相关的paper。这让我当时就想起了一个词，大跃进。虽然我理解得也不深刻，但我觉得其实还远不到人们想的那样，DL可以实现真正的人工智能。我当时想，别人都在做的，那我不做，既然有这样一个机会让我搞一下真的人脑，那我就来看看，到底真的人脑是什么样子的？然后一直搞到现在，我发现这个坑是真的多，神经科学这个领域从我开始踏入，到现在，一直没有什么质的进展。但是AI的大潮，已经从CV，转到NLP了。上个月参加谷歌组织的机器学习冬令营，我发现做视觉的相对来说少一些，但是做NLP的，一大把。这是一个很有趣的现象，因为CV那块，像朱教授说的那样，刷榜刷得差不多了，在图像识别本身来说，已经没有什么可以进步的了，除非和其他的领域结合。于是人们又自然而然转到NLP上面去。下一个浪潮是哪里呢？我猜是机器人学，因为前两者都要结合啊，需要一个载体或者说agent来帮助表明这东西有多牛逼啊。而且机器人本身，也是需要加上前两者，才能实现智能这一特性的。可是这还是缺思考，缺认知这一块，所以认知和推理，我觉得是下下个浪潮，也是我现在想研究的方向。</p>
-<p>这其实有点像一个统一的过程，分而治之，再合成一个完整的学科。从朱教授的介绍来讲，人工智能发展的60年有两个阶段：</p>
-<ol>
-<li>前30年以数理逻辑的表达和推理为主： 这一期的领军人物懂很多认知科学的东西，有很强的全局观念，但是没有落地，所以不了了之。</li>
-<li>后30年以概率统计的建模、学习和计算为主： 几大学科独立发展，基于概率建模和随机计算，AI再度繁荣</li>
-</ol>
-<p>后30年的代表人物中，朱教授有提到Judea Pearl这个人，11年的图灵奖获得者。巧的是我当时也追过这个人的paper，因为他的因果模型，我觉得是很有希望用在大脑建模过程当中的，找来他的那本著作看，无奈数学推导对我太难，而后放弃，但这个理论，还依然在我的to do list里面。</p>
-<p>那这几大学科怎么统一到AI上面呢？框架是什么？<br>教授给出的方向是：小数据，大任务范式</p>
-<p>他认为智能系统的根源可以追溯到两个基本前提条件：</p>
-<ol>
-<li>物理环境客观的现实与因果链条：这个我理解的是input, 也就是所见所观所得，这些是外部条件来的</li>
-<li>智能物种与生俱来的任务与价值链条：这个我理解的是 inner sense。也就是所思所做，即文章提到的价值观和决策函数。<br>这有点像一个控制里面的系统，有自己内部的构造和决策，加上外界的input，然后推导出output. 而其实我们想达到的AI，也就是一个智能系统罢了。</li>
-</ol>
-<p>但是这个系统不是一层不变的，就像我们的人脑，每时每刻的状态其实都是不一样的。那为什么会变呢，也就是为什么会有学习这个过程呢？</p>
-<ol>
-<li>外来的数据：外部世界通过各种感知信号，传递到人脑，塑造模型。这些数据来源于观察和实践。观察的数据用于学习各种统计模型，即相关性。实践的数据用于学习因果模型，即将行为和结果联系在一起。</li>
-<li>内在的任务：即由内在的价值函数驱动行为，以达到某种目的。</li>
-</ol>
-<p>这个学习的缘由其实和上面的前提条件很像，都是一个是input的东西，一个是inner的东西。不同的在于，前面那个是初始状态，是静止的，后面那个是学习的过程，是动态的，且一直都在变的。</p>
-<p>那怎么根据这些前提条件和驱动因子实现小数据，大任务范式这个统一框架呢？朱教授提到了暗物质，这个暗物质不是物理学中的那个暗物质。我理解的是，它其实代表了一种 common sense 的建立和因果的推理。你看到的，不仅仅是你看到的，还有那些物体背后的联系和因果关系。而这些，就是那些在暗处的东西，那些能促使小数据完成大任务的因子。那这需要什么学科的知识呢？答案是认知，mind。这就涉及到心理学和神经科学相关的东西了。</p>
-<p>在介绍到认知的时候，朱教授引入了博弈伦理。其中提到了两大类的学习方法，我觉得是很有必要单独拿出来看看的，因为这两个学习的方法，其实也是我们真的学习的过程：</p>
-<ol>
-<li><strong>归纳学习(Inductive learning)</strong>: 通过观察大量数据样本来学习，这些样本就是对某个时期、某个地域、某个人群达成的准平衡态的观察。归纳学习的结果就是一个时空因果的概率模型。</li>
-<li><strong>演绎学习(Deductive learning)</strong>: 这个东西文献中很少，也就是从价值函数（还有物理因果）出发，直接推导出这些准平衡态。<br>这就像我们人类早期的学习，都是归纳学习来的，通过观察别人，学习别人，来逐步形成自己的人生观价值观世界观。而后成长到一定年纪的时候，就是演绎学习了，没有见过的东西，通过分析和推理，依然可以得出正确的结论。<br>只可惜我们很多人，一辈子都没有到演绎学习的阶段，从来只是从别人那里听来读来，并没有形成自己的一套方法论。</li>
-</ol>
-<p>我还想提的一点是，归纳学习有点像现在的强化学习，用很少的样本，就是不断去尝试啊，然后得出结果，有一套因果推导在里面。这也是为什么我很关注强化学习的另一个原因。</p>
-<p>之后朱教授讲到学习的极限，停机问题，说实话我对这个方向不是很了解，就不过多分析了。</p>
-<p>最后文章的总结题目是：智能科学-牛顿与达尔文理论体系的统一。提到物理学的责任是寻找支配自然各种现象的统一的力。而智能科学的研究对象是什么呢？是把物理学排除在外的生物意志给拿进来，研究一个物理与生物混合的复杂系统。这里朱教授提到了力的概念，提到了人与人之间，人与物，物与物之间，那些联系其实可用看成一种力，因为这些力是可以真实用数学表达式表达出来的，而且在物理学上是已经很统一很规范了的。那我们要做的其实就是把生物这块的东西，跟物理结合起来。</p>
-<p>在我以前最开始思考AI与人脑的结合的时候，并没有从物理这个方向去想，一是完全没有意识，二是觉得没有什么联系。对物理的理解并不深，所以我对这个观点的看法不加评论。但是有没有一种大统一，是可以独立于物理啊这些理论，在智能的内部（包括人工智能和真人智能），有一个统一的理论，来解释所有的因果和相关呢？我觉得是有的，这也是我一直想找到的一个统一的理论来链接AI和human brain.</p>
-<p>整篇文章让我特别感动的是介绍到David Mumford的时候，说他念念不忘人工智能，从头开始学统计概率，直奔关键体系，而不是拿着锤子找钉子。这恰恰是我目前想追求的，但现实里我却智能拿着锤子找钉子，如果条件允许，我想我还是会钻到统计概率那边，再去学习的，因为我目前的知识体系，还缺少这一块，而这一块又是我认为很重要的。当然，再学个物理也是极好的。</p>
-<p>All in all, 现在的Artificial intelligence 只能算是 engineering，而不是一门真正的science，等真正有人站出来统一这个学科了，或许才能真正称之为 Science of Intelligence。 我希望自己能在有生之年，能够成为这个science of intelligence 建立的推动者。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂文</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">碎碎念</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/16/UnifyAI/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
@@ -1702,7 +1801,7 @@ var _hmt = _hmt || [];
           </span>
           <span class="post-meta-divider">|</span>
 					<span class="post-count">
-              本站总共112k字
+              本站总共122.2k字
           </span>
     	</div>
       	<div class="footer-right">
@@ -1809,11 +1908,31 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1837,18 +1956,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Coding</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Notes</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Deep learning</a>
               </li>
              
@@ -1861,19 +1968,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Neural Dynamic Simulation</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
+                <a href="javascript:void(0)" class="js-tag color3">Network</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">NodeJS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">OrangePi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1885,11 +1992,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Stochastic</a>
+                <a href="javascript:void(0)" class="js-tag color3">Self-driving</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Self-driving</a>
+                <a href="javascript:void(0)" class="js-tag color1">Stochastic</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1901,7 +2008,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Tools</a>
+                <a href="javascript:void(0)" class="js-tag color4">learning</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1909,15 +2016,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">learning</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">思维模型</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Graph optimization</a>
+                <a href="javascript:void(0)" class="js-tag color3">读书</a>
               </li>
             
             <div class="clearfix"></div>
